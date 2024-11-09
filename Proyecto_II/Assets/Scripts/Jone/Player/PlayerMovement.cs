@@ -9,21 +9,35 @@ using UnityEngine.InputSystem;
  * FECHA: 09/11/2024
  * DESCRIPCIÓN: Script base que se encarga del movimiento del personaje jugable usando el New Input System
  * VERSIÓN: 1.0 movimiento base con W/A/S/D
+ *              1.1 rotación al girar
  *          2.0 salto
  */
 
 public class PlayerMovement : MonoBehaviour
 {
-    PlayerInput playerInput;
-    [SerializeField] InputActionReference walkAction;
-    [SerializeField] InputActionReference jumpAction;
-
+    #region Movement Variables
     Rigidbody rb;
-
+    [Header("Movement Settings")]
     [SerializeField] float baseSpeed = 5f;
     [SerializeField] float movementSpeedMultiplier = 1f;
+    [SerializeField] float rotationSpeed = 15f;
+    #endregion
+
+    #region Jump Variables
+    [Header("Jump Settings")]
     [SerializeField] float jumpForce = 5f;
-    private bool isGrounded = true;
+    [SerializeField] private float groundCheckRadius = 0.2f; 
+    [SerializeField] private Transform groundCheckPoint; 
+    [SerializeField] private LayerMask groundLayer;
+    #endregion
+
+    #region New Input System Variables
+    PlayerInput playerInput;
+    [Space(10)]
+    [Header("Inputs")]
+    [SerializeField] InputActionReference walkAction;
+    [SerializeField] InputActionReference jumpAction;
+    #endregion
 
     private void OnEnable()
     {
@@ -50,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
      * AUTOR: Jone Sainz Egea
      * FECHA: 09/11/2024
      * DESCRIPCIÓN: lee el valor de la acción de andar del playerInput
+     *              rota al jugador para que mire en la dirección en la que va a andar
      *              mueve al jugador teniendo en cuenta la velocidad base y el multiplicador de velocidad
      * @param: -
      * @return: - 
@@ -57,19 +72,39 @@ public class PlayerMovement : MonoBehaviour
     void PlayerWalk()
     {
         Vector2 direction = walkAction.action.ReadValue<Vector2>();
-        transform.position += new Vector3(direction.x, 0, direction.y) * movementSpeedMultiplier * baseSpeed * Time.deltaTime;
+        Vector3 newPosition = new Vector3(direction.x, 0, direction.y);
+
+        if (newPosition != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(newPosition);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
+
+        transform.position += newPosition * movementSpeedMultiplier * baseSpeed * Time.deltaTime;
     }
 
     /* NOMBRE MÉTODO: Jump
      * AUTOR: Jone Sainz Egea
      * FECHA: 09/11/2024
-     * DESCRIPCIÓN: añade impulso de salto cuando se llama a la acción de salto
+     * DESCRIPCIÓN: si está en el suelo, añade impulso de salto cuando se llama a la acción de salto
      * @param: contexto de salto
      * @return: - 
      */
     private void Jump(InputAction.CallbackContext context)
     {
-        if (isGrounded)
-            rb.AddForce(new Vector3(0, 1, 0) * jumpForce, ForceMode.Impulse);
+        if (IsGrounded())
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+    }
+
+    /* NOMBRE MÉTODO: IsGrounded
+     * AUTOR: Jone Sainz Egea
+     * FECHA: 09/11/2024
+     * DESCRIPCIÓN: comprueba si el jugador está en contacto con la capa del suelo
+     * @param: -
+     * @return: true si está en el suelo, false si no
+     */
+    private bool IsGrounded()
+    {
+        return Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundLayer);
     }
 }
