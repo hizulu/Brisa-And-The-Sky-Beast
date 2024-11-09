@@ -6,10 +6,12 @@ using UnityEngine.InputSystem;
 
 /* NOMBRE CLASE: Player Movement
  * AUTOR: Jone Sainz Egea
+          Sara Yue Madruga Martín
  * FECHA: 09/11/2024
  * DESCRIPCIÓN: Script base que se encarga del movimiento del personaje jugable usando el New Input System
  * VERSIÓN: 1.0 movimiento base con W/A/S/D
  *              1.1 rotación al girar
+ *              1.2 rotación del player junto con la cámara
  *          2.0 salto
  *          3.0 animaciones
  */
@@ -23,6 +25,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float baseSpeed = 5f;
     [SerializeField] float movementSpeedMultiplier = 1f;
     [SerializeField] float rotationSpeed = 15f;
+    private float currentSpeed;
+    [SerializeField] private float runSpeed = 10f;
+
+    [SerializeField] private Transform camTransform;
     #endregion
 
     #region Jump Variables
@@ -39,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Inputs")]
     [SerializeField] InputActionReference walkAction;
     [SerializeField] InputActionReference jumpAction;
+    [SerializeField] InputActionReference runAction;
     #endregion
 
     private void OnEnable()
@@ -56,19 +63,23 @@ public class PlayerMovement : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        currentSpeed = baseSpeed;
     }
 
     void Update()
     {
+        PlayerRun();
         PlayerWalk();
     }
 
     /* NOMBRE MÉTODO: PlayerWalk
      * AUTOR: Jone Sainz Egea
+              Sara Yue Madruga Martín
      * FECHA: 09/11/2024
      * DESCRIPCIÓN: lee el valor de la acción de andar del playerInput
      *              rota al jugador para que mire en la dirección en la que va a andar
      *              mueve al jugador teniendo en cuenta la velocidad base y el multiplicador de velocidad
+     *              rota al jugador en base a la rotación de la cámara
      * @param: -
      * @return: - 
      */
@@ -80,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
         if (newPosition != Vector3.zero)
         {
             anim.SetBool("isWalking", true);
+            newPosition = Quaternion.AngleAxis(camTransform.rotation.eulerAngles.y, Vector3.up) * newPosition;
             Quaternion targetRotation = Quaternion.LookRotation(newPosition);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         } else
@@ -88,6 +100,21 @@ public class PlayerMovement : MonoBehaviour
         }
 
         transform.position += newPosition * movementSpeedMultiplier * baseSpeed * Time.deltaTime;
+    }
+
+    void PlayerRun()
+    {
+        if (runAction.action.IsPressed())
+        {
+            anim.SetBool("isRunning", true);
+            currentSpeed = runSpeed;
+            Debug.Log("Estás corriendo");
+        }
+        else
+        {
+            currentSpeed = baseSpeed;
+            anim.SetBool("isRunning", false);
+        }
     }
 
     /* NOMBRE MÉTODO: Jump
@@ -103,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetTrigger("jump");
             //rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            Debug.Log("Estás saltando");
         }
     }
 

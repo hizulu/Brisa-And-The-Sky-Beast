@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -244,9 +244,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.23
-  m_Height: 1.8368696
+  m_Height: 1.7981212
   m_Direction: 1
-  m_Center: {x: 0, y: 0.88767546, z: 0}
+  m_Center: {x: 0, y: 0.90704966, z: 0}
 --- !u!54 &19571740
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -272,7 +272,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &19571741
 MonoBehaviour:
@@ -319,6 +319,8 @@ MonoBehaviour:
   baseSpeed: 5
   movementSpeedMultiplier: 1
   rotationSpeed: 15
+  runSpeed: 10
+  camTransform: {fileID: 1374258374}
   jumpForce: 3
   groundCheckRadius: 0.2
   groundCheckPoint: {fileID: 542768361}
@@ -327,6 +329,7 @@ MonoBehaviour:
     m_Bits: 8
   walkAction: {fileID: -6437502031864252024, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
   jumpAction: {fileID: 2138747907920559678, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
+  runAction: {fileID: 3991312467720647605, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
 --- !u!1 &133337807
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,12 +481,12 @@ GameObject:
   - component: {fileID: 286571974}
   - component: {fileID: 286571973}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Capsule
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &286571972
 Transform:
   m_ObjectHideFlags: 0
@@ -674,7 +677,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -784,7 +787,7 @@ GameObject:
   - component: {fileID: 619691283}
   - component: {fileID: 619691282}
   - component: {fileID: 619691281}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1207,7 +1210,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 1118992266}
   m_Follow: {fileID: 1118992266}
   m_Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 40
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -1271,7 +1274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CollideAgainst:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 72
   m_IgnoreTag: Player
   m_TransparentLayers:
     serializedVersion: 2
@@ -1284,8 +1287,8 @@ MonoBehaviour:
   m_Strategy: 0
   m_MaximumEffort: 4
   m_SmoothingTime: 0
-  m_Damping: 0
-  m_DampingWhenOccluded: 0
+  m_Damping: 2
+  m_DampingWhenOccluded: 2
   m_OptimalTargetDistance: 0
 --- !u!1 &1662292769
 GameObject:
@@ -1388,7 +1391,7 @@ SceneRoots:
   - {fileID: 389174345}
   - {fileID: 1662292771}
   - {fileID: 619691284}
-  - {fileID: 286571972}
-  - {fileID: 1374258374}
-  - {fileID: 133337811}
   - {fileID: 19571736}
+  - {fileID: 1374258374}
+  - {fileID: 286571972}
+  - {fileID: 133337811}

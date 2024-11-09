@@ -1,6 +1,13 @@
 using Cinemachine;
 using UnityEngine;
 
+/* NOMBRE CLASE: Cursor Zoom
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 09/11/2024
+ * DESCRIPCIÓN: Script que hace que haciendo scroll con el ratón, haga zoom in/out.
+ * VERSIÓN: 1.0 Acción de zoom in/out
+ */
+
 public class CursorZoom : MonoBehaviour
 {
     [SerializeField] private float minZoom = 6f;
@@ -17,6 +24,8 @@ public class CursorZoom : MonoBehaviour
     {
         framingTransposer = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>();
         newDistanceCam = defaultDistance;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
@@ -24,6 +33,14 @@ public class CursorZoom : MonoBehaviour
         CameraZoom();
     }
 
+    /* NOMBRE MÉTODO: CameraZoom
+     * AUTOR: Sara Yue Madruga Martín
+     * FECHA: 09/11/2024
+     * DESCRIPCIÓN: método que gestiona el zoom in/out hacia el player con el botón central del ratón (haciendo scroll).
+                    suma 
+     * @param: -
+     * @return: - 
+     */
     public void CameraZoom()
     {
         float zoomValue = -Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity; // El "-Input" es para que invierta el scroll.
