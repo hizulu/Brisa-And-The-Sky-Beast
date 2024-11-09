@@ -11,12 +11,14 @@ using UnityEngine.InputSystem;
  * VERSIÓN: 1.0 movimiento base con W/A/S/D
  *              1.1 rotación al girar
  *          2.0 salto
+ *          3.0 animaciones
  */
 
 public class PlayerMovement : MonoBehaviour
 {
     #region Movement Variables
     Rigidbody rb;
+    Animator anim;
     [Header("Movement Settings")]
     [SerializeField] float baseSpeed = 5f;
     [SerializeField] float movementSpeedMultiplier = 1f;
@@ -53,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -76,8 +79,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (newPosition != Vector3.zero)
         {
+            anim.SetBool("isWalking", true);
             Quaternion targetRotation = Quaternion.LookRotation(newPosition);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        } else
+        {
+            anim.SetBool("isWalking", false);
         }
 
         transform.position += newPosition * movementSpeedMultiplier * baseSpeed * Time.deltaTime;
@@ -93,7 +100,10 @@ public class PlayerMovement : MonoBehaviour
     private void Jump(InputAction.CallbackContext context)
     {
         if (IsGrounded())
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        {
+            anim.SetTrigger("jump");
+            //rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
     }
 
     /* NOMBRE MÉTODO: IsGrounded
