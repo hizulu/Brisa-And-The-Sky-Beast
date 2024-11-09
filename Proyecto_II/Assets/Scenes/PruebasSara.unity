@@ -320,6 +320,7 @@ MonoBehaviour:
   movementSpeedMultiplier: 1
   rotationSpeed: 15
   runSpeed: 10
+  crouchedSpeed: 2
   camTransform: {fileID: 1374258374}
   jumpForce: 3
   groundCheckRadius: 0.2
@@ -330,6 +331,7 @@ MonoBehaviour:
   walkAction: {fileID: -6437502031864252024, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
   jumpAction: {fileID: 2138747907920559678, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
   runAction: {fileID: 3991312467720647605, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
+  crouchedAction: {fileID: -6464814545137978351, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
 --- !u!1 &133337807
 GameObject:
   m_ObjectHideFlags: 0

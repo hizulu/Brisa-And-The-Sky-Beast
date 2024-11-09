@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,12 +10,13 @@ using UnityEngine.InputSystem;
  *              1.1 rotación al girar
  *              1.2 rotación del player junto con la cámara
  *          2.0 salto
- *          3.0 animaciones
+ *          3.0 correr
+ *          4.0 animaciones
  */
 
 public class PlayerMovement : MonoBehaviour
 {
-    #region Movement Variables
+    #region Movements Variables
     Rigidbody rb;
     Animator anim;
     [Header("Movement Settings")]
@@ -27,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotationSpeed = 15f;
     private float currentSpeed;
     [SerializeField] private float runSpeed = 10f;
+    [SerializeField] private float crouchedSpeed = 0.25f;
 
     [SerializeField] private Transform camTransform;
     #endregion
@@ -46,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] InputActionReference walkAction;
     [SerializeField] InputActionReference jumpAction;
     [SerializeField] InputActionReference runAction;
+    [SerializeField] InputActionReference crouchedAction;
     #endregion
 
     private void OnEnable()
@@ -69,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         PlayerRun();
+        PlayerCrouched();
         PlayerWalk();
     }
 
@@ -94,12 +95,14 @@ public class PlayerMovement : MonoBehaviour
             newPosition = Quaternion.AngleAxis(camTransform.rotation.eulerAngles.y, Vector3.up) * newPosition;
             Quaternion targetRotation = Quaternion.LookRotation(newPosition);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        } else
+            Debug.Log("Estás andando" + " " + currentSpeed);
+        }
+        else
         {
             anim.SetBool("isWalking", false);
         }
 
-        transform.position += newPosition * movementSpeedMultiplier * baseSpeed * Time.deltaTime;
+        transform.position += newPosition * movementSpeedMultiplier * currentSpeed * Time.deltaTime;
     }
 
     void PlayerRun()
@@ -108,12 +111,27 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetBool("isRunning", true);
             currentSpeed = runSpeed;
-            Debug.Log("Estás corriendo");
+            Debug.Log("Estás corriendo" + " " + currentSpeed);
         }
         else
         {
             currentSpeed = baseSpeed;
             anim.SetBool("isRunning", false);
+        }
+    }
+
+    void PlayerCrouched()
+    {
+        if (crouchedAction.action.IsPressed())
+        {
+            anim.SetBool("isCrouching", true);
+            currentSpeed = crouchedSpeed;
+            Debug.Log("Estás en sigilo" + " " + currentSpeed);
+        }
+        else
+        {
+            currentSpeed = baseSpeed;
+            anim.SetBool("isCrouching", false);
         }
     }
 
