@@ -1,28 +1,33 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 /* NOMBRE CLASE: Player Movement
  * AUTOR: Jone Sainz Egea
+          Sara Yue Madruga Martín
  * FECHA: 09/11/2024
  * DESCRIPCIÓN: Script base que se encarga del movimiento del personaje jugable usando el New Input System
  * VERSIÓN: 1.0 movimiento base con W/A/S/D
  *              1.1 rotación al girar
+ *              1.2 rotación del player junto con la cámara
  *          2.0 salto
- *          3.0 animaciones
+ *          3.0 correr
+ *          4.0 animaciones
  */
 
 public class PlayerMovement : MonoBehaviour
 {
-    #region Movement Variables
+    #region Movements Variables
     Rigidbody rb;
     Animator anim;
     [Header("Movement Settings")]
     [SerializeField] float baseSpeed = 5f;
     [SerializeField] float movementSpeedMultiplier = 1f;
     [SerializeField] float rotationSpeed = 15f;
+    private float currentSpeed;
+    [SerializeField] private float runSpeed = 10f;
+    [SerializeField] private float crouchedSpeed = 0.25f;
+
+    [SerializeField] private Transform camTransform;
     #endregion
 
     #region Jump Variables
@@ -39,16 +44,21 @@ public class PlayerMovement : MonoBehaviour
     [Header("Inputs")]
     [SerializeField] InputActionReference walkAction;
     [SerializeField] InputActionReference jumpAction;
+    [SerializeField] InputActionReference runAction;
+    [SerializeField] InputActionReference crouchedAction;
+    [SerializeField] InputActionReference attackAction;
     #endregion
 
     private void OnEnable()
     {
         jumpAction.action.started += Jump;
+        attackAction.action.started += Attack;
     }
 
     private void OnDisable()
     {
         jumpAction.action.started -= Jump;
+        attackAction.action.started -= Attack;
     }
 
     void Start()
@@ -56,19 +66,24 @@ public class PlayerMovement : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        currentSpeed = baseSpeed;
     }
 
     void Update()
     {
+        PlayerRun();
+        PlayerCrouched();
         PlayerWalk();
     }
 
     /* NOMBRE MÉTODO: PlayerWalk
      * AUTOR: Jone Sainz Egea
+              Sara Yue Madruga Martín
      * FECHA: 09/11/2024
      * DESCRIPCIÓN: lee el valor de la acción de andar del playerInput
      *              rota al jugador para que mire en la dirección en la que va a andar
      *              mueve al jugador teniendo en cuenta la velocidad base y el multiplicador de velocidad
+     *              rota al jugador en base a la rotación de la cámara
      * @param: -
      * @return: - 
      */
@@ -80,14 +95,47 @@ public class PlayerMovement : MonoBehaviour
         if (newPosition != Vector3.zero)
         {
             anim.SetBool("isWalking", true);
+            newPosition = Quaternion.AngleAxis(camTransform.rotation.eulerAngles.y, Vector3.up) * newPosition;
             Quaternion targetRotation = Quaternion.LookRotation(newPosition);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        } else
+            Debug.Log("Estás andando" + " " + currentSpeed);
+        }
+        else
         {
             anim.SetBool("isWalking", false);
         }
 
-        transform.position += newPosition * movementSpeedMultiplier * baseSpeed * Time.deltaTime;
+        transform.position += newPosition * movementSpeedMultiplier * currentSpeed * Time.deltaTime;
+    }
+
+    void PlayerRun()
+    {
+        if (runAction.action.IsPressed())
+        {
+            anim.SetBool("isRunning", true);
+            currentSpeed = runSpeed;
+            Debug.Log("Estás corriendo" + " " + currentSpeed);
+        }
+        else
+        {
+            currentSpeed = baseSpeed;
+            anim.SetBool("isRunning", false);
+        }
+    }
+
+    void PlayerCrouched()
+    {
+        if (crouchedAction.action.IsPressed())
+        {
+            anim.SetBool("isCrouching", true);
+            currentSpeed = crouchedSpeed;
+            Debug.Log("Estás en sigilo" + " " + currentSpeed);
+        }
+        else
+        {
+            currentSpeed = baseSpeed;
+            anim.SetBool("isCrouching", false);
+        }
     }
 
     /* NOMBRE MÉTODO: Jump
@@ -103,6 +151,28 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetTrigger("jump");
             //rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            Debug.Log("Estás saltando");
+        }
+    }
+
+    /* NOMBRE MÉTODO: Attack
+     * AUTOR: Sara Yue Madruga Martín
+     * FECHA: 10/11/2024
+     * DESCRIPCIÓN: 
+     * @param: 
+     * @return: - 
+     */
+    private void Attack(InputAction.CallbackContext context)
+    {
+        if (attackAction.action.IsPressed())
+        {
+            anim.SetBool("isAttacking", true);
+            anim.SetTrigger("attack");
+            Debug.Log("Estás realizando el ataque 1");
+        }
+        else
+        {
+            anim.SetBool("isAttacking", false);
         }
     }
 
