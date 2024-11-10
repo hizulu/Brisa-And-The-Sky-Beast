@@ -46,16 +46,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] InputActionReference jumpAction;
     [SerializeField] InputActionReference runAction;
     [SerializeField] InputActionReference crouchedAction;
+    [SerializeField] InputActionReference attackAction;
     #endregion
 
     private void OnEnable()
     {
         jumpAction.action.started += Jump;
+        attackAction.action.started += Attack;
     }
 
     private void OnDisable()
     {
         jumpAction.action.started -= Jump;
+        attackAction.action.started -= Attack;
     }
 
     void Start()
@@ -149,6 +152,27 @@ public class PlayerMovement : MonoBehaviour
             anim.SetTrigger("jump");
             //rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             Debug.Log("Estás saltando");
+        }
+    }
+
+    /* NOMBRE MÉTODO: Attack
+     * AUTOR: Sara Yue Madruga Martín
+     * FECHA: 10/11/2024
+     * DESCRIPCIÓN: 
+     * @param: 
+     * @return: - 
+     */
+    private void Attack(InputAction.CallbackContext context)
+    {
+        if (attackAction.action.IsPressed())
+        {
+            anim.SetBool("isAttacking", true);
+            anim.SetTrigger("attack");
+            Debug.Log("Estás realizando el ataque 1");
+        }
+        else
+        {
+            anim.SetBool("isAttacking", false);
         }
     }
 
