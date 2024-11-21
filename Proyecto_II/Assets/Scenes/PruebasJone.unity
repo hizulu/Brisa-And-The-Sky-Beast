@@ -1359,9 +1359,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: df81436042500f44285fef8b57ef8c1b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 827710955}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: df81436042500f44285fef8b57ef8c1b, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 827710954}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: df81436042500f44285fef8b57ef8c1b, type: 3}
       insertIndex: -1
@@ -1369,6 +1366,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: df81436042500f44285fef8b57ef8c1b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 827710952}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: df81436042500f44285fef8b57ef8c1b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 827710955}
   m_SourcePrefab: {fileID: 100100000, guid: df81436042500f44285fef8b57ef8c1b, type: 3}
 --- !u!1 &827710950 stripped
 GameObject:
@@ -1469,26 +1469,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 827710950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69bfd878cc103d74992f4c6fbb908b4b, type: 3}
+  m_Script: {fileID: 11500000, guid: 11d0204cb1f196a4184a6c9b35da39a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   baseSpeed: 5
-  movementSpeedMultiplier: 1
-  rotationSpeed: 15
-  runSpeed: 10
-  crouchedSpeed: 2
+  speedMultiplier: 1
+  runMultiplier: 1.25
+  crouchMultiplier: 0.75
   camTransform: {fileID: 229000438}
-  jumpForce: 3
-  groundCheckRadius: 0.2
-  groundCheckPoint: {fileID: 1005225170}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
   walkAction: {fileID: -6437502031864252024, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
-  jumpAction: {fileID: 2138747907920559678, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
   runAction: {fileID: 3991312467720647605, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
   crouchedAction: {fileID: -6464814545137978351, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
-  attackAction: {fileID: -134862396008731625, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
 --- !u!1 &992123722
 GameObject:
   m_ObjectHideFlags: 0
@@ -2074,7 +2065,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!195 &1489732516
 NavMeshAgent:
   m_ObjectHideFlags: 0
