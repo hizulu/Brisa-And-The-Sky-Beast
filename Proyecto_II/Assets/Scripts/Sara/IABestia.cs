@@ -42,7 +42,7 @@ public class IABestia : MonoBehaviour
             }
         }
 
-        if (bestia.velocity.sqrMagnitude > 0.1f)
+        if (bestia.velocity.sqrMagnitude > 0.2f)
         {
             animBestia.SetBool("bestiaIsWalking", true);
         }
