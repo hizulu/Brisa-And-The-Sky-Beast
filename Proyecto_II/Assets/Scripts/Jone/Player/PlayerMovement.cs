@@ -85,10 +85,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update()
-    {
+    {        
         PlayerRun();
         PlayerCrouched();
         PlayerWalk();
+        
     }
 
     /* NOMBRE MÉTODO: PlayerWalk
