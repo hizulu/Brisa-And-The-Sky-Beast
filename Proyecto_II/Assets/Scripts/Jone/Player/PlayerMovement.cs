@@ -1,5 +1,8 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /* NOMBRE CLASE: Player Movement
  * AUTOR: Jone Sainz Egea
@@ -12,6 +15,7 @@ using UnityEngine.InputSystem;
  *          2.0 salto
  *          3.0 correr
  *          4.0 animaciones
+ *          5.0 implementación de tutoriales
  */
 
 public class PlayerMovement : MonoBehaviour
@@ -49,6 +53,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] InputActionReference attackAction;
     #endregion
 
+    #region Tutorial Variables
+    [SerializeField] private GameObject tutorialPanel;
+    [SerializeField] private TextMeshProUGUI textTutorial;
+    private bool isWalkTutoActive = true;
+    private bool isRunTutoActive = true;
+    private bool isJumpTutoActive = true;
+    private bool isAttackTutoActive = true;
+    #endregion
+
     private void OnEnable()
     {
         jumpAction.action.started += Jump;
@@ -67,6 +80,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         currentSpeed = baseSpeed;
+        tutorialPanel.SetActive(false);
+        StartCoroutine(WalkTutorial());
     }
 
     void Update()
@@ -89,6 +104,9 @@ public class PlayerMovement : MonoBehaviour
      */
     void PlayerWalk()
     {
+        if (isWalkTutoActive)
+            return;
+
         Vector2 direction = walkAction.action.ReadValue<Vector2>();
         Vector3 newPosition = new Vector3(direction.x, 0, direction.y);
 
@@ -98,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
             newPosition = Quaternion.AngleAxis(camTransform.rotation.eulerAngles.y, Vector3.up) * newPosition;
             Quaternion targetRotation = Quaternion.LookRotation(newPosition);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            Debug.Log("Estás andando" + " " + currentSpeed);
+            //Debug.Log("Estás andando" + " " + currentSpeed);
         }
         else
         {
@@ -110,11 +128,14 @@ public class PlayerMovement : MonoBehaviour
 
     void PlayerRun()
     {
+        if (isRunTutoActive)
+            return;
+
         if (runAction.action.IsPressed())
         {
             anim.SetBool("isRunning", true);
             currentSpeed = runSpeed;
-            Debug.Log("Estás corriendo" + " " + currentSpeed);
+            //Debug.Log("Estás corriendo" + " " + currentSpeed);
         }
         else
         {
@@ -129,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetBool("isCrouching", true);
             currentSpeed = crouchedSpeed;
-            Debug.Log("Estás en sigilo" + " " + currentSpeed);
+            //Debug.Log("Estás en sigilo" + " " + currentSpeed);
         }
         else
         {
@@ -147,11 +168,14 @@ public class PlayerMovement : MonoBehaviour
      */
     private void Jump(InputAction.CallbackContext context)
     {
+        if (isJumpTutoActive)
+            return;
+
         if (IsGrounded())
         {
             anim.SetTrigger("jump");
-            //rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            Debug.Log("Estás saltando");
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            //Debug.Log("Estás saltando");
         }
     }
 
@@ -164,6 +188,9 @@ public class PlayerMovement : MonoBehaviour
      */
     private void Attack(InputAction.CallbackContext context)
     {
+        if (isAttackTutoActive)
+            return;
+
         if (attackAction.action.IsPressed())
         {
             anim.SetBool("isAttacking", true);
@@ -187,4 +214,120 @@ public class PlayerMovement : MonoBehaviour
     {
         return Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundLayer);
     }
+
+    #region Coroutines Tutoriales
+
+    /* NOMBRE FUNCIÓN: WalkTutorial
+     * AUTOR: Sara Yue Madruga Martín
+     * FECHA: 29/11/2024
+     * DESCRIPCIÓN: activa el panel del tutorial de caminar después de 2 segundos desde que se ha llamado a la corrutina.
+                    hasta que no se realiza la acción de "caminar" no desactiva el panel del tutorial y activa la siguiente corrutina, la de correr.
+     * @param: -
+     * @return: -
+     */
+    IEnumerator WalkTutorial()
+    {
+        tutorialPanel.GetComponent<Image>().color = Color.gray;
+        yield return new WaitForSecondsRealtime(2f);
+        tutorialPanel.SetActive(true);
+        textTutorial.text = "Para desplazarte utiliza las teclas W A S D.";
+
+        yield return new WaitUntil(() => walkAction.action.IsPressed()); // El tutorial de caminar no se desactiva hasta que no se realiza la acción de "walkAction".
+        StartCoroutine(CheckTutorial(tutorialPanel.GetComponent<Image>().color, Color.green, 0.5f));
+        isWalkTutoActive = false;
+
+        yield return new WaitForSecondsRealtime(2f);
+        tutorialPanel.SetActive(false);
+        Debug.Log("Tutorial de caminar terminado.");
+        StartCoroutine(RunTutorial());
+    }
+
+    /* NOMBRE FUNCIÓN: RunTutorial
+     * AUTOR: Sara Yue Madruga Martín
+     * FECHA: 29/11/2024
+     * DESCRIPCIÓN: activa el panel del tutorial de correr después de 2 segundos desde que se ha llamado a la corrutina.
+                    hasta que no se realiza la acción de "correr" no desactiva el panel del tutorial, detiene la corrutina de caminar y activa la siguiente corrutina, la de saltar.
+     * @param: -
+     * @return: -
+     */
+    IEnumerator RunTutorial()
+    {
+        tutorialPanel.GetComponent<Image>().color = Color.gray;
+        yield return new WaitForSecondsRealtime(2f);
+        tutorialPanel.SetActive(true);
+        textTutorial.text = "Para correr utiliza las teclas W A S D y mantén pulsado SHIFT izquierdo.";
+
+        yield return new WaitUntil(() => runAction.action.IsPressed()); // El tutorial de correr no se desactiva hasta que no se realiza la acción de correr (pulsar LEFT SHIFT).
+        StartCoroutine(CheckTutorial(tutorialPanel.GetComponent<Image>().color, Color.green, 0.5f));
+        isRunTutoActive = false;
+        StopCoroutine(WalkTutorial());
+
+        yield return new WaitForSecondsRealtime(2f);
+        tutorialPanel.SetActive(false);
+        Debug.Log("Tutorial de correr terminado.");
+        StartCoroutine(JumpTutorial());
+    }
+
+    /* NOMBRE FUNCIÓN: JumpTutorial
+     * AUTOR: Sara Yue Madruga Martín
+     * FECHA: 29/11/2024
+     * DESCRIPCIÓN: activa el panel del tutorial de saltar después de 2 segundos desde que se ha llamado a la corrutina.
+                    hasta que no se realiza la acción de "saltar" no desactiva el panel del tutorial, detiene la corrutina de correr y sale de la misma.
+     * @param: -
+     * @return: -
+     */
+    IEnumerator JumpTutorial()
+    {
+        tutorialPanel.GetComponent<Image>().color = Color.gray;
+        yield return new WaitForSecondsRealtime(2f);
+        tutorialPanel.SetActive(true);
+        textTutorial.text = "Para saltar, pulsa la barra espaciadora.";
+
+        yield return new WaitUntil(() => jumpAction.action.IsPressed()); // El tutorial de saltar no se desactiva hasta que no se realiza la acción de saltar.
+        StartCoroutine(CheckTutorial(tutorialPanel.GetComponent<Image>().color, Color.green, 0.5f));
+        isJumpTutoActive = false;
+        StopCoroutine(RunTutorial());
+
+        yield return new WaitForSecondsRealtime(2f);
+        tutorialPanel.SetActive(false);
+        
+        Debug.Log("Tutorial de saltar terminado.");
+        StartCoroutine(AttackTutorial());
+    }
+
+    IEnumerator AttackTutorial()
+    {
+        tutorialPanel.GetComponent<Image>().color = Color.gray;
+        yield return new WaitForSecondsRealtime(2f);
+        tutorialPanel.SetActive(true);
+        textTutorial.text = "Para atacar haz click izquierdo con el ratón.";
+
+        yield return new WaitUntil(() => attackAction.action.IsPressed()); // El tutorial de atacar no se desactiva hasta que no se realiza la acción de atacar.
+        StartCoroutine(CheckTutorial(tutorialPanel.GetComponent<Image>().color, Color.green, 0.5f));
+        isAttackTutoActive = false;
+        StopCoroutine(JumpTutorial());
+
+        yield return new WaitForSecondsRealtime(2f);
+        tutorialPanel.SetActive(false);
+
+        Debug.Log("Tutorial de saltar terminado.");
+        yield break;
+    }
+
+    IEnumerator CheckTutorial(Color color1, Color color2, float tiempoCambio)
+    {
+        Image tutoImage = tutorialPanel.GetComponent<Image>();
+        float tiempoPasado = 0f;
+        tutoImage.color = color1;
+
+        while(tiempoPasado < tiempoCambio)
+        {
+            tutoImage.color = Color.Lerp(color1, color2, tiempoPasado/tiempoCambio);
+            tiempoPasado += Time.deltaTime;
+            yield return null;
+        }
+
+        tutoImage.color = color2;
+    }
+    #endregion
 }
