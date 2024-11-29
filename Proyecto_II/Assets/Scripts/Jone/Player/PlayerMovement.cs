@@ -221,7 +221,7 @@ public class PlayerMovement : MonoBehaviour
      * AUTOR: Sara Yue Madruga Martín
      * FECHA: 29/11/2024
      * DESCRIPCIÓN: activa el panel del tutorial de caminar después de 2 segundos desde que se ha llamado a la corrutina.
-                    hasta que no se realiza la acción de "caminar" no desactiva el panel del tutorial y activa la siguiente corrutina, la de correr.
+                    hasta que no se realiza la acción de "caminar" no desactiva el panel del tutorial y comienza la siguiente corrutina, la de correr.
      * @param: -
      * @return: -
      */
@@ -246,7 +246,7 @@ public class PlayerMovement : MonoBehaviour
      * AUTOR: Sara Yue Madruga Martín
      * FECHA: 29/11/2024
      * DESCRIPCIÓN: activa el panel del tutorial de correr después de 2 segundos desde que se ha llamado a la corrutina.
-                    hasta que no se realiza la acción de "correr" no desactiva el panel del tutorial, detiene la corrutina de caminar y activa la siguiente corrutina, la de saltar.
+                    hasta que no se realiza la acción de "correr" no desactiva el panel del tutorial, detiene la corrutina de caminar y comienza la siguiente corrutina, la de saltar.
      * @param: -
      * @return: -
      */
@@ -272,7 +272,7 @@ public class PlayerMovement : MonoBehaviour
      * AUTOR: Sara Yue Madruga Martín
      * FECHA: 29/11/2024
      * DESCRIPCIÓN: activa el panel del tutorial de saltar después de 2 segundos desde que se ha llamado a la corrutina.
-                    hasta que no se realiza la acción de "saltar" no desactiva el panel del tutorial, detiene la corrutina de correr y sale de la misma.
+                    hasta que no se realiza la acción de "saltar" no desactiva el panel del tutorial, detiene la corrutina de correr y y comienza la siguiente corrutina, la de atacar
      * @param: -
      * @return: -
      */
@@ -295,6 +295,14 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(AttackTutorial());
     }
 
+    /* NOMBRE FUNCIÓN: AttackTutorial
+     * AUTOR: Sara Yue Madruga Martín
+     * FECHA: 29/11/2024
+     * DESCRIPCIÓN: activa el panel del tutorial de atacar después de 2 segundos desde que se ha llamado a la corrutina.
+                    hasta que no se realiza la acción de "atacar" no desactiva el panel del tutorial, detiene la corrutina de saltar y sale de la misma.
+     * @param: -
+     * @return: -
+     */
     IEnumerator AttackTutorial()
     {
         tutorialPanel.GetComponent<Image>().color = Color.gray;
