@@ -5,14 +5,34 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource SFXSource;
 
-    public AudioClip background;
+    public AudioClip backNoLoop;
+    public AudioClip backLoop;
     public AudioClip walk;
     public AudioClip run;
 
+    bool noLoop = false;
+
     private void Start()
     {
-        musicSource.clip = background;
+        musicSource.clip = backNoLoop;
+        musicSource.loop = false;
         musicSource.Play();
+    }
+
+    private void Update()
+    {
+        if (!musicSource.isPlaying && !noLoop)
+        {
+            PlayLoopingBackground();
+        }
+    }
+
+    private void PlayLoopingBackground()
+    {
+        musicSource.clip = backLoop;
+        musicSource.loop = true;
+        musicSource.Play();
+        noLoop = true;
     }
 
     public void PlaySFX(AudioClip clip)
