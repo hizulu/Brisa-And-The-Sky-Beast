@@ -216,7 +216,7 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetTrigger("jump");
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            //Debug.Log("Estás saltando");
+            Debug.Log("Estás saltando");
         }
     }
 
@@ -323,10 +323,10 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(true);
         textTutorial.text = "Para saltar, pulsa la barra espaciadora.";
+        isJumpTutoActive = false;
 
         yield return new WaitUntil(() => jumpAction.action.IsPressed()); // El tutorial de saltar no se desactiva hasta que no se realiza la acción de saltar.
         StartCoroutine(CheckTutorial(tutorialPanel.GetComponent<Image>().color, Color.green, 0.5f));
-        isJumpTutoActive = false;
         StopCoroutine(RunTutorial());
 
         yield return new WaitForSecondsRealtime(2f);
@@ -350,10 +350,10 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(true);
         textTutorial.text = "Para atacar haz click izquierdo con el ratón.";
+        isAttackTutoActive = false;
 
         yield return new WaitUntil(() => attackAction.action.IsPressed()); // El tutorial de atacar no se desactiva hasta que no se realiza la acción de atacar.
-        StartCoroutine(CheckTutorial(tutorialPanel.GetComponent<Image>().color, Color.green, 0.5f));
-        isAttackTutoActive = false;
+        StartCoroutine(CheckTutorial(tutorialPanel.GetComponent<Image>().color, Color.green, 0.5f));        
         StopCoroutine(JumpTutorial());
 
         yield return new WaitForSecondsRealtime(2f);
