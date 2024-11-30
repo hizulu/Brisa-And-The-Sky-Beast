@@ -62,7 +62,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isAttackTutoActive = true;
     #endregion
 
+    #region Variables Audio
     AudioManager audioManager;
+    bool isWalkingSoundPlaying = false;
+    bool isRunningSoundPlaying = false;
+    #endregion
 
     private void OnEnable()
     {
@@ -110,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
      * @param: -
      * @return: - 
      */
+
     void PlayerWalk()
     {
         if (isWalkTutoActive)
@@ -124,13 +129,22 @@ public class PlayerMovement : MonoBehaviour
             newPosition = Quaternion.AngleAxis(camTransform.rotation.eulerAngles.y, Vector3.up) * newPosition;
             Quaternion targetRotation = Quaternion.LookRotation(newPosition);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            audioManager.PlaySFX(audioManager.walk);
-            //Debug.Log("Estás andando" + " " + currentSpeed);
+
+            // Si no está corriendo y el sonido de caminar no se está reproduciendo
+            if (!isRunningSoundPlaying && !isWalkingSoundPlaying)
+            {
+                audioManager.PlaySFX(audioManager.walk);
+                isWalkingSoundPlaying = true;
+            }
         }
         else
         {
             anim.SetBool("isWalking", false);
-            audioManager.StopSFX();
+            if (isWalkingSoundPlaying)
+            {
+                audioManager.StopSFX();
+                isWalkingSoundPlaying = false;
+            }
         }
 
         transform.position += newPosition * movementSpeedMultiplier * currentSpeed * Time.deltaTime;
@@ -145,16 +159,31 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetBool("isRunning", true);
             currentSpeed = runSpeed;
-            audioManager.PlaySFX(audioManager.run);
-            //Debug.Log("Estás corriendo" + " " + currentSpeed);
+
+            // Se para el sonido de caminar y se pone el de correr si no está sonando
+            if (isWalkingSoundPlaying)
+            {
+                audioManager.StopSFX();
+                isWalkingSoundPlaying = false;
+            }
+            if (!isRunningSoundPlaying)
+            {
+                audioManager.PlaySFX(audioManager.run);
+                isRunningSoundPlaying = true;
+            }
         }
         else
         {
-            currentSpeed = baseSpeed;
             anim.SetBool("isRunning", false);
-            audioManager.StopSFX();
+            if (isRunningSoundPlaying)
+            {
+                audioManager.StopSFX();
+                isRunningSoundPlaying = false;
+            }
+            currentSpeed = baseSpeed;
         }
     }
+
 
     void PlayerCrouched()
     {
