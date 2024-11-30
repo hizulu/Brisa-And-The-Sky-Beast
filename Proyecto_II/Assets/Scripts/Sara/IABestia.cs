@@ -11,11 +11,13 @@ public class IABestia : MonoBehaviour
     private Vector3 randomMovement;
     private NavMeshAgent bestia;
     private GameObject[] trees;
+    [SerializeField] private Animator animBestia;
 
     void Start()
     {
         bestia = GetComponent<NavMeshAgent>();
         trees = GameObject.FindGameObjectsWithTag("Arbol");
+        animBestia = GetComponent<Animator>();
         Smell();
     }
 
@@ -38,6 +40,15 @@ public class IABestia : MonoBehaviour
             {
                 RandomBehaviour();
             }
+        }
+
+        if (bestia.velocity.sqrMagnitude > 0.2f)
+        {
+            animBestia.SetBool("bestiaIsWalking", true);
+        }
+        else
+        {
+            animBestia.SetBool("bestiaIsWalking", false);
         }
     }
 
