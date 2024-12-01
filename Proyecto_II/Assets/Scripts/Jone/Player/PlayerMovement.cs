@@ -51,15 +51,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] InputActionReference runAction;
     [SerializeField] InputActionReference crouchedAction;
     [SerializeField] InputActionReference attackAction;
+    [SerializeField] InputActionReference callBeastAction;
     #endregion
 
     #region Tutorial Variables
+    [Space(10)]
     [SerializeField] private GameObject tutorialPanel;
     [SerializeField] private TextMeshProUGUI textTutorial;
     private bool isWalkTutoActive = true;
     private bool isRunTutoActive = true;
     private bool isJumpTutoActive = true;
     private bool isAttackTutoActive = true;
+    private bool isCallBeastTutoActive = true;
     #endregion
 
     #region Variables Audio
@@ -72,12 +75,14 @@ public class PlayerMovement : MonoBehaviour
     {
         jumpAction.action.started += Jump;
         attackAction.action.started += Attack;
+        callBeastAction.action.started += CallBeast;
     }
 
     private void OnDisable()
     {
         jumpAction.action.started -= Jump;
         attackAction.action.started -= Attack;
+        callBeastAction.action.started-= CallBeast;
     }
 
     private void Awake()
@@ -115,6 +120,7 @@ public class PlayerMovement : MonoBehaviour
      * @return: - 
      */
 
+    #region Movement Functions
     void PlayerWalk()
     {
         if (isWalkTutoActive)
@@ -200,6 +206,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Actions
     /* NOMBRE MÉTODO: Jump
      * AUTOR: Jone Sainz Egea
      * FECHA: 09/11/2024
@@ -255,6 +264,31 @@ public class PlayerMovement : MonoBehaviour
     {
         return Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundLayer);
     }
+
+    /* NOMBRE MÉTODO: CallBeast
+     * AUTOR: Jone Sainz Egea
+     * FECHA: 01/12/2024
+     * DESCRIPCIÓN: 
+     * @param: 
+     * @return: - 
+     */
+    private void CallBeast(InputAction.CallbackContext context)
+    {
+        if (isCallBeastTutoActive)
+            return;
+
+        if (IsGrounded())
+        {
+            // Animación silbar
+            // Sonido silbar
+            
+            // Llamar método de la bestia de ir directo al jugador
+            
+            Debug.Log("Estás llamando a la bestia");
+        }
+    }
+
+    #endregion
 
     #region Coroutines Tutoriales
 
@@ -322,7 +356,7 @@ public class PlayerMovement : MonoBehaviour
         tutorialPanel.GetComponent<Image>().color = Color.gray;
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(true);
-        textTutorial.text = "Para saltar, pulsa la barra espaciadora.";
+        textTutorial.text = "Para saltar pulsa la barra espaciadora.";
         isJumpTutoActive = false;
 
         yield return new WaitUntil(() => jumpAction.action.IsPressed()); // El tutorial de saltar no se desactiva hasta que no se realiza la acción de saltar.
@@ -359,7 +393,35 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(false);
 
-        Debug.Log("Tutorial de saltar terminado.");
+        Debug.Log("Tutorial de atacar terminado.");
+        StartCoroutine(CallBeastTutorial());
+        yield break;
+    }
+
+    /* NOMBRE FUNCIÓN: CallBeastTutorial
+     * AUTOR: Jone Sainz Egea
+     * FECHA: 01/12/2024
+     * DESCRIPCIÓN: activa el panel del tutorial de llamar a la bestia después de 2 segundos desde que se ha llamado a la corrutina.
+                    hasta que no se realiza la acción de "llamar a la bestia" no desactiva el panel del tutorial, detiene la corrutina de llamar a la bestia y sale de la misma.
+     * @param: -
+     * @return: -
+     */
+    IEnumerator CallBeastTutorial()
+    {
+        tutorialPanel.GetComponent<Image>().color = Color.gray;
+        yield return new WaitForSecondsRealtime(2f);
+        tutorialPanel.SetActive(true);
+        textTutorial.text = "Para llamar a la bestia pulsa la tecla Q.";
+        isCallBeastTutoActive = false;
+
+        yield return new WaitUntil(() => callBeastAction.action.IsPressed()); // El tutorial de atacar no se desactiva hasta que no se realiza la acción de llamar a la bestia.
+        StartCoroutine(CheckTutorial(tutorialPanel.GetComponent<Image>().color, Color.green, 0.5f));
+        StopCoroutine(CallBeastTutorial());
+
+        yield return new WaitForSecondsRealtime(2f);
+        tutorialPanel.SetActive(false);
+
+        Debug.Log("Tutorial de llamar a la bestia terminado.");
         yield break;
     }
 
