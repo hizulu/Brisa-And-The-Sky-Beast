@@ -1,21 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+
+/* NOMBRE CLASE: ActionableButtonMovesPlatform
+ * AUTOR: Jone Sainz Egea
+ * FECHA: 01/12/2024
+ * DESCRIPCIÓN: script que cambia la posición de una plataforma con un interruptor accionable
+ * VERSIÓN: 1.0 funcionamiento básico levantar plataforma
+ *              1.1 mostrar text interactuar
+ */
 
 public class ActionableButtonMovesPlatform : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Transform platform; 
-    [SerializeField] private Transform position1; 
-    [SerializeField] private Transform position2; 
+    [SerializeField] private Transform platform; // La plataforma a mover
+    [SerializeField] private Transform position1; // Posición inicial de la plataforma
+    [SerializeField] private Transform position2; // Posición final de la plataforma
+    [SerializeField] private GameObject interactionPanel; // Panel de interacción
+    [SerializeField] private TextMeshProUGUI interactionText; // Texto dentro del panel
 
     [Header("Settings")]
     [SerializeField] private float moveSpeed = 2f; // Velocidad de movimiento de la plataforma
+    [SerializeField] private string interactMessage = "Pulsa \"E\" para interactuar."; // Mensaje por defecto
 
     private bool isPlayerInRange = false; // Verifica si el jugador está dentro del área
-    private bool isPlatformAtPosition1 = true; // Estado actual de la plataforma
+    private bool isPlatformAtPosition1 = false; // Estado actual de la plataforma
     private bool isMoving = false; // Si la plataforma se está moviendo
+
+    private void Start()
+    {
+        // Ocultar el panel de interacción al inicio
+        interactionPanel.SetActive(false);
+    }
 
     private void Update()
     {
@@ -24,6 +43,9 @@ public class ActionableButtonMovesPlatform : MonoBehaviour
         {
             MovePlatform();
         }
+
+        // Actualizar la visibilidad del panel de interacción
+        UpdateInteractionPanel();
     }
 
     private void MovePlatform()
@@ -36,6 +58,20 @@ public class ActionableButtonMovesPlatform : MonoBehaviour
         {
             platform.position = targetPosition.position; // Asegurarse de que la posición sea exacta
             isMoving = false;
+        }
+    }
+
+    private void UpdateInteractionPanel()
+    {
+        // Mostrar el panel solo si el jugador está en rango y la plataforma no se está moviendo
+        if (isPlayerInRange && !isMoving)
+        {
+            interactionPanel.SetActive(true);
+            interactionText.text = interactMessage;
+        }
+        else
+        {
+            interactionPanel.SetActive(false);
         }
     }
 
