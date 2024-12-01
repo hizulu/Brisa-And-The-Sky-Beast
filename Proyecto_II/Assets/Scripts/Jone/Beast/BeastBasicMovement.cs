@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 
 
@@ -16,26 +18,27 @@ using UnityEngine.InputSystem.LowLevel;
 public class BeastBasicMovement : MonoBehaviour
 {
     [SerializeField] Transform player;
-    [SerializeField] float walkDistance = 6f;
-    [SerializeField] float runDistance = 4f;
-    [SerializeField] float followDistance = 2f;
-    [SerializeField] float waitDistance = 10f;
 
-    //[SerializeField] float wanderCooldown = 5f;
 
-    [SerializeField] float walkingRange = 30f;
-    [SerializeField] float waitingRange = 4f;
-    [SerializeField] float wanderingRange = 50f;
+
+    [SerializeField] float walkingRange = 20f;
+    [SerializeField] float waitingRange = 7f;
+    [SerializeField] float wanderingRange = 40f;
+    [SerializeField] float runningDistance = 10f;
     [SerializeField] float freeCloseDistance = 10f;
     [SerializeField] float treesDetectionRange = 5f;
     [SerializeField] float treeDetectionProbabilityWalking = 0.3f;
     [SerializeField] float treeDetectionProbabilityWandering = 0.6f;
+    [SerializeField] float playerOutOfRange = 150f;
 
     private bool playerWalking = false;
-    private bool playerRunning = false;
+    private static bool playerRunning = false;
+
+    [SerializeField] InputActionReference openBeastMenu;
 
     private float stopTimer = 0f;
     [SerializeField] private float stopTime = 3f;
+    [SerializeField] float followDistance = 10f;
     private Vector3 randomMovement;
     private NavMeshAgent bestia;
     private GameObject[] trees;
@@ -48,11 +51,21 @@ public class BeastBasicMovement : MonoBehaviour
     private BeastFreeState currentFreeState = BeastFreeState.Walk;
     private BeastConstrainedState currentConstrainedState = BeastConstrainedState.Approach;
 
-    private bool beastFree = true;
+    private static bool beastFree = true;
 
     private Vector3 lastPlayerPosition; // Última posición registrada.
 
     private float idleTime = 0f;
+
+    private void OnEnable()
+    {
+        openBeastMenu.action.started += OpenBeastMenu;
+    }
+
+    private void OnDisable()
+    {
+        openBeastMenu.action.started -= OpenBeastMenu;
+    }
 
     void Start()
     {
@@ -96,10 +109,16 @@ public class BeastBasicMovement : MonoBehaviour
         }      
     }
 
+    #region Beast Free States
     void UpdateBeastFree()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-       
+
+        if (playerRunning)
+        {
+            ChangeState(BeastFreeState.Run);
+        }
+
         switch (currentFreeState)
         {
             case BeastFreeState.Walk:
@@ -115,7 +134,7 @@ public class BeastBasicMovement : MonoBehaviour
                     ChangeState(BeastFreeState.Run);
                     Run();
                 }
-                else 
+                else
                     ChangeState(BeastFreeState.Walk);
                 break;
 
@@ -138,75 +157,14 @@ public class BeastBasicMovement : MonoBehaviour
                     idleTime = 0f;
                 }*/
                 break;
-                
+
         }
     }
 
-    void UpdateBeastConstrained()
-    {
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
-        switch (currentConstrainedState)
-        {
-            case BeastConstrainedState.Approach:
-                if (distanceToPlayer <= waitingRange)
-                    ChangeState(BeastConstrainedState.Wait);
-                else
-                    bestia.SetDestination(player.position);
-                break;
-
-            case BeastConstrainedState.Wait:
-                if (playerRunning)
-                {
-                    ChangeState(BeastFreeState.Run);
-                    Run();
-                }
-                else
-                    ChangeState(BeastFreeState.Walk);
-                break;
-
-            case BeastConstrainedState.Sit:
-                if (distanceToPlayer > wanderingRange)
-                    ChangeState(BeastFreeState.Run);
-                else if (playerWalking)
-                    ChangeState(BeastFreeState.Walk);
-                else
-                    Wander();
-                break;
-        }
-    }
-
-    // Sobrecarga de métodos
-    void ChangeState(BeastState newState)
-    {
-        currentState = newState;
-    }
-    void ChangeState(BeastFreeState newState)
-    {
-        currentFreeState = newState;
-    }
-    void ChangeState(BeastConstrainedState newState)
-    {
-        currentConstrainedState = newState;
-    }
-
-    void FollowPlayer(float targetDistance, float randomness)
-    {
-        Vector3 followPosition = player.position - player.forward * targetDistance;
-        followPosition += new Vector3(Random.Range(-randomness, randomness), 0, Random.Range(-randomness, randomness));
-        MoveToPosition(followPosition);
-        bestia.SetDestination(followPosition);
-    }
-
-    void MoveTowardsPlayer()
-    {
-        MoveToPosition(player.position);
-    }
 
     void Walk()
     {
         Debug.Log("BEAST Walking");
-        //FollowPlayer(walkDistance, 2f); // Follow with random offset
 
         if (PlayerWalking())
         {
@@ -223,7 +181,9 @@ public class BeastBasicMovement : MonoBehaviour
     void Run()
     {
         Debug.Log(" BEAST Running");
-        bestia.SetDestination(player.position);
+        Vector3 destination = new Vector3(player.position.x - 5f, player.position.y, player.position.z - 5f);
+        bestia.SetDestination(destination);
+        
     }
 
     void Wander()
@@ -254,15 +214,91 @@ public class BeastBasicMovement : MonoBehaviour
         }
         else
         {
-            Debug.Log("El jugador no está caminando.");            
+            Debug.Log("El jugador no está caminando.");
         }
     }
 
-    void MoveToPosition(Vector3 position)
+    #endregion
+
+    #region Beast Constrained States
+    void UpdateBeastConstrained()
     {
-        transform.position = Vector3.MoveTowards(transform.position, position, Time.deltaTime * 3f); // Velocidad de movimiento ajustable
-        transform.LookAt(position); // Mirar hacia la posición de destino
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        switch (currentConstrainedState)
+        {
+            case BeastConstrainedState.Approach:
+                if (distanceToPlayer <= waitingRange)
+                    ChangeState(BeastConstrainedState.Wait);
+                else
+                    bestia.SetDestination(player.position);
+                break;
+
+            case BeastConstrainedState.Wait:
+                // TODO: aleatoriedad en la que pueda pasar o a estado libre o a SIT
+                Waiting();
+                break;
+
+            case BeastConstrainedState.Sit:
+                if (distanceToPlayer > walkingRange)
+                    beastFree = true;
+                else
+                    Debug.Log("BEAST Sitting");
+                break;
+        }
     }
+
+    void Waiting()
+    {
+        Debug.Log("BEAST Waiting");
+        /*if (!beastFree)
+            StartCoroutine(BeastWaiting());
+        else
+            return;*/
+        // Empezar a contar y si pasan 8 segundos sin ábrir el menú cambiar de estado
+        // beastFree = true;
+    }
+
+    void Sitting()
+    {
+        // Mirar al jugador
+    }
+
+    IEnumerator BeastWaiting()
+    {
+        yield return new WaitForSecondsRealtime(8f);
+
+        ChangeState(BeastConstrainedState.Sit);
+    }
+
+    void OpenBeastMenu(InputAction.CallbackContext context)
+    {
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        if (distanceToPlayer <= waitingRange && currentConstrainedState == BeastConstrainedState.Wait)
+        {
+            // Abrir panel de opciones
+            Debug.Log("Llama a acción de plataforma");
+            PlatformAction();
+        }
+        Debug.Log("Ha terminado de abrir el menú)");
+    }
+
+    #endregion
+
+    #region ChangeState Sobrecarga de métodos
+    void ChangeState(BeastState newState)
+    {
+        currentState = newState;
+    }
+    void ChangeState(BeastFreeState newState)
+    {
+        currentFreeState = newState;
+    }
+    void ChangeState(BeastConstrainedState newState)
+    {
+        currentConstrainedState = newState;
+    }
+    #endregion
 
     bool PlayerWalking()
     {
@@ -298,46 +334,52 @@ public class BeastBasicMovement : MonoBehaviour
         }
     }
 
-
-    #region CalledFromOtherScripts
-    public void CallBeast() // Llamar a este desde el jugador
+    void PlatformAction()
     {
-        beastFree = false;
-        //ChangeState(BeastConstrainedState.Approach);
+        BeastActionPlatform.LinkBeast();
     }
 
-    public void PlayerOnIdle()
+    #region CalledFromOtherScripts
+    public static void CallBeast() // Llamar a este desde el jugador
     {
-        ChangeState(BeastFreeState.Wander);
+        beastFree = false;
     }
 
     public void PlayerOnSleepForLong()
     {
         ChangeState(BeastFreeState.Sleep);
     }
+
+    public static void PlayerRunning()
+    {
+        playerRunning = !playerRunning;
+    }
+
     #endregion
-    /*
+
     // Dibujar círculos para visualizar las distancias en el editor
     void OnDrawGizmos()
     {
         if (player != null)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(player.position, walkDistance);
+            Gizmos.DrawWireSphere(player.position, walkingRange);
 
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(player.position, runDistance);
+            Gizmos.DrawWireSphere(player.position, waitingRange);
 
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(player.position, followDistance);
+            Gizmos.DrawWireSphere(player.position, wanderingRange);
 
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(player.position, waitDistance);
+            Gizmos.DrawWireSphere(player.position, freeCloseDistance);
 
             Gizmos.color = Color.magenta;
-            Gizmos.DrawWireSphere(player.position, wanderDistance);
+            Gizmos.DrawWireSphere(player.position, treesDetectionRange);
+
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(player.position, playerOutOfRange);
         }
-    }
-    */
+    }  
     
 }

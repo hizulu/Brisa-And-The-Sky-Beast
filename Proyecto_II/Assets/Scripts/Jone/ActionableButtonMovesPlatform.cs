@@ -58,6 +58,7 @@ public class ActionableButtonMovesPlatform : MonoBehaviour
         {
             platform.position = targetPosition.position; // Asegurarse de que la posición sea exacta
             isMoving = false;
+            BeastActionPlatform.RemoveLink();
         }
     }
 

@@ -108,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    #region Movement Functions
     /* NOMBRE MÉTODO: PlayerWalk
      * AUTOR: Jone Sainz Egea
               Sara Yue Madruga Martín
@@ -120,7 +121,6 @@ public class PlayerMovement : MonoBehaviour
      * @return: - 
      */
 
-    #region Movement Functions
     void PlayerWalk()
     {
         if (isWalkTutoActive)
@@ -164,6 +164,7 @@ public class PlayerMovement : MonoBehaviour
         if (runAction.action.IsPressed() && walkAction.action.ReadValue<Vector2>() != Vector2.zero)
         {
             anim.SetBool("isRunning", true);
+            BeastBasicMovement.PlayerRunning();
             currentSpeed = runSpeed;
 
             // Se para el sonido de caminar y se pone el de correr si no está sonando
@@ -181,6 +182,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             anim.SetBool("isRunning", false);
+            BeastBasicMovement.PlayerRunning();
             if (isRunningSoundPlaying)
             {
                 audioManager.StopSFX();
@@ -281,9 +283,9 @@ public class PlayerMovement : MonoBehaviour
         {
             // Animación silbar
             // Sonido silbar
-            
-            // Llamar método de la bestia de ir directo al jugador
-            
+
+            BeastBasicMovement.CallBeast();
+
             Debug.Log("Estás llamando a la bestia");
         }
     }
