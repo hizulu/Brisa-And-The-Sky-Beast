@@ -24,6 +24,7 @@ public class BeastBasicMovement : MonoBehaviour
     //[SerializeField] float wanderCooldown = 5f;
 
     [SerializeField] float walkingRange = 30f;
+    [SerializeField] float waitingRange = 4f;
     [SerializeField] float wanderingRange = 50f;
     [SerializeField] float freeCloseDistance = 10f;
     [SerializeField] float treesDetectionRange = 5f;
@@ -33,12 +34,14 @@ public class BeastBasicMovement : MonoBehaviour
     private bool playerWalking = false;
     private bool playerRunning = false;
 
+    private float stopTimer = 0f;
+    [SerializeField] private float stopTime = 3f;
     private Vector3 randomMovement;
     private NavMeshAgent bestia;
     private GameObject[] trees;
-    [SerializeField] private Animator animBestia;
+    Animator animBestia;
 
-    private enum BeastState { Free, Constrained}
+    private enum BeastState { Free, Constrained }
     private enum BeastFreeState { Walk, Run, Wander, Sleep }
     private enum BeastConstrainedState { Approach, Wait, Sit }
     private BeastState currentState = BeastState.Free;
@@ -47,6 +50,8 @@ public class BeastBasicMovement : MonoBehaviour
 
     private bool beastFree = true;
 
+    private Vector3 lastPlayerPosition; // Última posición registrada.
+
     private float idleTime = 0f;
 
     void Start()
@@ -54,12 +59,23 @@ public class BeastBasicMovement : MonoBehaviour
         bestia = GetComponent<NavMeshAgent>();
         trees = GameObject.FindGameObjectsWithTag("Arbol");
         animBestia = GetComponent<Animator>();
+
+        lastPlayerPosition = player.position;
         Smell();
     }
 
     void Update()
     {
-        UpdateBeastState();      
+        UpdateBeastState();
+
+        if (bestia.velocity.sqrMagnitude > 0.2f)
+        {
+            animBestia.SetBool("bestiaIsWalking", true);
+        }
+        else
+        {
+            animBestia.SetBool("bestiaIsWalking", false);
+        }
     }
     void UpdateBeastState()
     {        
@@ -89,8 +105,6 @@ public class BeastBasicMovement : MonoBehaviour
             case BeastFreeState.Walk:
                 if (distanceToPlayer > walkingRange)
                     ChangeState(BeastFreeState.Run);
-                else if (!playerWalking)
-                    ChangeState(BeastFreeState.Wander);
                 else
                     Walk();
                 break;
@@ -108,8 +122,6 @@ public class BeastBasicMovement : MonoBehaviour
             case BeastFreeState.Wander:
                 if (distanceToPlayer > wanderingRange)
                     ChangeState(BeastFreeState.Run);
-                else if (playerWalking)
-                    ChangeState(BeastFreeState.Walk);
                 else
                     Wander();
                 break;
@@ -137,12 +149,10 @@ public class BeastBasicMovement : MonoBehaviour
         switch (currentConstrainedState)
         {
             case BeastConstrainedState.Approach:
-                if (distanceToPlayer > walkingRange)
-                    ChangeState(BeastFreeState.Run);
-                else if (!playerWalking)
-                    ChangeState(BeastFreeState.Wander);
+                if (distanceToPlayer <= waitingRange)
+                    ChangeState(BeastConstrainedState.Wait);
                 else
-                    Walk();
+                    bestia.SetDestination(player.position);
                 break;
 
             case BeastConstrainedState.Wait:
@@ -197,6 +207,17 @@ public class BeastBasicMovement : MonoBehaviour
     {
         Debug.Log("BEAST Walking");
         //FollowPlayer(walkDistance, 2f); // Follow with random offset
+
+        if (PlayerWalking())
+        {
+            Debug.Log("El jugador está caminando.");
+        }
+        else
+        {
+            Debug.Log("El jugador no está caminando.");
+
+            ChangeState(BeastFreeState.Wander);
+        }
     }
 
     void Run()
@@ -208,8 +229,33 @@ public class BeastBasicMovement : MonoBehaviour
     void Wander()
     {
         Debug.Log("BEAST Wandering");
-       // Vector3 wanderPosition = player.position + new Vector3(Random.Range(-wanderDistance, wanderDistance), 0, Random.Range(-wanderDistance, wanderDistance));
-       // MoveToPosition(wanderPosition);
+
+        if (Vector3.Distance(transform.position, randomMovement) < 1f)
+        {
+            stopTimer += Time.deltaTime;
+
+            if (stopTimer >= stopTime)
+            {
+                stopTimer = 0f;
+                Smell();
+            }
+        }
+        else
+        {
+            bestia.SetDestination(randomMovement);
+        }
+
+
+        if (PlayerWalking())
+        {
+            Debug.Log("El jugador está caminando.");
+
+            ChangeState(BeastFreeState.Walk);
+        }
+        else
+        {
+            Debug.Log("El jugador no está caminando.");            
+        }
     }
 
     void MoveToPosition(Vector3 position)
@@ -220,8 +266,14 @@ public class BeastBasicMovement : MonoBehaviour
 
     bool PlayerWalking()
     {
-        
-        return true;
+        // Compara la posición actual con la última posición registrada.
+        if (player.position != lastPlayerPosition)
+        {
+            lastPlayerPosition = player.position; // Actualiza la posición.
+            return true; // El jugador se ha movido.
+        }
+
+        return false; // El jugador no se ha movido.
     }
 
     // Hecho por Sara (no sé cuando pero antes del 10/11/2024)
