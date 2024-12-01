@@ -647,6 +647,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bestia (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 913a75838466089459146be7b2bd36f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1282,7 +1286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 913a75838466089459146be7b2bd36f0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1335,7 +1339,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1667031295}
   SFXSource: {fileID: 958066030}
-  background: {fileID: 8300000, guid: 79e0dd98d0850244a9f4a4297a6f830b, type: 3}
+  backNoLoop: {fileID: 8300000, guid: 6f60d4ea80deed94ea1dc5f503432b93, type: 3}
+  backLoop: {fileID: 8300000, guid: 6521b0843b0c2c1478a7f3f81d968009, type: 3}
   walk: {fileID: 8300000, guid: 9bb95f635989f7847b1d582f99c6f198, type: 3}
   run: {fileID: 8300000, guid: db518f4d957a4ff418747d80476e0ea6, type: 3}
 --- !u!4 &469061552
@@ -3506,7 +3511,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.125
+  m_Volume: 0.588
   m_Pitch: 1
   Loop: 1
   Mute: 0
