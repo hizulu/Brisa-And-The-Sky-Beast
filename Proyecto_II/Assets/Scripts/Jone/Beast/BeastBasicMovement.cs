@@ -66,12 +66,14 @@ public class BeastBasicMovement : MonoBehaviour
         
         if (beastFree)
         {
+            Debug.Log("BEAST Free");
             ChangeState(BeastState.Free); // Esto no debería estar aquí
 
             UpdateBeastFree(); // Esto sí
         }
         else
         {
+            Debug.Log("BEAST Constrained");
             ChangeState(BeastState.Constrained);
 
             UpdateBeastConstrained();
@@ -113,6 +115,7 @@ public class BeastBasicMovement : MonoBehaviour
                 break;
 
             case BeastFreeState.Sleep:
+                /*
                 if (distanceToPlayer > waitDistance)
                     ChangeState(BeastState.Run);
                 else
@@ -121,8 +124,9 @@ public class BeastBasicMovement : MonoBehaviour
                 {
                     ChangeState(BeastState.Wander);
                     idleTime = 0f;
-                }
+                }*/
                 break;
+                
         }
     }
 
@@ -191,16 +195,19 @@ public class BeastBasicMovement : MonoBehaviour
 
     void Walk()
     {
+        Debug.Log("BEAST Walking");
         //FollowPlayer(walkDistance, 2f); // Follow with random offset
     }
 
     void Run()
     {
+        Debug.Log(" BEAST Running");
         bestia.SetDestination(player.position);
     }
 
     void Wander()
     {
+        Debug.Log("BEAST Wandering");
        // Vector3 wanderPosition = player.position + new Vector3(Random.Range(-wanderDistance, wanderDistance), 0, Random.Range(-wanderDistance, wanderDistance));
        // MoveToPosition(wanderPosition);
     }
@@ -209,6 +216,12 @@ public class BeastBasicMovement : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, position, Time.deltaTime * 3f); // Velocidad de movimiento ajustable
         transform.LookAt(position); // Mirar hacia la posición de destino
+    }
+
+    bool PlayerWalking()
+    {
+        
+        return true;
     }
 
     // Hecho por Sara (no sé cuando pero antes del 10/11/2024)
