@@ -108,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    #region Movement Functions
     /* NOMBRE MÉTODO: PlayerWalk
      * AUTOR: Jone Sainz Egea
               Sara Yue Madruga Martín
@@ -120,7 +121,6 @@ public class PlayerMovement : MonoBehaviour
      * @return: - 
      */
 
-    #region Movement Functions
     void PlayerWalk()
     {
         if (isWalkTutoActive)
@@ -164,6 +164,7 @@ public class PlayerMovement : MonoBehaviour
         if (runAction.action.IsPressed() && walkAction.action.ReadValue<Vector2>() != Vector2.zero)
         {
             anim.SetBool("isRunning", true);
+            BeastBasicMovement.PlayerRunning(true);
             currentSpeed = runSpeed;
 
             // Se para el sonido de caminar y se pone el de correr si no está sonando
@@ -181,6 +182,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             anim.SetBool("isRunning", false);
+            BeastBasicMovement.PlayerRunning(false);
             if (isRunningSoundPlaying)
             {
                 audioManager.StopSFX();
@@ -281,9 +283,9 @@ public class PlayerMovement : MonoBehaviour
         {
             // Animación silbar
             // Sonido silbar
-            
-            // Llamar método de la bestia de ir directo al jugador
-            
+
+            BeastBasicMovement.CallBeast();
+
             Debug.Log("Estás llamando a la bestia");
         }
     }
@@ -313,7 +315,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(false);
-        Debug.Log("Tutorial de caminar terminado.");
+        //Debug.Log("Tutorial de caminar terminado.");
         StartCoroutine(RunTutorial());
     }
 
@@ -339,7 +341,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(false);
-        Debug.Log("Tutorial de correr terminado.");
+        //Debug.Log("Tutorial de correr terminado.");
         StartCoroutine(JumpTutorial());
     }
 
@@ -366,7 +368,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(false);
         
-        Debug.Log("Tutorial de saltar terminado.");
+        //Debug.Log("Tutorial de saltar terminado.");
         StartCoroutine(AttackTutorial());
     }
 
@@ -393,7 +395,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(false);
 
-        Debug.Log("Tutorial de atacar terminado.");
+        //Debug.Log("Tutorial de atacar terminado.");
         StartCoroutine(CallBeastTutorial());
         yield break;
     }
@@ -421,7 +423,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(false);
 
-        Debug.Log("Tutorial de llamar a la bestia terminado.");
+        //Debug.Log("Tutorial de llamar a la bestia terminado.");
         yield break;
     }
 

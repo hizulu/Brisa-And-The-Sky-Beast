@@ -32,7 +32,6 @@ public class ActionableButtonMovesPlatform : MonoBehaviour
 
     private void Start()
     {
-        // Ocultar el panel de interacción al inicio
         interactionPanel.SetActive(false);
     }
 
@@ -58,6 +57,7 @@ public class ActionableButtonMovesPlatform : MonoBehaviour
         {
             platform.position = targetPosition.position; // Asegurarse de que la posición sea exacta
             isMoving = false;
+            BeastActionPlatform.RemoveLink();
         }
     }
 
