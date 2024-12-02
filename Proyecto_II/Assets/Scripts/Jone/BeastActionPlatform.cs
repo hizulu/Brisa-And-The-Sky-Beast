@@ -45,5 +45,6 @@ public class BeastActionPlatform : MonoBehaviour
             agent.Warp(beast.transform.position);
         }
         Debug.Log("Objetos desvinculados");
+        BeastBasicMovement.GiveBeastFreedom();
     }
 }

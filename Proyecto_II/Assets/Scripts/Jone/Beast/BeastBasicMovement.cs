@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.XR;
 
 
 /* NOMBRE CLASE: BeastBasicMovement
@@ -20,28 +21,34 @@ public class BeastBasicMovement : MonoBehaviour
     [SerializeField] Transform player;
 
 
+    [Header("Ranges and distances")]
+    [SerializeField] float treesDetectionRange = 5f; // Cómo de cerca del árbol debe estar para que lo detecte
+    [SerializeField] float waitingRange = 15f; // Distancia a la que se para del jugador
+    [SerializeField] float runningDistance = 18f; // Distancia a la que corre del jugador
+    [SerializeField] float freeCloseDistance = 20f; // Distancia a la que se tiene que acercar cuando se ha alejado
+    [SerializeField] float walkingRange = 28f; // Rango de libertad de andar
+    [SerializeField] float wanderingRange = 40f; // Rango de libertad de deambular
+    [SerializeField] float playerOutOfRange = 150f; // Distancia a la que se considera fuera de rango
 
-    [SerializeField] float walkingRange = 20f;
-    [SerializeField] float waitingRange = 7f;
-    [SerializeField] float wanderingRange = 40f;
-    [SerializeField] float runningDistance = 10f;
-    [SerializeField] float freeCloseDistance = 10f;
-    [SerializeField] float treesDetectionRange = 5f;
     [SerializeField] float treeDetectionProbabilityWalking = 0.3f;
     [SerializeField] float treeDetectionProbabilityWandering = 0.6f;
-    [SerializeField] float playerOutOfRange = 150f;
 
     private bool playerWalking = false;
-    private static bool playerRunning = false;
+    private static bool playerRunning = false; // Se gestiona desde el script de player
+    private static bool beastCalled = false;
+    private bool beastMenuOpen = false;
+
+    private Vector3 randomRunningDestination = Vector3.zero;
 
     [SerializeField] InputActionReference openBeastMenu;
 
     private float stopTimer = 0f;
     [SerializeField] private float stopTime = 3f;
     [SerializeField] float followDistance = 10f;
-    private Vector3 randomMovement;
+    private Vector3 randomMovement = Vector3.zero;
     private NavMeshAgent bestia;
     private GameObject[] trees;
+
     Animator animBestia;
 
     private enum BeastState { Free, Constrained }
@@ -91,8 +98,7 @@ public class BeastBasicMovement : MonoBehaviour
         }
     }
     void UpdateBeastState()
-    {        
-        
+    {                
         if (beastFree)
         {
             Debug.Log("BEAST Free");
@@ -106,7 +112,10 @@ public class BeastBasicMovement : MonoBehaviour
             ChangeState(BeastState.Constrained);
 
             UpdateBeastConstrained();
-        }      
+        } 
+        
+        // if (BeastOutOfRange() || BeastStuck()) {tp to player}
+
     }
 
     #region Beast Free States
@@ -129,9 +138,9 @@ public class BeastBasicMovement : MonoBehaviour
                 break;
 
             case BeastFreeState.Run:
-                if (playerRunning)
+                if (playerRunning || distanceToPlayer > freeCloseDistance)
                 {
-                    ChangeState(BeastFreeState.Run);
+                    Debug.Log("Player running es: " + playerRunning);
                     Run();
                 }
                 else
@@ -147,17 +156,9 @@ public class BeastBasicMovement : MonoBehaviour
 
             case BeastFreeState.Sleep:
                 /*
-                if (distanceToPlayer > waitDistance)
-                    ChangeState(BeastState.Run);
-                else
-                    idleTime += Time.deltaTime;
-                if (idleTime >= wanderCooldown)
-                {
-                    ChangeState(BeastState.Wander);
-                    idleTime = 0f;
+                TODO: lógica del estado de descanso
                 }*/
                 break;
-
         }
     }
 
@@ -166,14 +167,23 @@ public class BeastBasicMovement : MonoBehaviour
     {
         Debug.Log("BEAST Walking");
 
-        if (PlayerWalking())
+        if (Vector3.Distance(transform.position, randomMovement) < 1f)
         {
-            Debug.Log("El jugador está caminando.");
+            stopTimer += Time.deltaTime;
+
+            if (stopTimer >= stopTime)
+            {
+                stopTimer = 0f;
+                Smell();
+            }
         }
         else
         {
-            Debug.Log("El jugador no está caminando.");
+            bestia.SetDestination(randomMovement);
+        }
 
+        if (!PlayerWalking())
+        {
             ChangeState(BeastFreeState.Wander);
         }
     }
@@ -181,9 +191,8 @@ public class BeastBasicMovement : MonoBehaviour
     void Run()
     {
         Debug.Log(" BEAST Running");
-        Vector3 destination = new Vector3(player.position.x - 5f, player.position.y, player.position.z - 5f);
-        bestia.SetDestination(destination);
-        
+        Vector3 destination = player.position + randomRunningDestination;
+        bestia.SetDestination(destination);       
     }
 
     void Wander()
@@ -205,17 +214,32 @@ public class BeastBasicMovement : MonoBehaviour
             bestia.SetDestination(randomMovement);
         }
 
-
         if (PlayerWalking())
         {
-            Debug.Log("El jugador está caminando.");
-
             ChangeState(BeastFreeState.Walk);
         }
-        else
+    }
+
+    void GetRandomDestinationWithinRunningRange()
+    {       
+        float angle = Random.Range(0f, Mathf.PI * 2);  // Ángulo aleatorio en radianes
+
+        float xOffset = Mathf.Cos(angle) * runningDistance;
+        float zOffset = Mathf.Sin(angle) * runningDistance;
+
+        randomRunningDestination = new Vector3(xOffset, 0, zOffset);
+    }
+
+    bool PlayerWalking()
+    {
+        // Compara la posición actual con la última posición registrada.
+        if (player.position != lastPlayerPosition)
         {
-            Debug.Log("El jugador no está caminando.");
+            lastPlayerPosition = player.position; // Actualiza la posición.
+            return true; // El jugador se ha movido.
         }
+
+        return false; // El jugador no se ha movido.
     }
 
     #endregion
@@ -225,11 +249,19 @@ public class BeastBasicMovement : MonoBehaviour
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
+        if (beastCalled)
+        {
+            ChangeState(BeastConstrainedState.Approach);
+        }
+
         switch (currentConstrainedState)
         {
             case BeastConstrainedState.Approach:
-                if (distanceToPlayer <= waitingRange)
+                if (distanceToPlayer < waitingRange)
+                {
+                    beastCalled = false;
                     ChangeState(BeastConstrainedState.Wait);
+                }
                 else
                     bestia.SetDestination(player.position);
                 break;
@@ -246,17 +278,17 @@ public class BeastBasicMovement : MonoBehaviour
                     Debug.Log("BEAST Sitting");
                 break;
         }
+
+        if (distanceToPlayer > playerOutOfRange)
+        {
+            beastFree = true;
+        }
     }
 
     void Waiting()
     {
         Debug.Log("BEAST Waiting");
-        /*if (!beastFree)
-            StartCoroutine(BeastWaiting());
-        else
-            return;*/
-        // Empezar a contar y si pasan 8 segundos sin ábrir el menú cambiar de estado
-        // beastFree = true;
+        StartCoroutine(BeastWaiting());
     }
 
     void Sitting()
@@ -264,15 +296,27 @@ public class BeastBasicMovement : MonoBehaviour
         // Mirar al jugador
     }
 
+    
     IEnumerator BeastWaiting()
     {
-        yield return new WaitForSecondsRealtime(8f);
+        float elapsedTime = 0f;
+        float waitTime = 8f;
 
-        ChangeState(BeastConstrainedState.Sit);
+        while (elapsedTime < waitTime)
+        {
+            if (beastMenuOpen)
+                yield break; // Finaliza la corrutina
+
+            elapsedTime += Time.unscaledDeltaTime; // Incrementa el tiempo teniendo en cuenta el tiempo real
+            yield return null;
+        }
+
+        beastFree = true;
     }
 
     void OpenBeastMenu(InputAction.CallbackContext context)
     {
+        beastMenuOpen = true;
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         if (distanceToPlayer <= waitingRange && currentConstrainedState == BeastConstrainedState.Wait)
         {
@@ -281,6 +325,12 @@ public class BeastBasicMovement : MonoBehaviour
             PlatformAction();
         }
         Debug.Log("Ha terminado de abrir el menú)");
+        beastMenuOpen = false;
+    }
+
+    void PlatformAction()
+    {
+        BeastActionPlatform.LinkBeast();
     }
 
     #endregion
@@ -293,6 +343,10 @@ public class BeastBasicMovement : MonoBehaviour
     void ChangeState(BeastFreeState newState)
     {
         currentFreeState = newState;
+        if (newState == BeastFreeState.Run)
+        {
+            GetRandomDestinationWithinRunningRange();
+        }
     }
     void ChangeState(BeastConstrainedState newState)
     {
@@ -300,17 +354,7 @@ public class BeastBasicMovement : MonoBehaviour
     }
     #endregion
 
-    bool PlayerWalking()
-    {
-        // Compara la posición actual con la última posición registrada.
-        if (player.position != lastPlayerPosition)
-        {
-            lastPlayerPosition = player.position; // Actualiza la posición.
-            return true; // El jugador se ha movido.
-        }
-
-        return false; // El jugador no se ha movido.
-    }
+    
 
     // Hecho por Sara (no sé cuando pero antes del 10/11/2024)
     void Smell()
@@ -333,16 +377,13 @@ public class BeastBasicMovement : MonoBehaviour
             randomMovement = player.position + randomOffset;
         }
     }
-
-    void PlatformAction()
-    {
-        BeastActionPlatform.LinkBeast();
-    }
+    
 
     #region CalledFromOtherScripts
     public static void CallBeast() // Llamar a este desde el jugador
     {
         beastFree = false;
+        beastCalled = true;        
     }
 
     public void PlayerOnSleepForLong()
@@ -350,11 +391,15 @@ public class BeastBasicMovement : MonoBehaviour
         ChangeState(BeastFreeState.Sleep);
     }
 
-    public static void PlayerRunning()
+    public static void PlayerRunning(bool playerIsRunning)
     {
-        playerRunning = !playerRunning;
+        playerRunning = playerIsRunning;
     }
 
+    public static void GiveBeastFreedom()
+    {
+        beastFree = true;
+    }
     #endregion
 
     // Dibujar círculos para visualizar las distancias en el editor
