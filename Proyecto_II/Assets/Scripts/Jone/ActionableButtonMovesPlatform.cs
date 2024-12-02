@@ -32,7 +32,6 @@ public class ActionableButtonMovesPlatform : MonoBehaviour
 
     private void Start()
     {
-        // Ocultar el panel de interacción al inicio
         interactionPanel.SetActive(false);
     }
 
