@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+//using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -9,7 +9,7 @@ public class EndingTrigger : MonoBehaviour
 {
     public static bool beastUp;
     [SerializeField] private GameObject defaultPanel; // Panel de interacción
-    [SerializeField] private TextMeshProUGUI panelText; // Texto dentro del panel
+    //[SerializeField] private TextMeshProUGUI panelText; // Texto dentro del panel
 
     [SerializeField] private string panelMessage = "Necesitas que la bestia suba a la plataforma para continuar.";
 
@@ -25,7 +25,7 @@ public class EndingTrigger : MonoBehaviour
             if (!beastUp)
             {
                 defaultPanel.SetActive(true);
-                panelText.text = panelMessage;
+                //panelText.text = panelMessage;
             }
             else
             {

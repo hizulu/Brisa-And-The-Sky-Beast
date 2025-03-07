@@ -1,7 +1,7 @@
-using BBUnity.Actions;
+//using BBUnity.Actions;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+//using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -13,7 +13,7 @@ public class BeastActionPlatform : MonoBehaviour
     private static Transform platformTransform;
 
     [SerializeField] private GameObject defaultPanel; // Panel de interacción
-    [SerializeField] private TextMeshProUGUI panelText; // Texto dentro del panel
+    //[SerializeField] private TextMeshProUGUI panelText; // Texto dentro del panel
 
     [SerializeField] private string panelMessage = "Para que la bestia se suba a la plataforma, llámala (Q) y cuando esté esperando sobre la plataforma pulsa TAB.";
     private bool isPlayerInRange = false; // Verifica si el jugador está dentro del área
@@ -60,7 +60,7 @@ public class BeastActionPlatform : MonoBehaviour
             agent.Warp(beast.transform.position);
         }
         Debug.Log("Objetos desvinculados");
-        BeastBasicMovement.GiveBeastFreedom();
+        //BeastBasicMovement.GiveBeastFreedom();
         EndingTrigger.beastUp = true;
     }
 
@@ -69,7 +69,7 @@ public class BeastActionPlatform : MonoBehaviour
         if (isPlayerInRange && !EndingTrigger.beastUp)
         {
             defaultPanel.SetActive(true);
-            panelText.text = panelMessage;
+            //panelText.text = panelMessage;
         }
         else
         {

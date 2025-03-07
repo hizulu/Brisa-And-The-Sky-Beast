@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+//using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -20,7 +20,7 @@ public class ActionableButtonMovesPlatform : MonoBehaviour
     [SerializeField] private Transform position1; // Posición inicial de la plataforma
     [SerializeField] private Transform position2; // Posición final de la plataforma
     [SerializeField] private GameObject interactionPanel; // Panel de interacción
-    [SerializeField] private TextMeshProUGUI interactionText; // Texto dentro del panel
+    //[SerializeField] private TextMeshProUGUI interactionText; // Texto dentro del panel
 
     [Header("Settings")]
     [SerializeField] private float moveSpeed = 2f; // Velocidad de movimiento de la plataforma
@@ -67,7 +67,7 @@ public class ActionableButtonMovesPlatform : MonoBehaviour
         if (isPlayerInRange && !isMoving)
         {
             interactionPanel.SetActive(true);
-            interactionText.text = interactMessage;
+            //interactionText.text = interactMessage;
         }
         else
         {
