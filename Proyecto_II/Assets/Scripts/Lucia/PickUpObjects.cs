@@ -1,35 +1,46 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PickUpObjects : MonoBehaviour
 {
-    public GameObject item;
     public GameObject adviseObject;
+    private bool playerInRange = false;
+    private Item itemScript;
 
     void Start()
     {
-        adviseObject.gameObject.SetActive(false);
+        if (adviseObject != null)
+            adviseObject.SetActive(false);
+
+        itemScript = GetComponent<Item>();  // Obtiene la referencia del Item asociado
     }
 
-    private void OnTriggerStay(Collider other)
+    void Update()
     {
-        if (other.gameObject.tag == "Player")
+        if (playerInRange && Input.GetKeyDown(KeyCode.E) && itemScript != null)
         {
-            adviseObject.SetActive(true);
-            Debug.Log("En el area del objeto");
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                item.gameObject.SetActive(false);
-                adviseObject.gameObject.SetActive(false);
-                Debug.Log("Objeto cogido");
-            }
+            itemScript.CollectItem();  // Llama al método de Item para recogerlo
+            adviseObject.SetActive(false);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+            if (adviseObject != null)
+                adviseObject.SetActive(true);
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
-        adviseObject.gameObject.SetActive(false);
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+            if (adviseObject != null)
+                adviseObject.SetActive(false);
+        }
     }
 }
