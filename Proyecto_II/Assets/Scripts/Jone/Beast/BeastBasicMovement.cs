@@ -29,6 +29,10 @@ public class BeastBasicMovement : MonoBehaviour
     [SerializeField] float walkingRange = 28f; // Rango de libertad de andar
     [SerializeField] float wanderingRange = 40f; // Rango de libertad de deambular
     [SerializeField] float playerOutOfRange = 150f; // Distancia a la que se considera fuera de rango
+    private float smoothFactor = 5f;
+    private float rotationSpeed = 8f;
+    private float baseSpeed = 6f;
+    private float baseAcceleration = 10f;
 
     [SerializeField] float treeDetectionProbabilityWalking = 0.3f;
     [SerializeField] float treeDetectionProbabilityWandering = 0.6f;
@@ -118,6 +122,27 @@ public class BeastBasicMovement : MonoBehaviour
 
     }
 
+    void MoveBeast(Vector3 destination, float desiredSpeed, float desiredAcceleration)
+    {
+        // Smooth rotation only if moving
+        if (bestia.velocity.magnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(bestia.velocity.normalized);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        }
+
+        // Smooth acceleration and speed transitions
+        bestia.acceleration = Mathf.Lerp(bestia.acceleration, desiredAcceleration, Time.deltaTime * smoothFactor);
+        bestia.speed = Mathf.Lerp(bestia.speed, desiredSpeed, Time.deltaTime * smoothFactor);
+
+        // Apply a slight random offset only when setting a new destination
+        if (!bestia.hasPath || bestia.remainingDistance < 0.5f) // Check if the AI needs a new path
+        {
+            Vector3 randomOffset = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+            bestia.SetDestination(destination + randomOffset);
+        }
+    }
+
     #region Beast Free States
     void UpdateBeastFree()
     {
@@ -179,7 +204,7 @@ public class BeastBasicMovement : MonoBehaviour
         }
         else
         {
-            bestia.SetDestination(randomMovement);
+            MoveBeast(randomMovement, baseSpeed, baseAcceleration);
         }
 
         if (!PlayerWalking())
@@ -192,7 +217,7 @@ public class BeastBasicMovement : MonoBehaviour
     {
         Debug.Log(" BEAST Running");
         Vector3 destination = player.position + randomRunningDestination;
-        bestia.SetDestination(destination);       
+        MoveBeast(destination, baseSpeed + 1, baseAcceleration + 1);
     }
 
     void Wander()
@@ -211,7 +236,7 @@ public class BeastBasicMovement : MonoBehaviour
         }
         else
         {
-            bestia.SetDestination(randomMovement);
+            MoveBeast(randomMovement, baseSpeed - 1, baseAcceleration - 1);
         }
 
         if (PlayerWalking())
@@ -263,7 +288,7 @@ public class BeastBasicMovement : MonoBehaviour
                     ChangeState(BeastConstrainedState.Wait);
                 }
                 else
-                    bestia.SetDestination(player.position);
+                    MoveBeast(player.position, baseSpeed + 1, baseAcceleration + 2);
                 break;
 
             case BeastConstrainedState.Wait:
