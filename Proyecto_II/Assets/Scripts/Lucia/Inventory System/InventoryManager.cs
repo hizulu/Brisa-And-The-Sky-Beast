@@ -29,19 +29,7 @@ public class InventoryManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            inventoryEnabled = !inventoryEnabled;
-            inventoryMenu.SetActive(inventoryEnabled);
-            Time.timeScale = inventoryEnabled ? 0 : 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape) && inventoryEnabled)
-        {
-            inventoryEnabled = false;
-            inventoryMenu.SetActive(false);
-            Time.timeScale = 1;
-        }
+      
     }
 
     public void AddItem(ItemData itemData, int quantity)
@@ -92,5 +80,22 @@ public class InventoryManager : MonoBehaviour
             itemSlots.Add(slotComponent);
         }
     }
-
+    public void OpenCloseInventory()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            inventoryEnabled = !inventoryEnabled;
+            inventoryMenu.SetActive(inventoryEnabled);
+            Time.timeScale = inventoryEnabled ? 0 : 1;
+        }        
+    }
+    public void CloseInventory()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && inventoryEnabled)
+        {
+            inventoryEnabled = false;
+            inventoryMenu.SetActive(false);
+            Time.timeScale = 1;
+        }
+    }
 }
