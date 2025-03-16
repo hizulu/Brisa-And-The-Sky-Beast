@@ -7,6 +7,7 @@ public class PlayerWalkState : PlayerMovedState
 {
     public PlayerWalkState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
+
     }
 
     public override void Enter()
@@ -33,7 +34,5 @@ public class PlayerWalkState : PlayerMovedState
     {
         stateMachine.ChangeState(stateMachine.IdleState);
         base.OnMovementCanceled(context);
-        //    stateMachine.ChangeState(stateMachine.IdleState);
-        //if (stateMachine.MovementData.MovementInput == Vector2.zero || stateMachine.MovementData.MovementSpeedModifier == 0f)
     }
 }

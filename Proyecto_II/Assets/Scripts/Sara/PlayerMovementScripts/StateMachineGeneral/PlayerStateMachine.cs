@@ -14,16 +14,29 @@ public class PlayerStateMachine : StateMachine
 {
     public Player Player { get; }
     public PlayerMovementData MovementData { get; }
+    public PlayerAirborneData AirborneData { get; }
 
     public PlayerIdleState IdleState { get; }
     public PlayerWalkState WalkState { get; }
+    public PlayerRunState RunState { get; }
+    public PlayerCrouchState CrouchState { get; }
+    public PlayerAttackState AttackState { get; }
+    public PlayerComboAttack ComboAttack { get; }
+    public PlayerJumpState JumpState { get; }
 
     public PlayerStateMachine(Player player)
     {
         Player = player;
+
         MovementData = new PlayerMovementData();
+        AirborneData = new PlayerAirborneData();
 
         IdleState = new PlayerIdleState(this);
         WalkState = new PlayerWalkState(this);
+        RunState = new PlayerRunState(this);
+        CrouchState = new PlayerCrouchState(this);
+        AttackState = new PlayerAttackState(this);
+        ComboAttack = new PlayerComboAttack(this);
+        JumpState = new PlayerJumpState(this);
     }
 }

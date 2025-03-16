@@ -2185,9 +2185,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4877f67cb8b679b4faba5420f85dc0b0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1247430454}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4877f67cb8b679b4faba5420f85dc0b0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1247430450}
   m_SourcePrefab: {fileID: 100100000, guid: 4877f67cb8b679b4faba5420f85dc0b0, type: 3}
 --- !u!1 &1247430446 stripped
 GameObject:
@@ -2222,37 +2219,6 @@ CapsuleCollider:
   m_Height: 3.8198197
   m_Direction: 1
   m_Center: {x: 0, y: 1.8774302, z: 0.044224776}
---- !u!114 &1247430450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1247430446}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69bfd878cc103d74992f4c6fbb908b4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseSpeed: 5
-  movementSpeedMultiplier: 1
-  rotationSpeed: 15
-  runSpeed: 10
-  crouchedSpeed: 0.25
-  camTransform: {fileID: 1653594965}
-  jumpForce: 5
-  groundCheckRadius: 0.2
-  groundCheckPoint: {fileID: 1665095468}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  walkAction: {fileID: -6437502031864252024, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
-  jumpAction: {fileID: 2138747907920559678, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
-  runAction: {fileID: 3991312467720647605, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
-  crouchedAction: {fileID: -6464814545137978351, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
-  attackAction: {fileID: -134862396008731625, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
-  callBeastAction: {fileID: -1480620515225916566, guid: b97e0f2e4ec17d14382af6d1f3b33d88, type: 3}
-  tutorialPanel: {fileID: 0}
 --- !u!54 &1247430451
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2314,11 +2280,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Data>k__BackingField: {fileID: 11400000, guid: 0117d3880d42f5e4c8e253d2b166adb8, type: 2}
+  <LayerData>k__BackingField:
+    <GroundLayer>k__BackingField:
+      serializedVersion: 2
+      m_Bits: 0
   <PlayerAnimationData>k__BackingField:
     groundedParameterName: Grounded
     movedParameterName: Moved
+    attackParameterName: Attack
+    airborneParameterName: Airborne
     idleParameterName: isIdle
     walkParameterName: isWalking
+    runParameterName: isRunning
+    attack01ParameterName: isAttacking01
+    attack02ParameterName: isAttacking02
+    attack03ParameterName: isAttacking03
+    jumpParameterName: isJumping
 --- !u!114 &1247430454
 MonoBehaviour:
   m_ObjectHideFlags: 0

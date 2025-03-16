@@ -24,11 +24,6 @@ public class PlayerGroundedState : PlayerMovementState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-
-        //if (stateMachine.MovementData.MovementInput != Vector2.zero)
-        //    OnMove();
-        //else
-        //    Stop();
     }
 
     public override void UpdatePhysics()

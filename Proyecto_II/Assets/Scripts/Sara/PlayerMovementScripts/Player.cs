@@ -16,25 +16,28 @@ public class Player : MonoBehaviour
     [field: Header("References")]
     [field: SerializeField] public PlayerSO Data { get; private set; }
 
+    [field: Header("Collisions")]
+    [field: SerializeField] public PlayerLayerData LayerData { get; private set; }
+
     [field: Header("Animaciones")]
     [field: SerializeField] public PlayerAnimationData PlayerAnimationData { get; private set; }
 
-    public Rigidbody rbPlayer { get; private set; }
-    public Animator animPlayer { get; private set; }
-    public CinemachineVirtualCamera camPlayer { get; private set; }
+    public Rigidbody RbPlayer { get; private set; }
+    public Animator AnimPlayer { get; private set; }
+    public CinemachineVirtualCamera CamPlayer { get; private set; }
 
     private PlayerStateMachine playerStateMachine;
 
-    public PlayerInput playerInput { get; private set; }
+    public PlayerInput PlayerInput { get; private set; }
 
     private void Awake()
     {
         PlayerAnimationData.Initialize();
 
-        rbPlayer = GetComponent<Rigidbody>();
-        animPlayer = GetComponent<Animator>();
+        RbPlayer = GetComponent<Rigidbody>();
+        AnimPlayer = GetComponent<Animator>();
 
-        playerInput = GetComponent<PlayerInput>();
+        PlayerInput = GetComponent<PlayerInput>();
 
         playerStateMachine = new PlayerStateMachine(this);
     }
