@@ -7,10 +7,13 @@ public class PointOfInterest : MonoBehaviour
     public enum InterestType { Tree, Rock }
     public InterestType interestType;
 
+    public Transform agent;
+
     private float baseInterest;
     private float currentInterest;
-    private float maxDistance = 10f; // Rango máximo de influencia
+    private float maxDistance = 50f; // Rango máximo de influencia
     private float resetTime = 120f; // 2 minutos
+    private bool interestConsumed = false;
 
     private void Start()
     {
@@ -20,14 +23,22 @@ public class PointOfInterest : MonoBehaviour
 
     public float GetInterestValue(Transform agent)
     {
-        float distance = Vector3.Distance(transform.position, agent.position);
-        float interest = baseInterest * Mathf.Clamp01(1 - (distance / maxDistance)); // Reduce interés con distancia
-        return interest;
+        if (!interestConsumed)
+        {
+            float distance = Vector3.Distance(transform.position, agent.position);
+            currentInterest = baseInterest * Mathf.Clamp01(1 - (distance / maxDistance)); // Reduce interés con distancia
+        }
+        else
+        {
+            currentInterest = 0f;
+        }
+        return currentInterest;
     }
 
     public void ConsumeInterest()
     {
         currentInterest = 0;
+        interestConsumed = true;
         StartCoroutine(ResetInterest());
     }
 
@@ -35,12 +46,22 @@ public class PointOfInterest : MonoBehaviour
     {
         yield return new WaitForSeconds(resetTime);
         currentInterest = baseInterest;
+        interestConsumed = false;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, 1f);
+        if (!interestConsumed)
+        {
+            float distance = Vector3.Distance(transform.position, agent.position);
+            currentInterest = baseInterest * Mathf.Clamp01(1 - (distance / maxDistance)); // Reduce interés con distancia
+        }
+        else
+        {
+            currentInterest = 0f;
+        }
         UnityEditor.Handles.Label(transform.position + Vector3.up * 2, $"Interest: {currentInterest}");
     }
 }
