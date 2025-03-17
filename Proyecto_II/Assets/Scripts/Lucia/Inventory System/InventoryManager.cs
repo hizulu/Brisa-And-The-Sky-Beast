@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -80,22 +81,42 @@ public class InventoryManager : MonoBehaviour
             itemSlots.Add(slotComponent);
         }
     }
-    public void OpenCloseInventory()
+
+    public void OpenCloseInventory(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
+        if (!context.performed)
+            return;
+
+        if(context.control.name == "f")
             inventoryEnabled = !inventoryEnabled;
-            inventoryMenu.SetActive(inventoryEnabled);
-            Time.timeScale = inventoryEnabled ? 0 : 1;
-        }        
-    }
-    public void CloseInventory()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) && inventoryEnabled)
-        {
+
+        if (inventoryEnabled && context.control.name == "escape")
             inventoryEnabled = false;
-            inventoryMenu.SetActive(false);
-            Time.timeScale = 1;
-        }
+
+        inventoryMenu.SetActive(inventoryEnabled);
+        Time.timeScale = inventoryEnabled ? 0 : 1;
     }
+
+    #region MÉTODOS ANTIGUOS MODIFICADOS
+
+    //public void OpenCloseInventory()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.F))
+    //    {
+    //        inventoryEnabled = !inventoryEnabled;
+    //        inventoryMenu.SetActive(inventoryEnabled);
+    //        Time.timeScale = inventoryEnabled ? 0 : 1;
+    //    }        
+    //}
+    //public void CloseInventory()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Escape) && inventoryEnabled)
+    //    {
+    //        inventoryEnabled = false;
+    //        inventoryMenu.SetActive(false);
+    //        Time.timeScale = 1;
+    //    }
+    //}
+
+    #endregion
 }

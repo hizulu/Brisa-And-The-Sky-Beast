@@ -14,5 +14,7 @@ public interface IState
     void HandleInput();
     void UpdateLogic();
     void UpdatePhysics();
+    void OnTriggerEnter(Collider collider);
+    void OnTriggerExit(Collider collider);
     void Exit();
 }
