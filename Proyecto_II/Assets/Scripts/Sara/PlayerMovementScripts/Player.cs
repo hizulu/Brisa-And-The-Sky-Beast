@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
 
     public PlayerInput PlayerInput { get; private set; }
 
+
+
     private void Awake()
     {
         PlayerAnimationData.Initialize();
@@ -40,6 +42,13 @@ public class Player : MonoBehaviour
         PlayerInput = GetComponent<PlayerInput>();
 
         playerStateMachine = new PlayerStateMachine(this);
+
+        PlayerInput.PlayerActions.Inventory.performed += OpenCloseInventory;
+    }
+
+    private void OnDestroy()
+    {
+        PlayerInput.PlayerActions.Inventory.performed -= OpenCloseInventory;
     }
 
     void Start()
@@ -57,4 +66,8 @@ public class Player : MonoBehaviour
         playerStateMachine.UpdateLogic();
     }
 
+    public void OpenCloseInventory(InputAction.CallbackContext context)
+    {
+        InventoryManager.Instance.OpenCloseInventory(context);
+    }
 }

@@ -51,6 +51,24 @@ public class PlayerMovementState : IState
         RemoveInputActionsCallbacks();
     }
 
+    public virtual void OnTriggerEnter(Collider collider)
+    {
+        if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
+        {
+            ContactWithGround();
+            return;
+        }
+    }
+
+    public virtual void OnTriggerExit(Collider collider)
+    {
+        if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
+        {
+            NoContactWithGround();
+            return;
+        }
+    }
+
     private void ReadMovementInput()
     {
         stateMachine.MovementData.MovementInput = stateMachine.Player.PlayerInput.PlayerActions.Movement.ReadValue<Vector2>();
@@ -154,6 +172,16 @@ public class PlayerMovementState : IState
     private bool IsGrounded()
     {
         return Physics.Raycast(stateMachine.Player.RbPlayer.position, Vector3.down, groundedData.GroundCheckDistance);
+    }
+
+    protected virtual void ContactWithGround()
+    {
+
+    }
+
+    protected virtual void NoContactWithGround()
+    {
+
     }
 
     //public virtual void OnTriggerEnter(Collider collider)

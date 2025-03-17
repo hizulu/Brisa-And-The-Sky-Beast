@@ -23,6 +23,7 @@ public class PlayerStateMachine : StateMachine
     public PlayerAttackState AttackState { get; }
     public PlayerComboAttack ComboAttack { get; }
     public PlayerJumpState JumpState { get; }
+    public PlayerFallState FallState { get; }
 
     public PlayerStateMachine(Player player)
     {
@@ -38,5 +39,6 @@ public class PlayerStateMachine : StateMachine
         AttackState = new PlayerAttackState(this);
         ComboAttack = new PlayerComboAttack(this);
         JumpState = new PlayerJumpState(this);
+        FallState = new PlayerFallState(this);
     }
 }
