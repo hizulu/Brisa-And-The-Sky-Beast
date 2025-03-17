@@ -7,7 +7,7 @@ public class PointOfInterest : MonoBehaviour
     public enum InterestType { Tree, Rock }
     public InterestType interestType;
 
-    public Transform agent;
+    private Transform agentTransform;
 
     private float baseInterest;
     private float currentInterest;
@@ -19,6 +19,7 @@ public class PointOfInterest : MonoBehaviour
     {
         baseInterest = interestType == InterestType.Tree ? 10f : 5f;
         currentInterest = baseInterest;
+        agentTransform = FindObjectOfType<Beast_V3>().transform;
     }
 
     public float GetInterestValue(Transform agent)
@@ -53,15 +54,22 @@ public class PointOfInterest : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, 1f);
-        if (!interestConsumed)
+        if (agentTransform != null) // Evita el error si no se ha encontrado el agente aún
         {
-            float distance = Vector3.Distance(transform.position, agent.position);
-            currentInterest = baseInterest * Mathf.Clamp01(1 - (distance / maxDistance)); // Reduce interés con distancia
+            if (!interestConsumed)
+            {
+                float distance = Vector3.Distance(transform.position, agentTransform.position);
+                currentInterest = baseInterest * Mathf.Clamp01(1 - (distance / maxDistance)); // Reduce interés con distancia
+            }
+            else
+            {
+                currentInterest = 0f;
+            }
+            UnityEditor.Handles.Label(transform.position + Vector3.up * 2, $"Interest: {currentInterest}");
         }
         else
         {
-            currentInterest = 0f;
+            UnityEditor.Handles.Label(transform.position + Vector3.up * 2, "Agent not found");
         }
-        UnityEditor.Handles.Label(transform.position + Vector3.up * 2, $"Interest: {currentInterest}");
     }
 }
