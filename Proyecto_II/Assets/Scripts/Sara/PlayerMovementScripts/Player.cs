@@ -66,8 +66,19 @@ public class Player : MonoBehaviour
         playerStateMachine.UpdateLogic();
     }
 
+    private void OnTriggerEnter(Collider collider)
+    {
+        playerStateMachine.OnTriggerEnter(collider);
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        playerStateMachine.OnTriggerExit(collider);
+    }
+
     public void OpenCloseInventory(InputAction.CallbackContext context)
     {
         InventoryManager.Instance.OpenCloseInventory(context);
     }
+
 }

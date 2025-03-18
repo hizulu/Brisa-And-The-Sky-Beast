@@ -55,7 +55,8 @@ public class PlayerMovementState : IState
     {
         if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
         {
-            ContactWithGround();
+            ContactWithGround(collider);
+            //Debug.Log(collider.gameObject.name);
             return;
         }
     }
@@ -64,7 +65,7 @@ public class PlayerMovementState : IState
     {
         if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
         {
-            NoContactWithGround();
+            NoContactWithGround(collider);
             return;
         }
     }
@@ -89,9 +90,9 @@ public class PlayerMovementState : IState
         stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled += OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.Run.performed += RunStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
-        stateMachine.Player.PlayerInput.PlayerActions.Attack.performed += AttackStart;
-        stateMachine.Player.PlayerInput.PlayerActions.Jump.performed += JumpStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.Crouch.performed += CrouchStarted;
+        
+        
+        
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled -= OnMovementCanceled;
     }
 
@@ -150,36 +151,21 @@ public class PlayerMovementState : IState
         stateMachine.ChangeState(stateMachine.RunState);
     }
 
-    protected virtual void CrouchStarted(InputAction.CallbackContext context)
-    {
-        stateMachine.ChangeState(stateMachine.CrouchState);
-    }
+    
 
-    protected virtual void AttackStart(InputAction.CallbackContext context)
-    {
-        stateMachine.ChangeState(stateMachine.ComboAttack);
-    }
+    
 
-    protected virtual void JumpStarted(InputAction.CallbackContext context)
-    {
-        if (IsGrounded())
-        {
-            //stateMachine.Player.RbPlayer.AddForce(Vector3.up * airborneData.BaseForceJump, ForceMode.Impulse);
-            stateMachine.ChangeState(stateMachine.JumpState);
-        }
-    }
+    //private bool IsGrounded()
+    //{
+    //    return Physics.Raycast(stateMachine.Player.RbPlayer.position, Vector3.down, groundedData.GroundCheckDistance);
+    //}
 
-    private bool IsGrounded()
-    {
-        return Physics.Raycast(stateMachine.Player.RbPlayer.position, Vector3.down, groundedData.GroundCheckDistance);
-    }
-
-    protected virtual void ContactWithGround()
+    protected virtual void ContactWithGround(Collider collider)
     {
 
     }
 
-    protected virtual void NoContactWithGround()
+    protected virtual void NoContactWithGround(Collider collider)
     {
 
     }

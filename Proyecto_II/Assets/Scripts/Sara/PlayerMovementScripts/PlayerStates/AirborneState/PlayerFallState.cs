@@ -13,12 +13,7 @@ public class PlayerFallState : PlayerAirborneState
     {
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
-    }
-
-    public override void UpdateLogic()
-    {
-        base.UpdateLogic();
-        stateMachine.ChangeState(stateMachine.FallState);
+        //Debug.Log("Has entrado en el estado de CAYENDO");
     }
 
     public override void UpdatePhysics()
@@ -30,5 +25,11 @@ public class PlayerFallState : PlayerAirborneState
     {
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
+        //Debug.Log("Has salido Del estado de CAYENDO");
     }
+
+    //protected override void OnContactWithGround(Collider collider)
+    //{
+    //    stateMachine.ChangeState(stateMachine.LandState);
+    //}
 }
