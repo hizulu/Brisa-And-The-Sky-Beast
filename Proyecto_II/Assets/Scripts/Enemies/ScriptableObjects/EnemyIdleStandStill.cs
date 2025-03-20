@@ -8,15 +8,15 @@ public class EnemyIdleStandStill : EnemyIdleSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-
-        enemy.anim.SetBool("seMueve", false);
+        Debug.Log("Has entrado en estado de IDLESSTILL");
+        //enemy.anim.SetBool("isIdling", true);
     }
 
     public override void DoExitLogic()
     {
         base.DoExitLogic();
-
-        enemy.anim.SetBool("seMueve", true);
+        Debug.Log("Estás en IDLESSTILL");
+        //enemy.anim.SetBool("isIdling", false);
     }
 
     public override void DoFrameUpdateLogic()
@@ -32,6 +32,7 @@ public class EnemyIdleStandStill : EnemyIdleSOBase
     public override void Initialize(GameObject gameObject, Enemy enemy)
     {
         base.Initialize(gameObject, enemy);
+        Debug.Log("Estás en el script de StandStill");
     }
 
     public override void ResetValues()

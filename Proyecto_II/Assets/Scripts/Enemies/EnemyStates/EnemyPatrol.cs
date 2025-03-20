@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class EnemyPatrol : EnemyStateTemplate
 {
-    public EnemyPatrol(EnemyStateMachine _stateMachine) : base(_stateMachine)
+    public EnemyPatrol(Enemy _enemy, EnemyStateMachine _stateMachine) : base(_enemy, _stateMachine)
     {
     }
+
     public override void Enter() { }
 
     public override void Exit() { }

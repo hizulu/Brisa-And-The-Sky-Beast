@@ -15,7 +15,7 @@ public class EnemyIdleSOBase : ScriptableObject
         this.gameObject = gameObject;
         transform = gameObject.transform;
         this.enemy = enemy;
-
+        Debug.Log("Estás en el script de SOBase");
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 

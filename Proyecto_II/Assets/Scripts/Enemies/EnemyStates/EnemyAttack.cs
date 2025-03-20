@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class EnemyAttack : EnemyStateTemplate
 {
-    public EnemyAttack(EnemyStateMachine _stateMachine) : base(_stateMachine)
+    public EnemyAttack(Enemy _enemy, EnemyStateMachine _stateMachine) : base(_enemy, _stateMachine)
     {
     }
+
     public override void Enter() { }
 
     public override void Exit() { }
