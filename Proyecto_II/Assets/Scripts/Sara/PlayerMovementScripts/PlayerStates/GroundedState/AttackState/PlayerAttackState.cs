@@ -16,7 +16,7 @@ public class PlayerAttackState : PlayerGroundedState
         //totalComboTime = 0f;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.AttackParameterHash);
-        Debug.Log("Has entrado en el estado de ATACAR");
+        //Debug.Log("Has entrado en el estado de ATACAR");
     }
 
     //public override void UpdateLogic()
@@ -29,7 +29,7 @@ public class PlayerAttackState : PlayerGroundedState
     {
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.AttackParameterHash);
-        Debug.Log("Has salido del estado de ATACAR");
+        //Debug.Log("Has salido del estado de ATACAR");
     }
 
     //private void ResetCombo()

@@ -18,7 +18,7 @@ public class PlayerJumpState : PlayerAirborneState
         stateMachine.MovementData.JumpForceModifier = airborneData.JumpData.NormalJumpModif;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.JumpParameterHash);
-        Debug.Log("Has entrado en el estado de SALTAR.");
+        //Debug.Log("Has entrado en el estado de SALTAR.");
     }
 
     public override void UpdateLogic()
@@ -39,7 +39,7 @@ public class PlayerJumpState : PlayerAirborneState
         isJumping = false;
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.JumpParameterHash);
-        Debug.Log("Has salido del estado de SALTAR.");
+        //Debug.Log("Has salido del estado de SALTAR.");
     }
 
     private void FinishJump()
@@ -63,8 +63,6 @@ public class PlayerJumpState : PlayerAirborneState
             //jumpForce = Mathf.Clamp(jumpForce, 0f, 10f);
 
             stateMachine.Player.RbPlayer.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-            Debug.Log(jumpForce);
             isJumping = true;
         }        
     }

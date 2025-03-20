@@ -14,7 +14,7 @@ public class PlayerRunState : PlayerMovedState
         stateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.RunSpeedModif;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.RunParameterHash);
-        Debug.Log("Has entrado en el estado de CORRER.");
+        //Debug.Log("Has entrado en el estado de CORRER.");
     }
 
     public override void UpdateLogic()
@@ -28,7 +28,7 @@ public class PlayerRunState : PlayerMovedState
     {
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.RunParameterHash);
-        Debug.Log("Has salido del estado de CORRER.");
+        //Debug.Log("Has salido del estado de CORRER.");
     }
 
     protected override void OnMovementCanceled(InputAction.CallbackContext context)

@@ -44,4 +44,14 @@ public abstract class StateMachine
     {
         currentState?.UpdatePhysics();
     }
+
+    public void OnTriggerEnter(Collider collider)
+    {
+        currentState?.OnTriggerEnter(collider);
+    }
+
+    public void OnTriggerExit(Collider collider)
+    {
+        currentState?.OnTriggerExit(collider);
+    }
 }

@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     [field: SerializeField] public PlayerAnimationData PlayerAnimationData { get; private set; }
 
     public Rigidbody RbPlayer { get; private set; }
+    public BoxCollider GroundCheckCollider { get; private set; }
     public Animator AnimPlayer { get; private set; }
     public CinemachineVirtualCamera CamPlayer { get; private set; }
 
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
         PlayerAnimationData.Initialize();
 
         RbPlayer = GetComponent<Rigidbody>();
+        GroundCheckCollider = GetComponentInChildren<BoxCollider>();
         AnimPlayer = GetComponent<Animator>();
 
         PlayerInput = GetComponent<PlayerInput>();
@@ -66,8 +68,19 @@ public class Player : MonoBehaviour
         playerStateMachine.UpdateLogic();
     }
 
+    private void OnTriggerEnter(Collider collider)
+    {
+        playerStateMachine.OnTriggerEnter(collider);
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        playerStateMachine.OnTriggerExit(collider);
+    }
+
     public void OpenCloseInventory(InputAction.CallbackContext context)
     {
         InventoryManager.Instance.OpenCloseInventory(context);
     }
+
 }
