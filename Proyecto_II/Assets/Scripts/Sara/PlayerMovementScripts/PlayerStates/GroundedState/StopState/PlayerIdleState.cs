@@ -17,9 +17,9 @@ public class PlayerIdleState : PlayerGroundedState
 
     public override void Enter()
     {
-        stateMachine.MovementData.MovementSpeedModifier = 0f;
+        playerStateMachine.MovementData.MovementSpeedModifier = 0f;
         base.Enter();
-        StartAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
+        StartAnimation(playerStateMachine.Player.PlayerAnimationData.IdleParameterHash);
         //Debug.Log("Has entrado en el estado de IDLE.");
     }
 
@@ -27,7 +27,7 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.UpdateLogic();
 
-        if (stateMachine.MovementData.MovementInput == Vector2.zero)
+        if (playerStateMachine.MovementData.MovementInput == Vector2.zero)
         {
             return;
         }
@@ -43,7 +43,7 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Exit()
     {
         base.Exit();
-        StopAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
+        StopAnimation(playerStateMachine.Player.PlayerAnimationData.IdleParameterHash);
         //Debug.Log("Has salido del estado de IDLE.");
     }
 }

@@ -12,7 +12,7 @@ public class PlayerFallState : PlayerAirborneState
     public override void Enter()
     {
         base.Enter();
-        StartAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
+        StartAnimation(playerStateMachine.Player.PlayerAnimationData.FallParameterHash);
         Debug.Log("Has entrado en el estado de CAYENDO");
     }
 
@@ -29,7 +29,7 @@ public class PlayerFallState : PlayerAirborneState
     public override void Exit()
     {
         base.Exit();
-        StopAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
+        StopAnimation(playerStateMachine.Player.PlayerAnimationData.FallParameterHash);
         Debug.Log("Has salido Del estado de CAYENDO");
     }
 
@@ -37,9 +37,9 @@ public class PlayerFallState : PlayerAirborneState
     {
         Debug.Log("Contacto con el suelo detectado");
 
-        if (stateMachine.MovementData.MovementInput == Vector2.zero)
+        if (playerStateMachine.MovementData.MovementInput == Vector2.zero)
         {
-            stateMachine.ChangeState(stateMachine.IdleState);
+            playerStateMachine.ChangeState(playerStateMachine.IdleState);
 
             return;
         }

@@ -5,6 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Idle-Stand Still", menuName = "Enemy Logic/Idle Logic/Stand Still")]
 public class EnemyIdleStandStill : EnemyIdleSOBase
 {
+    public override void Initialize(GameObject gameObject, Enemy enemy)
+    {
+        base.Initialize(gameObject, enemy);
+        Debug.Log("Estás en el script de StandStill");
+    }
+
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
@@ -27,13 +33,7 @@ public class EnemyIdleStandStill : EnemyIdleSOBase
     public override void DoPhysiscsLogic()
     {
         base.DoPhysiscsLogic();
-    }
-
-    public override void Initialize(GameObject gameObject, Enemy enemy)
-    {
-        base.Initialize(gameObject, enemy);
-        Debug.Log("Estás en el script de StandStill");
-    }
+    }    
 
     public override void ResetValues()
     {

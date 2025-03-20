@@ -13,17 +13,17 @@ using UnityEngine.InputSystem;
  */
 public class PlayerMovementState : IState
 {
-    protected PlayerStateMachine stateMachine;
+    protected PlayerStateMachine playerStateMachine;
 
     protected readonly PlayerGroundedData groundedData;
     protected readonly PlayerAirborneData airborneData;
 
-    public PlayerMovementState(PlayerStateMachine _stateMachine)
+    public PlayerMovementState(PlayerStateMachine _playerStateMachine)
     {
-        stateMachine = _stateMachine;
+        playerStateMachine = _playerStateMachine;
 
-        groundedData = stateMachine.Player.Data.GroundedData;
-        airborneData = stateMachine.Player.Data.AirborneData;
+        groundedData = playerStateMachine.Player.Data.GroundedData;
+        airborneData = playerStateMachine.Player.Data.AirborneData;
     }
 
     public virtual void Enter()
@@ -53,7 +53,7 @@ public class PlayerMovementState : IState
 
     public virtual void OnTriggerEnter(Collider collider)
     {
-        if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
+        if (playerStateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
         {
             ContactWithGround(collider);
             //Debug.Log(collider.gameObject.name);
@@ -63,7 +63,7 @@ public class PlayerMovementState : IState
 
     public virtual void OnTriggerExit(Collider collider)
     {
-        if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
+        if (playerStateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
         {
             NoContactWithGround(collider);
             return;
@@ -72,51 +72,51 @@ public class PlayerMovementState : IState
 
     private void ReadMovementInput()
     {
-        stateMachine.MovementData.MovementInput = stateMachine.Player.PlayerInput.PlayerActions.Movement.ReadValue<Vector2>();
+        playerStateMachine.MovementData.MovementInput = playerStateMachine.Player.PlayerInput.PlayerActions.Movement.ReadValue<Vector2>();
     }
 
     protected void StartAnimation(int hashNumAnimation)
     {
-        stateMachine.Player.AnimPlayer.SetBool(hashNumAnimation, true);
+        playerStateMachine.Player.AnimPlayer.SetBool(hashNumAnimation, true);
     }
 
     protected void StopAnimation(int hashNumAnimation)
     {
-        stateMachine.Player.AnimPlayer.SetBool(hashNumAnimation, false);
+        playerStateMachine.Player.AnimPlayer.SetBool(hashNumAnimation, false);
     }
 
     protected virtual void AddInputActionsCallbacks()
     {
-        stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled += OnMovementCanceled;
-        stateMachine.Player.PlayerInput.PlayerActions.Run.performed += RunStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
+        playerStateMachine.Player.PlayerInput.PlayerActions.Movement.canceled += OnMovementCanceled;
+        playerStateMachine.Player.PlayerInput.PlayerActions.Run.performed += RunStarted;
+        playerStateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
         
         
         
-        stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled -= OnMovementCanceled;
+        playerStateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled -= OnMovementCanceled;
     }
 
     protected virtual void RemoveInputActionsCallbacks()
     {
-        stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled -= OnMovementCanceled;
-        stateMachine.Player.PlayerInput.PlayerActions.Run.canceled -= OnMovementCanceled;
+        playerStateMachine.Player.PlayerInput.PlayerActions.Movement.canceled -= OnMovementCanceled;
+        playerStateMachine.Player.PlayerInput.PlayerActions.Run.canceled -= OnMovementCanceled;
     }
 
     protected virtual void Move()
     {
-        if (stateMachine.MovementData.MovementInput == Vector2.zero || stateMachine.MovementData.MovementSpeedModifier == 0f)
+        if (playerStateMachine.MovementData.MovementInput == Vector2.zero || playerStateMachine.MovementData.MovementSpeedModifier == 0f)
             return;
 
         Vector3 cameraForward = Camera.main.transform.forward;
         cameraForward.y = 0;
         cameraForward.Normalize();
 
-        Vector3 movementDirection = cameraForward * stateMachine.MovementData.MovementInput.y + Camera.main.transform.right * stateMachine.MovementData.MovementInput.x;
+        Vector3 movementDirection = cameraForward * playerStateMachine.MovementData.MovementInput.y + Camera.main.transform.right * playerStateMachine.MovementData.MovementInput.x;
         movementDirection.Normalize();
 
         float movSpeed = GetMovementSpeed();
         movementDirection.Normalize();
-        stateMachine.Player.RbPlayer.MovePosition(stateMachine.Player.RbPlayer.position + movementDirection * movSpeed * Time.deltaTime);
+        playerStateMachine.Player.RbPlayer.MovePosition(playerStateMachine.Player.RbPlayer.position + movementDirection * movSpeed * Time.deltaTime);
         Rotate(movementDirection);
     }
 
@@ -125,18 +125,18 @@ public class PlayerMovementState : IState
         if (movementDirection != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(movementDirection); // Hace que el personaje gire en la dirección donde se produce el movimiento.
-            stateMachine.Player.RbPlayer.rotation = Quaternion.Slerp(stateMachine.Player.RbPlayer.rotation, targetRotation, Time.deltaTime * 10f);
+            playerStateMachine.Player.RbPlayer.rotation = Quaternion.Slerp(playerStateMachine.Player.RbPlayer.rotation, targetRotation, Time.deltaTime * 10f);
         }
     }
 
     protected Vector3 GetMovementInputDirection()
     {
-        return new Vector3(stateMachine.MovementData.MovementInput.x, 0f, stateMachine.MovementData.MovementInput.y);
+        return new Vector3(playerStateMachine.MovementData.MovementInput.x, 0f, playerStateMachine.MovementData.MovementInput.y);
     }
 
     protected float GetMovementSpeed()
     {
-        float movementSpeed = groundedData.BaseSpeed * stateMachine.MovementData.MovementSpeedModifier;
+        float movementSpeed = groundedData.BaseSpeed * playerStateMachine.MovementData.MovementSpeedModifier;
 
         return movementSpeed;
     }
@@ -148,7 +148,7 @@ public class PlayerMovementState : IState
 
     protected virtual void RunStarted(InputAction.CallbackContext context)
     {
-        stateMachine.ChangeState(stateMachine.RunState);
+        playerStateMachine.ChangeState(playerStateMachine.RunState);
     }
 
     

@@ -19,7 +19,7 @@ public class PlayerGroundedState : PlayerMovementState
     public override void Enter()
     {
         base.Enter();
-        StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
+        StartAnimation(playerStateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
 
     public override void UpdateLogic()
@@ -35,48 +35,48 @@ public class PlayerGroundedState : PlayerMovementState
     public override void Exit()
     {
         base.Exit();
-        StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
+        StopAnimation(playerStateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
 
     protected override void AddInputActionsCallbacks()
     {
         base.AddInputActionsCallbacks();
-        stateMachine.Player.PlayerInput.PlayerActions.Jump.started += JumpStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.Crouch.started += CrouchStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.Attack.started += AttackStart;
+        playerStateMachine.Player.PlayerInput.PlayerActions.Jump.started += JumpStarted;
+        playerStateMachine.Player.PlayerInput.PlayerActions.Crouch.started += CrouchStarted;
+        playerStateMachine.Player.PlayerInput.PlayerActions.Attack.started += AttackStart;
     }
 
     protected override void RemoveInputActionsCallbacks()
     {
         base.RemoveInputActionsCallbacks();
-        stateMachine.Player.PlayerInput.PlayerActions.Jump.started -= JumpStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.Crouch.started -= CrouchStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.Attack.started -= AttackStart;
+        playerStateMachine.Player.PlayerInput.PlayerActions.Jump.started -= JumpStarted;
+        playerStateMachine.Player.PlayerInput.PlayerActions.Crouch.started -= CrouchStarted;
+        playerStateMachine.Player.PlayerInput.PlayerActions.Attack.started -= AttackStart;
     }
 
     protected virtual void OnMove()
     {
-        stateMachine.ChangeState(stateMachine.WalkState);
+        playerStateMachine.ChangeState(playerStateMachine.WalkState);
     }
 
     protected virtual void OnStop()
     {
-        stateMachine.ChangeState(stateMachine.IdleState);
+        playerStateMachine.ChangeState(playerStateMachine.IdleState);
     }
 
     protected virtual void JumpStarted(InputAction.CallbackContext context)
     {
-        stateMachine.ChangeState(stateMachine.JumpState);
+        playerStateMachine.ChangeState(playerStateMachine.JumpState);
     }
 
     protected virtual void CrouchStarted(InputAction.CallbackContext context)
     {
-        stateMachine.ChangeState(stateMachine.CrouchState);
+        playerStateMachine.ChangeState(playerStateMachine.CrouchState);
     }
 
     protected virtual void AttackStart(InputAction.CallbackContext context)
     {
-        stateMachine.ChangeState(stateMachine.ComboAttack);
+        playerStateMachine.ChangeState(playerStateMachine.ComboAttack);
     }
 
     protected override void NoContactWithGround(Collider collider)
@@ -89,7 +89,7 @@ public class PlayerGroundedState : PlayerMovementState
             return;
         }
 
-        stateMachine.ChangeState(stateMachine.FallState);
+        playerStateMachine.ChangeState(playerStateMachine.FallState);
         Debug.Log("Estás cayendo");
     }
 
@@ -100,7 +100,7 @@ public class PlayerGroundedState : PlayerMovementState
         Debug.Log($"Radio de detección: {radius}");  // Verifica el valor del radio
 
         // Usamos la posición del centro del BoxCollider de GroundCheck
-        Vector3 groundCheckPosition = stateMachine.Player.GroundCheckCollider.transform.position;
+        Vector3 groundCheckPosition = playerStateMachine.Player.GroundCheckCollider.transform.position;
         Debug.Log($"Posición del chequeo de suelo: {groundCheckPosition}");  // Verifica la posición del centro del collider
 
         // Detecta los colliders en un área alrededor del centro del BoxCollider

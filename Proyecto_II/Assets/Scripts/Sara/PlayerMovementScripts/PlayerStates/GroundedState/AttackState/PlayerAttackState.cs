@@ -15,7 +15,7 @@ public class PlayerAttackState : PlayerGroundedState
         //comboAttacks = 0;
         //totalComboTime = 0f;
         base.Enter();
-        StartAnimation(stateMachine.Player.PlayerAnimationData.AttackParameterHash);
+        StartAnimation(playerStateMachine.Player.PlayerAnimationData.AttackParameterHash);
         //Debug.Log("Has entrado en el estado de ATACAR");
     }
 
@@ -28,7 +28,7 @@ public class PlayerAttackState : PlayerGroundedState
     public override void Exit()
     {
         base.Exit();
-        StopAnimation(stateMachine.Player.PlayerAnimationData.AttackParameterHash);
+        StopAnimation(playerStateMachine.Player.PlayerAnimationData.AttackParameterHash);
         //Debug.Log("Has salido del estado de ATACAR");
     }
 

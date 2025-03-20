@@ -11,9 +11,9 @@ public class PlayerRunState : PlayerMovedState
 
     public override void Enter()
     {
-        stateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.RunSpeedModif;
+        playerStateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.RunSpeedModif;
         base.Enter();
-        StartAnimation(stateMachine.Player.PlayerAnimationData.RunParameterHash);
+        StartAnimation(playerStateMachine.Player.PlayerAnimationData.RunParameterHash);
         //Debug.Log("Has entrado en el estado de CORRER.");
     }
 
@@ -27,13 +27,13 @@ public class PlayerRunState : PlayerMovedState
     public override void Exit()
     {
         base.Exit();
-        StopAnimation(stateMachine.Player.PlayerAnimationData.RunParameterHash);
+        StopAnimation(playerStateMachine.Player.PlayerAnimationData.RunParameterHash);
         //Debug.Log("Has salido del estado de CORRER.");
     }
 
     protected override void OnMovementCanceled(InputAction.CallbackContext context)
     {
-        stateMachine.ChangeState(stateMachine.IdleState);
+        playerStateMachine.ChangeState(playerStateMachine.IdleState);
         base.OnMovementCanceled(context);
     }
 }

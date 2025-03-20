@@ -12,7 +12,7 @@ public class PlayerAirborneState : PlayerMovementState
     public override void Enter()
     {
         base.Enter();
-        StartAnimation(stateMachine.Player.PlayerAnimationData.AirborneParameterHash);
+        StartAnimation(playerStateMachine.Player.PlayerAnimationData.AirborneParameterHash);
     }
 
     public override void UpdateLogic()
@@ -28,12 +28,12 @@ public class PlayerAirborneState : PlayerMovementState
     public override void Exit()
     {
         base .Exit();
-        StopAnimation(stateMachine.Player.PlayerAnimationData.AirborneParameterHash);
+        StopAnimation(playerStateMachine.Player.PlayerAnimationData.AirborneParameterHash);
     }
 
     protected virtual void Jump()
     {
-        stateMachine.ChangeState(stateMachine.JumpState);
+        playerStateMachine.ChangeState(playerStateMachine.JumpState);
     }
 
     protected override void ContactWithGround(Collider collider)

@@ -15,7 +15,7 @@ public class PlayerComboAttack : PlayerAttackState
     {
         attackFinish = false;
         base.Enter();
-        StartAnimation(stateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
+        StartAnimation(playerStateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
     }
 
     public override void UpdateLogic()
@@ -27,16 +27,16 @@ public class PlayerComboAttack : PlayerAttackState
     {
         attackFinish = false;
         base.Exit();
-        StopAnimation(stateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
+        StopAnimation(playerStateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
     }
 
     private void FinishAttack01()
     {
-        Animator animator = stateMachine.Player.AnimPlayer;
+        Animator animator = playerStateMachine.Player.AnimPlayer;
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             attackFinish = true;
-            stateMachine.ChangeState(stateMachine.IdleState);
+            playerStateMachine.ChangeState(playerStateMachine.IdleState);
         }
     }
 

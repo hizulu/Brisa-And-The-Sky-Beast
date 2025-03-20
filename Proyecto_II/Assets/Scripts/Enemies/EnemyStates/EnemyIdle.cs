@@ -12,10 +12,8 @@ public class EnemyIdle : EnemyStateTemplate
     {
         base.Enter();
         Debug.Log("Este es el script de EnemyIdle");
-        stateMachine.Enemy.EnemyIdleBaseInstance.DoEnterLogic();
+        enemyStateMachine.Enemy.EnemyIdleBaseInstance.DoEnterLogic();
     }
-
-    public override void Exit() { }
 
     public override void OnTriggerEnter(Collider collider) { }
 
@@ -24,6 +22,9 @@ public class EnemyIdle : EnemyStateTemplate
     public override void UpdateLogic() { }
 
     public override void UpdatePhysics() { }
+
+    public override void Exit() { }
+
     protected override void MoveEnemy()
     {
 

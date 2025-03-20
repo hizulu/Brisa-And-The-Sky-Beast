@@ -20,7 +20,12 @@ public class EnemyIdleSOBase : ScriptableObject
     }
 
     public virtual void DoEnterLogic() { }
-    public virtual void DoExitLogic() { ResetValues(); }
+
+    public virtual void DoExitLogic()
+    { 
+        ResetValues();
+    }
+
     public virtual void DoFrameUpdateLogic()
     {
         /*if (enemy.IsAggroed)
@@ -28,6 +33,8 @@ public class EnemyIdleSOBase : ScriptableObject
             enemy.StateMachine.ChangeState(enemy.ChaseState);
         }*/
     }
+
     public virtual void DoPhysiscsLogic() { }
+
     public virtual void ResetValues() { }
 }

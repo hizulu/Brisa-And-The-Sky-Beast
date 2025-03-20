@@ -12,12 +12,12 @@ public class PlayerLandState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
-        StartAnimation(stateMachine.Player.PlayerAnimationData.LandParameterHash);
+        StartAnimation(playerStateMachine.Player.PlayerAnimationData.LandParameterHash);
     }
 
     public override void Exit()
     {
         base.Exit();
-        StopAnimation(stateMachine.Player.PlayerAnimationData.LandParameterHash);
+        StopAnimation(playerStateMachine.Player.PlayerAnimationData.LandParameterHash);
     }
 }

@@ -12,22 +12,22 @@ public class PlayerCrouchState : PlayerMovedState
 
     public override void Enter()
     {
-        stateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.CrouchSpeedModif;
+        playerStateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.CrouchSpeedModif;
         base.Enter();
-        StartAnimation(stateMachine.Player.PlayerAnimationData.CrouchParameterHash);
+        StartAnimation(playerStateMachine.Player.PlayerAnimationData.CrouchParameterHash);
         Debug.Log("Has entrado en el estado de AGACHARSE.");
     }
 
     public override void Exit()
     {
         base.Exit();
-        StopAnimation(stateMachine.Player.PlayerAnimationData.CrouchParameterHash);
+        StopAnimation(playerStateMachine.Player.PlayerAnimationData.CrouchParameterHash);
         Debug.Log("Has salido del estado de AGACHARSE.");
     }
 
     protected override void OnMovementCanceled(InputAction.CallbackContext context)
     {
-        stateMachine.ChangeState(stateMachine.IdleState);
+        playerStateMachine.ChangeState(playerStateMachine.IdleState);
         base.OnMovementCanceled(context);
     }
 }

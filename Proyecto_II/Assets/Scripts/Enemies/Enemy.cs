@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public Player player;
+    public Player Player;
     public Animator AnimEnemy { get; private set; }
 
     private EnemyStateMachine enemyStateMachine;
@@ -18,14 +18,13 @@ public class Enemy : MonoBehaviour
         EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
         AnimEnemy = GetComponent<Animator>();
         enemyStateMachine = new EnemyStateMachine(this);
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     private void Start()
     {
         EnemyIdleBaseInstance.Initialize(gameObject, this);
         enemyStateMachine.ChangeState(enemyStateMachine.EnemeyIdleState);
-        //Debug.Log("Este es el script del enemigo");
     }
 
     private void Update()

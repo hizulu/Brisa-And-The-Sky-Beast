@@ -12,9 +12,9 @@ public class PlayerWalkState : PlayerMovedState
 
     public override void Enter()
     {
-        stateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.WalkSpeedModif;
+        playerStateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.WalkSpeedModif;
         base.Enter();
-        StartAnimation(stateMachine.Player.PlayerAnimationData.WalkParameterHash);
+        StartAnimation(playerStateMachine.Player.PlayerAnimationData.WalkParameterHash);
         //Debug.Log("Has entrado en el estado de CAMINAR.");
     }
 
@@ -26,13 +26,13 @@ public class PlayerWalkState : PlayerMovedState
     public override void Exit()
     {
         base.Exit();
-        StopAnimation(stateMachine.Player.PlayerAnimationData.WalkParameterHash);
+        StopAnimation(playerStateMachine.Player.PlayerAnimationData.WalkParameterHash);
         //Debug.Log("Has salido del estado de CAMINAR.");
     }
 
     protected override void OnMovementCanceled(InputAction.CallbackContext context)
     {
-        stateMachine.ChangeState(stateMachine.IdleState);
+        playerStateMachine.ChangeState(playerStateMachine.IdleState);
         base.OnMovementCanceled(context);
     }
 }
