@@ -81,43 +81,46 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected override void NoContactWithGround(Collider collider)
     {
-        Debug.Log("MIERDA");
+        Debug.Log("Llamando a NoContactWithGround en PlayerGroundedState");
 
         if (IsGrounded())
+        {
+            Debug.Log("Estás tocando suelo.");
             return;
+        }
 
         stateMachine.ChangeState(stateMachine.FallState);
+        Debug.Log("Estás cayendo");
     }
 
     private bool IsGrounded()
     {
-        Debug.Log("IsGrounded() is being called"); // Confirmamos que la función se llama
+        // Define el radio de la esfera que detectará el suelo
+        float radius = groundedData.GroundCheckDistance;  // Usamos el valor del radio definido en groundedData
+        Debug.Log($"Radio de detección: {radius}");  // Verifica el valor del radio
 
-        RaycastHit hit;
-        Vector3 rayOrigin = stateMachine.Player.RbPlayer.position;
+        // Usamos la posición del centro del BoxCollider de GroundCheck
+        Vector3 groundCheckPosition = stateMachine.Player.GroundCheckCollider.transform.position;
+        Debug.Log($"Posición del chequeo de suelo: {groundCheckPosition}");  // Verifica la posición del centro del collider
 
-        Debug.DrawRay(rayOrigin, Vector3.down * groundedData.GroundCheckDistance, Color.red, 0.1f);
-        Debug.Log("Disparando Raycast desde: " + rayOrigin);
+        // Detecta los colliders en un área alrededor del centro del BoxCollider
+        Collider[] colliders = Physics.OverlapSphere(groundCheckPosition, radius);
+        Debug.Log($"Colliders detectados: {colliders.Length}");  // Verifica cuántos colliders se detectan
 
-        if (Physics.Raycast(rayOrigin, Vector3.down, out hit, groundedData.GroundCheckDistance))
+        foreach (Collider collider in colliders)
         {
-            Debug.Log("Raycast hit: " + hit.collider.gameObject.name + " | Layer: " + LayerMask.LayerToName(hit.collider.gameObject.layer));
+            // Imprime el nombre del objeto para verificar lo que se está detectando
+            Debug.Log($"Collider detectado: {collider.gameObject.name}, Layer: {LayerMask.LayerToName(collider.gameObject.layer)}");
 
-            if (stateMachine.Player.LayerData.IsGroundLayer(hit.collider.gameObject.layer))
+            // Verifica si el collider está en la capa de "Ground" y no es trigger
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Ground") && !collider.isTrigger)
             {
-                Debug.Log("We are grounded.");
-                return true;
-            }
-            else
-            {
-                Debug.Log("Layer is not Ground.");
+                Debug.Log("¡El jugador está tocando el suelo!");
+                return true;  // El jugador está tocando el suelo
             }
         }
-        else
-        {
-            Debug.Log("Raycast NO ha detectado suelo.");
-        }
 
-        return false;
+        Debug.Log("El jugador no está tocando el suelo.");
+        return false;  // El jugador no está tocando el suelo
     }
 }

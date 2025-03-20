@@ -36,8 +36,8 @@ public class PlayerAirborneState : PlayerMovementState
         stateMachine.ChangeState(stateMachine.JumpState);
     }
 
-    //protected virtual void OnContactWithGround(Collider collider)
-    //{
+    protected override void ContactWithGround(Collider collider)
+    {
 
-    //}
+    }
 }
