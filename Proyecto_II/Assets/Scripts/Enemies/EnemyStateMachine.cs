@@ -10,6 +10,7 @@ public class EnemyStateMachine : StateMachine
     public EnemyChase EnemyChaseState { get; }
     public EnemyAttack EnemyAttackState { get; }
     public EnemyRetreat EnemyRetreatState { get; }
+
     public EnemyStateMachine(Enemy _enemy)
     {
         Enemy = _enemy;

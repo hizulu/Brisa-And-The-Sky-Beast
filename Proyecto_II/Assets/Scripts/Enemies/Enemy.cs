@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public Player player;
-    public Animator anim { get; private set; }
+    public Animator AnimEnemy { get; private set; }
 
     private EnemyStateMachine enemyStateMachine;
 
@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
-        anim = GetComponent<Animator>();
+        AnimEnemy = GetComponent<Animator>();
         enemyStateMachine = new EnemyStateMachine(this);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         EnemyIdleBaseInstance.Initialize(gameObject, this);
+        enemyStateMachine.ChangeState(enemyStateMachine.EnemeyIdleState);
         //Debug.Log("Este es el script del enemigo");
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyPatrol : EnemyStateTemplate
 {
-    public EnemyPatrol(Enemy _enemy, EnemyStateMachine _stateMachine) : base(_enemy, _stateMachine)
+    public EnemyPatrol(EnemyStateMachine _stateMachine) : base(_stateMachine)
     {
     }
 

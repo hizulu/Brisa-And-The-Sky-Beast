@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class EnemyIdle : EnemyStateTemplate
 {
-    public EnemyIdle(Enemy _enemy, EnemyStateMachine _stateMachine) : base(_enemy, _stateMachine)
+    public EnemyIdle(EnemyStateMachine _stateMachine) : base(_stateMachine)
     {
     }
 
     public override void Enter()
     {
         base.Enter();
-        enemy.EnemyIdleBaseInstance.DoEnterLogic();
+        Debug.Log("Este es el script de EnemyIdle");
+        stateMachine.Enemy.EnemyIdleBaseInstance.DoEnterLogic();
     }
 
     public override void Exit() { }

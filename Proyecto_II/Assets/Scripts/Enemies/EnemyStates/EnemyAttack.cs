@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAttack : EnemyStateTemplate
 {
-    public EnemyAttack(Enemy _enemy, EnemyStateMachine _stateMachine) : base(_enemy, _stateMachine)
+    public EnemyAttack(EnemyStateMachine _stateMachine) : base(_stateMachine)
     {
     }
 

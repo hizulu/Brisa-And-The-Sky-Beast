@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyRetreat : EnemyStateTemplate
 {
-    public EnemyRetreat(Enemy _enemy, EnemyStateMachine _stateMachine) : base(_enemy, _stateMachine)
+    public EnemyRetreat(EnemyStateMachine _stateMachine) : base(_stateMachine)
     {
     }
     public override void Enter() { }

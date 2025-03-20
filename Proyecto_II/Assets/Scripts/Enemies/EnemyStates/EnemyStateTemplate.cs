@@ -5,12 +5,12 @@ using UnityEngine;
 public class EnemyStateTemplate : IState
 {
     protected EnemyStateMachine stateMachine;
-    protected Enemy enemy;
+    //protected Enemy enemy;
 
-    public EnemyStateTemplate(Enemy _enemy, EnemyStateMachine _stateMachine)
+    public EnemyStateTemplate(EnemyStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
-        enemy = _enemy;
+        //enemy = _enemy;
     }
 
     public virtual void Enter() { }
