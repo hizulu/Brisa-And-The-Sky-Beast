@@ -26,6 +26,9 @@ public class EnemyIdle : EnemyStateTemplate
             if (enemyStateMachine.Enemy.doPatrol)
             {
                 enemyStateMachine.ChangeState(enemyStateMachine.EnemyPatrolState);
+            } else if (enemyStateMachine.Enemy.doChase)
+            {
+                enemyStateMachine.ChangeState(enemyStateMachine.EnemyChaseState);
             }
         }
     }

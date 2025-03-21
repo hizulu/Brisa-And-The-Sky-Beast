@@ -7,15 +7,44 @@ public class EnemyRetreat : EnemyStateTemplate
     public EnemyRetreat(EnemyStateMachine _stateMachine) : base(_stateMachine)
     {
     }
-    public override void Enter() { }
 
-    public override void Exit() { }
+    public override void Enter()
+    {
+        base.Enter();
+        enemyStateMachine.Enemy.matForDepuration.color = Color.magenta; // Depuración TEMP
+        enemyStateMachine.Enemy.EnemyRetreatBaseInstance.DoEnterLogic();
+    }
 
-    public override void OnTriggerEnter(Collider collider) { }
+    public override void UpdateLogic()
+    {
+        base.UpdateLogic();
 
-    public override void OnTriggerExit(Collider collider) { }
+        enemyStateMachine.Enemy.EnemyRetreatBaseInstance.DoFrameUpdateLogic();
 
-    public override void UpdateLogic() { }
+        if (!enemyStateMachine.Enemy.doRetreat)
+        {
+            if (enemyStateMachine.Enemy.doChase)
+            {
+                enemyStateMachine.ChangeState(enemyStateMachine.EnemyChaseState);
+            }
+            else if (enemyStateMachine.Enemy.doAttack)
+            {
+                enemyStateMachine.ChangeState(enemyStateMachine.EnemyAttackState);
+            }
+        }
+    }
 
-    public override void UpdatePhysics() { }
+    public override void UpdatePhysics()
+    {
+        base.UpdatePhysics();
+
+        enemyStateMachine.Enemy.EnemyRetreatBaseInstance.DoPhysiscsLogic();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        enemyStateMachine.Enemy.matForDepuration.color = Color.gray; // Depuración TEMP
+        enemyStateMachine.Enemy.EnemyRetreatBaseInstance.DoExitLogic();
+    }
 }

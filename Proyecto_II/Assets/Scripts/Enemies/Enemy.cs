@@ -14,15 +14,15 @@ public class Enemy : MonoBehaviour
     #region States
     [SerializeField] private EnemyIdleSOBase EnemyIdleBase;
     [SerializeField] private EnemyPatrolSOBase EnemyPatrolBase;
-    //[SerializeField] private EnemyChaseSOBase EnemyChaseBase;
-    //[SerializeField] private EnemyAttackSOBase EnemyAttackBase;
-    //[SerializeField] private EnemyRetreatSOBase EnemyRetreatBase;
+    [SerializeField] private EnemyChaseSOBase EnemyChaseBase;
+    [SerializeField] private EnemyAttackSOBase EnemyAttackBase;
+    [SerializeField] private EnemyRetreatSOBase EnemyRetreatBase;
 
     public EnemyIdleSOBase EnemyIdleBaseInstance { get; set; }
     public EnemyPatrolSOBase EnemyPatrolBaseInstance { get; set; }
-    //public EnemyChaseSOBase EnemyChaseBaseBaseInstance { get; set; }
-    //public EnemyAttackSOBase EnemyAttackBaseInstance { get; set; }
-    //public EnemyRetreatSOBase EnemyRetreatBaseInstance { get; set; }
+    public EnemyChaseSOBase EnemyChaseBaseInstance { get; set; }
+    public EnemyAttackSOBase EnemyAttackBaseInstance { get; set; }
+    public EnemyRetreatSOBase EnemyRetreatBaseInstance { get; set; }
     #endregion
 
     #region State change Checks
@@ -37,14 +37,14 @@ public class Enemy : MonoBehaviour
     {
         EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
         EnemyPatrolBaseInstance = Instantiate(EnemyPatrolBase);
-        //EnemyChaseBaseBaseInstance = Instantiate(EnemyChaseBase);
-        //EnemyAttackBaseInstance = Instantiate(EnemyAttackBase);
-        //EnemyRetreatBaseInstance = Instantiate(EnemyRetreatBase);
+        EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
+        EnemyAttackBaseInstance = Instantiate(EnemyAttackBase);
+        EnemyRetreatBaseInstance = Instantiate(EnemyRetreatBase);
 
         enemyStateMachine = new EnemyStateMachine(this);
 
         AnimEnemy = GetComponent<Animator>();
-        //matForDepuration = GetComponent<Material>();
+        matForDepuration = GetComponent<Material>();
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 

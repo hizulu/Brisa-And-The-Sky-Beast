@@ -11,7 +11,7 @@ public class EnemyPatrol : EnemyStateTemplate
     public override void Enter()
     {
         base.Enter();
-        enemyStateMachine.Enemy.matForDepuration.color = Color.blue;
+        enemyStateMachine.Enemy.matForDepuration.color = Color.blue; // Depuración TEMP
         enemyStateMachine.Enemy.EnemyPatrolBaseInstance.DoEnterLogic();
     }
 
@@ -20,6 +20,18 @@ public class EnemyPatrol : EnemyStateTemplate
         base.UpdateLogic();
 
         enemyStateMachine.Enemy.EnemyPatrolBaseInstance.DoFrameUpdateLogic();
+
+        if (!enemyStateMachine.Enemy.doPatrol)
+        {
+            if (enemyStateMachine.Enemy.doIdle)
+            {
+                enemyStateMachine.ChangeState(enemyStateMachine.EnemyIdleState);
+            }
+            else if (enemyStateMachine.Enemy.doChase)
+            {
+                enemyStateMachine.ChangeState(enemyStateMachine.EnemyChaseState);
+            }
+        }
     }
 
     public override void UpdatePhysics()
