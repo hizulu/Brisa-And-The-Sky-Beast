@@ -11,22 +11,36 @@ public class EnemyIdle : EnemyStateTemplate
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Este es el script de EnemyIdle");
+        enemyStateMachine.Enemy.matForDepuration.color = Color.green; // Depuración TEMP
         enemyStateMachine.Enemy.EnemyIdleBaseInstance.DoEnterLogic();
     }
 
-    public override void OnTriggerEnter(Collider collider) { }
-
-    public override void OnTriggerExit(Collider collider) { }
-
-    public override void UpdateLogic() { }
-
-    public override void UpdatePhysics() { }
-
-    public override void Exit() { }
-
-    protected override void MoveEnemy()
+    public override void UpdateLogic()
     {
+        base.UpdateLogic();
 
+        enemyStateMachine.Enemy.EnemyIdleBaseInstance.DoFrameUpdateLogic();
+
+        if (!enemyStateMachine.Enemy.doIdle)
+        {
+            if (enemyStateMachine.Enemy.doPatrol)
+            {
+                enemyStateMachine.ChangeState(enemyStateMachine.EnemyPatrolState);
+            }
+        }
+    }
+
+    public override void UpdatePhysics() 
+    {
+        base.UpdatePhysics();
+
+        enemyStateMachine.Enemy.EnemyIdleBaseInstance.DoPhysiscsLogic();
+    }
+
+    public override void Exit() 
+    {
+        base.Exit();
+        enemyStateMachine.Enemy.matForDepuration.color = Color.gray; // Depuración TEMP
+        enemyStateMachine.Enemy.EnemyIdleBaseInstance.DoExitLogic();
     }
 }

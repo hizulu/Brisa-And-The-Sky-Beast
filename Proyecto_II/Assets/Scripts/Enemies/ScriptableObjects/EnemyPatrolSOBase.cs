@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyIdleSOBase : ScriptableObject
+public class EnemyPatrolSOBase : ScriptableObject
 {
     protected Enemy enemy;
     protected Transform transform;
@@ -14,19 +14,23 @@ public class EnemyIdleSOBase : ScriptableObject
         this.gameObject = gameObject;
         transform = gameObject.transform;
         this.enemy = enemy;
-
+        Debug.Log("Estás en el script de PatrolSOBase");
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public virtual void DoEnterLogic() { }
 
     public virtual void DoExitLogic()
-    { 
+    {
         ResetValues();
     }
 
     public virtual void DoFrameUpdateLogic()
     {
+        /*if (enemy.IsAggroed)
+        {
+            enemy.StateMachine.ChangeState(enemy.ChaseState);
+        }*/
     }
 
     public virtual void DoPhysiscsLogic() { }

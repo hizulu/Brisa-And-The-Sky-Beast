@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyStateMachine : StateMachine
 {
     public Enemy Enemy { get; }
-    public EnemyIdle EnemeyIdleState { get; }
+    public EnemyIdle EnemyIdleState { get; }
     public EnemyPatrol EnemyPatrolState { get; }
     public EnemyChase EnemyChaseState { get; }
     public EnemyAttack EnemyAttackState { get; }
@@ -15,7 +15,7 @@ public class EnemyStateMachine : StateMachine
     {
         Enemy = _enemy;
 
-        EnemeyIdleState = new EnemyIdle(this);
+        EnemyIdleState = new EnemyIdle(this);
         EnemyPatrolState = new EnemyPatrol(this);
         EnemyChaseState = new EnemyChase(this);
         EnemyAttackState = new EnemyAttack(this);

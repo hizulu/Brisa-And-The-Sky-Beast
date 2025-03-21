@@ -8,15 +8,36 @@ public class EnemyPatrol : EnemyStateTemplate
     {
     }
 
-    public override void Enter() { }
+    public override void Enter()
+    {
+        base.Enter();
+        enemyStateMachine.Enemy.matForDepuration.color = Color.blue;
+        enemyStateMachine.Enemy.EnemyPatrolBaseInstance.DoEnterLogic();
+    }
 
-    public override void Exit() { }
+    public override void UpdateLogic()
+    {
+        base.UpdateLogic();
 
-    public override void OnTriggerEnter(Collider collider) { }
+        enemyStateMachine.Enemy.EnemyPatrolBaseInstance.DoFrameUpdateLogic();
+    }
 
-    public override void OnTriggerExit(Collider collider) { }
+    public override void UpdatePhysics()
+    {
+        base.UpdatePhysics();
 
-    public override void UpdateLogic() { }
+        enemyStateMachine.Enemy.EnemyPatrolBaseInstance.DoPhysiscsLogic();
+    }
 
-    public override void UpdatePhysics() { }
+    public override void Exit()
+    {
+        base.Exit();
+        enemyStateMachine.Enemy.matForDepuration.color = Color.gray; // Depuración TEMP
+        enemyStateMachine.Enemy.EnemyPatrolBaseInstance.DoExitLogic();
+    }
+
+    protected override void MoveEnemy()
+    {
+
+    }
 }
