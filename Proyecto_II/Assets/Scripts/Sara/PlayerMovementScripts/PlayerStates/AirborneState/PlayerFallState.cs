@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerFallState : PlayerAirborneState
@@ -19,29 +20,53 @@ public class PlayerFallState : PlayerAirborneState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-    }
-
-    public override void UpdatePhysics()
-    {
-        base.UpdatePhysics();
+        LandInGround();
     }
 
     public override void Exit()
     {
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
-        Debug.Log("Has salido Del estado de CAYENDO");
+        Debug.Log("Has salido del estado de CAYENDO");
     }
 
-    protected override void ContactWithGround(Collider collider)
+    //protected override void ContactWithGround(Collider collider)
+    //{
+    //    Debug.Log("Contacto con el suelo detectado");
+
+    //    if (stateMachine.MovementData.MovementInput == Vector2.zero)
+    //    {
+    //        stateMachine.ChangeState(stateMachine.LandState);
+    //        Debug.Log("Deberías aterrizar");
+    //        return;
+    //    }
+    //}
+
+    private void LandInGround()
     {
-        Debug.Log("Contacto con el suelo detectado");
-
-        if (stateMachine.MovementData.MovementInput == Vector2.zero)
+        if (IsGrounded())
         {
-            stateMachine.ChangeState(stateMachine.IdleState);
-
+            Debug.Log("Deberías aterrizar");
+            stateMachine.ChangeState(stateMachine.LandState);
             return;
         }
+    }
+
+    private bool IsGrounded()
+    {
+        float radius = groundedData.GroundCheckDistance;
+        Vector3 groundCheckPosition = stateMachine.Player.GroundCheckCollider.transform.position;
+
+        Collider[] colliders = Physics.OverlapSphere(groundCheckPosition, radius);
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Ground") && !collider.isTrigger)
+            {
+                Debug.Log("Has tocado suelo");
+                return true;
+            }
+        }
+        return false;
     }
 }
