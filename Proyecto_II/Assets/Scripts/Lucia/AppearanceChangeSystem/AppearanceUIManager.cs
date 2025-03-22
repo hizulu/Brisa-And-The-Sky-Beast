@@ -13,6 +13,7 @@ public class AppearanceUIManager : MonoBehaviour
     [Header("UI Elements - Unlocked Panel")]
     public TMP_Text unlockedNameText;
     public TMP_Text unlockedDescriptionText;
+    public Button selectSkinButton;
 
     [Header("UI Elements - Blocked Panel")]
     public TMP_Text blockedNameText;
@@ -22,6 +23,8 @@ public class AppearanceUIManager : MonoBehaviour
     [Header("Appearance Data")]
     public List<AppearanceChangeData> appearances = new List<AppearanceChangeData>();
     private int currentAppearanceIndex = 0;
+
+    public CharacterAppearanceManager characterAppearanceManager;
 
     private void Start()
     {
@@ -33,6 +36,10 @@ public class AppearanceUIManager : MonoBehaviour
         else
         {
             Debug.LogError("La lista de apariencias está vacía en AppearanceUIManager.");
+        }
+        if (selectSkinButton != null)
+        {
+            selectSkinButton.onClick.AddListener(ApplyAppearanceToCharacter);
         }
     }
 
@@ -81,6 +88,7 @@ public class AppearanceUIManager : MonoBehaviour
             // Mostrar panel desbloqueado y ocultar bloqueado
             unlockedSkinPanel.SetActive(true);
             blockedSkinPanel.SetActive(false);
+            selectSkinButton.interactable = true;
 
             // Actualizar textos
             if (unlockedNameText != null) unlockedNameText.text = newAppearance.appearanceName;
@@ -91,6 +99,7 @@ public class AppearanceUIManager : MonoBehaviour
             // Mostrar panel bloqueado y ocultar desbloqueado
             unlockedSkinPanel.SetActive(false);
             blockedSkinPanel.SetActive(true);
+            selectSkinButton.interactable = false;
 
             // Actualizar textos
             if (blockedNameText != null) blockedNameText.text = newAppearance.appearanceName;
@@ -98,4 +107,13 @@ public class AppearanceUIManager : MonoBehaviour
             if (objectsNeededText != null) objectsNeededText.text = $"Objetos necesarios: {newAppearance.objectsNeeded}";
         }
     }
+
+    public void ApplyAppearanceToCharacter()
+    {
+        if (appearances.Count > 0 && appearances[currentAppearanceIndex].isUnlocked && characterAppearanceManager != null)
+        {
+            characterAppearanceManager.ChangeAppearance(appearances[currentAppearanceIndex]);
+        }
+    }
+
 }
