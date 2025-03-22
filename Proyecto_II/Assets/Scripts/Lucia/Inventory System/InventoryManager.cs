@@ -10,6 +10,7 @@ using UnityEngine.InputSystem;
  * FECHA: 13/03/2025
  * DESCRIPCIÓN: Script que se encarga de gestionar el inventario del jugador.
  * VERSIÓN: 1.0 
+ * 1.1 AppearanceChangeMenu, appearanceChangeEnabled, mapMenu, mapEnabled.
  */
 
 public class InventoryManager : MonoBehaviour
@@ -17,6 +18,12 @@ public class InventoryManager : MonoBehaviour
     #region Variables
     public GameObject inventoryMenu;
     public bool inventoryEnabled = false;
+    public GameObject AppearanceChangeMenu;
+    public bool appearanceChangeEnabled = false;
+    public GameObject mapMenu;
+    public bool mapEnabled = false;
+    public bool firstTime = true;
+
     public List<ItemSlot> itemSlots = new List<ItemSlot>();
     private Dictionary<ItemData, int> inventory = new Dictionary<ItemData, int>();
     public GameObject itemSlotPrefab;
@@ -96,13 +103,30 @@ public class InventoryManager : MonoBehaviour
         if (!context.performed)
             return;
 
-        if (context.control.name == "f")
-            inventoryEnabled = !inventoryEnabled;
+        if (context.control.name == "f" && firstTime)
+        {
+            inventoryEnabled = true;
+            firstTime = false;
+        }
+        else if (context.control.name == "f" && !firstTime)
+        {
+            inventoryEnabled = false;
+            appearanceChangeEnabled = false;
+            mapEnabled = false;
+            firstTime = true;
+        }
 
         if (inventoryEnabled && context.control.name == "escape") //TODO esto no funciona
+        {
             inventoryEnabled = false;
+            appearanceChangeEnabled = false;
+            mapEnabled = false;
+            firstTime = true;
+        }
 
         inventoryMenu.SetActive(inventoryEnabled);
+        AppearanceChangeMenu.SetActive(appearanceChangeEnabled);
+        mapMenu.SetActive(mapEnabled);
         Time.timeScale = inventoryEnabled ? 0 : 1;
         Cursor.visible = inventoryEnabled ? true : false; // Hace visible el cursor
         Cursor.lockState = inventoryEnabled ? CursorLockMode.None : CursorLockMode.Locked; // Bloquea el cursor
