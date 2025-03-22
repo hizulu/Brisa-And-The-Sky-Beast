@@ -6,7 +6,8 @@ using UnityEngine;
  * AUTOR: Lucía García López
  * FECHA: 22/03/2025
  * DESCRIPCIÓN: Script que se encarga de almacenar la información del cambio de apariencia.
- * VERSIÓN: 1.0 appearanceID, appearanceName, appearanceIcon, appearanceDescription.
+ * VERSIÓN: 1.0 appearanceID, appearanceName, appearanceIcon, appearanceDescription, appearanceMaterial
+ * 1.1 objectsNeeded, isUnlocked.
  */
 
 public class AppearanceChangeData : ScriptableObject
@@ -16,4 +17,6 @@ public class AppearanceChangeData : ScriptableObject
     public Sprite appearanceIcon;
     public string appearanceDescription;
     public Material appearanceMaterial;
+    public string objectsNeeded;
+    public bool isUnlocked;
 }

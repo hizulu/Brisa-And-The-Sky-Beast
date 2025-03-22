@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a316d8c6bcfd314a8b1a078ce33e3eb, type: 3}
   m_Name: BrisaBase
   m_EditorClassIdentifier: 
-  appeatranceID: 10
-  appeatranceName: BrisaBase
-  appeatranceIcon: {fileID: 21300000, guid: 2bf99cb7d80261c49a5a0d197074a662, type: 3}
-  appeatranceDescription: Skin base de Brisa.
-  appeatranceMaterial: {fileID: 2100000, guid: 2ea47ea010e2a4448aa2b7adba17093a, type: 2}
+  appearanceID: skinBase
+  appearanceName: Brisa
+  appearanceIcon: {fileID: 21300000, guid: 2bf99cb7d80261c49a5a0d197074a662, type: 3}
+  appearanceDescription: Skin base de brisa, se obtiene desde el inicio.
+  appearanceMaterial: {fileID: 2100000, guid: 2ea47ea010e2a4448aa2b7adba17093a, type: 2}
+  objectsNeeded: 
+  isUnlocked: 1

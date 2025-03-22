@@ -891,6 +891,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryMenu: {fileID: 1243913224}
   inventoryEnabled: 0
+  AppearanceChangeMenu: {fileID: 1672321218}
+  appearanceChangeEnabled: 0
+  mapMenu: {fileID: 275122145}
+  mapEnabled: 0
+  firstTime: 1
   itemSlots:
   - {fileID: 1605097580}
   itemSlotPrefab: {fileID: 1605097579}
@@ -3054,7 +3059,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.25490198}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -3076,7 +3081,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 654804124}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1672321222}
+        m_TargetAssemblyTypeName: AppearanceUIManager, Assembly-CSharp
+        m_MethodName: ChangeAppearanceLeft
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &654804124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3090,7 +3107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.25490198}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3115,6 +3132,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 654804121}
   m_CullTransparentMesh: 1
+--- !u!114 &676937857 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1517358038723131146, guid: 8ff745458a0e5f341bee160d5f29851f, type: 3}
+  m_PrefabInstance: {fileID: 4336903298497003058}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &715091164
 GameObject:
   m_ObjectHideFlags: 0
@@ -3401,6 +3429,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 731613961}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &735406286 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1963636337322557098, guid: 8ff745458a0e5f341bee160d5f29851f, type: 3}
+  m_PrefabInstance: {fileID: 4336903298497003058}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &768879187
 GameObject:
   m_ObjectHideFlags: 0
@@ -3506,10 +3545,26 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 768879187}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &771661767 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6117873855526854466, guid: b677c4ad998fd414ba8cbeea19c3caf3, type: 3}
+  m_PrefabInstance: {fileID: 7043141718486995908}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &778713693 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3108792730934618936, guid: af1a19614c68b024186208a11f2e17c0, type: 3}
   m_PrefabInstance: {fileID: 1419017846}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &806703404 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8366269509243574891, guid: b677c4ad998fd414ba8cbeea19c3caf3, type: 3}
+  m_PrefabInstance: {fileID: 7043141718486995908}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &806703405 stripped
 RectTransform:
@@ -4919,6 +4974,17 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &1165679045 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5256947242840339381, guid: b677c4ad998fd414ba8cbeea19c3caf3, type: 3}
+  m_PrefabInstance: {fileID: 7043141718486995908}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1167308669
 GameObject:
   m_ObjectHideFlags: 0
@@ -6188,31 +6254,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1331401778}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 275122145}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1672321218}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1331401778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8437,6 +8479,7 @@ GameObject:
   - component: {fileID: 1672321219}
   - component: {fileID: 1672321221}
   - component: {fileID: 1672321220}
+  - component: {fileID: 1672321222}
   m_Layer: 5
   m_Name: AppearanceChange Panel
   m_TagString: Untagged
@@ -8506,6 +8549,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672321218}
   m_CullTransparentMesh: 1
+--- !u!114 &1672321222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672321218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6310b80efa01541ac2409a960a9a10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unlockedSkinPanel: {fileID: 1779924658}
+  blockedSkinPanel: {fileID: 806703404}
+  appearanceImage: {fileID: 1368328022}
+  unlockedNameText: {fileID: 676937857}
+  unlockedDescriptionText: {fileID: 735406286}
+  blockedNameText: {fileID: 1165679045}
+  blockedDescriptionText: {fileID: 771661767}
+  objectsNeededText: {fileID: 1818338131}
+  appearances:
+  - {fileID: 11400000, guid: 7c6ec63dcb217b148a2778841812538e, type: 2}
+  - {fileID: 11400000, guid: 09df38b04ff8b894a9d59897984019c0, type: 2}
 --- !u!1 &1690357332
 GameObject:
   m_ObjectHideFlags: 0
@@ -8778,6 +8844,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704030678}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1779924658 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5683681601629333668, guid: 8ff745458a0e5f341bee160d5f29851f, type: 3}
+  m_PrefabInstance: {fileID: 4336903298497003058}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1811038108
 GameObject:
   m_ObjectHideFlags: 0
@@ -8899,6 +8970,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1811038108}
   m_CullTransparentMesh: 1
+--- !u!114 &1818338131 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5702697167306674581, guid: b677c4ad998fd414ba8cbeea19c3caf3, type: 3}
+  m_PrefabInstance: {fileID: 7043141718486995908}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1829720568
 GameObject:
   m_ObjectHideFlags: 0
@@ -8959,7 +9041,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.25490198}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -8981,7 +9063,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1829720571}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1672321222}
+        m_TargetAssemblyTypeName: AppearanceUIManager, Assembly-CSharp
+        m_MethodName: ChangeAppearanceRight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1829720571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8995,7 +9089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.25490198}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10132,7 +10226,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5683681601629333668, guid: 8ff745458a0e5f341bee160d5f29851f, type: 3}
       propertyPath: m_Name
-      value: EnabledSkin Panel
+      value: UnlockedSkin Panel
       objectReference: {fileID: 0}
     - target: {fileID: 5683681601629333668, guid: 8ff745458a0e5f341bee160d5f29851f, type: 3}
       propertyPath: m_IsActive
@@ -10379,7 +10473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8366269509243574891, guid: b677c4ad998fd414ba8cbeea19c3caf3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
