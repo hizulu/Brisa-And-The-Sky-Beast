@@ -110,10 +110,13 @@ public class AppearanceUIManager : MonoBehaviour
 
     public void ApplyAppearanceToCharacter()
     {
-        if (appearances.Count > 0 && appearances[currentAppearanceIndex].isUnlocked && characterAppearanceManager != null)
+        if (appearances.Count > 0 && characterAppearanceManager != null)
         {
             characterAppearanceManager.ChangeAppearance(appearances[currentAppearanceIndex]);
         }
+        else
+        {
+            Debug.LogError("No hay apariencias en la lista o CharacterAppearanceManager no está asignado.");
+        }
     }
-
 }

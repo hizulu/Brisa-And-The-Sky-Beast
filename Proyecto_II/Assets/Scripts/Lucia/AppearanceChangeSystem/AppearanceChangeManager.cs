@@ -2,16 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class CharacterAppearanceManager : MonoBehaviour
 {
     public Renderer characterRenderer;
-    public AppearanceChangeData appearanceData;
-
-    void Start()
-    {
-        ApplyAppearance(appearanceData);
-    }
+    private AppearanceChangeData currentAppearance;
+    private AppearanceChangeData appearanceData;
 
     public void ChangeAppearance(AppearanceChangeData newAppearance)
     {
@@ -30,7 +25,7 @@ public class CharacterAppearanceManager : MonoBehaviour
 
             if (materials.Length > 1)
             {
-                materials[0] = appearance.appearanceMaterial;
+                materials[0] = new Material(appearance.appearanceMaterial); // Forzar cambio creando una nueva instancia
                 characterRenderer.materials = materials;
             }
         }
