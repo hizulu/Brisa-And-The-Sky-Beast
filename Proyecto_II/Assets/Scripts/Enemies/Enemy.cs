@@ -44,13 +44,17 @@ public class Enemy : MonoBehaviour
         enemyStateMachine = new EnemyStateMachine(this);
 
         AnimEnemy = GetComponent<Animator>();
-        matForDepuration = GetComponent<Material>();
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     private void Start()
     {
         EnemyIdleBaseInstance.Initialize(gameObject, this);
+        EnemyPatrolBaseInstance.Initialize(gameObject, this);
+        EnemyChaseBaseInstance.Initialize(gameObject, this);
+        EnemyAttackBaseInstance.Initialize(gameObject, this);
+        EnemyRetreatBaseInstance.Initialize(gameObject, this);
+
         enemyStateMachine.ChangeState(enemyStateMachine.EnemyIdleState);
     }
 

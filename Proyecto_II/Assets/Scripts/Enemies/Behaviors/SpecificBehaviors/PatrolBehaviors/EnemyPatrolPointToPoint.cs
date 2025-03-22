@@ -18,7 +18,7 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-        Debug.Log("Has entrado en estado de PatrolPointToPoint");
+        Debug.Log("Has entrado en estado de Patrol - Point To Point");
         //Transform parent = transform.parent;
 
         //// Encuentra los objetos hijo por su nombre
@@ -37,6 +37,7 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     public override void DoExitLogic()
     {
         base.DoExitLogic();
+        Debug.Log("Has salid del estado de Patrol - Point To Point");
     }
 
     public override void DoFrameUpdateLogic()

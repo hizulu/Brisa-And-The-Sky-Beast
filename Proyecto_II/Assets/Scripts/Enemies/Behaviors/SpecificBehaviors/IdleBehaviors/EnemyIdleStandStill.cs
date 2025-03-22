@@ -17,7 +17,7 @@ public class EnemyIdleStandStill : EnemyIdleSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-        Debug.Log("Has entrado en estado de IDLESSTILL");
+        Debug.Log("Has entrado en estado de Idle - Stand Still");
         //enemy.anim.SetBool("isIdling", true);
 
         stillTime = Random.Range(minStillTime, maxStillTime);
@@ -27,7 +27,7 @@ public class EnemyIdleStandStill : EnemyIdleSOBase
     public override void DoExitLogic()
     {
         base.DoExitLogic();
-        Debug.Log("Has salido del estado de IDLESSTILL");
+        Debug.Log("Has salido del estado de Idle - Stand Still");
         //enemy.anim.SetBool("isIdling", false);
     }
 

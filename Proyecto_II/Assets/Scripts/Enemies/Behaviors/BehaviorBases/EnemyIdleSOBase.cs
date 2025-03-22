@@ -25,9 +25,7 @@ public class EnemyIdleSOBase : ScriptableObject
         ResetValues();
     }
 
-    public virtual void DoFrameUpdateLogic()
-    {
-    }
+    public virtual void DoFrameUpdateLogic() { }
 
     public virtual void DoPhysiscsLogic() { }
 

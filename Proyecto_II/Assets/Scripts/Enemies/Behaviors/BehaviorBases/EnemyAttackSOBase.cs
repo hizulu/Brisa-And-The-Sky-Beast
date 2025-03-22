@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyChaseSOBase : ScriptableObject
+public class EnemyAttackSOBase : ScriptableObject
 {
     protected Enemy enemy;
     protected Transform transform;
@@ -14,7 +14,7 @@ public class EnemyChaseSOBase : ScriptableObject
         this.gameObject = gameObject;
         transform = gameObject.transform;
         this.enemy = enemy;
-        Debug.Log("Estás en el script de ChaseSOBase");
+
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
@@ -25,13 +25,7 @@ public class EnemyChaseSOBase : ScriptableObject
         ResetValues();
     }
 
-    public virtual void DoFrameUpdateLogic()
-    {
-        /*if (enemy.IsAggroed)
-        {
-            enemy.StateMachine.ChangeState(enemy.ChaseState);
-        }*/
-    }
+    public virtual void DoFrameUpdateLogic() { }
 
     public virtual void DoPhysiscsLogic() { }
 
