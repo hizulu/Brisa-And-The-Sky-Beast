@@ -55,6 +55,6 @@ public class PlayerAnimationData
 
         JumpParameterHash = Animator.StringToHash(jumpParameterName);
         FallParameterHash = Animator.StringToHash(fallParameterName);
-        LandParameterHash = Animator.StringToHash(fallParameterName);
+        LandParameterHash = Animator.StringToHash(landParameterName);
     }
 }

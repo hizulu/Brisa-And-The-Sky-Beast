@@ -20,8 +20,10 @@ public class PlayerRunState : PlayerMovedState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        //if(stateMachine.MovementData.MovementInput == Vector2.zero)
-        //    stateMachine.ChangeState(stateMachine.IdleState);
+
+        // Brisa no puede correr si no está en movimiento.
+        if (stateMachine.MovementData.MovementInput == Vector2.zero)
+            stateMachine.ChangeState(stateMachine.IdleState);
     }
 
     public override void Exit()

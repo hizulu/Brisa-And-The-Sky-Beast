@@ -15,5 +15,11 @@ MonoBehaviour:
   <GroundedData>k__BackingField:
     <BaseSpeed>k__BackingField: 5
     <WalkData>k__BackingField:
-      <WalkSpeedModif>k__BackingField: 0.5
+      <WalkSpeedModif>k__BackingField: 1
       <RunSpeedModif>k__BackingField: 1
+      <CrouchSpeedModif>k__BackingField: 0.1
+    GroundCheckDistance: 0.1
+  <AirborneData>k__BackingField:
+    <BaseForceJump>k__BackingField: 4
+    <JumpData>k__BackingField:
+      <NormalJumpModif>k__BackingField: 0.5

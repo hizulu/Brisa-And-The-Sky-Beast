@@ -56,14 +56,11 @@ public class PlayerJumpState : PlayerAirborneState
     {
         if(!isJumping)
         {
-            float jumpForce = 5f;
-
-            // MIRAR POR QUÉ NO FUNCIONA CON BASEFORCEJUMP.
-            //float jumpForce = airborneData.BaseForceJump * (1 + airborneData.JumpData.NormalJumpModif);
-            //jumpForce = Mathf.Clamp(jumpForce, 0f, 10f);
-
+            float jumpForce = airborneData.BaseForceJump * (1 + stateMachine.MovementData.JumpForceModifier);
+            //jumpForce = Mathf.Clamp(jumpForce, 0f, 10f); // Por si queremos poner un tope a la fuerza de salto.
             stateMachine.Player.RbPlayer.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isJumping = true;
+            Debug.Log(jumpForce);
         }        
     }
 }
