@@ -46,7 +46,7 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
 
         _direction = (_targetPos - enemy.transform.position).normalized;
 
-        MoveEnemy();
+        enemy.MoveEnemy(_direction * PointToPointMovementSpeed);
 
         if ((enemy.transform.position - _targetPos).sqrMagnitude < 0.01f)
         {
