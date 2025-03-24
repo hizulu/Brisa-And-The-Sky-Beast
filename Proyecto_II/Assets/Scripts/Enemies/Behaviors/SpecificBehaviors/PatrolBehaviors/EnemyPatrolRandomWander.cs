@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Jone Sainz Egea
+// 24/03/2025
 [CreateAssetMenu(fileName = "Patrol-Random Wander", menuName = "Enemy Logic/Patrol Logic/Random Wander")]
 public class EnemyPatrolRandomWander : EnemyPatrolSOBase
 {
