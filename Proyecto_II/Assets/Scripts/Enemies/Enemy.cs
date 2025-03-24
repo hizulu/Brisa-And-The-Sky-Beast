@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
 
     private EnemyStateMachine enemyStateMachine;
 
+    public Rigidbody rb;
+
 
     #region States
     [SerializeField] private EnemyIdleSOBase EnemyIdleBase;
@@ -45,6 +47,7 @@ public class Enemy : MonoBehaviour
 
         AnimEnemy = GetComponent<Animator>();
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -67,5 +70,10 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         enemyStateMachine.UpdatePhysics();        
+    }
+
+    public void MoveEnemy(Vector3 velocity)
+    {
+        rb.velocity = velocity;
     }
 }
