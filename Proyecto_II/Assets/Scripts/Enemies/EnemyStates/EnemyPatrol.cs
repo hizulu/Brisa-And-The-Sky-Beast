@@ -47,9 +47,4 @@ public class EnemyPatrol : EnemyStateTemplate
         enemyStateMachine.Enemy.matForDepuration.color = Color.gray; // Depuración TEMP
         enemyStateMachine.Enemy.EnemyPatrolBaseInstance.DoExitLogic();
     }
-
-    protected override void MoveEnemy()
-    {
-
-    }
 }

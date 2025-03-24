@@ -23,13 +23,5 @@ public class EnemyStateTemplate : IState
 
     public virtual void UpdateLogic() { }
 
-    public virtual void UpdatePhysics()
-    {
-        MoveEnemy();
-    }
-
-    protected virtual void MoveEnemy()
-    {
-
-    }
+    public virtual void UpdatePhysics() { }
 }
