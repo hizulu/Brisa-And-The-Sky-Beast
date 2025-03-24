@@ -30,4 +30,11 @@ public class EnemyPatrolSOBase : ScriptableObject
     public virtual void DoPhysiscsLogic() { }
 
     public virtual void ResetValues() { }
+
+    protected virtual void MoveEnemy()
+    {
+        float speed = 5f;
+        Vector3 movementDirection = transform.forward;
+        transform.position += movementDirection * speed * Time.deltaTime;
+    }
 }
