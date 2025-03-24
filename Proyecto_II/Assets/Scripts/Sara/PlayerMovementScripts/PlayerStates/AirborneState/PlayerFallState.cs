@@ -23,6 +23,12 @@ public class PlayerFallState : PlayerAirborneState
         LandInGround();
     }
 
+    public override void UpdatePhysics()
+    {
+        base.UpdatePhysics();
+        IncreaseFallSpeed();
+    }
+
     public override void Exit()
     {
         base.Exit();
@@ -68,5 +74,15 @@ public class PlayerFallState : PlayerAirborneState
             }
         }
         return false;
+    }
+
+    private float fallSpeed = 0f;
+    private float gravityAcceleration = 9.8f;
+    private float maxSpeed = 20f;
+    private void IncreaseFallSpeed()
+    {
+        fallSpeed = Mathf.Min(fallSpeed + gravityAcceleration * Time.deltaTime, maxSpeed);
+        stateMachine.Player.RbPlayer.velocity = new Vector3(stateMachine.Player.RbPlayer.velocity.x, -fallSpeed, stateMachine.Player.RbPlayer.velocity.z);
+        Debug.Log(fallSpeed);
     }
 }
