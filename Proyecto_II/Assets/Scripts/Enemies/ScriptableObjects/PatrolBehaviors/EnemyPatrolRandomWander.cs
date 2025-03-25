@@ -9,7 +9,10 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
 {
     [SerializeField] private float minRandomRadius = 5f;
     [SerializeField] private float maxRandomRadius = 12f;
-    [SerializeField] private float randomMovementSpeed = 3f;
+    [SerializeField] private float randomWanderSpeed = 3f;
+    [SerializeField] private float playerDetectionRange = 12f;
+
+    private float playerDetectionRangeSQR = 0f;
 
     private Vector3 targetPos;
     private Vector3 direction;
@@ -18,6 +21,7 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
     {
         base.DoEnterLogic();
 
+        playerDetectionRangeSQR = playerDetectionRange * playerDetectionRange;
         targetPos = GetRandomPointInRingAroundEnemy();
     }
 
@@ -28,15 +32,20 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
 
     public override void DoFrameUpdateLogic()
     {
-        base.DoFrameUpdateLogic();
-
-        direction = (targetPos - enemy.transform.position).normalized;
-
-        enemy.MoveEnemy(direction * randomMovementSpeed);
+        base.DoFrameUpdateLogic();       
 
         if ((enemy.transform.position - targetPos).sqrMagnitude < 0.01f)
         {
             enemy.doIdle = true;
+            enemy.doPatrol = false;
+        }
+
+        float distanceToPlayerSQR = (playerTransform.position - enemy.transform.position).sqrMagnitude;
+        
+        if (distanceToPlayerSQR < playerDetectionRangeSQR)
+        {
+            Debug.Log("Debería perseguir a Brisa");
+            enemy.doChase = true;
             enemy.doPatrol = false;
         }
     }
@@ -44,6 +53,10 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
+
+        direction = (targetPos - enemy.transform.position).normalized;
+
+        enemy.MoveEnemy(direction * randomWanderSpeed);
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)

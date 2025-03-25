@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     public Rigidbody rb;
     public Material matForDepuration;
 
+    [SerializeField] float maxHealth = 100f;
+    private float currentHealth;
+
     private EnemyStateMachine enemyStateMachine;
 
     #region States
@@ -73,4 +76,29 @@ public class Enemy : MonoBehaviour
     {
         rb.velocity = velocity;
     }
+
+    #region DamageRelated Functions
+    // Function called from Player script
+    public void DamageEnemy (float damageAmount)
+    {
+        currentHealth -= damageAmount;
+        // TODO: anim.SetTrigger("getDamaged");
+        // TODO: play enemy damage sound depending on enemy
+        matForDepuration.color = Color.red; // TEMP
+
+        if (currentHealth <= Mathf.Epsilon)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        MoveEnemy(Vector3.zero);
+        // TODO: anim.SetBool("isDead", true);
+        // TODO: play enemy death sound depending on enemy
+        // TODO: character deactivation (collider, script...)
+        Destroy(this.gameObject, 1f); // TEMP
+    }
+    #endregion
 }
