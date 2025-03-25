@@ -21,7 +21,7 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
 
         distanceToStopAttackStateSQR = distanceToStopAttackState * distanceToStopAttackState;
 
-        DoThreeZigZags();
+        enemy.StartCoroutine(DoThreeZigZags());
     }
 
     public override void DoExitLogic()
@@ -57,18 +57,32 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
         base.ResetValues();
     }
 
-    private void DoThreeZigZags()
+    private IEnumerator DoThreeZigZags()
     {
-        // TODO: calcula el primer punto dependiendo de la posición del jugador
-        // Cuando llega a ese punto calcula el segundo punto del zig zag teniendo en cuenta que el jugador se ha podido mover
-        // Lo mismo con el tercer punto del zig zag
-        // Después del último punto salta directo al jugador y llama a la función attack (cuando ya está "encima" del jugador)
+        Vector3 startPosition = enemy.transform.position;
+        Vector3 directionToPlayer = (playerTransform.position - startPosition).normalized;
+        Vector3 right = Vector3.Cross(Vector3.up, directionToPlayer).normalized; // Vector perpendicular para el zig-zag
+
+        for (int i = 0; i < 3; i++)
+        {
+            Vector3 jumpTarget = startPosition + directionToPlayer * (i + 1) * 2f; // Avanza hacia el jugador
+            jumpTarget += (i % 2 == 0 ? right : -right) * lateralOffset; // Alterna lado de zig-zag con el desplazamiento lateral deseado
+
+            JumpTo(jumpTarget);
+
+            yield return new WaitForSeconds(timeBetweenJumps);
+        }
+
+        // Después de los tres zig-zags
+        JumpTo(playerTransform.position);
+        yield return new WaitForSeconds(0.2f); // Tiempo de espera de salto final
+        Attack();
     }
 
     private void JumpTo(Vector3 target)
     {
-        Vector3 jumpDirection = (target - enemy.transform.position).normalized;
         enemy.rb.velocity = Vector3.zero; // Resetea velocidad antes del nuevo salto
+        Vector3 jumpDirection = (target - enemy.transform.position).normalized;
         enemy.rb.AddForce(jumpDirection * jumpForce + Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
