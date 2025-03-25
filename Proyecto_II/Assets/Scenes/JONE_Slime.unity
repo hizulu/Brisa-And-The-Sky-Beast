@@ -1248,7 +1248,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &879111205
 MonoBehaviour:
@@ -1266,7 +1266,7 @@ MonoBehaviour:
   rb: {fileID: 879111204}
   matForDepuration: {fileID: 2100000, guid: c78e026279f76194294efd8c0fb8bc01, type: 2}
   EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
-  EnemyPatrolBase: {fileID: 11400000, guid: 134b982aa64ebec4a837cdbbe039b9d8, type: 2}
+  EnemyPatrolBase: {fileID: 11400000, guid: b0e5a092ec1ef7440a2c5e8107b4185b, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: bc983e81189273949be3796722c61808, type: 2}
   EnemyAttackBase: {fileID: 11400000, guid: 2ca1387201d44d74890456e83dd96210, type: 2}
   EnemyRetreatBase: {fileID: 11400000, guid: 3f4d915fcd62bfc48bd2b2dd2993b489, type: 2}
