@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
-    [SerializeField] private GameObject opcionesMenu;
+    [SerializeField] private GameObject creditosMenu;
 
     private void Start()
     {
         mainMenu.SetActive(true);
-        opcionesMenu.SetActive(false);
+        creditosMenu.SetActive(false);
     }
 
     public void PlayGame()
@@ -19,16 +19,16 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
     }
 
-    public void Opciones()
+    public void Creditos()
     {
         mainMenu.SetActive(false);
-        opcionesMenu.SetActive(true);
+        creditosMenu.SetActive(true);
     }
 
     public void Volver()
     {
         mainMenu.SetActive(true);
-        opcionesMenu.SetActive(false);
+        creditosMenu.SetActive(false);
     }
 
     public void ExitGame()
