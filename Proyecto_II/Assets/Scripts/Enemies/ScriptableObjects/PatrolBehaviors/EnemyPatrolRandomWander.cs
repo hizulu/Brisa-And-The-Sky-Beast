@@ -40,7 +40,7 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
             enemy.doPatrol = false;
         }
 
-        float distanceToPlayerSQR = (playerTransform.position - enemy.transform.position).sqrMagnitude;
+        float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
         
         if (distanceToPlayerSQR < playerDetectionRangeSQR)
         {

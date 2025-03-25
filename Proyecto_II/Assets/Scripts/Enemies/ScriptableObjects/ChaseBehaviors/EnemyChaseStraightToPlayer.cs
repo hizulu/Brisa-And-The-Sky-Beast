@@ -30,7 +30,7 @@ public class EnemyChaseStraightToPlayer : EnemyChaseSOBase
     {
         base.DoFrameUpdateLogic();
 
-        float distanceToPlayerSQR = (playerTransform.position - enemy.transform.position).sqrMagnitude;
+        float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
 
         if (distanceToPlayerSQR < playerAttackRangeSQR)
         {
@@ -50,7 +50,7 @@ public class EnemyChaseStraightToPlayer : EnemyChaseSOBase
     {
         base.DoPhysicsLogic();
 
-        direction = (playerTransform.position - enemy.transform.position).normalized;
+        direction = (enemy.transform.position - playerTransform.position).normalized;
 
         enemy.MoveEnemy(direction * chasingSpeed);
     }
