@@ -23,15 +23,14 @@ public class PlayerJumpState : PlayerAirborneState
 
     public override void UpdateLogic()
     {
-        base.UpdateLogic();
-        FinishJump();
+        base.UpdateLogic();        
     }
 
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
-        Jump();
         JumpingOrFalling();
+        Jump();
     }
 
     public override void Exit()
@@ -61,21 +60,23 @@ public class PlayerJumpState : PlayerAirborneState
             //jumpForce = Mathf.Clamp(jumpForce, 0f, 10f); // Por si queremos poner un tope a la fuerza de salto.
             stateMachine.Player.RbPlayer.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isJumping = true;
-            Debug.Log(jumpForce);
         }        
     }
 
     private void JumpingOrFalling()
     {
-        if (stateMachine.Player.RbPlayer.velocity.y < 5)
+        Debug.Log(stateMachine.Player.RbPlayer.velocity.y);
+
+        if (stateMachine.Player.RbPlayer.velocity.y >= 0)
         {
+            Debug.Log("Velocidad en Y:" + " " + stateMachine.Player.RbPlayer.velocity.y);
             Debug.Log("Es un salto.");
-            return;
         }
-        else if(stateMachine.Player.RbPlayer.velocity.y >= 5)
+        else if (stateMachine.Player.RbPlayer.velocity.y <= -3)
         {
             stateMachine.ChangeState(stateMachine.FallState);
             Debug.Log("Has pasado de salto a caída.");
         }
     }
+
 }
