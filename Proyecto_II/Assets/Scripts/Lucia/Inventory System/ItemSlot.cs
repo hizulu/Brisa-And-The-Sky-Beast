@@ -29,7 +29,6 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     {
         itemImageAndDescription = FindObjectOfType<ItemImageAndDescription>();
 
-        // Only deactivate the slot if it doesn't have an item
         if (IsEmpty())
         {
             gameObject.SetActive(false);
