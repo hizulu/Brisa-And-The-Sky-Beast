@@ -1,5 +1,14 @@
+#region Bibliotecas
 using System.Collections;
 using UnityEngine;
+#endregion
+
+/* NOMBRE CLASE: Pick Up Objects
+ * AUTOR: Lucía García López
+ * FECHA: 13/03/2025
+ * DESCRIPCIÓN: Script que se encarga de recoger objetos del escenario.
+ * VERSIÓN: 1.0 
+ */
 
 public class PickUpObjects : MonoBehaviour
 {

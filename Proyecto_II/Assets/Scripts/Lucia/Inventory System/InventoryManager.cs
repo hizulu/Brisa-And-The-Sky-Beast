@@ -1,20 +1,36 @@
+#region Bibliotecas
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+#endregion
+
+/* NOMBRE CLASE: Inventory Manager
+ * AUTOR: Lucía García López
+ * FECHA: 13/03/2025
+ * DESCRIPCIÓN: Script que se encarga de gestionar el inventario del jugador.
+ * VERSIÓN: 1.0 
+ * 1.1 AppearanceChangeMenu, appearanceChangeEnabled, mapMenu, mapEnabled.
+ */
 
 public class InventoryManager : MonoBehaviour
 {
-    public static InventoryManager Instance { get; private set; }
-
+    #region Variables
     public GameObject inventoryMenu;
-    private bool inventoryEnabled = false;
+    public bool inventoryEnabled = false;
+    public GameObject AppearanceChangeMenu;
+    public bool appearanceChangeEnabled = false;
+    public GameObject mapMenu;
+    public bool mapEnabled = false;
+    public bool firstTime = true;
+
     public List<ItemSlot> itemSlots = new List<ItemSlot>();
-
     private Dictionary<ItemData, int> inventory = new Dictionary<ItemData, int>();
-
     public GameObject itemSlotPrefab;
     public Transform inventoryPanel;
+    #endregion
+
+    public static InventoryManager Instance { get; private set; }
 
     private void Awake()
     {
@@ -28,22 +44,18 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-      
-    }
-
+    //Añadir un ítem al inventario usando un ItemData y una cantidad, si ya existe, sumar la cantidad
     public void AddItem(ItemData itemData, int quantity)
     {
-        if (inventory.ContainsKey(itemData))
+        if (inventory.ContainsKey(itemData)) //Inventory es el diccionario
         {
-            inventory[itemData] += quantity; // Sumar correctamente
-            UpdateItemSlot(itemData, inventory[itemData]); // Actualizar UI
+            inventory[itemData] += quantity; //Suma la cantidad al ítem existente
+            UpdateItemSlot(itemData, inventory[itemData]); //Actualiza la cantidad en el slot
         }
         else
         {
             inventory[itemData] = quantity;
-            AssignOrCreateItemSlot(itemData, quantity);
+            AssignOrCreateItemSlot(itemData, quantity); //Crea un nuevo slot si no existe
         }
     }
 
@@ -59,22 +71,25 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    //Asignar o crear un nuevo slot para un ítem
     private void AssignOrCreateItemSlot(ItemData itemData, int quantity)
     {
-        // Si el primer slot está vacío, úsalo en vez de crear uno nuevo
+        // Buscar un slot vacío y asignarle el ítem
         foreach (ItemSlot slot in itemSlots)
         {
             if (slot.IsEmpty())
             {
                 slot.SetItem(itemData, quantity);
+                slot.gameObject.SetActive(true);
                 return;
             }
         }
 
-        // Si no hay slots vacíos, crear uno nuevo
+        // Si no hay slots vacíos, crear uno nuevo y activarlo
         GameObject newSlot = Instantiate(itemSlotPrefab, inventoryPanel);
-        ItemSlot slotComponent = newSlot.GetComponent<ItemSlot>();
+        newSlot.SetActive(true);
 
+        ItemSlot slotComponent = newSlot.GetComponent<ItemSlot>();
         if (slotComponent != null)
         {
             slotComponent.SetItem(itemData, quantity);
@@ -82,19 +97,39 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    //Abrir y cerrar inventario usando el Input System
     public void OpenCloseInventory(InputAction.CallbackContext context)
     {
         if (!context.performed)
             return;
 
-        if(context.control.name == "f")
-            inventoryEnabled = !inventoryEnabled;
-
-        if (inventoryEnabled && context.control.name == "escape")
+        if (context.control.name == "f" && firstTime)
+        {
+            inventoryEnabled = true;
+            firstTime = false;
+        }
+        else if (context.control.name == "f" && !firstTime)
+        {
             inventoryEnabled = false;
+            appearanceChangeEnabled = false;
+            mapEnabled = false;
+            firstTime = true;
+        }
+
+        if (inventoryEnabled && context.control.name == "escape") //TODO esto no funciona
+        {
+            inventoryEnabled = false;
+            appearanceChangeEnabled = false;
+            mapEnabled = false;
+            firstTime = true;
+        }
 
         inventoryMenu.SetActive(inventoryEnabled);
+        AppearanceChangeMenu.SetActive(appearanceChangeEnabled);
+        mapMenu.SetActive(mapEnabled);
         Time.timeScale = inventoryEnabled ? 0 : 1;
+        Cursor.visible = inventoryEnabled ? true : false; // Hace visible el cursor
+        Cursor.lockState = inventoryEnabled ? CursorLockMode.None : CursorLockMode.Locked; // Bloquea el cursor
     }
 
     #region MÉTODOS ANTIGUOS MODIFICADOS
