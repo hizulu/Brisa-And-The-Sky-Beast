@@ -14,7 +14,7 @@ public class PlayerFallState : PlayerAirborneState
     {
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
-        Debug.Log("Has entrado en el estado de CAYENDO");
+        //Debug.Log("Has entrado en el estado de CAYENDO");
     }
 
     public override void UpdateLogic()
@@ -33,7 +33,7 @@ public class PlayerFallState : PlayerAirborneState
     {
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
-        Debug.Log("Has salido del estado de CAYENDO");
+        //Debug.Log("Has salido del estado de CAYENDO");
     }
 
     //protected override void ContactWithGround(Collider collider)
@@ -69,7 +69,7 @@ public class PlayerFallState : PlayerAirborneState
         {
             if (collider.gameObject.layer == LayerMask.NameToLayer("Ground") && !collider.isTrigger)
             {
-                Debug.Log("Has tocado suelo");
+                //Debug.Log("Has tocado suelo");
                 return true;
             }
         }

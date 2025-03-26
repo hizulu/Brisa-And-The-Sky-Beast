@@ -31,6 +31,7 @@ public class PlayerJumpState : PlayerAirborneState
     {
         base.UpdatePhysics();
         Jump();
+        JumpingOrFalling();
     }
 
     public override void Exit()
@@ -62,5 +63,19 @@ public class PlayerJumpState : PlayerAirborneState
             isJumping = true;
             Debug.Log(jumpForce);
         }        
+    }
+
+    private void JumpingOrFalling()
+    {
+        if (stateMachine.Player.RbPlayer.velocity.y < 5)
+        {
+            Debug.Log("Es un salto.");
+            return;
+        }
+        else if(stateMachine.Player.RbPlayer.velocity.y >= 5)
+        {
+            stateMachine.ChangeState(stateMachine.FallState);
+            Debug.Log("Has pasado de salto a caída.");
+        }
     }
 }

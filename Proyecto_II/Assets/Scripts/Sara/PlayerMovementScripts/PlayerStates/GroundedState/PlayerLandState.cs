@@ -15,7 +15,7 @@ public class PlayerLandState : PlayerGroundedState
     {
         landFinish = false;
         base.Enter();
-        Debug.Log("Has entrado en estado de ATERRIZAR");
+        //Debug.Log("Has entrado en estado de ATERRIZAR");
         StartAnimation(stateMachine.Player.PlayerAnimationData.LandParameterHash);
     }
 
@@ -29,7 +29,7 @@ public class PlayerLandState : PlayerGroundedState
     {
         landFinish = false;
         base.Exit();
-        Debug.Log("Has salido del estado de ATERRIZAR");
+        //Debug.Log("Has salido del estado de ATERRIZAR");
         StopAnimation(stateMachine.Player.PlayerAnimationData.LandParameterHash);
     }
 
