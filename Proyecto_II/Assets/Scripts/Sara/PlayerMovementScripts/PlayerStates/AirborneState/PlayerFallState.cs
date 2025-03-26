@@ -52,7 +52,6 @@ public class PlayerFallState : PlayerAirborneState
     {
         if (IsGrounded())
         {
-            Debug.Log("Deberías aterrizar");
             stateMachine.ChangeState(stateMachine.LandState);
             return;
         }
@@ -83,6 +82,5 @@ public class PlayerFallState : PlayerAirborneState
     {
         fallSpeed = Mathf.Min(fallSpeed + gravityAcceleration * Time.deltaTime, maxSpeed);
         stateMachine.Player.RbPlayer.velocity = new Vector3(stateMachine.Player.RbPlayer.velocity.x, -fallSpeed, stateMachine.Player.RbPlayer.velocity.z);
-        Debug.Log(fallSpeed);
     }
 }
