@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
  * DESCRIPCIÓN: Script que se encarga de gestionar el inventario del jugador.
  * VERSIÓN: 1.0 
  * 1.1 AppearanceChangeMenu, appearanceChangeEnabled, mapMenu, mapEnabled.
+ * 1.2 powersMenu, powersEnabled.
  */
 
 public class InventoryManager : MonoBehaviour
@@ -23,6 +24,8 @@ public class InventoryManager : MonoBehaviour
     public GameObject mapMenu;
     public bool mapEnabled = false;
     public bool firstTime = true;
+    public GameObject powersMenu;
+    public bool powersEnabled = false;
 
     public List<ItemSlot> itemSlots = new List<ItemSlot>();
     private Dictionary<ItemData, int> inventory = new Dictionary<ItemData, int>();
@@ -113,6 +116,7 @@ public class InventoryManager : MonoBehaviour
             inventoryEnabled = false;
             appearanceChangeEnabled = false;
             mapEnabled = false;
+            powersEnabled = false;
             firstTime = true;
         }
 
@@ -121,12 +125,14 @@ public class InventoryManager : MonoBehaviour
             inventoryEnabled = false;
             appearanceChangeEnabled = false;
             mapEnabled = false;
+            powersEnabled = false;
             firstTime = true;
         }
 
         inventoryMenu.SetActive(inventoryEnabled);
         AppearanceChangeMenu.SetActive(appearanceChangeEnabled);
         mapMenu.SetActive(mapEnabled);
+        powersMenu.SetActive(powersEnabled);
         Time.timeScale = inventoryEnabled ? 0 : 1;
         Cursor.visible = inventoryEnabled ? true : false; // Hace visible el cursor
         Cursor.lockState = inventoryEnabled ? CursorLockMode.None : CursorLockMode.Locked; // Bloquea el cursor

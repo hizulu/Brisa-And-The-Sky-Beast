@@ -989,6 +989,8 @@ MonoBehaviour:
   mapMenu: {fileID: 275122145}
   mapEnabled: 0
   firstTime: 1
+  powersMenu: {fileID: 1725009581}
+  powersEnabled: 0
   itemSlots:
   - {fileID: 1605097580}
   itemSlotPrefab: {fileID: 1605097579}
@@ -7489,7 +7491,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1331401778}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 275122145}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1725009581}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1331401778
 MonoBehaviour:
   m_ObjectHideFlags: 0
