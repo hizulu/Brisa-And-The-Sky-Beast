@@ -57,7 +57,7 @@ public class PlayerMovementState : IState
         {
             ContactWithGround(collider);
             //Debug.Log(collider.gameObject.name);
-            return;
+            //return;
         }
     }
 
@@ -66,7 +66,7 @@ public class PlayerMovementState : IState
         if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
         {
             NoContactWithGround(collider);
-            return;
+            //return;
         }
     }
 

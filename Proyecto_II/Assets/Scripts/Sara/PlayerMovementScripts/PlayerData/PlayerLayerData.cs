@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class PlayerLayerData
 {
-    [field: SerializeField] public LayerMask GroundLayer { get; private set; }
+    [field: SerializeField] public LayerMask EnviromentLayer { get; private set; }
 
     public bool ContainsLayer(LayerMask layerMask, int layer)
     {
@@ -15,6 +15,6 @@ public class PlayerLayerData
 
     public bool IsGroundLayer(int layer)
     {
-        return ContainsLayer(GroundLayer, layer);
+        return ContainsLayer(EnviromentLayer, layer);
     }
 }
