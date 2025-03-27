@@ -31,7 +31,8 @@ public class Player : MonoBehaviour
 
     public PlayerInput PlayerInput { get; private set; }
 
-
+    private float playerMaxHealth = 100f;
+    private float playerCurrentHealth;
 
     private void Awake()
     {
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerStateMachine.ChangeState(playerStateMachine.IdleState);
+        playerCurrentHealth = playerMaxHealth;
     }
     private void FixedUpdate()
     {
@@ -66,6 +68,7 @@ public class Player : MonoBehaviour
     {
         playerStateMachine.HandleInput();
         playerStateMachine.UpdateLogic();
+        Debug.Log($"Player current health is: {playerCurrentHealth}");
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -83,4 +86,21 @@ public class Player : MonoBehaviour
         InventoryManager.Instance.OpenCloseInventory(context);
     }
 
+    #region SaveAndLoadFuncionts
+
+    public void SetPosition(Vector3 savedPosition)
+    {
+        transform.position = savedPosition;
+    }
+
+    public float GetHealth()
+    {
+        return playerCurrentHealth;
+    }
+
+    public void SetHealth(float savedHealth)
+    {
+        playerCurrentHealth = savedHealth;
+    }
+    #endregion
 }

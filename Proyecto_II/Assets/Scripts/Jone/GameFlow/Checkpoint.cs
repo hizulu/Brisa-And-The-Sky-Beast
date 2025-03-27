@@ -6,9 +6,12 @@ public class Checkpoint : MonoBehaviour
 {
     public bool Activated = false;
 
-    private SpriteRenderer thisSpriteRenderer;
+    public Material green;
+    public Material magenta;
 
     public static List<GameObject> CheckPointsList;
+
+    private SaveManager saveManager;
 
     void Start()
     {
@@ -22,47 +25,47 @@ public class Checkpoint : MonoBehaviour
             CheckPointsList.Add(gameObject);
         }
 
-        thisSpriteRenderer = GetComponent<SpriteRenderer>();
-        thisSpriteRenderer.color = Color.magenta;
+        GetComponent<MeshRenderer>().material = magenta;
+
+        saveManager = SaveManager.instance;
     }
 
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             ActivateCheckPoint();
+            saveManager.SaveSceneState();
         }
     }
 
     private void ActivateCheckPoint()
     {
+        // Deactivate all the checkpoints
         foreach (GameObject cp in CheckPointsList)
         {
             cp.GetComponent<Checkpoint>().Activated = false;
-            cp.GetComponent<SpriteRenderer>().color = Color.magenta;
+            cp.GetComponent<MeshRenderer>().material = magenta;
         }
 
+        // Activate current checkpoint
         Activated = true;
-        thisSpriteRenderer.color = Color.green;
+        GetComponent<MeshRenderer>().material = green;
     }
 
     public static Vector3 GetActiveCheckPointPosition()
     {
-        Vector3 result = new Vector3(0, -9.5f, -5f);
+        if (CheckPointsList == null || CheckPointsList.Count == 0)
+            return Vector3.zero; // TODO: change for default position
 
-        if (CheckPointsList != null)
+        foreach (GameObject cp in CheckPointsList)
         {
-            foreach (GameObject cp in CheckPointsList)
+            if (cp.GetComponent<Checkpoint>().Activated)
             {
-                if (cp.GetComponent<Checkpoint>().Activated)
-                {
-                    result = cp.transform.position;
-                    break;
-                }
+                return cp.transform.position;
             }
         }
 
-        return result;
+        return CheckPointsList[0].transform.position;
     }
 }
