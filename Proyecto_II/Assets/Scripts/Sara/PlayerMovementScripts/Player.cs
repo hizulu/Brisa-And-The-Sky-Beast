@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [field: Header("Animaciones")]
     [field: SerializeField] public PlayerAnimationData PlayerAnimationData { get; private set; }
 
+    [SerializeField] public GameObject WeaponPlayer;
     public Rigidbody RbPlayer { get; private set; }
     public BoxCollider GroundCheckCollider { get; private set; }
     public Animator AnimPlayer { get; private set; }
@@ -82,5 +83,4 @@ public class Player : MonoBehaviour
     {
         InventoryManager.Instance.OpenCloseInventory(context);
     }
-
 }

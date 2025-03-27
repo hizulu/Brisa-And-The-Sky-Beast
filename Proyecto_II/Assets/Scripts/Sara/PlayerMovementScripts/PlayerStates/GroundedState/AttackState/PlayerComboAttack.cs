@@ -23,6 +23,15 @@ public class PlayerComboAttack : PlayerAttackState
         FinishAttack01();
     }
 
+    public override void OnTriggerEnter(Collider collider)
+    {
+        if (stateMachine.Player.WeaponPlayer.CompareTag("Enemy"))
+        {
+            Debug.Log("Daño al enemigo");
+            collider.gameObject.SetActive(false);
+        }
+    }
+
     public override void Exit()
     {
         attackFinish = false;

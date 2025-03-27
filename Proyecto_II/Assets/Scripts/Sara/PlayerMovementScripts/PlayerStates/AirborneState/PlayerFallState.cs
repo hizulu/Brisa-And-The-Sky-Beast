@@ -26,7 +26,7 @@ public class PlayerFallState : PlayerAirborneState
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
-        IncreaseFallSpeed();
+        //IncreaseFallSpeed();
     }
 
     public override void Exit()
@@ -52,6 +52,7 @@ public class PlayerFallState : PlayerAirborneState
     {
         if (IsGrounded())
         {
+            Debug.Log("Pasas a ATERRIZAR");
             stateMachine.ChangeState(stateMachine.LandState);
             return;
         }
@@ -66,12 +67,19 @@ public class PlayerFallState : PlayerAirborneState
 
         foreach (Collider collider in colliders)
         {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Ground") && !collider.isTrigger)
+            string objName = collider.gameObject.name;
+            string layerName = LayerMask.LayerToName(collider.gameObject.layer);
+            bool isTrigger = collider.isTrigger;
+
+            Debug.Log($"Objeto detectado: {objName} | Capa: {layerName} | isTrigger: {isTrigger}");
+
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
             {
-                //Debug.Log("Has tocado suelo");
+                Debug.Log("Has tocado suelo");
                 return true;
             }
         }
+        Debug.Log("No estás tocando suelo");
         return false;
     }
 

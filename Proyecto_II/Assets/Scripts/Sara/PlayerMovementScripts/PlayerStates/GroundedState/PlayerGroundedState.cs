@@ -100,7 +100,7 @@ public class PlayerGroundedState : PlayerMovementState
 
         foreach (Collider collider in colliders)
         {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Ground") && !collider.isTrigger)
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
             {
                 return true;
             }

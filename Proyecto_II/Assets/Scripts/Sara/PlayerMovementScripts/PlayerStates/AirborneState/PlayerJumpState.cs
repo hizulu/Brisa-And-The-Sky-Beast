@@ -15,7 +15,7 @@ public class PlayerJumpState : PlayerAirborneState
     public override void Enter()
     {
         jumpFinish = false;
-        stateMachine.MovementData.JumpForceModifier = airborneData.JumpData.NormalJumpModif;
+        stateMachine.MovementData.JumpForceModifier = 0f;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.JumpParameterHash);
         //Debug.Log("Has entrado en el estado de SALTAR.");
@@ -30,7 +30,7 @@ public class PlayerJumpState : PlayerAirborneState
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
-        JumpingOrFalling();
+        //JumpingOrFalling();
         Jump();
     }
 
@@ -49,10 +49,10 @@ public class PlayerJumpState : PlayerAirborneState
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             jumpFinish = true;
-            stateMachine.ChangeState(stateMachine.IdleState);
+            stateMachine.ChangeState(stateMachine.FallState);
         }
     }
-    
+
     protected override void Jump()
     {
         if(!isJumping)
@@ -64,13 +64,13 @@ public class PlayerJumpState : PlayerAirborneState
         }        
     }
 
-    private void JumpingOrFalling()
-    {
-        float velY = stateMachine.Player.RbPlayer.velocity.y;
+    //private void JumpingOrFalling()
+    //{
+    //    float velY = stateMachine.Player.RbPlayer.velocity.y;
 
-        if (velY > -3)
-            return;
-        else
-            stateMachine.ChangeState(stateMachine.FallState);
-    }
+    //    if (velY > -5)
+    //        return;
+    //    else
+    //        stateMachine.ChangeState(stateMachine.FallState);
+    //}
 }
