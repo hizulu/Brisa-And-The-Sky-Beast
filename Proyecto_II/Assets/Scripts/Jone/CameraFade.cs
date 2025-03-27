@@ -52,7 +52,6 @@ public class CameraFade : MonoBehaviour
                 time = 1f;
                 direction = -1;
             }
-
         }
     }
     public void OnGUI()
