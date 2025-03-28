@@ -9,9 +9,8 @@ public class HitBox : MonoBehaviour
         HittableElement hittable = other.GetComponent<HittableElement>();
         if (hittable != null)
         {
+            Debug.Log("Detecta objeto hitteable");
             hittable.OnHit();
         }
-        else
-            Debug.Log("No se ha detectado un objeto con el que colisionar");
     }
 }
