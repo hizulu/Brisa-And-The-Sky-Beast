@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lever : MonoBehaviour
+public class Lever : HittableElement
 {
     [SerializeField] private LeverActionBase leverAction;
 
     private bool isActivated = false;
 
-    public void LeverActioned()
+    public override void OnHit()
     {
         DoLeverAnimation();
 
