@@ -9,12 +9,14 @@ using static UnityEditor.ShaderData;
  * AUTOR: Jone Sainz Egea
  * FECHA: 12/03/2025
  * DESCRIPCIÓN: Script base que se encarga del flujo del juego
- * VERSIÓN: 1.0 estructura básica de singleton
+ * VERSIÓN: 1.0 estructura básica de singleton y funciones de pausa
+ *              1.1 funciones de guardado y cargado
  */
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    private SaveManager saveManager;
 
     // Estructura Singleton
     void Awake()
@@ -28,6 +30,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        saveManager = SaveManager.instance;
     }
 
     private void OnEnable()
@@ -68,6 +75,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SaveSceneData()
+    {
+        saveManager.SaveSceneState();
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.sceneLoaded += LoadSavedSceneChanges; // Registered when scene is loaded
+    }
+
+    private void LoadSavedSceneChanges(Scene scene, LoadSceneMode mode)
+    {
+        SceneManager.sceneLoaded -= LoadSavedSceneChanges; // Removes the method so that it isn't called multiple times
+        saveManager.LoadSceneState();
+        Checkpoint.GetActiveCheckPointPosition();
+    }
+
     void PauseGame()
     {
         Time.timeScale = 0f;
@@ -77,5 +102,15 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         //UIManager.Instance.QuitarPantallaPausa();
+    }
+
+    public void LoadNextScene()
+    {
+        // TODO
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }
