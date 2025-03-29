@@ -81,27 +81,32 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected override void NoContactWithGround(Collider collider)
     {
-        if (IsGrounded())
+        if (!IsGrounded())
         {
-            Debug.Log("Estás tocando suelo.");
-            return;
+            stateMachine.ChangeState(stateMachine.FallState);
         }
-
-        stateMachine.ChangeState(stateMachine.FallState);
-        Debug.Log("Estás cayendo");
     }
 
     private bool IsGrounded()
     {
+        //Debug.Log("Se ha ejecutado el método IsGrounded");
+
         float radius = groundedData.GroundCheckDistance;
         Vector3 groundCheckPosition = stateMachine.Player.GroundCheckCollider.transform.position;
-
         Collider[] colliders = Physics.OverlapSphere(groundCheckPosition, radius);
+        //Debug.Log($"Número de colisiones detectadas: {colliders.Length}");
 
         foreach (Collider collider in colliders)
         {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Ground") && !collider.isTrigger)
+            string objName = collider.gameObject.name;
+            string layerName = LayerMask.LayerToName(collider.gameObject.layer);
+            bool isTrigger = collider.isTrigger;
+
+            //Debug.Log($"Detectado: {objName} | Capa: {layerName} | isTrigger: {isTrigger}");
+
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
             {
+                Debug.Log("Se ha detectado suelo");
                 return true;
             }
         }

@@ -57,7 +57,7 @@ public class PlayerMovementState : IState
         {
             ContactWithGround(collider);
             //Debug.Log(collider.gameObject.name);
-            return;
+            //return;
         }
     }
 
@@ -66,7 +66,7 @@ public class PlayerMovementState : IState
         if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
         {
             NoContactWithGround(collider);
-            return;
+            //return;
         }
     }
 
@@ -151,15 +151,6 @@ public class PlayerMovementState : IState
         stateMachine.ChangeState(stateMachine.RunState);
     }
 
-    
-
-    
-
-    //private bool IsGrounded()
-    //{
-    //    return Physics.Raycast(stateMachine.Player.RbPlayer.position, Vector3.down, groundedData.GroundCheckDistance);
-    //}
-
     protected virtual void ContactWithGround(Collider collider)
     {
 
@@ -170,31 +161,8 @@ public class PlayerMovementState : IState
 
     }
 
-    //public virtual void OnTriggerEnter(Collider collider)
-    //{
-    //    if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
-    //    {
-    //        OnContactWithGround(collider);
+    private void TakeDamage()
+    {
 
-    //        return;
-    //    }
-    //}
-
-    //public virtual void OnTriggerExit(Collider collider)
-    //{
-    //    if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
-    //    {
-    //        OnContactWithGroundExited(collider);
-
-    //        return;
-    //    }
-    //}
-
-    //protected virtual void OnContactWithGround(Collider collider)
-    //{
-    //}
-
-    //protected virtual void OnContactWithGroundExited(Collider collider)
-    //{
-    //}
+    }
 }

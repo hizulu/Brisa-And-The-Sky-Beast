@@ -15,7 +15,7 @@ public class PlayerJumpState : PlayerAirborneState
     public override void Enter()
     {
         jumpFinish = false;
-        stateMachine.MovementData.JumpForceModifier = airborneData.JumpData.NormalJumpModif;
+        stateMachine.MovementData.JumpForceModifier = 0f;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.JumpParameterHash);
         //Debug.Log("Has entrado en el estado de SALTAR.");
@@ -30,6 +30,7 @@ public class PlayerJumpState : PlayerAirborneState
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
+        //JumpingOrFalling();
         Jump();
     }
 
@@ -48,10 +49,10 @@ public class PlayerJumpState : PlayerAirborneState
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             jumpFinish = true;
-            stateMachine.ChangeState(stateMachine.IdleState);
+            stateMachine.ChangeState(stateMachine.FallState);
         }
     }
-    
+
     protected override void Jump()
     {
         if(!isJumping)
@@ -60,7 +61,16 @@ public class PlayerJumpState : PlayerAirborneState
             //jumpForce = Mathf.Clamp(jumpForce, 0f, 10f); // Por si queremos poner un tope a la fuerza de salto.
             stateMachine.Player.RbPlayer.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isJumping = true;
-            Debug.Log(jumpForce);
         }        
     }
+
+    //private void JumpingOrFalling()
+    //{
+    //    float velY = stateMachine.Player.RbPlayer.velocity.y;
+
+    //    if (velY > -5)
+    //        return;
+    //    else
+    //        stateMachine.ChangeState(stateMachine.FallState);
+    //}
 }

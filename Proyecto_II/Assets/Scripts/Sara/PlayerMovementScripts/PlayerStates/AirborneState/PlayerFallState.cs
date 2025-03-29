@@ -14,7 +14,7 @@ public class PlayerFallState : PlayerAirborneState
     {
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
-        Debug.Log("Has entrado en el estado de CAYENDO");
+        //Debug.Log("Has entrado en el estado de CAYENDO");
     }
 
     public override void UpdateLogic()
@@ -26,14 +26,14 @@ public class PlayerFallState : PlayerAirborneState
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
-        IncreaseFallSpeed();
+        //IncreaseFallSpeed();
     }
 
     public override void Exit()
     {
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
-        Debug.Log("Has salido del estado de CAYENDO");
+        //Debug.Log("Has salido del estado de CAYENDO");
     }
 
     //protected override void ContactWithGround(Collider collider)
@@ -52,7 +52,7 @@ public class PlayerFallState : PlayerAirborneState
     {
         if (IsGrounded())
         {
-            Debug.Log("Deberías aterrizar");
+            //Debug.Log("Pasas a ATERRIZAR");
             stateMachine.ChangeState(stateMachine.LandState);
             return;
         }
@@ -67,12 +67,14 @@ public class PlayerFallState : PlayerAirborneState
 
         foreach (Collider collider in colliders)
         {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Ground") && !collider.isTrigger)
+
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
             {
-                Debug.Log("Has tocado suelo");
+                //Debug.Log("Has tocado suelo");
                 return true;
             }
         }
+        //Debug.Log("No estás tocando suelo");
         return false;
     }
 
@@ -83,6 +85,5 @@ public class PlayerFallState : PlayerAirborneState
     {
         fallSpeed = Mathf.Min(fallSpeed + gravityAcceleration * Time.deltaTime, maxSpeed);
         stateMachine.Player.RbPlayer.velocity = new Vector3(stateMachine.Player.RbPlayer.velocity.x, -fallSpeed, stateMachine.Player.RbPlayer.velocity.z);
-        Debug.Log(fallSpeed);
     }
 }
