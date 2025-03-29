@@ -14,7 +14,7 @@ public class DamagesBrisa : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            player.SetHealth(50);
+            //player.SetHealth(50);
         }
     }
 }

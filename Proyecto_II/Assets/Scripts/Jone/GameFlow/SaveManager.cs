@@ -111,7 +111,7 @@ public class SaveManager : MonoBehaviour
         #region Saving Player
         Player infoPlayer = FindObjectOfType<Player>();
         sceneState.playerState.playerPosition = Checkpoint.GetActiveCheckPointPosition();
-        sceneState.playerState.playerHealth = infoPlayer.GetHealth();
+        //sceneState.playerState.playerHealth = infoPlayer.GetHealth();
         Debug.Log($"Player health saved: {sceneState.playerState.playerHealth}");
         #endregion
 
@@ -145,8 +145,8 @@ public class SaveManager : MonoBehaviour
             Player savedPlayer = FindObjectOfType<Player>();
             if (savedPlayer != null)
             {
-                savedPlayer.SetPosition(savedSceneState.playerState.playerPosition);
-                savedPlayer.SetHealth(savedSceneState.playerState.playerHealth);
+                //savedPlayer.SetPosition(savedSceneState.playerState.playerPosition);
+                //savedPlayer.SetHealth(savedSceneState.playerState.playerHealth);
                 Debug.Log($"Player health should be: {savedSceneState.playerState.playerHealth}");
             }
             #endregion
