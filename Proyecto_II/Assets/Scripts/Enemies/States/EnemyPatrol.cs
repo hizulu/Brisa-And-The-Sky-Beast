@@ -13,6 +13,7 @@ public class EnemyPatrol : EnemyStateTemplate
         base.Enter();
 
         enemyStateMachine.Enemy.matForDepuration.color = Color.blue; // Depuración temporal
+        enemyStateMachine.Enemy.anim.SetBool("isMoving", true);
         enemyStateMachine.Enemy.EnemyPatrolBaseInstance.DoEnterLogic();
     }
 

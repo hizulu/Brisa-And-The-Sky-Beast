@@ -8,12 +8,14 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
     [SerializeField] private float attackDamage = 20f;
     [SerializeField] private float distanceToStopAttackState = 5f;
 
-    [SerializeField] private float jumpForce = 10f;
-    [SerializeField] private float lateralOffset = 3f;
-    [SerializeField] private float timeBetweenJumps = 0.5f;
+    [SerializeField] private float jumpDuration = 0.6f;
+    [SerializeField] private float lateralOffset = 2f;
+    [SerializeField] private float jumpHeight = 1.5f;
+    [SerializeField] private float stopDistance = 0.5f;
+
+    private bool isAttacking = false;
 
     private float distanceToStopAttackStateSQR = 0f;
-
 
     public override void DoEnterLogic()
     {
@@ -21,7 +23,11 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
 
         distanceToStopAttackStateSQR = distanceToStopAttackState * distanceToStopAttackState;
 
-        enemy.StartCoroutine(DoThreeZigZags());
+        if (!isAttacking)
+        {
+            isAttacking = true;
+            enemy.StartCoroutine(DoThreeZigZags());
+        }
     }
 
     public override void DoExitLogic()
@@ -60,30 +66,39 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
     private IEnumerator DoThreeZigZags()
     {
         Vector3 startPosition = enemy.transform.position;
-        Vector3 directionToPlayer = (playerTransform.position - startPosition).normalized;
-        Vector3 right = Vector3.Cross(Vector3.up, directionToPlayer).normalized; // Vector perpendicular para el zig-zag
+        Vector3 directionToTarget = (playerTransform.position - startPosition).normalized;
+        Vector3 right = Vector3.Cross(Vector3.up, directionToTarget).normalized;
+
+        float[] distances = { 0.25f, 0.5f, 0.75f };
+        float[] lateralOffsets = { lateralOffset, lateralOffset * 0.66f, lateralOffset * 0.33f };
 
         for (int i = 0; i < 3; i++)
         {
-            Vector3 jumpTarget = startPosition + directionToPlayer * (i + 1) * 2f; // Avanza hacia el jugador
-            jumpTarget += (i % 2 == 0 ? right : -right) * lateralOffset; // Alterna lado de zig-zag con el desplazamiento lateral deseado
+            Vector3 jumpTarget = startPosition + directionToTarget * distances[i] * Vector3.Distance(startPosition, playerTransform.position);
+            jumpTarget += (i % 2 == 0 ? right : -right) * lateralOffsets[i];
 
-            JumpTo(jumpTarget);
-
-            yield return new WaitForSeconds(timeBetweenJumps);
+            yield return MoveInArc(enemy.transform.position, jumpTarget, jumpHeight);
         }
 
-        // Después de los tres zig-zags
-        JumpTo(playerTransform.position);
-        yield return new WaitForSeconds(0.2f); // Tiempo de espera de salto final
+        Vector3 finalJumpTarget = playerTransform.position - directionToTarget * stopDistance;
+        yield return MoveInArc(enemy.transform.position, finalJumpTarget, jumpHeight);
+
         Attack();
     }
 
-    private void JumpTo(Vector3 target)
+    private IEnumerator MoveInArc(Vector3 start, Vector3 end, float height)
     {
-        enemy.rb.velocity = Vector3.zero; // Resetea velocidad antes del nuevo salto
-        Vector3 jumpDirection = (target - enemy.transform.position).normalized;
-        enemy.rb.AddForce(jumpDirection * jumpForce + Vector3.up * jumpForce, ForceMode.Impulse);
+        float elapsedTime = 0;
+        while (elapsedTime < jumpDuration)
+        {
+            float t = elapsedTime / jumpDuration;
+            Vector3 position = Vector3.Lerp(start, end, t);
+            position.y += Mathf.Sin(t * Mathf.PI) * height;
+            transform.position = position;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = end;
     }
 
     private void Attack()
@@ -93,5 +108,8 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
         // TODO: enemy.anim.SetTrigger("ataca");
         // TODO: play enemy attack sound depending on enemy
         // TODO: que el jugador reciba daño, llamar a función de player
+        isAttacking = false;
+        enemy.doAttack = false;
+        enemy.doRetreat = true;
     }
 }

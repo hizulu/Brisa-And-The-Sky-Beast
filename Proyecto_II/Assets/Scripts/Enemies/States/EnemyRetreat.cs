@@ -13,6 +13,7 @@ public class EnemyRetreat : EnemyStateTemplate
         base.Enter();
 
         enemyStateMachine.Enemy.matForDepuration.color = Color.magenta; // Depuración temporal
+        enemyStateMachine.Enemy.anim.SetBool("isMoving", true);
         enemyStateMachine.Enemy.EnemyRetreatBaseInstance.DoEnterLogic();
     }
 

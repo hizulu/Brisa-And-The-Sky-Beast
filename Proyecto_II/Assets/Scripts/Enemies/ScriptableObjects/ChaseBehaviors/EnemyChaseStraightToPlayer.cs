@@ -50,7 +50,7 @@ public class EnemyChaseStraightToPlayer : EnemyChaseSOBase
     {
         base.DoPhysicsLogic();
 
-        direction = (enemy.transform.position - playerTransform.position).normalized;
+        direction = (playerTransform.position - enemy.transform.position).normalized;
 
         enemy.MoveEnemy(direction * chasingSpeed);
     }

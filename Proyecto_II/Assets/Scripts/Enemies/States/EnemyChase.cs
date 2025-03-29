@@ -13,6 +13,7 @@ public class EnemyChase : EnemyStateTemplate
         base.Enter();
 
         enemyStateMachine.Enemy.matForDepuration.color = Color.yellow; // Depuración temporal
+        enemyStateMachine.Enemy.anim.SetBool("isMoving", true);
         enemyStateMachine.Enemy.EnemyChaseBaseInstance.DoEnterLogic();
     }
 
