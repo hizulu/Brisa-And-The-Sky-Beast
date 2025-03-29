@@ -27,4 +27,9 @@ public class CageMover : MonoBehaviour
             isMoving = false;
         }
     }
+
+    public bool IsMoving()
+    {
+        return isMoving;
+    }
 }

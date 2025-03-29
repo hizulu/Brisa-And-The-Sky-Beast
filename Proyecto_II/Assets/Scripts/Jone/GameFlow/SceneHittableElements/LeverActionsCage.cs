@@ -23,6 +23,13 @@ public class LeverActionsCage : LeverActionBase
         EnsureCageIsAssigned();
         if (cage == null) return;
 
+        // Para no recalcular objetivo si se está moviendo
+        if (cage.TryGetComponent(out CageMover mover) && mover.IsMoving())
+        {
+            Debug.Log("La jaula aún se está moviendo. No se recalcula la posición.");
+            return;
+        }
+
         Debug.Log("La jaula sube.");
         targetPosition = new Vector3(cage.transform.position.x, cage.transform.position.y + 5f, cage.transform.position.z);
         MoveCage();
@@ -32,6 +39,13 @@ public class LeverActionsCage : LeverActionBase
     {
         EnsureCageIsAssigned();
         if (cage == null) return;
+
+        // Para no recalcular objetivo si se está moviendo
+        if (cage.TryGetComponent(out CageMover mover) && mover.IsMoving())
+        {
+            Debug.Log("La jaula aún se está moviendo. No se recalcula la posición.");
+            return;
+        }
 
         Debug.Log("La jaula baja.");
         targetPosition = new Vector3(cage.transform.position.x, cage.transform.position.y - 5f, cage.transform.position.z);

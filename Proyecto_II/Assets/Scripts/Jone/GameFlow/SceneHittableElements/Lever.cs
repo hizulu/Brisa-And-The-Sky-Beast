@@ -24,17 +24,20 @@ public class Lever : HittableElement
 
         if (leverAction == null) return;
 
+        Debug.Log($"Action is reversible is: {leverAction.IsActionReversible()}");
         if (leverAction.IsActionReversible())
         {
             if (isActivated)
             {
+                Debug.Log("It's going to undo action");
                 leverAction.UndoLeverAction();
             }
             else
             {
+                Debug.Log("It's going to do action");
                 leverAction.DoLeverAction();
             }
-            isActivated = !isActivated;
+            //isActivated = !isActivated;
         }
         else if (!isActivated)
         {
