@@ -15,6 +15,7 @@ public class PlayerComboAttack : PlayerAttackState
     {
         attackFinish = false;
         base.Enter();
+        stateMachine.Player.GolpearPrueba();
         StartAnimation(stateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
     }
 
@@ -25,11 +26,11 @@ public class PlayerComboAttack : PlayerAttackState
 
     public override void OnTriggerEnter(Collider collider)
     {
-        if (stateMachine.Player.WeaponPlayer.CompareTag("Enemy"))
-        {
-            Debug.Log("Daño al enemigo");
-            collider.gameObject.SetActive(false);
-        }
+        //if (stateMachine.Player.WeaponPlayer.CompareTag("Enemy"))
+        //{
+        //    Debug.Log("Daño al enemigo");
+        //    collider.gameObject.SetActive(false);
+        //}
     }
 
     public override void Exit()

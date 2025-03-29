@@ -22,7 +22,8 @@ public class Player : MonoBehaviour
     [field: Header("Animaciones")]
     [field: SerializeField] public PlayerAnimationData PlayerAnimationData { get; private set; }
 
-    [SerializeField] public GameObject WeaponPlayer;
+    [SerializeField] public GameObject hitBox;
+    [SerializeField] private float attackDuration = 0.2f;
     public Rigidbody RbPlayer { get; private set; }
     public BoxCollider GroundCheckCollider { get; private set; }
     public Animator AnimPlayer { get; private set; }
@@ -57,6 +58,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerStateMachine.ChangeState(playerStateMachine.IdleState);
+        hitBox.SetActive(false);
     }
     private void FixedUpdate()
     {
@@ -82,5 +84,17 @@ public class Player : MonoBehaviour
     public void OpenCloseInventory(InputAction.CallbackContext context)
     {
         InventoryManager.Instance.OpenCloseInventory(context);
+    }
+
+    public void GolpearPrueba()
+    {
+        StartCoroutine(EnableHitBox());
+    }
+
+    private IEnumerator EnableHitBox()
+    {
+      hitBox.SetActive(true); // Activa el hitbox
+      yield return new WaitForSeconds(attackDuration);
+      hitBox.SetActive(false); // Lo desactiva después de un tiempo
     }
 }
