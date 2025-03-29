@@ -11,7 +11,8 @@ using System;
  * AUTOR: Lucía García López
  * FECHA: 13/03/2025
  * DESCRIPCIÓN: Script que se encarga de gestionar los slots de los ítems en el inventario.
- * VERSIÓN: 1.1 
+ * VERSIÓN: 1.0 SetItem, IsEmpty, UpdateQuantity, GetItemData, HasItem, SelectItem, OnPointerClick.
+ * 1.1 Cambios en UpdateQuantity, + OnValidate.
  */
 
 public class ItemSlot : MonoBehaviour, IPointerClickHandler
@@ -20,10 +21,11 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TMP_Text itemQuantityText;
 
     private ItemData itemData;
-    private int itemQuantity;
+    [SerializeField] private int itemQuantity;
 
     public bool itemSelected = false;
     private ItemImageAndDescription itemImageAndDescription;
+
 
     private void Start()
     {
@@ -32,6 +34,20 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         if (IsEmpty())
         {
             gameObject.SetActive(false);
+        }
+    }
+
+    //Solo para pruebas
+    // Método llamado cuando un valor cambia en el Inspector
+    public void OnValidate()
+    {
+        if (itemData != null && InventoryManager.Instance.inventory.ContainsKey(itemData))
+        {
+            // Actualizar la cantidad en el diccionario cuando cambie el valor en el Inspector
+            InventoryManager.Instance.inventory[itemData] = itemQuantity;
+
+            // Asegúrate de actualizar la visibilidad del slot
+            InventoryManager.Instance.UpdateItemSlotVisibility(itemData);
         }
     }
 
@@ -49,35 +65,40 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     public bool IsEmpty()
     {
-        return itemData == null; // Si no tiene un ítem asignado, está vacío
+        return itemData == null;
     }
 
     // Método para actualizar la cantidad de un ítem en un slot
     public void UpdateQuantity(int newQuantity)
     {
         itemQuantity = newQuantity;
-        itemQuantityText.text = newQuantity.ToString(); // Actualizar el texto
+        itemQuantityText.text = newQuantity.ToString(); // Actualizamos el texto
+
+        // Si la cantidad es 0 o menor, ocultamos el texto
+        if (newQuantity <= 0)
+        {            
+            itemQuantityText.enabled = false; // Desactivamos el texto
+            itemSelected = false; // Deseleccionamos el ítem
+        }
+        else
+        {
+            itemQuantityText.enabled = true; // Mostramos el texto si la cantidad es mayor que 0
+        }
     }
 
+    // Método para obtener la información de un ítem
     public ItemData GetItemData()
     {
         return itemData;
     }
 
+    // Método para comprobar si un slot tiene un ítem
     public bool HasItem()
     {
         return itemData != null;
     }
 
-    // Método para detectar el clic en un slot
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Left && !IsEmpty())
-        {
-            SelectItem();
-        }
-    }
-
+    // Método para seleccionar un ítem
     private void SelectItem()
     {
         itemSelected = !itemSelected;
@@ -92,4 +113,12 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    // Método para detectar el clic en un slot
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left && !IsEmpty())
+        {
+            SelectItem();
+        }
+    }
 }

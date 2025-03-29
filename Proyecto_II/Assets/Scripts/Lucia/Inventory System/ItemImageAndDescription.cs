@@ -11,6 +11,7 @@ using UnityEngine.UI;
  * VERSIÓN: 1.2 
  */
 
+
 public class ItemImageAndDescription : MonoBehaviour
 {
     [SerializeField] private Image itemIconImage;
@@ -42,7 +43,6 @@ public class ItemImageAndDescription : MonoBehaviour
             ClearDisplay();
         }
     }
-
 
     // Método para limpiar la interfaz cuando no hay ítem seleccionado
     public void ClearDisplay()
