@@ -12,7 +12,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] private ItemData itemData;
+    [SerializeField] public ItemData itemData; // Necesito ponerlo en público para acceder a él desde el inventario y comprobar.
     [SerializeField] private int itemQuantity = 1;
     private bool isCollected = false;
 

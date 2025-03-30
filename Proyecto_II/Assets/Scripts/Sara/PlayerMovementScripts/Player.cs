@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [field: Header("Animaciones")]
     [field: SerializeField] public PlayerAnimationData PlayerAnimationData { get; private set; }
 
+    [SerializeField] public GameObject PaloBrisa;
     [SerializeField] public GameObject hitBox;
     [SerializeField] private float attackDuration = 0.2f;
     public Rigidbody RbPlayer { get; private set; }
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerStateMachine.ChangeState(playerStateMachine.IdleState);
+        PaloBrisa.SetActive(false);
         hitBox.SetActive(false);
     }
     private void FixedUpdate()
@@ -86,6 +88,8 @@ public class Player : MonoBehaviour
         InventoryManager.Instance.OpenCloseInventory(context);
     }
 
+    #region Métodos temporales (No se sabe si se quedarán en el script de Player o se moverán).
+
     public void GolpearPrueba()
     {
         StartCoroutine(EnableHitBox());
@@ -97,4 +101,10 @@ public class Player : MonoBehaviour
       yield return new WaitForSeconds(attackDuration);
       hitBox.SetActive(false); // Lo desactiva después de un tiempo
     }
+
+    public void PaloRecogido()
+    {
+        PaloBrisa.SetActive(true);
+    }
+    #endregion
 }
