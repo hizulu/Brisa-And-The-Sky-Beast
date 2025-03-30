@@ -5,8 +5,6 @@ public class PowersLocked : MonoBehaviour
 {
     [SerializeField] private TMP_Text brisaPowerName;
     [SerializeField] private TMP_Text bestiaPowerName;
-    [SerializeField] private TMP_Text brisaPowerDescription;
-    [SerializeField] private TMP_Text bestiaPowerDescription;
     [SerializeField] private TMP_Text whereToFind;
 
     [SerializeField] private TMP_FontAsset unlockedFont; // Santana para poderes desbloqueados
@@ -17,19 +15,16 @@ public class PowersLocked : MonoBehaviour
     {
         if (isUnlocked)
         {
-            // Cambiar a fuente desbloqueada (Santana)
             brisaPowerName.font = unlockedFont;
             bestiaPowerName.font = unlockedFont;
-            brisaPowerDescription.font = unlockedFont;
-            bestiaPowerDescription.font = unlockedFont;
         }
         else
         {
-            // Cambiar a fuente bloqueada (Fenara)
             brisaPowerName.font = lockedFont;
             bestiaPowerName.font = lockedFont;
-            brisaPowerDescription.font = lockedFont;
-            bestiaPowerDescription.font = lockedFont;
         }
+
+        // Asegurar que whereToFind siempre use la fuente desbloqueada (Santana)
+        whereToFind.font = unlockedFont;
     }
 }

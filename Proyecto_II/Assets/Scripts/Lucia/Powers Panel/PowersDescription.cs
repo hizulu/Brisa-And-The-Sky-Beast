@@ -8,9 +8,13 @@ public class PowersDescription : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TMP_Text powersBestiaDescriptionText;
     [SerializeField] private TMP_Text powersBrisaNameText;
     [SerializeField] private TMP_Text powersBestiaNameText;
+
+    [SerializeField] private TMP_Text powersBrisaLockedNameText;
+    [SerializeField] private TMP_Text powersBestiaLockedNameText;
     [SerializeField] private TMP_Text whereToFindText;
 
     [SerializeField] private GameObject powersPanelLocked;
+    [SerializeField] private GameObject powersPanelUnlocked;
 
     [SerializeField] public PowersData powersData;
     private PowersLocked powersLocked;
@@ -21,6 +25,7 @@ public class PowersDescription : MonoBehaviour, IPointerClickHandler
         if (powersData != null)
         {
             powersPanelLocked.SetActive(!powersData.isUnlocked);
+            powersPanelUnlocked.SetActive(powersData.isUnlocked);
         }
     }
 
@@ -36,17 +41,31 @@ public class PowersDescription : MonoBehaviour, IPointerClickHandler
     {
         if (powersData != null)
         {
-            if (powersData.isUnlocked)
+            bool isUnlocked = powersData.isUnlocked;
+
+            powersPanelLocked.SetActive(true);  // Primero activa para asegurarte de que cambia de estado
+            powersPanelUnlocked.SetActive(false);
+
+            powersPanelLocked.SetActive(!isUnlocked);
+            powersPanelUnlocked.SetActive(isUnlocked);
+
+            Debug.Log("Locked Panel: " + powersPanelLocked.activeSelf);
+            Debug.Log("Unlocked Panel: " + powersPanelUnlocked.activeSelf);
+
+            powersLocked.ChangeFont(isUnlocked);
+
+            if (!isUnlocked)
             {
-                powersPanelLocked.SetActive(false);
-                powersLocked.ChangeFont(true); // Desbloqueado, cambiar a la fuente de Santana
-            }
-            else
-            {
+                powersPanelUnlocked.SetActive(false);
                 powersPanelLocked.SetActive(true);
-                powersLocked.ChangeFont(false); // Bloqueado, cambiar a la fuente de Fenara
                 LockedText();
             }
+            else if (isUnlocked)
+            {
+                powersPanelLocked.SetActive(false);
+                powersPanelUnlocked.SetActive(true);
+            }
+
             PowerDescriptionText();
         }
     }
@@ -67,5 +86,7 @@ public class PowersDescription : MonoBehaviour, IPointerClickHandler
     {
         whereToFindText.text = powersData.whereToFind;
         whereToFindText.enabled = true;
+        powersBrisaLockedNameText.text = powersData.powerBrisaName;
+        powersBestiaLockedNameText.text = powersData.powerBestiaName;
     }
 }
