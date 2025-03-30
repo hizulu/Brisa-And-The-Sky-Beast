@@ -58,25 +58,7 @@ public class PlayerFallState : PlayerAirborneState
         }
     }
 
-    private bool IsGrounded()
-    {
-        float radius = groundedData.GroundCheckDistance;
-        Vector3 groundCheckPosition = stateMachine.Player.GroundCheckCollider.transform.position;
-
-        Collider[] colliders = Physics.OverlapSphere(groundCheckPosition, radius);
-
-        foreach (Collider collider in colliders)
-        {
-
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
-            {
-                //Debug.Log("Has tocado suelo");
-                return true;
-            }
-        }
-        //Debug.Log("No estás tocando suelo");
-        return false;
-    }
+    
 
     private float fallSpeed = 0f;
     private float gravityAcceleration = 9.8f;

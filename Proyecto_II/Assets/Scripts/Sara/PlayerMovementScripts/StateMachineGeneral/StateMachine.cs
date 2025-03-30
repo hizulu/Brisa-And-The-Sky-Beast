@@ -12,21 +12,23 @@ using UnityEngine;
 
 public abstract class StateMachine
 {
-    private IState currentState;
+    public IState CurrentState { get; private set; }
+    public IState PreviousState {  get; private set; }
 
     /*
      * Método que se encarga de cambiar el estado actual por el nuevo que entre.
     */
     public void ChangeState(IState newState)
     {
-        currentState?.Exit();
-        currentState = newState;
-        currentState.Enter();
+        PreviousState = CurrentState;
+        CurrentState?.Exit();
+        CurrentState = newState;
+        CurrentState.Enter();
     }
 
     public void HandleInput()
     {
-        currentState?.HandleInput();
+        CurrentState?.HandleInput();
     }
 
     /*
@@ -34,7 +36,7 @@ public abstract class StateMachine
     */
     public void UpdateLogic()
     {
-        currentState?.UpdateLogic();
+        CurrentState?.UpdateLogic();
     }
 
     /*
@@ -42,16 +44,16 @@ public abstract class StateMachine
     */
     public void UpdatePhysics()
     {
-        currentState?.UpdatePhysics();
+        CurrentState?.UpdatePhysics();
     }
 
     public void OnTriggerEnter(Collider collider)
     {
-        currentState?.OnTriggerEnter(collider);
+        CurrentState?.OnTriggerEnter(collider);
     }
 
     public void OnTriggerExit(Collider collider)
     {
-        currentState?.OnTriggerExit(collider);
+        CurrentState?.OnTriggerExit(collider);
     }
 }
