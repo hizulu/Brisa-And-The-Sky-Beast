@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewAppearance", menuName = "AppearanceChangePanel/Appearance")]
+[CreateAssetMenu(fileName = "NewAppearance", menuName = "Inventory/Appearance")]
 
 /* NOMBRE CLASE: Appearance Change Data
  * AUTOR: Lucía García López

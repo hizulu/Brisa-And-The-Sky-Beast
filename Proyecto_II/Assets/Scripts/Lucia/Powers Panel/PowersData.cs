@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewPower", menuName = "PowerPanel/Power")]
+[CreateAssetMenu(fileName = "NewPower", menuName = "Inventory/Power")]
 
 /* NOMBRE CLASE: Powers Data
  * AUTOR: Lucía García López
@@ -17,4 +17,6 @@ public class PowersData : ScriptableObject
     public string powerBestiaName;
     public string powerBrisaDescription;
     public string powerBestiaDescription;
+    public bool isUnlocked;
+    public string whereToFind;
 }
