@@ -2172,8 +2172,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be504f8de0175984bbcadd8ca68c2e0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brisaPowerName: {fileID: 1101489145}
-  bestiaPowerName: {fileID: 356813938612131143}
+  brisaPowerNameLocked: {fileID: 1101489145}
+  bestiaPowerNameLocked: {fileID: 800793236}
+  brisaPowerNameUnlocked: {fileID: 1431815954}
+  bestiaPowerNameUnlocked: {fileID: 356813938612131143}
   whereToFind: {fileID: 2071599179}
   unlockedFont: {fileID: 11400000, guid: fb01418a2842a4348bceafc439a05681, type: 2}
   lockedFont: {fileID: 11400000, guid: 4c4390645d25648468e92073af453118, type: 2}
@@ -2581,8 +2583,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be504f8de0175984bbcadd8ca68c2e0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brisaPowerName: {fileID: 1101489145}
-  bestiaPowerName: {fileID: 356813938612131143}
+  brisaPowerNameLocked: {fileID: 1101489145}
+  bestiaPowerNameLocked: {fileID: 800793236}
+  brisaPowerNameUnlocked: {fileID: 1431815954}
+  bestiaPowerNameUnlocked: {fileID: 356813938612131143}
   whereToFind: {fileID: 2071599179}
   unlockedFont: {fileID: 11400000, guid: fb01418a2842a4348bceafc439a05681, type: 2}
   lockedFont: {fileID: 11400000, guid: 4c4390645d25648468e92073af453118, type: 2}
@@ -3815,8 +3819,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be504f8de0175984bbcadd8ca68c2e0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brisaPowerName: {fileID: 1431815954}
-  bestiaPowerName: {fileID: 356813938612131143}
+  brisaPowerNameLocked: {fileID: 1101489145}
+  bestiaPowerNameLocked: {fileID: 800793236}
+  brisaPowerNameUnlocked: {fileID: 1431815954}
+  bestiaPowerNameUnlocked: {fileID: 356813938612131143}
   whereToFind: {fileID: 2071599179}
   unlockedFont: {fileID: 11400000, guid: fb01418a2842a4348bceafc439a05681, type: 2}
   lockedFont: {fileID: 11400000, guid: 4c4390645d25648468e92073af453118, type: 2}
@@ -4552,8 +4558,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be504f8de0175984bbcadd8ca68c2e0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brisaPowerName: {fileID: 1101489145}
-  bestiaPowerName: {fileID: 356813938612131143}
+  brisaPowerNameLocked: {fileID: 1101489145}
+  bestiaPowerNameLocked: {fileID: 800793236}
+  brisaPowerNameUnlocked: {fileID: 1431815954}
+  bestiaPowerNameUnlocked: {fileID: 356813938612131143}
   whereToFind: {fileID: 2071599179}
   unlockedFont: {fileID: 11400000, guid: fb01418a2842a4348bceafc439a05681, type: 2}
   lockedFont: {fileID: 11400000, guid: 4c4390645d25648468e92073af453118, type: 2}
@@ -5775,8 +5783,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be504f8de0175984bbcadd8ca68c2e0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brisaPowerName: {fileID: 1101489145}
-  bestiaPowerName: {fileID: 356813938612131143}
+  brisaPowerNameLocked: {fileID: 1101489145}
+  bestiaPowerNameLocked: {fileID: 800793236}
+  brisaPowerNameUnlocked: {fileID: 1431815954}
+  bestiaPowerNameUnlocked: {fileID: 356813938612131143}
   whereToFind: {fileID: 2071599179}
   unlockedFont: {fileID: 11400000, guid: fb01418a2842a4348bceafc439a05681, type: 2}
   lockedFont: {fileID: 11400000, guid: 4c4390645d25648468e92073af453118, type: 2}
@@ -5907,7 +5917,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Gran Soplido
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fb01418a2842a4348bceafc439a05681, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4c4390645d25648468e92073af453118, type: 2}
   m_sharedMaterial: {fileID: 2149070473293129310, guid: fb01418a2842a4348bceafc439a05681, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -5971,7 +5981,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &800793237
@@ -8408,7 +8418,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Gran Soplido
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fb01418a2842a4348bceafc439a05681, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4c4390645d25648468e92073af453118, type: 2}
   m_sharedMaterial: {fileID: 2149070473293129310, guid: fb01418a2842a4348bceafc439a05681, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -8472,7 +8482,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1101489146

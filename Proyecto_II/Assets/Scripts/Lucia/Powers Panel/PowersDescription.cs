@@ -46,12 +46,25 @@ public class PowersDescription : MonoBehaviour, IPointerClickHandler
 
         powersPanelLocked.SetActive(!isUnlocked);
         powersPanelUnlocked.SetActive(isUnlocked);
-        powersLocked.ChangeFont(isUnlocked);
+
+        // Cambiamos las fuentes de ambos nombres según el estado
+        powersLocked.UpdatePowerNamesFont(isUnlocked);
 
         if (!isUnlocked)
         {
             LockedText();
         }
+        else
+        {
+            PowerDescriptionText();
+        }
+    }
+
+    private void LockedText()
+    {
+        whereToFindText.text = powersData.whereToFind;
+        powersBrisaLockedNameText.text = powersData.powerBrisaName;
+        powersBestiaLockedNameText.text = powersData.powerBestiaName;
     }
 
     private void PowerDescriptionText()
@@ -60,12 +73,5 @@ public class PowersDescription : MonoBehaviour, IPointerClickHandler
         powersBestiaDescriptionText.text = powersData.powerBestiaDescription;
         powersBrisaNameText.text = powersData.powerBrisaName;
         powersBestiaNameText.text = powersData.powerBestiaName;
-    }
-
-    private void LockedText()
-    {
-        whereToFindText.text = powersData.whereToFind;
-        powersBrisaLockedNameText.text = powersData.powerBrisaName;
-        powersBestiaLockedNameText.text = powersData.powerBestiaName;
     }
 }
