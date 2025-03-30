@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerAirborneState : PlayerMovementState
 {
@@ -12,7 +13,6 @@ public class PlayerAirborneState : PlayerMovementState
     public override void Enter()
     {
         base.Enter();
-        
         StartAnimation(stateMachine.Player.PlayerAnimationData.AirborneParameterHash);
     }
 
@@ -24,6 +24,7 @@ public class PlayerAirborneState : PlayerMovementState
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
+        MoveAirborne();
     }
 
     public override void Exit()
@@ -88,5 +89,13 @@ public class PlayerAirborneState : PlayerMovementState
 
             Debug.Log(stateMachine.Player.RbPlayer.velocity);
         }        
+    }
+
+    protected override void OnMovementCanceled(InputAction.CallbackContext context)
+    {
+        if (stateMachine.CurrentState is PlayerJumpState || stateMachine.CurrentState is PlayerFallState)
+        {
+            stateMachine.MovementData.MovementInput = Vector2.zero;
+        }
     }
 }

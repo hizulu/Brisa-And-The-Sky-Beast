@@ -17,23 +17,22 @@ public class PlayerJumpState : PlayerAirborneState
         jumpFinish = false;
         stateMachine.MovementData.JumpForceModifier = 0f;
         base.Enter();
-        Vector3 velocity = stateMachine.Player.RbPlayer.velocity;
-        float maxAirSpeed = 5f;
+        //Vector3 velocity = stateMachine.Player.RbPlayer.velocity;
+        //float maxAirSpeed = 5f;
 
-        Vector2 horizontalVelocity = new Vector2(velocity.x, velocity.z);
-        if (horizontalVelocity.magnitude > maxAirSpeed)
-        {
-            horizontalVelocity = horizontalVelocity.normalized * maxAirSpeed;
-        }
+        //Vector2 horizontalVelocity = new Vector2(velocity.x, velocity.z);
+        //if (horizontalVelocity.magnitude > maxAirSpeed)
+        //{
+        //    horizontalVelocity = horizontalVelocity.normalized * maxAirSpeed;
+        //}
 
-        stateMachine.Player.RbPlayer.velocity = new Vector3(horizontalVelocity.x, velocity.y, horizontalVelocity.y);
+        //stateMachine.Player.RbPlayer.velocity = new Vector3(horizontalVelocity.x, velocity.y, horizontalVelocity.y);
         StartAnimation(stateMachine.Player.PlayerAnimationData.JumpParameterHash);
         //Debug.Log("Has entrado en el estado de SALTAR.");
     }
 
     public override void UpdateLogic()
     {
-        ReadMovementInput();
         base.UpdateLogic();
         FinishJump();
     }
@@ -42,8 +41,8 @@ public class PlayerJumpState : PlayerAirborneState
     {
         base.UpdatePhysics();
         //JumpingOrFalling();
-        if (!IsGrounded())
-            MoveAirborne();
+        //if (!IsGrounded())
+        //    MoveAirborne();
 
         Jump();
     }
