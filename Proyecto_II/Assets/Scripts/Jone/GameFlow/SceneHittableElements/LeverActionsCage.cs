@@ -9,12 +9,19 @@ public class LeverActionsCage : LeverActionBase
     private GameObject cage;
     private float movementSpeed = 2f;
     private Vector3 targetPosition;
+    private Beast_V3 beast;
 
     private void EnsureCageIsAssigned()
     {
         if (cage == null)
         {
             cage = GameObject.FindGameObjectWithTag("Cage");
+        }
+    }private void EnsureBeastIsAssigned()
+    {
+        if (beast == null)
+        {
+            beast = GameObject.FindGameObjectWithTag("Beast").GetComponent<Beast_V3>();
         }
     }
 
@@ -57,6 +64,8 @@ public class LeverActionsCage : LeverActionBase
         if (cage.TryGetComponent(out CageMover mover))
         {
             mover.StartMoving(targetPosition, movementSpeed);
+            EnsureBeastIsAssigned();
+            beast.SetBeastFreeFromCage();
         }
         else
         {
