@@ -5,24 +5,108 @@ using UnityEngine.AI;
 
 // Jone Sainz Egea
 // Tercera versión de la bestia, sistema de prioridades
-// 16/03/2025
+// 16/03/2025 funcionamiento básico de puntos de interés
+    // 24/03/2025 Se añade interés en Brisa
 public class Beast_V3 : MonoBehaviour
 {
-    public float searchRadius = 10f;
-    public string interestTag = "InterestObject";
+    [SerializeField] float searchRadius = 10f;
     private NavMeshAgent agent;
+    public string interestTag = "InterestObject";
     private PointOfInterest currentTarget;
+    List<PointOfInterest> interestPoints;
+
+    private bool isWaiting = false;
+    private Coroutine waitCoroutine;
+
+    [Space(10)]
+    [Header("InterestInBrisa")]
+    [SerializeField] GameObject playerGO;
+    [SerializeField] float baseInterestInBrisa = 5f;
+    [SerializeField] float growthFactorInterestInBrisa = 0.05f;
+    private float interestInBrisa = 0f;
+    private bool interestedInBrisa = false;
+
+    public static bool beastConstrained = false;
 
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();       
         Invoke(nameof(FindBestInterestPoint), 1f);
     }
 
+    #region Lógica que será sustituida por el árbol de BeastTree
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+            CallBeast();
+        if (!beastConstrained)
+        {
+            interestInBrisa = GetInterestInBrisa();
+
+            if (interestedInBrisa)
+            {
+                if(Vector3.Distance(transform.position, playerGO.transform.position) < 6f)
+                    InteractWithBrisa();
+                else
+                    agent.SetDestination(playerGO.transform.position);
+            }
+            if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < 5f)
+            {
+                InteractWithPoint();
+            }
+        }
+        else
+        {
+            if (Vector3.Distance(transform.position, playerGO.transform.position) > 6f)
+                agent.SetDestination(playerGO.transform.position);
+            else
+            {
+                if (!isWaiting)
+                    StartNewCoroutine(WaitForOrderOrTimeout(10f));
+            }
+        }
+    }
+    #endregion
+
+    #region Lógica que irá en el árbol de BeastFree
     private void FindBestInterestPoint()
     {
+        interestInBrisa = GetInterestInBrisa();
+        if (interestInBrisa > 100f)
+        {
+            Debug.Log("Brisa es el destino");
+            interestedInBrisa = true;           
+        }
+        else
+        {
+            GetPointsOfInterest();
+
+            if (interestPoints.Count > 0)
+            {
+                currentTarget = GetHighestInterestPoint(interestPoints);
+
+                if (currentTarget != null)
+                {
+                    agent.SetDestination(currentTarget.transform.position);
+                }
+            }
+            else if (!isWaiting)
+            {
+                StartNewCoroutine(WaitAndSearch(10f));
+            }
+        }        
+    }
+
+    private float GetInterestInBrisa()
+    {
+        float distance = Vector3.Distance(transform.position, playerGO.transform.position);
+        return baseInterestInBrisa* Mathf.Exp(growthFactorInterestInBrisa * distance); // Aumento exponencial del interés en Brisa conforme se aleja    
+    }
+
+    private void GetPointsOfInterest()
+    {
+        interestPoints = new List<PointOfInterest>();
         Collider[] colliders = Physics.OverlapSphere(transform.position, searchRadius);
-        List<PointOfInterest> interestPoints = new List<PointOfInterest>();
 
         foreach (Collider col in colliders)
         {
@@ -35,17 +119,6 @@ public class Beast_V3 : MonoBehaviour
                 }
             }
         }
-
-            if (interestPoints.Count > 0)
-            {
-                currentTarget = GetHighestInterestPoint(interestPoints);
-
-                if (currentTarget != null)
-                {
-                    agent.SetDestination(currentTarget.transform.position);
-                    Debug.Log($"New destination set to: {currentTarget.transform.position}");
-                }
-            }
     }
 
     private PointOfInterest GetHighestInterestPoint(List<PointOfInterest> points)
@@ -64,15 +137,9 @@ public class Beast_V3 : MonoBehaviour
         }
         return bestPoint;
     }
+    #endregion
 
-    private void Update()
-    {
-        if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < 5f)
-        {
-            InteractWithPoint();
-        }
-    }
-
+    #region Acciones BeastFree
     private void InteractWithPoint()
     {
         if (currentTarget != null)
@@ -80,19 +147,99 @@ public class Beast_V3 : MonoBehaviour
             Debug.Log($"Interacted with {currentTarget.name}, interest consumed.");
             currentTarget.ConsumeInterest();
             currentTarget = null;
-            StartCoroutine(WaitAndSearch());
+            StartNewCoroutine(WaitAndSearch(2f));
         }
     }
-    private IEnumerator WaitAndSearch()
+
+    private void InteractWithBrisa()
     {
-        yield return new WaitForSeconds(1f); // Aquí habría que esperar a que termine la interacción
+        // TODO: Sit and wait for 5 seconds (if Brisa goes move)
+        StartNewCoroutine(WaitAndSearch(5f));
+        interestedInBrisa = false;
+    }
+
+    private IEnumerator WaitAndSearch(float waitingTime)
+    {
+        isWaiting = true;
+        yield return new WaitForSeconds(waitingTime);
+        isWaiting = false;
+
         Debug.Log("Looking for new destination");
         FindBestInterestPoint();
+
+        if (currentTarget == null)
+        {
+            Debug.Log("No interest points found, waiting again");
+            StartNewCoroutine(WaitAndSearch(10f));
+        }
+    }
+    #endregion
+
+    #region BeastConstrained
+    private IEnumerator WaitForOrderOrTimeout(float waitTime)
+    {
+        isWaiting = true;
+        float elapsedTime = 0f;
+        Debug.Log($"Empieza cuenta atrás de {waitTime} segundos");
+        while (elapsedTime < waitTime)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab)) //TODO: sustituirlo por NEW INPUT SYSTEM
+            {
+                Debug.Log("TAB presionado: Interrumpiendo espera."); 
+                OnTabPressed();
+                yield break; // Termina la corrutina inmediatamente
+            }
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        Debug.Log("Tiempo de espera completado: Ejecutando función por timeout.");
+        OnTimeoutReached();
+        isWaiting = false;
+    }
+
+    private void OnTabPressed()
+    {
+        Debug.Log("Ejecutando acción por TAB.");
+        // TODO: sustituirlo por función de abrir menú y ¿pausa del juego?
+        beastConstrained = false;
+        StartNewCoroutine(WaitAndSearch(10f));
+    }
+
+    private void OnTimeoutReached()
+    {
+        Debug.Log("Ejecutando acción tras esperar 10 segundos.");
+        beastConstrained = false;
+        StartNewCoroutine(WaitAndSearch(4f));
+    }
+
+    #endregion
+    
+    // Método que gestiona que solo haya una corrutina en marcha cada vez
+    private void StartNewCoroutine(IEnumerator newCorroutine)
+    {
+        if (waitCoroutine != null)
+        {
+            StopCoroutine(waitCoroutine); // Asegura que no haya otra corrutina en marcha
+        }
+        waitCoroutine = StartCoroutine(newCorroutine);
+    }
+
+    // Se llama a este método desde el scritp de Brisa
+    public static void CallBeast()
+    {
+        beastConstrained = true;
+        Debug.Log("Beast has been called.");
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, searchRadius);
+        if (playerGO == null) return;
+        float distance = Vector3.Distance(transform.position, playerGO.transform.position);
+        float printInterestInBrisa = baseInterestInBrisa * Mathf.Exp(growthFactorInterestInBrisa * distance);
+        UnityEditor.Handles.Label(playerGO.transform.position + Vector3.up * 4, $"Interest: {printInterestInBrisa}");
     }
 }

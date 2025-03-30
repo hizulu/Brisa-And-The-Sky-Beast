@@ -54,12 +54,12 @@ public class PointOfInterest : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, 1f);
-        if (agentTransform != null) // Evita el error si no se ha encontrado el agente aún
+        if (agentTransform != null)
         {
             if (!interestConsumed)
             {
                 float distance = Vector3.Distance(transform.position, agentTransform.position);
-                currentInterest = baseInterest * Mathf.Clamp01(1 - (distance / maxDistance)); // Reduce interés con distancia
+                currentInterest = baseInterest * Mathf.Clamp01(1 - (distance / maxDistance));
             }
             else
             {
