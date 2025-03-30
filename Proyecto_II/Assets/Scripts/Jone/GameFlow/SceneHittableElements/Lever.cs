@@ -10,7 +10,8 @@ public class Lever : HittableElement
     [SerializeField] private float rotationSpeed = 5f; // Velocidad de la animación
 
     private Transform leverStick;
-    private bool isActivated = true;
+    private bool isActivated = false;
+    private bool moveToActive = true;
     private Coroutine rotationCoroutine;
 
     private void Start()
@@ -37,7 +38,7 @@ public class Lever : HittableElement
                 Debug.Log("It's going to do action");
                 leverAction.DoLeverAction();
             }
-            //isActivated = !isActivated;
+            isActivated = !isActivated;
         }
         else if (!isActivated)
         {
@@ -48,13 +49,13 @@ public class Lever : HittableElement
 
     public void DoLeverAnimation()
     {
-        float targetAngle = isActivated ? leverNotActiveXRotation : leverActiveXRotation;
+        float targetAngle = moveToActive ? leverActiveXRotation : leverNotActiveXRotation;
 
         // Detiene una posible animación previa antes de iniciar una nueva
         if (rotationCoroutine != null) StopCoroutine(rotationCoroutine);
         rotationCoroutine = StartCoroutine(RotateLever(targetAngle));
 
-        isActivated = !isActivated;
+        moveToActive = !moveToActive;
     }
 
     private IEnumerator RotateLever(float targetXRotation)
@@ -62,11 +63,14 @@ public class Lever : HittableElement
         Quaternion startRotation = leverStick.rotation;
         Quaternion targetRotation = Quaternion.Euler(targetXRotation, leverStick.rotation.eulerAngles.y, leverStick.rotation.eulerAngles.z);
 
-        float timeElapsed = 0f;
-        while (timeElapsed < 1f)
+        float elapsedTime = 0f;
+        float duration = 1f / rotationSpeed; // Ajusta la duración según la velocidad
+
+        while (elapsedTime < duration)
         {
-            leverStick.rotation = Quaternion.Lerp(startRotation, targetRotation, timeElapsed);
-            timeElapsed += Time.deltaTime * rotationSpeed;
+            float t = elapsedTime / duration;
+            leverStick.rotation = Quaternion.Lerp(startRotation, targetRotation, t);
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
 
