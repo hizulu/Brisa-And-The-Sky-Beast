@@ -2260,6 +2260,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 141740095}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 141740100}
   m_SourcePrefab: {fileID: 100100000, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
 --- !u!1 &141740092 stripped
 GameObject:
@@ -2305,7 +2308,7 @@ MonoBehaviour:
     <EnviromentLayer>k__BackingField:
       serializedVersion: 2
       m_Bits: 64
-  playerAnimationData:
+  <PlayerAnimationData>k__BackingField:
     groundedParameterName: Grounded
     movedParameterName: Moved
     attackParameterName: Attack
@@ -2320,7 +2323,7 @@ MonoBehaviour:
     jumpParameterName: isJumping
     fallParameterName: isFalling
     landParameterName: isLanding
-  PaloBrisa: {fileID: 0}
+  PaloBrisa: {fileID: 1432328130}
   hitBox: {fileID: 873636943}
   attackDuration: 0.2
 --- !u!54 &141740097
@@ -2394,6 +2397,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &141740100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141740092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c23dbcc876390694695a181b390c13a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterRenderer: {fileID: 890035829}
 --- !u!1 &153292084
 GameObject:
   m_ObjectHideFlags: 0
@@ -5033,7 +5049,7 @@ MonoBehaviour:
   appearances:
   - {fileID: 11400000, guid: 7c6ec63dcb217b148a2778841812538e, type: 2}
   - {fileID: 11400000, guid: 09df38b04ff8b894a9d59897984019c0, type: 2}
-  characterAppearanceManager: {fileID: 0}
+  characterAppearanceManager: {fileID: 141740100}
 --- !u!114 &388839542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8832,6 +8848,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1257903892703862778, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
   m_PrefabInstance: {fileID: 889095242}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &890035829 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3893282528146514212, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
+  m_PrefabInstance: {fileID: 141740091}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &900983711
 GameObject:
@@ -12687,6 +12708,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.116684444, y: 0.1240545, z: 0.2953639}
   m_Center: {x: -0.046115533, y: 0.056806818, z: 0.1351328}
+--- !u!1 &1432328130 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b551cae4b68b8b4e8e7a6fbae202303, type: 3}
+  m_PrefabInstance: {fileID: 1954206487}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1469340864
 GameObject:
   m_ObjectHideFlags: 0
