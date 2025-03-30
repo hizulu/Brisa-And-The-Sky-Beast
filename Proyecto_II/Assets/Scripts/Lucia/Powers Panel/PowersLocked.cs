@@ -3,33 +3,26 @@ using TMPro;
 
 public class PowersLocked : MonoBehaviour
 {
-    [SerializeField] private TMP_Text brisaPowerName;
-    [SerializeField] private TMP_Text bestiaPowerName;
-    [SerializeField] private TMP_Text brisaPowerDescription;
-    [SerializeField] private TMP_Text bestiaPowerDescription;
+    [SerializeField] private TMP_Text brisaPowerNameLocked;   // Nombre Brisa en panel bloqueado
+    [SerializeField] private TMP_Text bestiaPowerNameLocked;  // Nombre Bestia en panel bloqueado
+    [SerializeField] private TMP_Text brisaPowerNameUnlocked; // Nombre Brisa en panel desbloqueado
+    [SerializeField] private TMP_Text bestiaPowerNameUnlocked;// Nombre Bestia en panel desbloqueado
     [SerializeField] private TMP_Text whereToFind;
 
-    [SerializeField] private TMP_FontAsset unlockedFont; // Santana para poderes desbloqueados
-    [SerializeField] private TMP_FontAsset lockedFont;   // Fenara para poderes bloqueados
+    [SerializeField] private TMP_FontAsset unlockedFont; // Santana
+    [SerializeField] private TMP_FontAsset lockedFont;   // Fenara
 
-    // Método para cambiar las fuentes
-    public void ChangeFont(bool isUnlocked)
+    public void UpdatePowerNamesFont(bool isUnlocked)
     {
-        if (isUnlocked)
-        {
-            // Cambiar a fuente desbloqueada (Santana)
-            brisaPowerName.font = unlockedFont;
-            bestiaPowerName.font = unlockedFont;
-            brisaPowerDescription.font = unlockedFont;
-            bestiaPowerDescription.font = unlockedFont;
-        }
-        else
-        {
-            // Cambiar a fuente bloqueada (Fenara)
-            brisaPowerName.font = lockedFont;
-            bestiaPowerName.font = lockedFont;
-            brisaPowerDescription.font = lockedFont;
-            bestiaPowerDescription.font = lockedFont;
-        }
+        // Fuentes para los textos en el panel bloqueado
+        brisaPowerNameLocked.font = isUnlocked ? unlockedFont : lockedFont;
+        bestiaPowerNameLocked.font = isUnlocked ? unlockedFont : lockedFont;
+
+        // Fuentes para los textos en el panel desbloqueado
+        brisaPowerNameUnlocked.font = unlockedFont;
+        bestiaPowerNameUnlocked.font = unlockedFont;
+
+        // Fuente para "Dónde encontrarlo" (siempre Santana)
+        whereToFind.font = unlockedFont;
     }
 }
