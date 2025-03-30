@@ -38,17 +38,66 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        PlayerAnimationData.Initialize();
+        Debug.Log("Awake iniciado en " + gameObject.name);
 
+        // Verificar PlayerAnimationData antes de inicializar
+        if (PlayerAnimationData == null)
+        {
+            Debug.LogError("PlayerAnimationData es null en Awake()");
+        }
+        else
+        {
+            PlayerAnimationData.Initialize();
+        }
+
+        // Obtener Rigidbody y verificar
         RbPlayer = GetComponent<Rigidbody>();
+        if (RbPlayer == null)
+        {
+            Debug.LogError("No se encontró Rigidbody en " + gameObject.name);
+        }
+
+        // Obtener BoxCollider (GroundCheckCollider) y verificar
         GroundCheckCollider = GetComponentInChildren<BoxCollider>();
+        if (GroundCheckCollider == null)
+        {
+            Debug.LogError("No se encontró BoxCollider en los hijos de " + gameObject.name);
+        }
+
+        // Obtener Animator y verificar
         AnimPlayer = GetComponent<Animator>();
+        if (AnimPlayer == null)
+        {
+            Debug.LogError("No se encontró Animator en " + gameObject.name);
+        }
 
+        // Obtener PlayerInput y verificar
         PlayerInput = GetComponent<PlayerInput>();
+        if (PlayerInput == null)
+        {
+            Debug.LogError("No se encontró PlayerInput en " + gameObject.name);
+        }
 
-        playerStateMachine = new PlayerStateMachine(this);
+        // Crear PlayerStateMachine verificando que 'this' es válido
+        if (this != null)
+        {
+            Debug.Log("Creando PlayerStateMachine para " + gameObject.name);
+            playerStateMachine = new PlayerStateMachine(this);
+        }
+        else
+        {
+            Debug.LogError("El objeto Player es null en Awake()");
+        }
 
-        PlayerInput.PlayerActions.Inventory.performed += OpenCloseInventory;
+        // Verificar PlayerActions antes de suscribirse a Inventory.performed
+        if (PlayerInput != null) // && PlayerInput.PlayerActions != null
+        {
+            PlayerInput.PlayerActions.Inventory.performed += OpenCloseInventory;
+        }
+        else
+        {
+            Debug.LogError("PlayerActions es null en Awake()");
+        }
     }
 
     private void OnDestroy()
