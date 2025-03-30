@@ -5,8 +5,8 @@ using UnityEngine;
 public class Lever : HittableElement
 {
     [SerializeField] private LeverActionBase leverAction;
-    [SerializeField] float leverActiveXRotation = -25f;
-    [SerializeField] float leverNotActiveXRotation = -150f;
+    [SerializeField] float leverActiveXRotation = -40f;
+    [SerializeField] float leverNotActiveXRotation = -140f;
     [SerializeField] private float rotationSpeed = 5f; // Velocidad de la animación
 
     private Transform leverStick;
