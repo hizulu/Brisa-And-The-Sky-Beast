@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewPower", menuName = "PowerPanel/Power")]
+[CreateAssetMenu(fileName = "NewPower", menuName = "Inventory/Power")]
 
 /* NOMBRE CLASE: Powers Data
  * AUTOR: Lucía García López
