@@ -65,11 +65,11 @@ public class PointOfInterest : MonoBehaviour
             {
                 currentInterest = 0f;
             }
-            UnityEditor.Handles.Label(transform.position + Vector3.up * 2, $"Interest: {currentInterest}");
+            //UnityEditor.Handles.Label(transform.position + Vector3.up * 2, $"Interest: {currentInterest}");
         }
         else
         {
-            UnityEditor.Handles.Label(transform.position + Vector3.up * 2, "Agent not found");
+            //UnityEditor.Handles.Label(transform.position + Vector3.up * 2, "Agent not found");
         }
     }
 }

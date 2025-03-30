@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.ShaderData;
+//using static UnityEditor.ShaderData;
 
 
 /* NOMBRE CLASE: GameManager
