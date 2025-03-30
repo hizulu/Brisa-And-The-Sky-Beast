@@ -17,4 +17,6 @@ public class PowersData : ScriptableObject
     public string powerBestiaName;
     public string powerBrisaDescription;
     public string powerBestiaDescription;
+    public bool isUnlocked;
+    public string whereToFind;
 }
