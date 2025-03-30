@@ -26,44 +26,58 @@ public class Beast_V3 : MonoBehaviour
     private float interestInBrisa = 0f;
     private bool interestedInBrisa = false;
 
+    private bool beastIsTrapped = true;
     public static bool beastConstrained = false;
+
+    private Animator anim;
 
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();       
-        Invoke(nameof(FindBestInterestPoint), 1f);
+        agent = GetComponent<NavMeshAgent>();             
+        anim = GetComponent<Animator>();
+        anim.SetBool("bestiaIsWalking", false);
     }
 
     #region Lógica que será sustituida por el árbol de BeastTree
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-            CallBeast();
-        if (!beastConstrained)
+        if (!beastIsTrapped)
         {
-            interestInBrisa = GetInterestInBrisa();
+            if (Input.GetKeyDown(KeyCode.Q))
+                CallBeast();
+            if (!beastConstrained)
+            {
+                interestInBrisa = GetInterestInBrisa();
 
-            if (interestedInBrisa)
-            {
-                if(Vector3.Distance(transform.position, playerGO.transform.position) < 6f)
-                    InteractWithBrisa();
-                else
-                    agent.SetDestination(playerGO.transform.position);
+                if (interestedInBrisa)
+                {
+                    if (Vector3.Distance(transform.position, playerGO.transform.position) < 6f)
+                        InteractWithBrisa();
+                    else
+                    {
+                        anim.SetBool("bestiaIsWalking", true);
+                        agent.SetDestination(playerGO.transform.position);
+                    }
+                }
+                if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < 5f)
+                {
+                    InteractWithPoint();
+                }
             }
-            if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < 5f)
+            else
             {
-                InteractWithPoint();
+                if (Vector3.Distance(transform.position, playerGO.transform.position) > 6f)
+                    agent.SetDestination(playerGO.transform.position);
+                else
+                {
+                    if (!isWaiting)
+                        StartNewCoroutine(WaitForOrderOrTimeout(10f));
+                }
             }
         }
         else
         {
-            if (Vector3.Distance(transform.position, playerGO.transform.position) > 6f)
-                agent.SetDestination(playerGO.transform.position);
-            else
-            {
-                if (!isWaiting)
-                    StartNewCoroutine(WaitForOrderOrTimeout(10f));
-            }
+            anim.SetBool("bestiaIsWalking", false);
         }
     }
     #endregion
@@ -72,7 +86,7 @@ public class Beast_V3 : MonoBehaviour
     private void FindBestInterestPoint()
     {
         interestInBrisa = GetInterestInBrisa();
-        if (interestInBrisa > 100f)
+        if (interestInBrisa > 50f)
         {
             Debug.Log("Brisa es el destino");
             interestedInBrisa = true;           
@@ -144,6 +158,7 @@ public class Beast_V3 : MonoBehaviour
     {
         if (currentTarget != null)
         {
+            anim.SetBool("bestiaIsWalking", false);
             Debug.Log($"Interacted with {currentTarget.name}, interest consumed.");
             currentTarget.ConsumeInterest();
             currentTarget = null;
@@ -231,6 +246,12 @@ public class Beast_V3 : MonoBehaviour
     {
         beastConstrained = true;
         Debug.Log("Beast has been called.");
+    }
+
+    public void SetBeastFreeFromCage()
+    {
+        beastIsTrapped = false;
+        Invoke(nameof(FindBestInterestPoint), 1f);
     }
 
     private void OnDrawGizmos()
