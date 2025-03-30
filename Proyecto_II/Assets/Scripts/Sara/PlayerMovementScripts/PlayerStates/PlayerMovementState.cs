@@ -70,7 +70,7 @@ public class PlayerMovementState : IState
         }
     }
 
-    private void ReadMovementInput()
+    public void ReadMovementInput()
     {
         stateMachine.MovementData.MovementInput = stateMachine.Player.PlayerInput.PlayerActions.Movement.ReadValue<Vector2>();
     }
@@ -120,7 +120,7 @@ public class PlayerMovementState : IState
         Rotate(movementDirection);
     }
 
-    private void Rotate(Vector3 movementDirection)
+    public void Rotate(Vector3 movementDirection)
     {
         if (movementDirection != Vector3.zero)
         {

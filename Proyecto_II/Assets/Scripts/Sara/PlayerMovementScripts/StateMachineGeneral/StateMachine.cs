@@ -13,12 +13,14 @@ using UnityEngine;
 public abstract class StateMachine
 {
     private IState currentState;
+    public IState PreviousState {  get; private set; }
 
     /*
      * Método que se encarga de cambiar el estado actual por el nuevo que entre.
     */
     public void ChangeState(IState newState)
     {
+        PreviousState = currentState;
         currentState?.Exit();
         currentState = newState;
         currentState.Enter();
