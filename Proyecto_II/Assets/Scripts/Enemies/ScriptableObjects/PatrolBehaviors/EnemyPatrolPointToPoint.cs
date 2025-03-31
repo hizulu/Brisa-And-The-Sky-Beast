@@ -7,6 +7,11 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
 {
     [SerializeField] private float PointToPointMovementSpeed = 1f;
 
+    //[Header("Puntos Recorrido Patrullaje")]
+    //[SerializeField] private List<Transform> patrolPoints = new List<Transform>();
+
+    //private int currentPoint = 0;
+
     private Transform _point1;
     private Transform _point2;
 
@@ -22,15 +27,10 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
         Transform parent = transform.parent;
 
         // Encuentra los objetos hijo por su nombre
-        GameObject _point1 = GameObject.Find("Point1");
-        GameObject _point2 = GameObject.Find("Point2");
+        _point1 = parent.Find("Punto1");
+        _point2 = parent.Find("Punto2");
 
-        if (_point1 == null)
-            Debug.LogError("Point1 no encontrado como hijo de " + parent.name);
-        if (_point2 == null)
-            Debug.LogError("Point2 no encontrado como hijo de " + parent.name);
-
-        //_targetPos = _point1.position;
+        _targetPos = _point1.position;
         _point = false;
     }
 
@@ -44,11 +44,7 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     {
         base.DoFrameUpdateLogic();
 
-        _direction = (_targetPos - enemy.transform.position).normalized;
-
-        enemy.MoveEnemy(_direction * PointToPointMovementSpeed);
-
-        if ((enemy.transform.position - _targetPos).sqrMagnitude < 0.01f)
+        if ((enemy.transform.position - _targetPos).sqrMagnitude < 2f)
         {
             _targetPos = GetNewTarget();
             _point = !_point;
@@ -58,6 +54,8 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
+        _direction = (_targetPos - enemy.transform.position).normalized;
+        enemy.MoveEnemy(_direction * PointToPointMovementSpeed);
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)
