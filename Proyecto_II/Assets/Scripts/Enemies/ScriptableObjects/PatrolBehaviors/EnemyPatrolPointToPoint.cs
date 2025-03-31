@@ -68,7 +68,14 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     private void SetEnemyMovement()
     {
         _direction = (_targetPos - enemy.transform.position).normalized;
+
         enemy.MoveEnemy(_direction * PointToPointMovementSpeed);
+
+        if (_direction.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(_direction);
+            enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, Time.deltaTime * 5f);
+        }
     }
 
     /*
