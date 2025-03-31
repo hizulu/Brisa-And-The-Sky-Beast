@@ -5,33 +5,29 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Patrol-Point to Point", menuName = "Enemy Logic/Patrol Logic/Point to Point")]
 public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
 {
+    #region Variables
     [SerializeField] private float PointToPointMovementSpeed = 1f;
+    [SerializeField] private float playerDetectionRange = 12f;
+    [SerializeField] private float randomIdle = 0.3f;
 
-    //[Header("Puntos Recorrido Patrullaje")]
-    //[SerializeField] private List<Transform> patrolPoints = new List<Transform>();
+    private List<Transform> patrolPoints = new List<Transform>(); // Lista para guardar los puntos a los que deben ir los enemigos (el recorrido de patrulla).
 
-    //private int currentPoint = 0;
-
-    private Transform _point1;
-    private Transform _point2;
+    private int currentPoint = 0; // Guardar el punto en el que están.
 
     private Vector3 _targetPos;
     private Vector3 _direction;
+    private float playerDetectionRangeSQR = 0f;
+    private int lastPointSaved = 0;
+    #endregion
 
-    private bool _point;
-
+    #region Métodos de EnemyPatrolSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-        Debug.Log("Has entrado en estado de PatrolPointToPoint");
-        Transform parent = transform.parent;
-
-        // Encuentra los objetos hijo por su nombre
-        _point1 = parent.Find("Punto1");
-        _point2 = parent.Find("Punto2");
-
-        _targetPos = _point1.position;
-        _point = false;
+        playerDetectionRangeSQR = playerDetectionRange * playerDetectionRange;
+        //Debug.Log("Has entrado en estado de PatrolPointToPoint");
+        AddPatrolPoints();
+        ReturnFromIdle();
     }
 
     public override void DoExitLogic()
@@ -43,19 +39,14 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-
-        if ((enemy.transform.position - _targetPos).sqrMagnitude < 2f)
-        {
-            _targetPos = GetNewTarget();
-            _point = !_point;
-        }
+        ChangePoint();
+        PlayerDetected();
     }
 
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
-        _direction = (_targetPos - enemy.transform.position).normalized;
-        enemy.MoveEnemy(_direction * PointToPointMovementSpeed);
+        SetEnemyMovement();
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)
@@ -67,12 +58,80 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     {
         base.ResetValues();
     }
+    #endregion
 
-    private Vector3 GetNewTarget()
+    #region Métodos Específicos de EnemyPatrolPointToPoint
+    /*
+     * Método para obtener la dirección que deben seguir los enemigos hasta los puntos de patrullaje.
+     * La dirección obtenida se envía al método MoveEnemy del script: "Enemy".
+     */
+    private void SetEnemyMovement()
     {
-        if (_point)
-            return _point1.position;
-        else
-            return _point2.position;
+        _direction = (_targetPos - enemy.transform.position).normalized;
+        enemy.MoveEnemy(_direction * PointToPointMovementSpeed);
     }
+
+    /*
+     * Método donde se busca un objeto llamado "PatrolPoints" que guarda los puntos que debe recorrer cada enemigo.
+     * Cada enemigo puede tener sus propios puntos (pueden ser más o menos y en diferentes sitios).
+     */
+    private void AddPatrolPoints()
+    {
+        Transform parent = transform.parent.Find("PatrolPoints");
+
+        if (parent != null)
+        {
+            patrolPoints.Clear(); // Limpiar la lista antes de comenzar a añadirlos para que no de problemas de otras llamadas.
+
+            foreach (Transform child in parent)
+                patrolPoints.Add(child); // Añadimos a la lista los puntos hijos.
+
+            if (patrolPoints.Count > 0) // Comprobamos que la lista no esté vacía.
+                _targetPos = patrolPoints[0].position; // Asignamos que la posición a la que debe ir primero es el primer elemento de la lista (Punto1).
+        }
+    }
+
+    /*
+     * Método para que el enemigo vaya cambiando de punto.
+     */
+    private void ChangePoint()
+    {
+        if ((enemy.transform.position - _targetPos).sqrMagnitude < 2f) //Comprueba que la distancia entre el enemigo y el punto al que debe ir sea menor que 2.
+        {
+            if (!enemy.doIdle && Random.value < randomIdle)
+            {
+                lastPointSaved = currentPoint; // Guardar el punto actual antes de pasar a IdleState.
+                enemy.doIdle = true;
+                enemy.doPatrol = false;
+            }
+            else
+            {
+                //Debug.Log($"Llegó al punto {currentPoint}: {patrolPoints[currentPoint].name}");
+                currentPoint = (currentPoint + 1) % patrolPoints.Count; // El punto actual se actualiza al siguiente de la lista y si es el último punto de todos, reinicia el índice.
+                _targetPos = patrolPoints[currentPoint].position; // Asigna la posición a la que debe ir el enemigo al punto actual de la lista.
+            }                
+        }
+    }
+
+    /*
+     * Método que guarda el último punto en el que está el enemigo para no reiniciar la lista de nuevo, sino que siga el orden establecido.
+     */
+    public void ReturnFromIdle()
+    {
+        currentPoint = lastPointSaved; // Asignar el último punto guardado como el actual.
+        _targetPos = patrolPoints[currentPoint].position;
+    }
+
+    private void PlayerDetected()
+    {
+        float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
+
+        if (distanceToPlayerSQR < playerDetectionRangeSQR)
+        {
+            Debug.Log("Debería perseguir a Brisa");
+            enemy.doChase = true;
+            enemy.doPatrol = false;
+        }
+    }
+    #endregion
 }
