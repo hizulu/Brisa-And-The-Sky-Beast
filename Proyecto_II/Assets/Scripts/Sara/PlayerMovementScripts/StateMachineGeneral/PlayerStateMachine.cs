@@ -15,6 +15,7 @@ public class PlayerStateMachine : StateMachine
     public Player Player { get; }
     public PlayerMovementData MovementData { get; }
     public PlayerAirborneData AirborneData { get; }
+    public PlayerStatsData StatsData { get; }
 
     public PlayerIdleState IdleState { get; }
     public PlayerWalkState WalkState { get; }
@@ -25,6 +26,8 @@ public class PlayerStateMachine : StateMachine
     public PlayerJumpState JumpState { get; }
     public PlayerFallState FallState { get; }
     public PlayerLandState LandState { get; }
+    public PlayerHalfDeadState HalfDeadState { get; }
+    public PlayerFinalDeadState FinalDeadState { get; }
 
     public PlayerStateMachine(Player player)
     {
@@ -32,6 +35,7 @@ public class PlayerStateMachine : StateMachine
 
         MovementData = new PlayerMovementData();
         AirborneData = new PlayerAirborneData();
+        StatsData = new PlayerStatsData();
 
         IdleState = new PlayerIdleState(this);
         WalkState = new PlayerWalkState(this);
@@ -42,5 +46,7 @@ public class PlayerStateMachine : StateMachine
         JumpState = new PlayerJumpState(this);
         FallState = new PlayerFallState(this);
         LandState = new PlayerLandState(this);
+        HalfDeadState = new PlayerHalfDeadState(this);
+        FinalDeadState = new PlayerFinalDeadState(this);
     }
 }

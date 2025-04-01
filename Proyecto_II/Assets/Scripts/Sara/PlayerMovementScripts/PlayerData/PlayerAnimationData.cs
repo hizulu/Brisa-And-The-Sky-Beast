@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -10,6 +8,7 @@ public class PlayerAnimationData
     [SerializeField] private string movedParameterName = "Moved";
     [SerializeField] private string attackParameterName = "Attack";
     [SerializeField] private string airborneParameterName = "Airborne";
+    [SerializeField] private string deathParameterName = "Death";
 
     [SerializeField] private string idleParameterName = "isIdle";
     [SerializeField] private string walkParameterName = "isWalking";
@@ -21,11 +20,15 @@ public class PlayerAnimationData
     [SerializeField] private string jumpParameterName = "isJumping";
     [SerializeField] private string fallParameterName = "isFalling";
     [SerializeField] private string landParameterName = "isLanding";
+    [SerializeField] private string halfDeadParameterName = "isHalfDeading";
+    [SerializeField] private string finalDeadParameterName = "isFinalDeading";
 
     public int GroundedParameterHash { get; private set; }
     public int MovedParameterHash { get; private set; }
     public int AttackParameterHash { get; private set; }
     public int AirborneParameterHash { get; private set; }
+    public int DeathParameterHash { get; private set; }
+
     public int IdleParameterHash { get; private set; }
     public int WalkParameterHash { get; private set; }
     public int RunParameterHash { get; private set; }
@@ -36,6 +39,8 @@ public class PlayerAnimationData
     public int JumpParameterHash { get; private set; }
     public int FallParameterHash { get; private set; }
     public int LandParameterHash { get; private set; }
+    public int HalfDeadParameterHash { get; private set; }
+    public int FinalDeadParameterHash { get; private set; }
 
     public void Initialize()
     {
@@ -43,6 +48,7 @@ public class PlayerAnimationData
         MovedParameterHash = Animator.StringToHash(movedParameterName);
         AttackParameterHash = Animator.StringToHash(attackParameterName);
         AirborneParameterHash = Animator.StringToHash(airborneParameterName);
+        DeathParameterHash = Animator.StringToHash(deathParameterName);
 
         IdleParameterHash = Animator.StringToHash(idleParameterName);
         WalkParameterHash = Animator.StringToHash(walkParameterName);
@@ -56,5 +62,8 @@ public class PlayerAnimationData
         JumpParameterHash = Animator.StringToHash(jumpParameterName);
         FallParameterHash = Animator.StringToHash(fallParameterName);
         LandParameterHash = Animator.StringToHash(landParameterName);
+
+        HalfDeadParameterHash = Animator.StringToHash(halfDeadParameterName);
+        FinalDeadParameterHash = Animator.StringToHash(finalDeadParameterName);
     }
 }
