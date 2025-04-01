@@ -14,6 +14,12 @@ public class Enemy : MonoBehaviour
 
     private EnemyStateMachine enemyStateMachine;
 
+    #region Variables temporales para visualizar las áreas: Gizmos
+    [Header("Variables Gizmos")]
+    [SerializeField] private float playerAttackRange = 0.5f;
+    [SerializeField] private float playerLostRange = 20f;
+    #endregion
+
     #region States
     [SerializeField] private EnemyIdleSOBase EnemyIdleBase;
     [SerializeField] private EnemyPatrolSOBase EnemyPatrolBase;
@@ -101,4 +107,13 @@ public class Enemy : MonoBehaviour
         Destroy(this.gameObject, 1f); // TEMP
     }
     #endregion
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, playerAttackRange);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, playerLostRange);
+    }
 }

@@ -13,7 +13,7 @@ public class EnemyAttack : EnemyStateTemplate
         base.Enter();
 
         enemyStateMachine.Enemy.matForDepuration.color = Color.red; // Depuración temporal
-        enemyStateMachine.Enemy.anim.SetTrigger("Attack");
+        //enemyStateMachine.Enemy.anim.SetTrigger("Attack");
         enemyStateMachine.Enemy.EnemyAttackBaseInstance.DoEnterLogic();
     }
 

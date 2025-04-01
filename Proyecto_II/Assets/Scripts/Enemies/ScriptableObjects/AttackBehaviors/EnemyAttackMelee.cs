@@ -10,9 +10,14 @@ public class EnemyAttackMelee : EnemyAttackSOBase
 
     private float _timer;
 
+    [SerializeField] private float attackDamage = 20f;
+    [SerializeField] private float distanceToStopAttackState = 5f;
+    private float distanceToStopAttackStateSQR = 0f;
+
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
+        distanceToStopAttackStateSQR = distanceToStopAttackState * distanceToStopAttackState;
     }
 
     public override void DoExitLogic()
@@ -39,6 +44,14 @@ public class EnemyAttackMelee : EnemyAttackSOBase
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
+
+        float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
+
+        if (distanceToPlayerSQR > distanceToStopAttackStateSQR)
+        {
+            enemy.doAttack = false;
+            enemy.doChase = true;
+        }
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)

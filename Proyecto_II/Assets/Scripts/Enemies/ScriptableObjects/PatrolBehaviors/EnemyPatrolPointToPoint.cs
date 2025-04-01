@@ -33,7 +33,7 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     public override void DoExitLogic()
     {
         base.DoExitLogic();
-        Debug.Log("Has salido del estado Patrol - Point To Point");
+        //Debug.Log("Has salido del estado Patrol - Point To Point");
     }
 
     public override void DoFrameUpdateLogic()
