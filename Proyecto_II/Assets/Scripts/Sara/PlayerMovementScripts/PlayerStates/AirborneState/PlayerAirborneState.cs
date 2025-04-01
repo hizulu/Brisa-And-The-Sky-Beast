@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,14 +11,13 @@ public class PlayerAirborneState : PlayerMovementState
     protected bool jumpFinish;
     protected bool isJumping = false;
 
-    protected bool doubleJump;
     private float jumpTimeElapsed;
-    private float minTimeBeforeDoubleJump = 0.1f;
+    private float minTimeBeforeDoubleJump = 0.05f;
+    protected int maxNumDoubleJump;
 
     public override void Enter()
     {
         base.Enter();
-        doubleJump = false;
         jumpTimeElapsed = 0f;
         StartAnimation(stateMachine.Player.PlayerAnimationData.AirborneParameterHash);
     }
@@ -29,9 +26,11 @@ public class PlayerAirborneState : PlayerMovementState
     {
         base.HandleInput();
 
-        if (jumpTimeElapsed > minTimeBeforeDoubleJump && stateMachine.Player.PlayerInput.PlayerActions.Jump.WasPressedThisFrame() && !doubleJump)
+        // Si quito "stateMachine.Player.PlayerInput.PlayerActions.Jump.triggered" puedo cortar el salto normal, pero se siente raro porque a veces va con retraso.
+        // Si lo pongo, no se hará el doble salto hasta que se acabe el salto normal.
+        if (jumpTimeElapsed > minTimeBeforeDoubleJump && stateMachine.Player.PlayerInput.PlayerActions.Jump.triggered && maxNumDoubleJump < 1)
         {
-            doubleJump = true;
+            maxNumDoubleJump++;
             stateMachine.ChangeState(stateMachine.DoubleJumpState);
         }
     }
@@ -56,7 +55,7 @@ public class PlayerAirborneState : PlayerMovementState
 
     protected virtual void Jump()
     {
-        stateMachine.ChangeState(stateMachine.JumpState);
+
     }
 
     protected virtual bool IsGrounded()
@@ -68,14 +67,9 @@ public class PlayerAirborneState : PlayerMovementState
 
         foreach (Collider collider in colliders)
         {
-
             if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
-            {
-                //Debug.Log("Has tocado suelo");
                 return true;
-            }
         }
-        //Debug.Log("No estás tocando suelo");
         return false;
     }
 
@@ -93,8 +87,6 @@ public class PlayerAirborneState : PlayerMovementState
     {
         if (stateMachine.PreviousState is PlayerIdleState)
         {
-            //Debug.Log("El método de moverte en el aire se ejecuta");
-
             if (stateMachine.MovementData.MovementInput == Vector2.zero)
                 return;
 
@@ -112,16 +104,17 @@ public class PlayerAirborneState : PlayerMovementState
             stateMachine.Player.RbPlayer.velocity = newVelocity;
 
             Rotate(movementDirection);
-
-            Debug.Log(stateMachine.Player.RbPlayer.velocity);
         }        
     }
 
     protected override void OnMovementCanceled(InputAction.CallbackContext context)
     {
         if (stateMachine.CurrentState is PlayerJumpState || stateMachine.CurrentState is PlayerFallState)
-        {
             stateMachine.MovementData.MovementInput = Vector2.zero;
-        }
+    }
+
+    protected void ResetDoubleJump()
+    {
+        maxNumDoubleJump = 0;
     }
 }

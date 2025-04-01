@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerJumpState : PlayerAirborneState
@@ -9,24 +7,10 @@ public class PlayerJumpState : PlayerAirborneState
 
     }
 
-    
-    
-
     public override void Enter()
     {
-        jumpFinish = false;        
-        stateMachine.MovementData.JumpForceModifier = 0f;
+        jumpFinish = false;
         base.Enter();
-        //Vector3 velocity = stateMachine.Player.RbPlayer.velocity;
-        //float maxAirSpeed = 5f;
-
-        //Vector2 horizontalVelocity = new Vector2(velocity.x, velocity.z);
-        //if (horizontalVelocity.magnitude > maxAirSpeed)
-        //{
-        //    horizontalVelocity = horizontalVelocity.normalized * maxAirSpeed;
-        //}
-
-        //stateMachine.Player.RbPlayer.velocity = new Vector3(horizontalVelocity.x, velocity.y, horizontalVelocity.y);
         StartAnimation(stateMachine.Player.PlayerAnimationData.JumpParameterHash);
         //Debug.Log("Has entrado en el estado de SALTAR.");
     }
@@ -71,7 +55,7 @@ public class PlayerJumpState : PlayerAirborneState
     {
         if(!isJumping)
         {
-            float jumpForce = airborneData.BaseForceJump * (1 + stateMachine.MovementData.JumpForceModifier);
+            float jumpForce = airborneData.BaseForceJump * (1 + airborneData.JumpData.NormalJumpModif);
             //jumpForce = Mathf.Clamp(jumpForce, 0f, 10f); // Por si queremos poner un tope a la fuerza de salto.
             stateMachine.Player.RbPlayer.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isJumping = true;

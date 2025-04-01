@@ -106,7 +106,7 @@ public class PlayerGroundedState : PlayerMovementState
 
             if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
             {
-                Debug.Log("Se ha detectado suelo");
+                //Debug.Log("Se ha detectado suelo");
                 return true;
             }
         }
