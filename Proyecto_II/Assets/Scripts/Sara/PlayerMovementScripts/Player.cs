@@ -113,7 +113,7 @@ public class Player : MonoBehaviour
     public void ResetHealth()
     {
         Data.StatsData.CurrentHealth = Data.StatsData.MaxHealth;
-        Debug.Log("Se ha reseteado la vida" + Data.StatsData.CurrentHealth);
+        //Debug.Log("Se ha reseteado la vida" + Data.StatsData.CurrentHealth);
     }
     #endregion
 }

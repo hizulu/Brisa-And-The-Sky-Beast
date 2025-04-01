@@ -67,7 +67,7 @@ public class PlayerAirborneState : PlayerMovementState
     {
         if (stateMachine.PreviousState is PlayerIdleState)
         {
-            Debug.Log("El método de moverte en el aire se ejecuta");
+            //Debug.Log("El método de moverte en el aire se ejecuta");
 
             if (stateMachine.MovementData.MovementInput == Vector2.zero)
                 return;
