@@ -17,6 +17,11 @@ public class PlayerFallState : PlayerAirborneState
         //Debug.Log("Has entrado en el estado de CAYENDO");
     }
 
+    public override void HandleInput()
+    {
+        base.HandleInput();
+    }
+
     public override void UpdateLogic()
     {
         base.UpdateLogic();

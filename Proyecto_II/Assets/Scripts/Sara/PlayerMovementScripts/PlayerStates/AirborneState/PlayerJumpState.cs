@@ -9,18 +9,12 @@ public class PlayerJumpState : PlayerAirborneState
 
     }
 
-    protected bool jumpFinish;
-    private bool isJumping = false;
-    protected bool doubleJump;
-
-    private float jumpTimeElapsed;
-    private float minTimeBeforeDoubleJump = 0.1f;
+    
+    
 
     public override void Enter()
     {
-        jumpFinish = false;
-        doubleJump = false;
-        jumpTimeElapsed = 0f;
+        jumpFinish = false;        
         stateMachine.MovementData.JumpForceModifier = 0f;
         base.Enter();
         //Vector3 velocity = stateMachine.Player.RbPlayer.velocity;
@@ -40,18 +34,11 @@ public class PlayerJumpState : PlayerAirborneState
     public override void HandleInput()
     {
         base.HandleInput();
-
-        if (jumpTimeElapsed > minTimeBeforeDoubleJump && stateMachine.Player.PlayerInput.PlayerActions.Jump.WasPressedThisFrame() && !doubleJump)
-        {
-            doubleJump = true;
-            stateMachine.ChangeState(stateMachine.DoubleJumpState);
-        }
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        jumpTimeElapsed += Time.deltaTime;
         FinishJump();
     }
 
@@ -70,7 +57,7 @@ public class PlayerJumpState : PlayerAirborneState
         //Debug.Log("Has salido del estado de SALTAR.");
     }
 
-    protected virtual void FinishJump()
+    protected override void FinishJump()
     {
         Animator animator = stateMachine.Player.AnimPlayer;
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)

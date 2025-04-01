@@ -24,7 +24,7 @@ public class PlayerStateMachine : StateMachine
     public PlayerAttackState AttackState { get; }
     public PlayerComboAttack ComboAttack { get; }
     public PlayerJumpState JumpState { get; }
-    public PlayerJumpState DoubleJumpState { get; }
+    public PlayerDoubleJumpState DoubleJumpState { get; }
     public PlayerFallState FallState { get; }
     public PlayerLandState LandState { get; }
     public PlayerHalfDeadState HalfDeadState { get; }

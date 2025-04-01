@@ -10,15 +10,36 @@ public class PlayerAirborneState : PlayerMovementState
 
     }
 
+    protected bool jumpFinish;
+    protected bool isJumping = false;
+
+    protected bool doubleJump;
+    private float jumpTimeElapsed;
+    private float minTimeBeforeDoubleJump = 0.1f;
+
     public override void Enter()
     {
         base.Enter();
+        doubleJump = false;
+        jumpTimeElapsed = 0f;
         StartAnimation(stateMachine.Player.PlayerAnimationData.AirborneParameterHash);
+    }
+
+    public override void HandleInput()
+    {
+        base.HandleInput();
+
+        if (jumpTimeElapsed > minTimeBeforeDoubleJump && stateMachine.Player.PlayerInput.PlayerActions.Jump.WasPressedThisFrame() && !doubleJump)
+        {
+            doubleJump = true;
+            stateMachine.ChangeState(stateMachine.DoubleJumpState);
+        }
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+        jumpTimeElapsed += Time.deltaTime;
     }
 
     public override void UpdatePhysics()
@@ -59,6 +80,11 @@ public class PlayerAirborneState : PlayerMovementState
     }
 
     protected override void ContactWithGround(Collider collider)
+    {
+
+    }
+
+    protected virtual void FinishJump()
     {
 
     }

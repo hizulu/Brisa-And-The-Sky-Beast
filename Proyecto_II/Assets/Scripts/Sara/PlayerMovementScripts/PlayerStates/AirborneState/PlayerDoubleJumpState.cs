@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDoubleJumpState : PlayerJumpState
+public class PlayerDoubleJumpState : PlayerAirborneState
 {
     public PlayerDoubleJumpState(PlayerStateMachine _stateMachine) : base(_stateMachine)
     {
@@ -12,7 +12,6 @@ public class PlayerDoubleJumpState : PlayerJumpState
     public override void Enter()
     {
         base.Enter();
-        //doubleJump = false;
         Debug.Log("Has entrado en el estado de DOBLE-SALTO");
         StartAnimation(stateMachine.Player.PlayerAnimationData.DoubleJumpParameterHash);
     }
@@ -20,6 +19,7 @@ public class PlayerDoubleJumpState : PlayerJumpState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+        FinishJump();
     }
 
     public override void UpdatePhysics()
