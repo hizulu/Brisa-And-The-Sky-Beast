@@ -44,7 +44,7 @@ public class PlayerAirborneState : PlayerMovementState
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
-        MoveAirborne();
+        Move();
     }
 
     public override void Exit()
@@ -83,29 +83,32 @@ public class PlayerAirborneState : PlayerMovementState
 
     }
 
-    protected virtual void MoveAirborne()
+    protected override void Move()
     {
-        if (stateMachine.PreviousState is PlayerIdleState)
+        Vector2 input = stateMachine.MovementData.MovementInput;
+
+        if (input == Vector2.zero)
         {
-            if (stateMachine.MovementData.MovementInput == Vector2.zero)
-                return;
+            stateMachine.Player.RbPlayer.velocity = new Vector3(0, stateMachine.Player.RbPlayer.velocity.y, 0);
+            return;
+        }
 
-            Vector3 cameraForward = Camera.main.transform.forward;
-            cameraForward.y = 0;
-            cameraForward.Normalize();
+        Vector3 cameraForward = Camera.main.transform.forward;
+        cameraForward.y = 0;
+        cameraForward.Normalize();
 
-            Vector3 movementDirection = cameraForward * stateMachine.MovementData.MovementInput.y + Camera.main.transform.right * stateMachine.MovementData.MovementInput.x;
-            movementDirection.Normalize();
+        Vector3 movementDirection = (cameraForward * input.y + Camera.main.transform.right * input.x).normalized;
 
-            float airControlFactor = airborneData.AirControl;
-            float airSpeed = airborneData.AirSpeed * airControlFactor;
+        float airSpeed = airborneData.AirSpeed;
+        float airControl = airborneData.AirControl;
 
-            Vector3 newVelocity = new Vector3(movementDirection.x * airSpeed, stateMachine.Player.RbPlayer.velocity.y, movementDirection.z * airSpeed);
-            stateMachine.Player.RbPlayer.velocity = newVelocity;
+        Vector3 newVelocity = new Vector3(movementDirection.x * airSpeed, stateMachine.Player.RbPlayer.velocity.y, movementDirection.z * airSpeed);
 
-            Rotate(movementDirection);
-        }        
+        stateMachine.Player.RbPlayer.velocity = Vector3.Lerp(stateMachine.Player.RbPlayer.velocity, newVelocity, airControl * Time.deltaTime);
+        //stateMachine.Player.RbPlayer.velocity = newVelocity; // Línea que hay que poner si elimino la variable de "airControl".
+        Rotate(movementDirection);
     }
+
 
     protected override void OnMovementCanceled(InputAction.CallbackContext context)
     {
