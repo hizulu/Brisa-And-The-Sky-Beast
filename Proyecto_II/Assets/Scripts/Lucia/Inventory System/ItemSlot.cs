@@ -39,17 +39,17 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     //Solo para pruebas
     // Método llamado cuando un valor cambia en el Inspector
-    public void OnValidate()
-    {
-        if (itemData != null && InventoryManager.Instance.inventory.ContainsKey(itemData))
-        {
-            // Actualizar la cantidad en el diccionario cuando cambie el valor en el Inspector
-            InventoryManager.Instance.inventory[itemData] = itemQuantity;
+    //public void OnValidate()
+    //{
+    //    if (itemData != null && InventoryManager.Instance.inventory.ContainsKey(itemData))
+    //    {
+    //        // Actualizar la cantidad en el diccionario cuando cambie el valor en el Inspector
+    //        InventoryManager.Instance.inventory[itemData] = itemQuantity;
 
-            // Asegúrate de actualizar la visibilidad del slot
-            InventoryManager.Instance.UpdateItemSlotVisibility(itemData);
-        }
-    }
+    //        // Asegúrate de actualizar la visibilidad del slot
+    //        InventoryManager.Instance.UpdateItemSlotVisibility(itemData);
+    //    }
+    //}
 
     // Método para asignar un ítem a un slot
     public void SetItem(ItemData newItemData, int quantity)
@@ -112,6 +112,14 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             itemImageAndDescription.ClearDisplay(); //Si se deselecciona, ocultar la descripción
         }
     }
+
+    // Método para deseleccionar un ítem
+    public void DeselectItem()
+    {
+        itemSelected = false;
+        itemImageAndDescription.ClearDisplay(); // Limpiar la descripción
+    }
+
 
     // Método para detectar el clic en un slot
     public void OnPointerClick(PointerEventData eventData)

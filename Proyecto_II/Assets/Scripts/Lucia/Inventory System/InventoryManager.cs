@@ -14,6 +14,7 @@ using UnityEngine.InputSystem;
  * 1.2 powersMenu, powersEnabled.
  * 1.3 CheckForItem.
  * 1.4 RemoveItem, UpdateItemQuantity, UpdateItemSlotVisibility OnValidate.
+ * 1.5 Inventory Open and Close with i key.
  */
 
 public class InventoryManager : MonoBehaviour
@@ -54,18 +55,18 @@ public class InventoryManager : MonoBehaviour
 
     //Solo para pruebas
     // Método llamado cuando un valor cambia en el Inspector
-    private void OnValidate()
-    {
-        // Verifica todos los slots en el inventario
-        foreach (var slot in itemSlots)
-        {
-            if (slot != null && slot.HasItem())
-            {
-                slot.UpdateQuantity(inventory[slot.GetItemData()]); // Actualiza la cantidad de cada ítem
-                slot.OnValidate(); // Llama al OnValidate de ItemSlot
-            }
-        }
-    }
+    //private void OnValidate()
+    //{
+    //    // Verifica todos los slots en el inventario
+    //    foreach (var slot in itemSlots)
+    //    {
+    //        if (slot != null && slot.HasItem())
+    //        {
+    //            slot.UpdateQuantity(inventory[slot.GetItemData()]); // Actualiza la cantidad de cada ítem
+    //            slot.OnValidate(); // Llama al OnValidate de ItemSlot
+    //        }
+    //    }
+    //}
 
     public void AddItem(ItemData itemData, int quantity)
     {
@@ -128,7 +129,6 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
     //Asignar o crear un nuevo slot para un ítem
     private void AssignOrCreateItemSlot(ItemData itemData, int quantity)
     {
@@ -188,15 +188,8 @@ public class InventoryManager : MonoBehaviour
             mapEnabled = false;
             powersEnabled = false;
             firstTime = true;
-        }
 
-        if (inventoryEnabled && context.control.name == "escape") //TODO esto no funciona
-        {
-            inventoryEnabled = false;
-            appearanceChangeEnabled = false;
-            mapEnabled = false;
-            powersEnabled = false;
-            firstTime = true;
+            DeselectAllItems(); // Llamamos al método para limpiar la selección
         }
 
         inventoryMenu.SetActive(inventoryEnabled);
@@ -204,8 +197,17 @@ public class InventoryManager : MonoBehaviour
         mapMenu.SetActive(mapEnabled);
         powersMenu.SetActive(powersEnabled);
         Time.timeScale = inventoryEnabled ? 0 : 1;
-        Cursor.visible = inventoryEnabled ? true : false; // Hace visible el cursor
-        Cursor.lockState = inventoryEnabled ? CursorLockMode.None : CursorLockMode.Locked; // Bloquea el cursor
+        Cursor.visible = inventoryEnabled;
+        Cursor.lockState = inventoryEnabled ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    // Método para deseleccionar todos los ítems cuando se cierra el inventario
+    private void DeselectAllItems()
+    {
+        foreach (ItemSlot slot in itemSlots)
+        {
+            slot.DeselectItem(); // Desactiva la selección de cada slot
+        }
     }
 
     #region MÉTODOS ANTIGUOS MODIFICADOS
