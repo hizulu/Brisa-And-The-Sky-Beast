@@ -63,7 +63,7 @@ public class PlayerMovementState : IState
         }
 
         if (collider.CompareTag("Enemy"))
-            TakeDamage(10);
+            TakeDamage(50);
     }
 
     public virtual void OnTriggerExit(Collider collider)
@@ -93,7 +93,6 @@ public class PlayerMovementState : IState
     protected virtual void AddInputActionsCallbacks()
     {
         stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled += OnMovementCanceled;
-        stateMachine.Player.PlayerInput.PlayerActions.Run.performed += RunStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
         
         
@@ -151,11 +150,6 @@ public class PlayerMovementState : IState
 
     }
 
-    protected virtual void RunStarted(InputAction.CallbackContext context)
-    {
-        stateMachine.ChangeState(stateMachine.RunState);
-    }
-
     protected virtual void ContactWithGround(Collider collider)
     {
 
@@ -170,7 +164,7 @@ public class PlayerMovementState : IState
     private void TakeDamage(float _enemyDamage)
     {
         statsData.CurrentHealth -= _enemyDamage;
-
+        Debug.Log(statsData.CurrentHealth);
         if (statsData.CurrentHealth <= 0)
             stateMachine.ChangeState(stateMachine.HalfDeadState);
     }
