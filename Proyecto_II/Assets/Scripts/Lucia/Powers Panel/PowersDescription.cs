@@ -15,11 +15,8 @@ public class PowersDescription : MonoBehaviour, IPointerClickHandler
     [SerializeField] private GameObject powersPanelUnlocked;
     [SerializeField] public PowersData powersData;
 
-    private PowersLocked powersLocked;
-
     private void Start()
     {
-        powersLocked = GetComponentInChildren<PowersLocked>(); // Asegúrate de que PowersLocked esté en un hijo de este objeto
         UpdatePanelState();
     }
 
@@ -46,9 +43,6 @@ public class PowersDescription : MonoBehaviour, IPointerClickHandler
 
         powersPanelLocked.SetActive(!isUnlocked);
         powersPanelUnlocked.SetActive(isUnlocked);
-
-        // Cambiamos las fuentes de ambos nombres según el estado
-        powersLocked.UpdatePowerNamesFont(isUnlocked);
 
         if (!isUnlocked)
         {

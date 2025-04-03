@@ -23,9 +23,19 @@ public class CharacterAppearanceManager : MonoBehaviour
         {
             Material[] materials = characterRenderer.materials;
 
-            if (materials.Length > 1)
+            if (materials.Length >= 4)
             {
-                materials[0] = new Material(appearance.appearanceMaterial); // Forzar cambio creando una nueva instancia
+                // Crear una nueva instancia del material principal
+                materials[0] = new Material(appearance.appearanceMainMaterial);
+
+                // Cambiar el Base Map del material en la posición 3
+                Texture2D newBaseMap = appearance.eyebrowsBaseMap; // Suponiendo que tienes una textura en appearance
+                if (newBaseMap != null)
+                {
+                    materials[3].SetTexture("_BaseMap", newBaseMap);
+                }
+
+                // Aplicar los materiales modificados
                 characterRenderer.materials = materials;
             }
         }
