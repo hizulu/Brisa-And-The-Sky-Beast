@@ -6,8 +6,7 @@ using UnityEngine;
  * AUTOR: Lucía García López
  * FECHA: 13/03/2025
  * DESCRIPCIÓN: Script que se encarga de almacenar la información de un ítem.
- * VERSIÓN: 1.0 appearanceID, appearanceName, appearanceIcon.
- * VERSIÓN: 1.1 + appearanceDescription.
+ * VERSIÓN: 1.0 itemID, itemName, itemIcon, itemDescription.
  */
 
 public class ItemData : ScriptableObject
