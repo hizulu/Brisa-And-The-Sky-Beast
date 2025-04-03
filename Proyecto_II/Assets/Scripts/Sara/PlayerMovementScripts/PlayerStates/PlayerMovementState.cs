@@ -17,6 +17,7 @@ public class PlayerMovementState : IState
 
     protected readonly PlayerGroundedData groundedData;
     protected readonly PlayerAirborneData airborneData;
+    protected readonly PlayerStatsData statsData;
 
     public PlayerMovementState(PlayerStateMachine _stateMachine)
     {
@@ -24,6 +25,7 @@ public class PlayerMovementState : IState
 
         groundedData = stateMachine.Player.Data.GroundedData;
         airborneData = stateMachine.Player.Data.AirborneData;
+        statsData = stateMachine.Player.Data.StatsData;
     }
 
     public virtual void Enter()
@@ -59,6 +61,9 @@ public class PlayerMovementState : IState
             //Debug.Log(collider.gameObject.name);
             //return;
         }
+
+        if (collider.CompareTag("Enemy"))
+            TakeDamage(50);
     }
 
     public virtual void OnTriggerExit(Collider collider)
@@ -88,7 +93,6 @@ public class PlayerMovementState : IState
     protected virtual void AddInputActionsCallbacks()
     {
         stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled += OnMovementCanceled;
-        stateMachine.Player.PlayerInput.PlayerActions.Run.performed += RunStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
         
         
@@ -146,11 +150,6 @@ public class PlayerMovementState : IState
 
     }
 
-    protected virtual void RunStarted(InputAction.CallbackContext context)
-    {
-        stateMachine.ChangeState(stateMachine.RunState);
-    }
-
     protected virtual void ContactWithGround(Collider collider)
     {
 
@@ -161,8 +160,12 @@ public class PlayerMovementState : IState
 
     }
 
-    private void TakeDamage()
-    {
 
+    private void TakeDamage(float _enemyDamage)
+    {
+        statsData.CurrentHealth -= _enemyDamage;
+        Debug.Log(statsData.CurrentHealth);
+        if (statsData.CurrentHealth <= 0)
+            stateMachine.ChangeState(stateMachine.HalfDeadState);
     }
 }

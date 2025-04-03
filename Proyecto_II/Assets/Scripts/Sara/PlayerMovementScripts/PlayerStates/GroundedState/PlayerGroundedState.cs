@@ -41,6 +41,7 @@ public class PlayerGroundedState : PlayerMovementState
     protected override void AddInputActionsCallbacks()
     {
         base.AddInputActionsCallbacks();
+        stateMachine.Player.PlayerInput.PlayerActions.Run.performed += RunStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Jump.started += JumpStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.started += CrouchStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Attack.started += AttackStart;
@@ -56,12 +57,26 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected virtual void OnMove()
     {
-        stateMachine.ChangeState(stateMachine.WalkState);
+        if (stateMachine.Player.PlayerInput.PlayerActions.Crouch.IsPressed())
+        {
+            stateMachine.ChangeState(stateMachine.CrouchState);
+            return;
+        }
+
+        if (stateMachine.Player.PlayerInput.PlayerActions.Run.IsPressed())
+            stateMachine.ChangeState(stateMachine.RunState);
+        else
+            stateMachine.ChangeState(stateMachine.WalkState);
     }
 
     protected virtual void OnStop()
     {
         stateMachine.ChangeState(stateMachine.IdleState);
+    }
+
+    protected virtual void RunStarted(InputAction.CallbackContext context)
+    {
+        stateMachine.ChangeState(stateMachine.RunState);
     }
 
     protected virtual void JumpStarted(InputAction.CallbackContext context)
@@ -106,7 +121,7 @@ public class PlayerGroundedState : PlayerMovementState
 
             if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
             {
-                Debug.Log("Se ha detectado suelo");
+                //Debug.Log("Se ha detectado suelo");
                 return true;
             }
         }

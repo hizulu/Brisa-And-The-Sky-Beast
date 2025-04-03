@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerJumpState : PlayerAirborneState
@@ -9,26 +7,18 @@ public class PlayerJumpState : PlayerAirborneState
 
     }
 
-    private bool jumpFinish;
-    private bool isJumping = false;
-
     public override void Enter()
     {
         jumpFinish = false;
-        stateMachine.MovementData.JumpForceModifier = 0f;
+        ResetDoubleJump();
         base.Enter();
-        //Vector3 velocity = stateMachine.Player.RbPlayer.velocity;
-        //float maxAirSpeed = 5f;
-
-        //Vector2 horizontalVelocity = new Vector2(velocity.x, velocity.z);
-        //if (horizontalVelocity.magnitude > maxAirSpeed)
-        //{
-        //    horizontalVelocity = horizontalVelocity.normalized * maxAirSpeed;
-        //}
-
-        //stateMachine.Player.RbPlayer.velocity = new Vector3(horizontalVelocity.x, velocity.y, horizontalVelocity.y);
         StartAnimation(stateMachine.Player.PlayerAnimationData.JumpParameterHash);
         //Debug.Log("Has entrado en el estado de SALTAR.");
+    }
+
+    public override void HandleInput()
+    {
+        base.HandleInput();
     }
 
     public override void UpdateLogic()
@@ -40,10 +30,6 @@ public class PlayerJumpState : PlayerAirborneState
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
-        //JumpingOrFalling();
-        //if (!IsGrounded())
-        //    MoveAirborne();
-
         Jump();
     }
 
@@ -56,34 +42,35 @@ public class PlayerJumpState : PlayerAirborneState
         //Debug.Log("Has salido del estado de SALTAR.");
     }
 
-    private void FinishJump()
+    protected override void FinishJump()
     {
         Animator animator = stateMachine.Player.AnimPlayer;
+
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             jumpFinish = true;
-            stateMachine.ChangeState(stateMachine.FallState);
+
+            if (stateMachine.Player.PlayerInput.PlayerActions.Jump.triggered && maxNumDoubleJump < 1)
+            {
+                maxNumDoubleJump++;
+                stateMachine.ChangeState(stateMachine.DoubleJumpState);
+            }
+            else
+            {
+                stateMachine.ChangeState(stateMachine.FallState);
+            }
         }
     }
+
 
     protected override void Jump()
     {
         if(!isJumping)
         {
-            float jumpForce = airborneData.BaseForceJump * (1 + stateMachine.MovementData.JumpForceModifier);
+            float jumpForce = airborneData.BaseForceJump * (1 + airborneData.JumpData.NormalJumpModif);
             //jumpForce = Mathf.Clamp(jumpForce, 0f, 10f); // Por si queremos poner un tope a la fuerza de salto.
             stateMachine.Player.RbPlayer.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isJumping = true;
         }        
     }
-
-    //private void JumpingOrFalling()
-    //{
-    //    float velY = stateMachine.Player.RbPlayer.velocity.y;
-
-    //    if (velY > -5)
-    //        return;
-    //    else
-    //        stateMachine.ChangeState(stateMachine.FallState);
-    //}
 }

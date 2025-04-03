@@ -18,6 +18,14 @@ public class PlayerCrouchState : PlayerMovedState
         Debug.Log("Has entrado en el estado de AGACHARSE.");
     }
 
+    public override void UpdateLogic()
+    {
+        base.UpdateLogic();
+
+        if (stateMachine.MovementData.MovementInput == Vector2.zero)
+            stateMachine.ChangeState(stateMachine.IdleState);
+    }
+
     public override void Exit()
     {
         base.Exit();
