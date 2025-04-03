@@ -10,6 +10,7 @@ public class PlayerJumpState : PlayerAirborneState
     public override void Enter()
     {
         jumpFinish = false;
+        ResetDoubleJump();
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.JumpParameterHash);
         //Debug.Log("Has entrado en el estado de SALTAR.");
@@ -44,12 +45,23 @@ public class PlayerJumpState : PlayerAirborneState
     protected override void FinishJump()
     {
         Animator animator = stateMachine.Player.AnimPlayer;
+
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             jumpFinish = true;
-            stateMachine.ChangeState(stateMachine.FallState);
+
+            if (stateMachine.Player.PlayerInput.PlayerActions.Jump.triggered && maxNumDoubleJump < 1)
+            {
+                maxNumDoubleJump++;
+                stateMachine.ChangeState(stateMachine.DoubleJumpState);
+            }
+            else
+            {
+                stateMachine.ChangeState(stateMachine.FallState);
+            }
         }
     }
+
 
     protected override void Jump()
     {
