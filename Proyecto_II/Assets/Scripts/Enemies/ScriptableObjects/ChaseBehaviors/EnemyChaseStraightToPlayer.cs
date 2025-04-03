@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Chase-Straight to Player", menuName = "Enemy Logic/Chase Logic/Straight to Player")]
 public class EnemyChaseStraightToPlayer : EnemyChaseSOBase
 {
-    [SerializeField] private float chasingSpeed = 4f;
+    [SerializeField] private float chasingSpeed = 6f;
     private Vector3 direction;
     [SerializeField] private float playerAttackRange = 7f;
     [SerializeField] private float playerLostRange = 20f;
@@ -24,6 +24,7 @@ public class EnemyChaseStraightToPlayer : EnemyChaseSOBase
     public override void DoExitLogic()
     {
         base.DoExitLogic();
+        enemy.anim.SetBool("isChasing,", false);
     }    
 
     public override void DoFrameUpdateLogic()
