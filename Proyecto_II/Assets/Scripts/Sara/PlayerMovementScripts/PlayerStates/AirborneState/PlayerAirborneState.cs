@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,21 +8,43 @@ public class PlayerAirborneState : PlayerMovementState
 
     }
 
+    protected bool jumpFinish;
+    protected bool isJumping = false;
+
+    private float jumpTimeElapsed;
+    private float minTimeBeforeDoubleJump = 0.05f;
+    protected int maxNumDoubleJump;
+
     public override void Enter()
     {
         base.Enter();
+        jumpTimeElapsed = 0f;
         StartAnimation(stateMachine.Player.PlayerAnimationData.AirborneParameterHash);
+    }
+
+    public override void HandleInput()
+    {
+        base.HandleInput();
+
+        // Si quito "stateMachine.Player.PlayerInput.PlayerActions.Jump.triggered" puedo cortar el salto normal, pero se siente raro porque a veces va con retraso.
+        // Si lo pongo, no se hará el doble salto hasta que se acabe el salto normal.
+        if (jumpTimeElapsed > minTimeBeforeDoubleJump && stateMachine.Player.PlayerInput.PlayerActions.Jump.triggered && maxNumDoubleJump < 1)
+        {
+            maxNumDoubleJump++;
+            stateMachine.ChangeState(stateMachine.DoubleJumpState);
+        }
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+        jumpTimeElapsed += Time.deltaTime;
     }
 
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
-        MoveAirborne();
+        Move();
     }
 
     public override void Exit()
@@ -35,7 +55,7 @@ public class PlayerAirborneState : PlayerMovementState
 
     protected virtual void Jump()
     {
-        stateMachine.ChangeState(stateMachine.JumpState);
+
     }
 
     protected virtual bool IsGrounded()
@@ -47,14 +67,9 @@ public class PlayerAirborneState : PlayerMovementState
 
         foreach (Collider collider in colliders)
         {
-
             if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
-            {
-                //Debug.Log("Has tocado suelo");
                 return true;
-            }
         }
-        //Debug.Log("No estás tocando suelo");
         return false;
     }
 
@@ -63,39 +78,46 @@ public class PlayerAirborneState : PlayerMovementState
 
     }
 
-    protected virtual void MoveAirborne()
+    protected virtual void FinishJump()
     {
-        if (stateMachine.PreviousState is PlayerIdleState)
-        {
-            Debug.Log("El método de moverte en el aire se ejecuta");
 
-            if (stateMachine.MovementData.MovementInput == Vector2.zero)
-                return;
-
-            Vector3 cameraForward = Camera.main.transform.forward;
-            cameraForward.y = 0;
-            cameraForward.Normalize();
-
-            Vector3 movementDirection = cameraForward * stateMachine.MovementData.MovementInput.y + Camera.main.transform.right * stateMachine.MovementData.MovementInput.x;
-            movementDirection.Normalize();
-
-            float airControlFactor = airborneData.AirControl;
-            float airSpeed = airborneData.AirSpeed * airControlFactor;
-
-            Vector3 newVelocity = new Vector3(movementDirection.x * airSpeed, stateMachine.Player.RbPlayer.velocity.y, movementDirection.z * airSpeed);
-            stateMachine.Player.RbPlayer.velocity = newVelocity;
-
-            Rotate(movementDirection);
-
-            Debug.Log(stateMachine.Player.RbPlayer.velocity);
-        }        
     }
+
+    protected override void Move()
+    {
+        Vector2 input = stateMachine.MovementData.MovementInput;
+
+        if (input == Vector2.zero)
+        {
+            stateMachine.Player.RbPlayer.velocity = new Vector3(0, stateMachine.Player.RbPlayer.velocity.y, 0);
+            return;
+        }
+
+        Vector3 cameraForward = Camera.main.transform.forward;
+        cameraForward.y = 0;
+        cameraForward.Normalize();
+
+        Vector3 movementDirection = (cameraForward * input.y + Camera.main.transform.right * input.x).normalized;
+
+        float airSpeed = airborneData.AirSpeed;
+        float airControl = airborneData.AirControl;
+
+        Vector3 newVelocity = new Vector3(movementDirection.x * airSpeed, stateMachine.Player.RbPlayer.velocity.y, movementDirection.z * airSpeed);
+
+        stateMachine.Player.RbPlayer.velocity = Vector3.Lerp(stateMachine.Player.RbPlayer.velocity, newVelocity, airControl * Time.deltaTime);
+        //stateMachine.Player.RbPlayer.velocity = newVelocity; // Línea que hay que poner si elimino la variable de "airControl".
+        Rotate(movementDirection);
+    }
+
 
     protected override void OnMovementCanceled(InputAction.CallbackContext context)
     {
         if (stateMachine.CurrentState is PlayerJumpState || stateMachine.CurrentState is PlayerFallState)
-        {
             stateMachine.MovementData.MovementInput = Vector2.zero;
-        }
+    }
+
+    protected void ResetDoubleJump()
+    {
+        maxNumDoubleJump = 0;
     }
 }

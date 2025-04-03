@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerFallState : PlayerAirborneState
@@ -15,6 +12,11 @@ public class PlayerFallState : PlayerAirborneState
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
         //Debug.Log("Has entrado en el estado de CAYENDO");
+    }
+
+    public override void HandleInput()
+    {
+        base.HandleInput();
     }
 
     public override void UpdateLogic()
@@ -36,29 +38,16 @@ public class PlayerFallState : PlayerAirborneState
         //Debug.Log("Has salido del estado de CAYENDO");
     }
 
-    //protected override void ContactWithGround(Collider collider)
-    //{
-    //    Debug.Log("Contacto con el suelo detectado");
-
-    //    if (stateMachine.MovementData.MovementInput == Vector2.zero)
-    //    {
-    //        stateMachine.ChangeState(stateMachine.LandState);
-    //        Debug.Log("Deberías aterrizar");
-    //        return;
-    //    }
-    //}
-
     private void LandInGround()
     {
         if (IsGrounded())
         {
             //Debug.Log("Pasas a ATERRIZAR");
             stateMachine.ChangeState(stateMachine.LandState);
+            ResetDoubleJump();
             return;
         }
-    }
-
-    
+    }    
 
     private float fallSpeed = 0f;
     private float gravityAcceleration = 9.8f;
