@@ -10,6 +10,8 @@ public class BreakableBox : HittableElement
 
     private BreakableEffectHandler effectHandler;
 
+    [Range(0f, 1f)] [SerializeField] private float scaleFactor = 0.65f;
+
     private void Start()
     {
         effectHandler = new BreakableEffectHandler(VFXPoolManager.Instance.GetVFX());
@@ -22,10 +24,15 @@ public class BreakableBox : HittableElement
         {
             anim.SetTrigger("breakBox");
         }
-
+        this.gameObject.transform.localScale = new Vector3 (scaleFactor, scaleFactor, scaleFactor);
         effectHandler.PlayEffect(transform.position);
         StartCoroutine(ReturnVFXToPool(1f));
 
+        Invoke("RemoveBox", 0.5f);
+    }
+
+    private void RemoveBox()
+    {
         gameObject.SetActive(false);
     }
     private IEnumerator ReturnVFXToPool(float delay)
