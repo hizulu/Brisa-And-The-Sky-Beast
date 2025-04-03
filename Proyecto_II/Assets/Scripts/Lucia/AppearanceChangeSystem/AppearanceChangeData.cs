@@ -8,6 +8,7 @@ using UnityEngine;
  * DESCRIPCIÓN: Script que se encarga de almacenar la información del cambio de apariencia.
  * VERSIÓN: 1.0 appearanceID, appearanceName, appearanceIcon, appearanceDescription, appearanceMaterial
  * 1.1 objectsNeeded, isUnlocked.
+ * 1.2 eyebrowsBaseMap.
  */
 
 public class AppearanceChangeData : ScriptableObject
@@ -16,7 +17,8 @@ public class AppearanceChangeData : ScriptableObject
     public string appearanceName;
     public Sprite appearanceIcon;
     public string appearanceDescription;
-    public Material appearanceMaterial;
+    public Material appearanceMainMaterial;
+    public Texture2D eyebrowsBaseMap;
     public string objectsNeeded;
     public bool isUnlocked;
 }
