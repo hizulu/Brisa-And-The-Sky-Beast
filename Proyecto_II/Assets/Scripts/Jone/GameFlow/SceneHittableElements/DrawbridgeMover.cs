@@ -5,7 +5,7 @@ using UnityEngine;
 
 // Jone Sainz Egea
 // 30/03/2025
-public class DrawbridgeMover : MonoBehaviour
+public class DrawbridgeMover : MonoBehaviour, IMovableElement
 {
     [SerializeField] private Transform oneActiveLever;
     [SerializeField] private Transform twoActiveLever;
@@ -13,10 +13,10 @@ public class DrawbridgeMover : MonoBehaviour
 
     private NavMeshModifierVolume navMeshModifier;
     private Coroutine moveCoroutine;
-
     private bool leverOneActive;
     private bool leverTwoActive;
     private bool isMoving = false;
+
     private void Awake()
     {
         navMeshModifier = GetComponent<NavMeshModifierVolume>();
@@ -73,4 +73,7 @@ public class DrawbridgeMover : MonoBehaviour
             Debug.Log("NavMeshModifier should not be activated");
         }
     }
+
+    public void StartMoving(Vector3 target, float speed) { } // No usado aquí
+    public bool IsMoving() => isMoving;
 }

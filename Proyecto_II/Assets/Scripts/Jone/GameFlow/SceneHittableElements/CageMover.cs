@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class CageMover : MonoBehaviour
+public class CageMover : MonoBehaviour, IMovableElement
 {
     private Vector3 targetPosition;
     private float movementSpeed;
@@ -13,6 +14,7 @@ public class CageMover : MonoBehaviour
         targetPosition = newTarget;
         movementSpeed = speed;
         isMoving = true;
+        Debug.Log($"La jaula se debería mover a: {targetPosition}");
     }
 
     private void Update()
@@ -28,8 +30,5 @@ public class CageMover : MonoBehaviour
         }
     }
 
-    public bool IsMoving()
-    {
-        return isMoving;
-    }
+    public bool IsMoving() => isMoving;
 }

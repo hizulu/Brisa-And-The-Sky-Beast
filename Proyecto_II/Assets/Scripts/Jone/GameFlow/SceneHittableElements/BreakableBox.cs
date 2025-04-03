@@ -8,27 +8,30 @@ public class BreakableBox : HittableElement
 {
     [SerializeField] private Animator anim;
 
+    private BreakableEffectHandler effectHandler;
+
+    private void Start()
+    {
+        effectHandler = new BreakableEffectHandler(VFXPoolManager.Instance.GetVFX());
+    }
+
     public override void OnHit()
     {
         Debug.Log("La caja se ha roto.");
         if (anim != null)
         {
             anim.SetTrigger("breakBox");
-
-            VisualEffect smokePoof = VFXPoolManager.Instance.GetVFX();
-            smokePoof.transform.position = transform.position;
-            smokePoof.Play();
-
-            float effectDuration = 1f; 
-            StartCoroutine(ReturnVFXToPool(smokePoof, effectDuration));
-
-            // Desactivar la caja en lugar de destruirla (opcional para reciclaje)
-            gameObject.SetActive(false);
         }
+
+        effectHandler.PlayEffect(transform.position);
+        StartCoroutine(ReturnVFXToPool(1f));
+
+        gameObject.SetActive(false);
     }
-    private IEnumerator ReturnVFXToPool(VisualEffect vfx, float delay)
+    private IEnumerator ReturnVFXToPool(float delay)
     {
         yield return new WaitForSeconds(delay);
-        VFXPoolManager.Instance.ReturnVFX(vfx);
+        VisualEffect visualEffect = effectHandler.GetVisualEffect();
+        VFXPoolManager.Instance.ReturnVFX(visualEffect);
     }
 }
