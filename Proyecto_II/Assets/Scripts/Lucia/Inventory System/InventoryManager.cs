@@ -176,12 +176,12 @@ public class InventoryManager : MonoBehaviour
         if (!context.performed)
             return;
 
-        if (context.control.name == "f" && firstTime)
+        if (context.control.name == "i" && firstTime)
         {
             inventoryEnabled = true;
             firstTime = false;
         }
-        else if (context.control.name == "f" && !firstTime)
+        else if (context.control.name == "i" && !firstTime)
         {
             inventoryEnabled = false;
             appearanceChangeEnabled = false;
