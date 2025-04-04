@@ -2313,6 +2313,7 @@ MonoBehaviour:
     movedParameterName: Moved
     attackParameterName: Attack
     airborneParameterName: Airborne
+    deathParameterName: Death
     idleParameterName: isIdle
     walkParameterName: isWalking
     runParameterName: isRunning
@@ -2321,8 +2322,11 @@ MonoBehaviour:
     attack02ParameterName: isAttacking02
     attack03ParameterName: isAttacking03
     jumpParameterName: isJumping
+    doubleJumpParameterName: isDoubleJumping
     fallParameterName: isFalling
     landParameterName: isLanding
+    halfDeadParameterName: isHalfDeading
+    finalDeadParameterName: isFinalDeading
   PaloBrisa: {fileID: 1432328130}
   hitBox: {fileID: 873636943}
   attackDuration: 0.2
@@ -8591,6 +8595,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreakableBoxPrefab (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3192046686387075132, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
+      propertyPath: scaleFactor
+      value: 0.65
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10141,6 +10149,10 @@ PrefabInstance:
     - target: {fileID: 3022515527523662604, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
       propertyPath: m_Name
       value: BreakableBoxPrefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192046686387075132, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
+      propertyPath: scaleFactor
+      value: 0.65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12308,6 +12320,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 141740093}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1282828723 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8455773522568456627, guid: 30db753e873c5bf48b4780179ca27d27, type: 3}
+  m_PrefabInstance: {fileID: 1406951993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1292092151
 GameObject:
   m_ObjectHideFlags: 0
@@ -12779,6 +12796,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &1315502574 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8455773522568456627, guid: 30db753e873c5bf48b4780179ca27d27, type: 3}
+  m_PrefabInstance: {fileID: 1526964478}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1345340397
 GameObject:
   m_ObjectHideFlags: 0
@@ -13196,6 +13218,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1847195341}
     m_Modifications:
+    - target: {fileID: 6706716108972619523, guid: 30db753e873c5bf48b4780179ca27d27, type: 3}
+      propertyPath: leverStick
+      value: 
+      objectReference: {fileID: 1282828723}
     - target: {fileID: 6706716108972619523, guid: 30db753e873c5bf48b4780179ca27d27, type: 3}
       propertyPath: leverAction
       value: 
@@ -13859,6 +13885,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1847195341}
     m_Modifications:
+    - target: {fileID: 6706716108972619523, guid: 30db753e873c5bf48b4780179ca27d27, type: 3}
+      propertyPath: leverStick
+      value: 
+      objectReference: {fileID: 1315502574}
     - target: {fileID: 6706716108972619523, guid: 30db753e873c5bf48b4780179ca27d27, type: 3}
       propertyPath: leverAction
       value: 
@@ -15432,6 +15462,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreakableBoxPrefab (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3192046686387075132, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
+      propertyPath: scaleFactor
+      value: 0.65
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16665,6 +16699,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreakableBoxPrefab (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3192046686387075132, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
+      propertyPath: scaleFactor
+      value: 0.65
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17837,6 +17875,10 @@ PrefabInstance:
     - target: {fileID: 3022515527523662604, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
       propertyPath: m_Name
       value: BreakableBoxPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192046686387075132, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
+      propertyPath: scaleFactor
+      value: 0.65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19283,6 +19325,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreakableBoxPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 3192046686387075132, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
+      propertyPath: scaleFactor
+      value: 0.65
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19502,6 +19548,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3659527116439377511, guid: 677b75b04fe3be54babccc6d89d4dba7, type: 3}
   m_PrefabInstance: {fileID: 2103105503}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &2104032067 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8455773522568456627, guid: 30db753e873c5bf48b4780179ca27d27, type: 3}
+  m_PrefabInstance: {fileID: 8880540708094179004}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2113506761
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19553,6 +19604,10 @@ PrefabInstance:
     - target: {fileID: 3022515527523662604, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
       propertyPath: m_Name
       value: BreakableBoxPrefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192046686387075132, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
+      propertyPath: scaleFactor
+      value: 0.65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -39259,6 +39314,7 @@ GameObject:
   - component: {fileID: 5812614302953924749}
   - component: {fileID: 1423387468391873558}
   - component: {fileID: 8375975879556118115}
+  - component: {fileID: 8375975879556118116}
   m_Layer: 0
   m_Name: "R\xEDo"
   m_TagString: Untagged
@@ -44450,6 +44506,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &8375975879556118116
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6784821590531597987}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: be5a34090d120ec4b824be88115d2969, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!23 &8389649883486260865
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -45983,6 +46060,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1847195341}
     m_Modifications:
+    - target: {fileID: 6706716108972619523, guid: 30db753e873c5bf48b4780179ca27d27, type: 3}
+      propertyPath: leverStick
+      value: 
+      objectReference: {fileID: 2104032067}
     - target: {fileID: 6706716108972619523, guid: 30db753e873c5bf48b4780179ca27d27, type: 3}
       propertyPath: leverAction
       value: 
