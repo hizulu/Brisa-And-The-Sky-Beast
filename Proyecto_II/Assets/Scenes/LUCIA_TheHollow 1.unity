@@ -2313,6 +2313,7 @@ MonoBehaviour:
     movedParameterName: Moved
     attackParameterName: Attack
     airborneParameterName: Airborne
+    deathParameterName: Death
     idleParameterName: isIdle
     walkParameterName: isWalking
     runParameterName: isRunning
@@ -2321,8 +2322,11 @@ MonoBehaviour:
     attack02ParameterName: isAttacking02
     attack03ParameterName: isAttacking03
     jumpParameterName: isJumping
+    doubleJumpParameterName: isDoubleJumping
     fallParameterName: isFalling
     landParameterName: isLanding
+    halfDeadParameterName: isHalfDeading
+    finalDeadParameterName: isFinalDeading
   PaloBrisa: {fileID: 1432328130}
   hitBox: {fileID: 873636943}
   attackDuration: 0.2
@@ -7998,7 +8002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &759845776
 Transform:
   m_ObjectHideFlags: 0
@@ -39259,6 +39263,7 @@ GameObject:
   - component: {fileID: 5812614302953924749}
   - component: {fileID: 1423387468391873558}
   - component: {fileID: 8375975879556118115}
+  - component: {fileID: 8375975879556118116}
   m_Layer: 0
   m_Name: "R\xEDo"
   m_TagString: Untagged
@@ -44450,6 +44455,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &8375975879556118116
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6784821590531597987}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: be5a34090d120ec4b824be88115d2969, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!23 &8389649883486260865
 MeshRenderer:
   m_ObjectHideFlags: 0
