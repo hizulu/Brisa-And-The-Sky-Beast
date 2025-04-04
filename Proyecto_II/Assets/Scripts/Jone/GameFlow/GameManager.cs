@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     private SaveManager saveManager;
+    [SerializeField] GameObject pausePanel;
+    [SerializeField] GameObject beastSelectionPanel;
+    bool isPaused = false;
+    bool beastSelectionActive = false;
 
     // Estructura Singleton
     void Awake()
@@ -55,6 +59,7 @@ public class GameManager : MonoBehaviour
             if (Time.timeScale != 0)
             {
                 Pause.TriggerPause();
+
                 Debug.Log("Juego pausado");
             }
             else
@@ -72,6 +77,26 @@ public class GameManager : MonoBehaviour
                     else
                         Pause.TriggerResume();
                 }*/
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (beastSelectionActive)
+            {
+                beastSelectionPanel.SetActive(false);
+                Time.timeScale = 1f;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                beastSelectionActive = false;
+            }
+            else
+            {
+                beastSelectionPanel.SetActive(true);
+                Time.timeScale = 0f;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                beastSelectionActive = true;
+            }
         }
     }
 
@@ -96,11 +121,17 @@ public class GameManager : MonoBehaviour
     void PauseGame()
     {
         Time.timeScale = 0f;
+        pausePanel.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         //UIManager.Instance.CargarPantallaPausa();
     }
-    void ResumeGame()
+    public void ResumeGame()
     {
         Time.timeScale = 1f;
+        pausePanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         //UIManager.Instance.QuitarPantallaPausa();
     }
 
