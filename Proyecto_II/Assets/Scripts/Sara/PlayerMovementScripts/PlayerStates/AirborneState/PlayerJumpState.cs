@@ -50,7 +50,7 @@ public class PlayerJumpState : PlayerAirborneState
         {
             jumpFinish = true;
 
-            if (stateMachine.Player.PlayerInput.PlayerActions.Jump.triggered && maxNumDoubleJump < 1)
+            if (stateMachine.Player.PlayerInput.PlayerActions.Jump.triggered && maxNumDoubleJump == 0)
             {
                 maxNumDoubleJump++;
                 stateMachine.ChangeState(stateMachine.DoubleJumpState);
@@ -61,7 +61,6 @@ public class PlayerJumpState : PlayerAirborneState
             }
         }
     }
-
 
     protected override void Jump()
     {

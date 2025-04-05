@@ -76,6 +76,9 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected virtual void RunStarted(InputAction.CallbackContext context)
     {
+        if (!IsGrounded())
+            return;
+
         stateMachine.ChangeState(stateMachine.RunState);
     }
 

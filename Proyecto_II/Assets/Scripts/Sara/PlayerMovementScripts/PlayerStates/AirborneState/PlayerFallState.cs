@@ -17,6 +17,15 @@ public class PlayerFallState : PlayerAirborneState
     public override void HandleInput()
     {
         base.HandleInput();
+
+        //if (stateMachine.Player.PlayerInput.PlayerActions.Jump.triggered)
+        //{
+        //    if (maxNumDoubleJump < 1)
+        //    {
+        //        maxNumDoubleJump++;
+        //        stateMachine.ChangeState(stateMachine.DoubleJumpState);
+        //    }
+        //}
     }
 
     public override void UpdateLogic()
