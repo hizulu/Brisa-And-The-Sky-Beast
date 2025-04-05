@@ -1,10 +1,20 @@
+#region Bibliotecas
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+#endregion
+
+/* NOMBRE CLASE: Appearance UI Manager
+ * AUTOR: Lucía García López
+ * FECHA: 25/03/2025
+ * DESCRIPCIÓN: Script que se encarga de gestionar la interfaz de usuario para cambiar la apariencia del personaje.
+ * VERSIÓN: 1.0
+ */
 
 public class AppearanceUIManager : MonoBehaviour
 {
+    #region Variables
     [Header("UI Panels")]
     public GameObject unlockedSkinPanel;
     public GameObject blockedSkinPanel;
@@ -25,6 +35,7 @@ public class AppearanceUIManager : MonoBehaviour
     private int currentAppearanceIndex = 0;
 
     public CharacterAppearanceManager characterAppearanceManager;
+    #endregion
 
     private void Start()
     {
@@ -43,6 +54,7 @@ public class AppearanceUIManager : MonoBehaviour
         }
     }
 
+    //Método para cambiar la apariencia a la derecha
     public void ChangeAppearanceRight()
     {
         Debug.Log("El objeto está a punto de cambiar de padre.");
@@ -54,6 +66,7 @@ public class AppearanceUIManager : MonoBehaviour
         UpdateAppearanceUI(appearances[currentAppearanceIndex]);
     }
 
+    //Método para cambiar la apariencia a la izquierda
     public void ChangeAppearanceLeft()
     {
         Debug.Log("El objeto está a punto de cambiar de padre.");
@@ -65,6 +78,7 @@ public class AppearanceUIManager : MonoBehaviour
         UpdateAppearanceUI(appearances[currentAppearanceIndex]);
     }
 
+    //Método para cambiar la apariencia al hacer clic en el botón
     private void UpdateAppearanceUI(AppearanceChangeData newAppearance)
     {
         if (newAppearance == null)
@@ -108,6 +122,7 @@ public class AppearanceUIManager : MonoBehaviour
         }
     }
 
+    //Método para aplicar la apariencia al personaje
     public void ApplyAppearanceToCharacter()
     {
         if (appearances.Count > 0 && characterAppearanceManager != null)

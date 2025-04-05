@@ -77,20 +77,20 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            inventory[itemData] = quantity; // Si no existe, lo añadimos
-            AssignOrCreateItemSlot(itemData, quantity); // Creamos un nuevo slot
+            inventory[itemData] = quantity; // Si no existe, se añade
+            AssignOrCreateItemSlot(itemData, quantity); // Se Crea un nuevo slot
         }
     }
 
-
+    //Método para eliminar un ítem del inventario
     public void RemoveItem(ItemData itemData)
     {
         if (inventory.ContainsKey(itemData)) // Verifica si el ítem existe en el inventario
         {
-            // Actualiza la cantidad a 0 
-            UpdateItemQuantity(itemData, 0); //TODO Revisar si es necesario o si es 0
+            int quantity = inventory[itemData];
+            quantity = quantity - 1;
+            UpdateItemQuantity(itemData, quantity); //TODO Revisar si es necesario o si funciona bien
 
-            // Luego, actualiza la visibilidad del slot
             UpdateItemSlotVisibility(itemData);
         }
     }
@@ -189,7 +189,7 @@ public class InventoryManager : MonoBehaviour
             powersEnabled = false;
             firstTime = true;
 
-            DeselectAllItems(); // Llamamos al método para limpiar la selección
+            DeselectAllItems();
         }
 
         inventoryMenu.SetActive(inventoryEnabled);

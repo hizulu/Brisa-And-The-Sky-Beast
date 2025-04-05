@@ -1,6 +1,15 @@
+#region Bibliotecas
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#endregion
+
+/* NOMBRE CLASE: Item Checker
+ * AUTOR: Lucía García López
+ * FECHA: 30/03/2025
+ * DESCRIPCIÓN: Script que se encarga de comprobar si un ítem está en el inventario.
+ * VERSIÓN: 1.0 
+ */
 
 public class ItemChecker : MonoBehaviour
 {
@@ -9,7 +18,7 @@ public class ItemChecker : MonoBehaviour
 
     private void Start()
     {
-        inventoryManager = InventoryManager.Instance; // Acceder a la instancia Singleton
+        inventoryManager = InventoryManager.Instance;
     }
 
     public void CheckItemOnInventary()
@@ -24,5 +33,4 @@ public class ItemChecker : MonoBehaviour
             Debug.LogWarning("InventoryManager no está inicializado.");
         }
     }
-
 }

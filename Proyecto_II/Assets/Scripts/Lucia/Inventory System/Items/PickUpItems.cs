@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 #endregion
 
-/* NOMBRE CLASE: Pick Up Objects
+/* NOMBRE CLASE: Pick Up Items
  * AUTOR: Lucía García López
  * FECHA: 13/03/2025
  * DESCRIPCIÓN: Script que se encarga de recoger objetos del escenario.
@@ -14,6 +14,7 @@ using UnityEngine.InputSystem;
 
 public class PickUpItems : MonoBehaviour
 {
+    #region Variables
     private bool playerInRange = false;
     private Item itemScript;
     private Renderer outline;
@@ -21,6 +22,7 @@ public class PickUpItems : MonoBehaviour
     private Player player;
     private Color outlineOriginalColor;
     private Color highlightColor=Color.white;
+    #endregion
 
     void Start()
     {
@@ -28,7 +30,7 @@ public class PickUpItems : MonoBehaviour
         outline = GetComponentInChildren<Renderer>();
         itemScript = GetComponent<Item>();
 
-        // Instanciamos un material nuevo para evitar cambios en materiales compartidos.
+        // Se instancia un material nuevo para evitar cambios en materiales compartidos.
         if (outline != null && outline.materials.Length > 0)
         {
             outlineMaterial = outline.materials[outline.materials.Length - 1];

@@ -1,6 +1,15 @@
+#region Bibliotecas
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#endregion
+
+/* NOMBRE CLASE: Character Appearance Manager
+ * AUTOR: Lucía García López
+ * FECHA: 25/03/2025
+ * DESCRIPCIÓN: Script que se encarga de cambiar la apariencia del personaje.
+ * VERSIÓN: 1.1 Cambio de baseMap de las cejas.
+ */
 
 public class CharacterAppearanceManager : MonoBehaviour
 {
@@ -28,11 +37,11 @@ public class CharacterAppearanceManager : MonoBehaviour
                 // Crear una nueva instancia del material principal
                 materials[0] = new Material(appearance.appearanceMainMaterial);
 
-                // Cambiar el Base Map del material en la posición 3
-                Texture2D newBaseMap = appearance.eyebrowsBaseMap; // Suponiendo que tienes una textura en appearance
+                // Como las cejas son un atlas, no se puede cambiar el material, hay que cambiar el BaseMap.
+                Texture2D newBaseMap = appearance.eyebrowsBaseMap;
                 if (newBaseMap != null)
                 {
-                    materials[3].SetTexture("_BaseMap", newBaseMap);
+                    materials[3].SetTexture("_BaseMap", newBaseMap); 
                 }
 
                 // Aplicar los materiales modificados

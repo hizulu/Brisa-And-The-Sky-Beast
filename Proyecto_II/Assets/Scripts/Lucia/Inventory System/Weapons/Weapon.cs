@@ -12,15 +12,16 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    #region Variables
     [SerializeField] public WeaponData weaponData; 
     private bool isCollected = false;
+    #endregion
 
     public void CollectWeapon()
     {
         if (isCollected) return;  // Evita recogerlo más de una vez
         isCollected = true;
 
-        //InventoryManager.Instance.AddItem(itemData, itemQuantity);
         gameObject.SetActive(false);  // Desactiva el objeto
         Destroy(gameObject, 0.1f);  // Lo destruye después de un pequeño delay
     }

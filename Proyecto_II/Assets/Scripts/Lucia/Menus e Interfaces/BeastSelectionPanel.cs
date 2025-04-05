@@ -1,8 +1,17 @@
+#region Bibliotecas
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+#endregion
+
+/* NOMBRE CLASE: Beast Selection Panel
+ * AUTOR: Lucía García López
+ * FECHA: 03/04/2025
+ * DESCRIPCIÓN: Script que se encarga de gestionar el panel de selección de la Bestia.
+ * VERSIÓN: 1.0
+ */
 
 public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
 {
@@ -15,7 +24,7 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
             beastSelectionPanel = gameObject;
     }
 
-    // Función para abrir y cerrar el panel con la tecla 'Tab'
+    // Método para abrir y cerrar el panel de selección de bestias
     public void OpenCloseBeastPanel(InputAction.CallbackContext context)
     {
         if (!context.performed)
@@ -37,7 +46,7 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    //Esto tengo que revisarlo
+    //TODO Esto tengo que revisarlo
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("Panel clicked!");

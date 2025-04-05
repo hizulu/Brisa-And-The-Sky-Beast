@@ -16,13 +16,14 @@ using System;
 
 public class WeaponSlot : MonoBehaviour, IPointerClickHandler
 {
+    #region Variables
     [SerializeField] private Image weaponIconImage;
 
     private WeaponData weaponData;
 
     public bool weaponSelected = false;
     private ObjectsImageAndDescription objectsImageAndDescription;
-
+    #endregion
 
     private void Start()
     {
@@ -40,7 +41,6 @@ public class WeaponSlot : MonoBehaviour, IPointerClickHandler
         // Si ya hay un arma, limpia el icono
         if (weaponData != null)
         {
-            // Aquí podrías agregar lógica para manejar el reemplazo de las armas, si es necesario
             Debug.Log("Reemplazando el arma anterior con la nueva");
         }
 

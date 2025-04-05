@@ -4,11 +4,11 @@ using TMPro;
 using UnityEngine.UI;
 #endregion
 
-/* NOMBRE CLASE: Oc¡bjects image and description
+/* NOMBRE CLASE: Objects image and description
  * AUTOR: Lucía García López
  * FECHA: 21/03/2025
  * DESCRIPCIÓN: Script que se encarga de gestionar la imagen y la descripción de un objeto.
- * VERSIÓN: 1.2 
+ * VERSIÓN: 1.3 WeaponSetImageAndDescription.
  */
 
 
@@ -28,10 +28,10 @@ public class ObjectsImageAndDescription : MonoBehaviour
     {
         if (itemData != null && itemData.itemIcon != null)
         {
-            Debug.Log("Setting sprite: " + itemData.itemIcon.name); // Debug the sprite name
-            objectIconImage.gameObject.SetActive(true); // Ensure the GameObject is active
+            Debug.Log("Setting sprite: " + itemData.itemIcon.name);
+            objectIconImage.gameObject.SetActive(true);
             objectIconImage.sprite = itemData.itemIcon;
-            objectIconImage.enabled = true; // Ensure the Image component is enabled
+            objectIconImage.enabled = true;
 
             objectNameText.text = itemData.itemName;
             objectDescriptionText.text = itemData.itemDescription;
@@ -49,10 +49,10 @@ public class ObjectsImageAndDescription : MonoBehaviour
     {
         if (weaponData != null && weaponData.weaponSquareIcon != null)
         {
-            Debug.Log("Setting sprite: " + weaponData.weaponSquareIcon.name); // Debug para verificar el sprite
-            objectIconImage.gameObject.SetActive(true); // Asegúrate de que el GameObject está activo
+            Debug.Log("Setting sprite: " + weaponData.weaponSquareIcon.name);
+            objectIconImage.gameObject.SetActive(true);
             objectIconImage.sprite = weaponData.weaponSquareIcon;
-            objectIconImage.enabled = true; // Habilitar el componente Image
+            objectIconImage.enabled = true;
 
             objectNameText.text = weaponData.weaponName;
             objectDescriptionText.text = weaponData.weaponDescription;
@@ -61,7 +61,7 @@ public class ObjectsImageAndDescription : MonoBehaviour
         }
         else
         {
-            ClearDisplay(); // Si no hay arma, limpia la UI
+            ClearDisplay();
         }
     }
 

@@ -17,6 +17,7 @@ using System;
 
 public class ItemSlot : MonoBehaviour, IPointerClickHandler
 {
+    #region Variables
     [SerializeField] private Image itemIconImage;
     [SerializeField] private TMP_Text itemQuantityText;
 
@@ -25,7 +26,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     public bool itemSelected = false;
     private ObjectsImageAndDescription itemImageAndDescription;
-
+    #endregion
 
     private void Start()
     {
@@ -72,17 +73,17 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public void UpdateQuantity(int newQuantity)
     {
         itemQuantity = newQuantity;
-        itemQuantityText.text = newQuantity.ToString(); // Actualizamos el texto
+        itemQuantityText.text = newQuantity.ToString();
 
         // Si la cantidad es 0 o menor, ocultamos el texto
         if (newQuantity <= 0)
         {            
-            itemQuantityText.enabled = false; // Desactivamos el texto
-            itemSelected = false; // Deseleccionamos el ítem
+            itemQuantityText.enabled = false;
+            itemSelected = false;
         }
         else
         {
-            itemQuantityText.enabled = true; // Mostramos el texto si la cantidad es mayor que 0
+            itemQuantityText.enabled = true; // Se muestra el texto si la cantidad es mayor que 0
         }
     }
 

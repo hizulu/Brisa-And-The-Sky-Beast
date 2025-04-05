@@ -1,8 +1,18 @@
+#region Bibliotecas
 using UnityEngine.InputSystem;
 using UnityEngine;
+#endregion
+
+/* NOMBRE CLASE: Pick Up Weapons
+ * AUTOR: Lucía García López
+ * FECHA: 05/04/2025
+ * DESCRIPCIÓN: Script que se encarga de recoger las armas en el juego.
+ * VERSIÓN: 1.0
+ */
 
 public class PickUpWeapons : MonoBehaviour
 {
+    #region Variables
     private bool playerInRange = false;
     private Weapon weaponScript;
     private Renderer outline;
@@ -11,7 +21,8 @@ public class PickUpWeapons : MonoBehaviour
     private Color outlineOriginalColor;
     private Color highlightColor = Color.white;
 
-    [SerializeField] private WeaponSlot weaponSlot; // Referencia al WeaponSlot
+    [SerializeField] private WeaponSlot weaponSlot;
+    #endregion
 
     void Start()
     {
