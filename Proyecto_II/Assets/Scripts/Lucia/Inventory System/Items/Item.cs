@@ -6,7 +6,7 @@ using UnityEngine;
 /* NOMBRE CLASE: Item
  * AUTOR: Lucía García López
  * FECHA: 13/03/2025
- * DESCRIPCIÓN: Script que se encarga de almacenar los itemas recogidos en el inventario.
+ * DESCRIPCIÓN: Script que se encarga de almacenar los items recogidos en el inventario.
  * VERSIÓN: 1.0 
  */
 
