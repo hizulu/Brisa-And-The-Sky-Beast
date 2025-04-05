@@ -1092,14 +1092,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Data>k__BackingField: {fileID: 11400000, guid: 0117d3880d42f5e4c8e253d2b166adb8, type: 2}
   <LayerData>k__BackingField:
-    <GroundLayer>k__BackingField:
+    <EnviromentLayer>k__BackingField:
       serializedVersion: 2
-      m_Bits: 4194304
+      m_Bits: 0
   <PlayerAnimationData>k__BackingField:
     groundedParameterName: Grounded
     movedParameterName: Moved
     attackParameterName: Attack
     airborneParameterName: Airborne
+    deathParameterName: Death
     idleParameterName: isIdle
     walkParameterName: isWalking
     runParameterName: isRunning
@@ -1108,8 +1109,14 @@ MonoBehaviour:
     attack02ParameterName: isAttacking02
     attack03ParameterName: isAttacking03
     jumpParameterName: isJumping
+    doubleJumpParameterName: isDoubleJumping
     fallParameterName: isFalling
     landParameterName: isLanding
+    halfDeadParameterName: isHalfDeading
+    finalDeadParameterName: isFinalDeading
+  PaloBrisa: {fileID: 0}
+  hitBox: {fileID: 0}
+  attackDuration: 0.2
 --- !u!54 &671884385
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1634,7 +1641,7 @@ PrefabInstance:
     - target: {fileID: -839943260769675171, guid: 913a75838466089459146be7b2bd36f0, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: effaefadc0d123047a2897b22f131bdc, type: 2}
+      objectReference: {fileID: 2100000, guid: 4c202571d3d5ad240bd528b3c731f91c, type: 2}
     - target: {fileID: 919132149155446097, guid: 913a75838466089459146be7b2bd36f0, type: 3}
       propertyPath: m_Name
       value: Bestia (1)
@@ -2141,6 +2148,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryMenu: {fileID: 205092081}
+  inventoryEnabled: 0
+  AppearanceChangeMenu: {fileID: 0}
+  appearanceChangeEnabled: 0
+  mapMenu: {fileID: 0}
+  mapEnabled: 0
+  powersMenu: {fileID: 0}
+  powersEnabled: 0
+  firstTime: 1
   itemSlots:
   - {fileID: 1268136071}
   itemSlotPrefab: {fileID: 1268136067}
