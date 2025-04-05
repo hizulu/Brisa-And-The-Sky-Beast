@@ -9,8 +9,8 @@ namespace BehaviorTree
     // Only if all child nodes succeed it is a success
     public class Sequence : Node
     {
-        public Sequence() : base() { }
-        public Sequence(List<Node> children) : base(children) { }
+        public Sequence() : base("Sequence") { }
+        public Sequence(List<Node> children) : base("Sequence", children) { }
         public override NodeState Evaluate()
         {
             bool anyChildRunning = false;
