@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PowersDescription : MonoBehaviour, IPointerClickHandler
 {
@@ -14,9 +15,12 @@ public class PowersDescription : MonoBehaviour, IPointerClickHandler
     [SerializeField] private GameObject powersPanelLocked;
     [SerializeField] private GameObject powersPanelUnlocked;
     [SerializeField] public PowersData powersData;
+    private Image image;
 
     private void Start()
     {
+        image = GetComponent<Image>();
+
         UpdatePanelState();
     }
 
@@ -47,10 +51,12 @@ public class PowersDescription : MonoBehaviour, IPointerClickHandler
         if (!isUnlocked)
         {
             LockedText();
+            LockedImage();
         }
         else
         {
             PowerDescriptionText();
+            UnlockedImage();
         }
     }
 
@@ -67,5 +73,17 @@ public class PowersDescription : MonoBehaviour, IPointerClickHandler
         powersBestiaDescriptionText.text = powersData.powerBestiaDescription;
         powersBrisaNameText.text = powersData.powerBrisaName;
         powersBestiaNameText.text = powersData.powerBestiaName;
+    }
+
+    private void LockedImage()
+    {
+        //Cambia el color de la imagen a un gris claro con opacidad
+        image.color = new Color(0.75f, 0.75f, 0.75f, 1f);
+    }
+
+    private void UnlockedImage()
+    {
+        //Cambia el color a blanco
+        image.color = new Color(1f, 1f, 1f, 1f);
     }
 }
