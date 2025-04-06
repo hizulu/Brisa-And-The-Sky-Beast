@@ -11,12 +11,13 @@ using System;
  * AUTOR: Lucía García López
  * FECHA: 13/03/2025
  * DESCRIPCIÓN: Script que se encarga de gestionar los slots de los ítems en el inventario.
- * VERSIÓN: 1.0 SetItem, IsEmpty, UpdateQuantity, GetItemData, HasItem, SelectItem, OnPointerClick.
+ * VERSIÓN: 1.0 SetWeapon, IsEmpty, UpdateQuantity, GetItemData, HasItem, SelectWeapon, OnPointerClick.
  * 1.1 Cambios en UpdateQuantity, + OnValidate.
  */
 
 public class ItemSlot : MonoBehaviour, IPointerClickHandler
 {
+    #region Variables
     [SerializeField] private Image itemIconImage;
     [SerializeField] private TMP_Text itemQuantityText;
 
@@ -24,12 +25,12 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private int itemQuantity;
 
     public bool itemSelected = false;
-    private ItemImageAndDescription itemImageAndDescription;
-
+    private ObjectsImageAndDescription itemImageAndDescription;
+    #endregion
 
     private void Start()
     {
-        itemImageAndDescription = FindObjectOfType<ItemImageAndDescription>();
+        itemImageAndDescription = FindObjectOfType<ObjectsImageAndDescription>();
 
         if (IsEmpty())
         {
@@ -72,17 +73,17 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public void UpdateQuantity(int newQuantity)
     {
         itemQuantity = newQuantity;
-        itemQuantityText.text = newQuantity.ToString(); // Actualizamos el texto
+        itemQuantityText.text = newQuantity.ToString();
 
         // Si la cantidad es 0 o menor, ocultamos el texto
         if (newQuantity <= 0)
         {            
-            itemQuantityText.enabled = false; // Desactivamos el texto
-            itemSelected = false; // Deseleccionamos el ítem
+            itemQuantityText.enabled = false;
+            itemSelected = false;
         }
         else
         {
-            itemQuantityText.enabled = true; // Mostramos el texto si la cantidad es mayor que 0
+            itemQuantityText.enabled = true; // Se muestra el texto si la cantidad es mayor que 0
         }
     }
 
@@ -105,7 +106,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
         if (itemSelected && itemImageAndDescription != null)
         {
-            itemImageAndDescription.SetImageAndDescription(itemData);
+            itemImageAndDescription.ItemSetImageAndDescription(itemData);
         }
         else
         {

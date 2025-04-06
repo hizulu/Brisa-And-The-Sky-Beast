@@ -1,40 +1,39 @@
 #region Bibliotecas
-using System.Collections;
-using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine;
 #endregion
 
-/* NOMBRE CLASE: Pick Up Objects
+/* NOMBRE CLASE: Pick Up Weapons
  * AUTOR: Lucía García López
- * FECHA: 13/03/2025
- * DESCRIPCIÓN: Script que se encarga de recoger objetos del escenario.
- * VERSIÓN: 1.1 
- * 1.1 ChangeOutline: Cambiar el color y el tamaño del outline.
+ * FECHA: 05/04/2025
+ * DESCRIPCIÓN: Script que se encarga de recoger las armas en el juego.
+ * VERSIÓN: 1.0
  */
 
-public class PickUpObjects : MonoBehaviour
+public class PickUpWeapons : MonoBehaviour
 {
+    #region Variables
     private bool playerInRange = false;
-    private Item itemScript;
+    private Weapon weaponScript;
     private Renderer outline;
     private Material outlineMaterial;
     private Player player;
     private Color outlineOriginalColor;
-    private Color highlightColor=Color.white;
+    private Color highlightColor = Color.white;
+
+    [SerializeField] private WeaponSlot weaponSlot;
+    #endregion
 
     void Start()
     {
         player = FindObjectOfType<Player>();
         outline = GetComponentInChildren<Renderer>();
-        itemScript = GetComponent<Item>();
+        weaponScript = GetComponent<Weapon>();
 
-        // Instanciamos un material nuevo para evitar cambios en materiales compartidos.
         if (outline != null && outline.materials.Length > 0)
         {
             outlineMaterial = outline.materials[outline.materials.Length - 1];
-
             outlineMaterial = new Material(outlineMaterial);
-
             Material[] materials = outline.materials;
             materials[materials.Length - 1] = outlineMaterial;
             outline.materials = materials;
@@ -51,12 +50,12 @@ public class PickUpObjects : MonoBehaviour
             Debug.LogError("No se encontró Renderer o materiales en el objeto o sus hijos");
         }
 
-        player.PlayerInput.PlayerActions.Interact.performed += PickUpItem; // Suscribirse a la acción de recoger objetos.
+        player.PlayerInput.PlayerActions.Interact.performed += PickUpWeapon;
     }
 
     private void OnDestroy()
     {
-        player.PlayerInput.PlayerActions.Interact.performed -= PickUpItem; // Desuscribirse a la acción de recoger objetos.
+        player.PlayerInput.PlayerActions.Interact.performed -= PickUpWeapon;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -64,7 +63,7 @@ public class PickUpObjects : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-            ChangeOutline(highlightColor, 0.1f); // Cambiar el color y el tamaño del outline.
+            ChangeOutline(highlightColor, 0.1f);
             Debug.Log("Player in range");
         }
     }
@@ -79,17 +78,30 @@ public class PickUpObjects : MonoBehaviour
         }
     }
 
-    private void PickUpItem(InputAction.CallbackContext context)
+    private void PickUpWeapon(InputAction.CallbackContext context)
     {
-        if (playerInRange && itemScript != null)
+        if (playerInRange && weaponScript != null)
         {
-            itemScript.CollectItem();
+            // Recoger el arma
+            weaponScript.CollectWeapon();
             ChangeOutline(outlineOriginalColor, 0.01f);
 
-            if (itemScript.itemData.itemName == "Palo")
+            // Si el jugador ya tiene un arma equipada, reemplázala
+            if (weaponSlot.HasWeapon())
+            {
+                weaponSlot.SetWeapon(weaponScript.weaponData); // Actualiza el slot con el nuevo arma
+                Debug.Log("Reemplazando el arma antigua con la nueva");
+            }
+            else
+            {
+                weaponSlot.SetWeapon(weaponScript.weaponData); // Si no tiene arma, asigna la nueva
+                Debug.Log("Arma nueva equipada");
+            }
+
+            if (weaponScript.weaponData.weaponName == "Palo")
                 player.PaloRecogido();
 
-            Debug.Log("Item collected");
+            Debug.Log("Palo collected");
         }
     }
 
@@ -97,26 +109,11 @@ public class PickUpObjects : MonoBehaviour
     {
         if (outlineMaterial != null)
         {
-            Debug.Log($"Cambiando outline - Color: {newColor}, Tamaño: {outlineSize}");
+            outlineMaterial.color = newColor;
 
-            // Cambiar el color
-            if (outlineMaterial.HasProperty("_Color"))
-            {
-                outlineMaterial.color = newColor;
-            }
-            else
-            {
-                Debug.LogWarning("El material no tiene una propiedad '_Color'");
-            }
-
-            // Cambiar el tamaño del outline
             if (outlineMaterial.HasProperty("_Size"))
             {
                 outlineMaterial.SetFloat("_Size", outlineSize);
-            }
-            else
-            {
-                Debug.LogWarning("El material no tiene una propiedad '_Size'");
             }
         }
         else
