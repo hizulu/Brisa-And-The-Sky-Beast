@@ -24,6 +24,8 @@ public class PlayerAnimationData
     [SerializeField] private string halfDeadParameterName = "isHalfDeading";
     [SerializeField] private string finalDeadParameterName = "isFinalDeading";
 
+    [SerializeField] private string callBeastParameterName = "isCallingBeast";
+
     public int GroundedParameterHash { get; private set; }
     public int MovedParameterHash { get; private set; }
     public int AttackParameterHash { get; private set; }
@@ -43,6 +45,8 @@ public class PlayerAnimationData
     public int LandParameterHash { get; private set; }
     public int HalfDeadParameterHash { get; private set; }
     public int FinalDeadParameterHash { get; private set; }
+
+    public int CallBeastParameterHash { get; private set; }
 
     public void Initialize()
     {
@@ -68,5 +72,7 @@ public class PlayerAnimationData
 
         HalfDeadParameterHash = Animator.StringToHash(halfDeadParameterName);
         FinalDeadParameterHash = Animator.StringToHash(finalDeadParameterName);
+
+        CallBeastParameterHash = Animator.StringToHash(callBeastParameterName);
     }
 }

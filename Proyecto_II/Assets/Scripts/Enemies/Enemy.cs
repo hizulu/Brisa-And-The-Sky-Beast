@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     public Material matForDepuration;
 
     [SerializeField] float maxHealth = 100f;
-    private float currentHealth;
+    [field:SerializeField] private float currentHealth;
 
     private EnemyStateMachine enemyStateMachine;
 
@@ -55,12 +55,17 @@ public class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        Player.OnAttackEnemy += DamageEnemy;
+
+        PlayerAttack01.OnAttack01Enemy += DamageEnemy;
+        PlayerAttack02.OnAttack02Enemy += DamageEnemy;
+        PlayerAttack03.OnAttack03Enemy += DamageEnemy;
     }
 
     private void OnDestroy()
     {
-        Player.OnAttackEnemy -= DamageEnemy;
+        PlayerAttack01.OnAttack01Enemy -= DamageEnemy;
+        PlayerAttack02.OnAttack02Enemy -= DamageEnemy;
+        PlayerAttack03.OnAttack03Enemy -= DamageEnemy;
     }
 
     private void Start()
@@ -72,6 +77,9 @@ public class Enemy : MonoBehaviour
         EnemyRetreatBaseInstance.Initialize(gameObject, this);
 
         enemyStateMachine.ChangeState(enemyStateMachine.EnemyIdleState);
+
+        currentHealth = maxHealth;
+        Debug.Log(currentHealth);
     }
 
     private void Update()
@@ -93,8 +101,8 @@ public class Enemy : MonoBehaviour
     // Function called from Player script
     public void DamageEnemy (float damageAmount)
     {
-        Debug.Log("Brisa ha hecho daño al Enemigo");
-        Debug.Log("Vida del enemigo: " + " " + damageAmount);
+        //Debug.Log("Brisa ha hecho daño al Enemigo");
+        //Debug.Log("Vida del enemigo: " + " " + currentHealth);
         currentHealth -= damageAmount;
         // TODO: anim.SetTrigger("getDamaged");
         // TODO: play enemy damage sound depending on enemy

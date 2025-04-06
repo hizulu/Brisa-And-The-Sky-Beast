@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,14 +11,21 @@ public class PlayerAttack02 : PlayerAttackState
 
     }
 
+    public static event Action<float> OnAttack02Enemy;
+
     public override void Enter()
     {
         maxTimeToNextAttack = 0.7f;
         attackTimeElapsed = 0;
         attackFinish = false;
+        attackDamageModifier = 1.5f;
         base.Enter();
         stateMachine.Player.GolpearPrueba();
         StartAnimation(stateMachine.Player.PlayerAnimationData.Attack02ParameterHash);
+
+        float attackDamageCombo02 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
+        OnAttack02Enemy?.Invoke(attackDamageCombo02);
+        Debug.Log("Daño del ataque 2: " + " " + attackDamageCombo02);
     }
 
     public override void HandleInput()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,19 @@ public class PlayerAttack03 : PlayerAttackState
 
     }
 
+    public static event Action<float> OnAttack03Enemy;
+
     public override void Enter()
     {
         attackFinish = false;
+        attackDamageModifier = 2;
         base.Enter();
         stateMachine.Player.GolpearPrueba();
         StartAnimation(stateMachine.Player.PlayerAnimationData.Attack03ParameterHash);
+
+        float attackDamageCombo03 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
+        OnAttack03Enemy?.Invoke(attackDamageCombo03);
+        Debug.Log("Daño del ataque 3: " + " " + attackDamageCombo03);
     }
 
     public override void UpdateLogic()

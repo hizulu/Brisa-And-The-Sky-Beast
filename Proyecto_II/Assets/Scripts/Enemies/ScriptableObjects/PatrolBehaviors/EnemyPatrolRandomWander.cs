@@ -44,7 +44,7 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
         
         if (distanceToPlayerSQR < playerDetectionRangeSQR)
         {
-            Debug.Log("Debería perseguir a Brisa");
+            //Debug.Log("Debería perseguir a Brisa");
             enemy.doChase = true;
             enemy.doPatrol = false;
         }
@@ -71,7 +71,7 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
 
     private Vector3 GetRandomPointInRingAroundEnemy()
     {
-        Debug.Log("Nuevo punto en la rosca");
+        //Debug.Log("Nuevo punto en la rosca");
 
         float randomRadius = Random.Range(minRandomRadius, maxRandomRadius);
         float randomAngle = Random.Range(0f, Mathf.PI * 2); // Ángulo aleatorio en radianes

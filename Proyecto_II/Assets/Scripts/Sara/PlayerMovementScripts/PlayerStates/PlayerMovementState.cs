@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -96,8 +97,8 @@ public class PlayerMovementState : IState
     {
         stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled += OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
-        
-        
+
+        stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed += CallBeast;
         
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled -= OnMovementCanceled;
     }
@@ -106,6 +107,7 @@ public class PlayerMovementState : IState
     {
         stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled -= OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled -= OnMovementCanceled;
+        stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed -= CallBeast;
     }
 
     protected virtual void Move()
@@ -170,5 +172,10 @@ public class PlayerMovementState : IState
         Debug.Log(statsData.CurrentHealth);
         if (statsData.CurrentHealth <= 0)
             stateMachine.ChangeState(stateMachine.HalfDeadState);
+    }
+
+    private void CallBeast(InputAction.CallbackContext context)
+    {
+        Debug.Log("Has llamado a la Bestia");   
     }
 }
