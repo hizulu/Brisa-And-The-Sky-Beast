@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(fileName = "Attack-Zig Zag Jump", menuName = "Enemy Logic/Attack Logic/Ziz Zag Jump")]
 public class EnemyAttackZigZagJump : EnemyAttackSOBase
@@ -16,6 +17,8 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
     private bool isAttacking = false;
 
     private float distanceToStopAttackStateSQR = 0f;
+
+    public static event Action<float> OnAttackPlayer;
 
     public override void DoEnterLogic()
     {
@@ -107,7 +110,8 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
         // Called after three zig zags done
         // TODO: enemy.anim.SetTrigger("ataca");
         // TODO: play enemy attack sound depending on enemy
-        // TODO: que el jugador reciba daño, llamar a función de player
+
+        OnAttackPlayer?.Invoke(attackDamage); // Evento que llama al método de TakeDamage() de Player, pasando el valor del daño del Slime.
         isAttacking = false;
         enemy.doAttack = false;
         enemy.doRetreat = true;

@@ -1,4 +1,5 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour
 
     public PlayerInput PlayerInput { get; private set; }
 
-
+    public static event Action<float> OnAttackEnemy;
 
     private void Awake()
     {
@@ -95,6 +96,7 @@ public class Player : MonoBehaviour
 
     public void GolpearPrueba()
     {
+        OnAttackEnemy?.Invoke(Data.StatsData.AttackDamageBase);
         StartCoroutine(EnableHitBox());
     }
 
