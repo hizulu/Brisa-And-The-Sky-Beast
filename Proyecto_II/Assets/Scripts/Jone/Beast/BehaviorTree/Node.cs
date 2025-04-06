@@ -15,8 +15,8 @@ namespace BehaviorTree
         public Node parent;
         protected List<Node> children = new List<Node>();
 
-        // Diccionario que guardará todas las variables compartidas del árbol
-        private Dictionary<string, object> _dataContext = new Dictionary<string, object>();
+        // Diccionario que guarda todas las variables compartidas del árbol
+        //private Dictionary<string, object> _dataContext = new Dictionary<string, object>();
 
         public Node()
         {
@@ -37,6 +37,9 @@ namespace BehaviorTree
 
         public virtual NodeState Evaluate() => NodeState.FAILURE;
 
+        // TODO: borrar esto
+        // Estos son unos métodos previos a la implementación de la blackboard
+        /*
         // Añadir datos al diccionario
         public void SetData(string key, object value)
         {
@@ -71,15 +74,8 @@ namespace BehaviorTree
                 currentNode = currentNode.parent;
             }
             return false; // No se ha encontrado la clave
-        }
+        }*/
     }
-
-    //public class Leaf : Node
-    //{
-    //    public Leaf(string name) : base(name)
-    //    {
-    //    }
-    //}
 }
 
 

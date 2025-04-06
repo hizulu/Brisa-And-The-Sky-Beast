@@ -1,10 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// Jone Sainz Egea
+// 16/03/2025
 public class PointOfInterest : MonoBehaviour
 {
-    public enum InterestType { Tree, Rock }
+    public enum InterestType { Tree, Rock, Flower }
     public InterestType interestType;
 
     private Transform agentTransform;
@@ -17,9 +18,24 @@ public class PointOfInterest : MonoBehaviour
 
     private void Start()
     {
-        baseInterest = interestType == InterestType.Tree ? 10f : 5f;
+        baseInterest = GetBaseInterest();
         currentInterest = baseInterest;
         agentTransform = FindObjectOfType<BeastBehaviorTree>().transform;
+    }
+
+    private float GetBaseInterest()
+    {
+        switch (interestType)
+        {
+            case InterestType.Tree:
+                return 10f;
+            case InterestType.Rock:
+                return 5f;
+            case InterestType.Flower:
+                return 2f;
+            default:
+                return 1f;
+        }
     }
 
     public float GetInterestValue(Transform agent)
