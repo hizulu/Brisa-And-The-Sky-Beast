@@ -483,6 +483,8 @@ MonoBehaviour:
   appearanceChangeEnabled: 0
   mapMenu: {fileID: 0}
   mapEnabled: 0
+  powersMenu: {fileID: 0}
+  powersEnabled: 0
   firstTime: 1
   itemSlots:
   - {fileID: 1605097580}
@@ -1238,10 +1240,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a641101e5dc20f47ab5f008f961be08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1068607544}
   rb: {fileID: 433896122}
   matForDepuration: {fileID: 2100000, guid: c78e026279f76194294efd8c0fb8bc01, type: 2}
   maxHealth: 100
+  playerAttackRange: 0.5
+  playerLostRange: 20
   EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
   EnemyPatrolBase: {fileID: 11400000, guid: b0e5a092ec1ef7440a2c5e8107b4185b, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: bc983e81189273949be3796722c61808, type: 2}
@@ -1668,6 +1672,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5d42b1f014fa74d86c92a0eb783f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pausePanel: {fileID: 0}
+  beastSelectionPanel: {fileID: 0}
 --- !u!4 &832040708
 Transform:
   m_ObjectHideFlags: 0
@@ -3175,6 +3181,7 @@ MonoBehaviour:
     movedParameterName: Moved
     attackParameterName: Attack
     airborneParameterName: Airborne
+    deathParameterName: Death
     idleParameterName: isIdle
     walkParameterName: isWalking
     runParameterName: isRunning
@@ -3183,8 +3190,12 @@ MonoBehaviour:
     attack02ParameterName: isAttacking02
     attack03ParameterName: isAttacking03
     jumpParameterName: isJumping
+    doubleJumpParameterName: isDoubleJumping
     fallParameterName: isFalling
     landParameterName: isLanding
+    halfDeadParameterName: isHalfDeading
+    finalDeadParameterName: isFinalDeading
+  PaloBrisa: {fileID: 1283729749}
   hitBox: {fileID: 283964052}
   attackDuration: 0.2
 --- !u!54 &1068607545
@@ -3982,6 +3993,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1246572742}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1283729749 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7818398729773369720, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
+  m_PrefabInstance: {fileID: 900197566}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1356516366
 GameObject:
   m_ObjectHideFlags: 0
@@ -4187,6 +4203,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   searchRadius: 30
   interestTag: InterestObject
+  playerGO: {fileID: 0}
+  baseInterestInBrisa: 5
+  growthFactorInterestInBrisa: 0.05
 --- !u!54 &1376460420
 Rigidbody:
   m_ObjectHideFlags: 0

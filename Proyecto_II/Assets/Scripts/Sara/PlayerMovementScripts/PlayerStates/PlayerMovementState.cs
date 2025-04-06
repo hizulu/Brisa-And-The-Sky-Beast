@@ -31,6 +31,7 @@ public class PlayerMovementState : IState
     public virtual void Enter()
     {
         AddInputActionsCallbacks();
+        EnemyAttackZigZagJump.OnAttackPlayer += TakeDamage;
     }
 
     public virtual void HandleInput()
@@ -50,6 +51,7 @@ public class PlayerMovementState : IState
 
     public virtual void Exit()
     {
+        EnemyAttackZigZagJump.OnAttackPlayer -= TakeDamage;
         RemoveInputActionsCallbacks();
     }
 
@@ -163,6 +165,7 @@ public class PlayerMovementState : IState
 
     private void TakeDamage(float _enemyDamage)
     {
+        Debug.Log("Están atacando a Brisa.");
         statsData.CurrentHealth -= _enemyDamage;
         Debug.Log(statsData.CurrentHealth);
         if (statsData.CurrentHealth <= 0)
