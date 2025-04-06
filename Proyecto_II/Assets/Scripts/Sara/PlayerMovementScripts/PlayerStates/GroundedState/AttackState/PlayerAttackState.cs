@@ -10,20 +10,34 @@ public class PlayerAttackState : PlayerGroundedState
 
     }
 
+    protected Animator animator;
+
+    protected bool attackFinish;
+
+    protected float attackTimeElapsed;
+    protected float maxTimeToNextAttack = 1f;
+    protected int currentNumAttack;
+
+    protected bool canContinueCombo;
+    protected bool isWaitingForInput;
+
     public override void Enter()
     {
-        //comboAttacks = 0;
-        //totalComboTime = 0f;
+        animator = stateMachine.Player.AnimPlayer;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.AttackParameterHash);
         //Debug.Log("Has entrado en el estado de ATACAR");
     }
 
-    //public override void UpdateLogic()
-    //{
-    //    if (totalComboTime > btAttacksTime)
-    //        ResetCombo();
-    //}
+    public override void HandleInput()
+    {
+        base.HandleInput();
+    }
+
+    public override void UpdateLogic()
+    {
+        base.UpdateLogic();
+    }
 
     public override void Exit()
     {
@@ -32,10 +46,5 @@ public class PlayerAttackState : PlayerGroundedState
         //Debug.Log("Has salido del estado de ATACAR");
     }
 
-    //private void ResetCombo()
-    //{
-    //    comboAttacks = 0;
-    //    totalComboTime = 0f;
-    //    attackFinish = false;
-    //}
+    protected virtual void FinishAttack() { }
 }

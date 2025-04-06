@@ -10,15 +10,10 @@ public class PlayerJumpState : PlayerAirborneState
     public override void Enter()
     {
         jumpFinish = false;
-        ResetDoubleJump();
+        //ResetDoubleJump();
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.JumpParameterHash);
         //Debug.Log("Has entrado en el estado de SALTAR.");
-    }
-
-    public override void HandleInput()
-    {
-        base.HandleInput();
     }
 
     public override void UpdateLogic()
@@ -37,6 +32,7 @@ public class PlayerJumpState : PlayerAirborneState
     {
         jumpFinish = false;
         isJumping = false;
+        Debug.Log("Desde salto normal: " + maxNumDoubleJump);
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.JumpParameterHash);
         //Debug.Log("Has salido del estado de SALTAR.");
@@ -61,7 +57,6 @@ public class PlayerJumpState : PlayerAirborneState
             }
         }
     }
-
 
     protected override void Jump()
     {

@@ -76,12 +76,18 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected virtual void RunStarted(InputAction.CallbackContext context)
     {
+        if (!IsGrounded())
+            return;
+
         stateMachine.ChangeState(stateMachine.RunState);
     }
 
     protected virtual void JumpStarted(InputAction.CallbackContext context)
     {
-        stateMachine.ChangeState(stateMachine.JumpState);
+        if (!(stateMachine.CurrentState is PlayerDoubleJumpState || stateMachine.CurrentState is PlayerFallState))
+        {
+            stateMachine.ChangeState(stateMachine.JumpState);
+        }
     }
 
     protected virtual void CrouchStarted(InputAction.CallbackContext context)
@@ -91,7 +97,11 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected virtual void AttackStart(InputAction.CallbackContext context)
     {
-        stateMachine.ChangeState(stateMachine.ComboAttack);
+        // Solo cambiar a Attack01 si no estamos en medio de un combo o ataque
+        if (!(stateMachine.CurrentState is PlayerAttack02 || stateMachine.CurrentState is PlayerAttack03))
+        {
+            stateMachine.ChangeState(stateMachine.Attack01State);
+        }
     }
 
     protected override void NoContactWithGround(Collider collider)
