@@ -55,6 +55,12 @@ public class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        Player.OnAttackEnemy += DamageEnemy;
+    }
+
+    private void OnDestroy()
+    {
+        Player.OnAttackEnemy -= DamageEnemy;
     }
 
     private void Start()
@@ -87,6 +93,8 @@ public class Enemy : MonoBehaviour
     // Function called from Player script
     public void DamageEnemy (float damageAmount)
     {
+        Debug.Log("Brisa ha hecho daño al Enemigo");
+        Debug.Log("Vida del enemigo: " + " " + damageAmount);
         currentHealth -= damageAmount;
         // TODO: anim.SetTrigger("getDamaged");
         // TODO: play enemy damage sound depending on enemy
@@ -94,12 +102,14 @@ public class Enemy : MonoBehaviour
 
         if (currentHealth <= Mathf.Epsilon)
         {
+            Debug.Log("Vida del enemigo: " + " " + currentHealth);
             Die();
         }
     }
 
     public void Die()
     {
+        Debug.Log("Enemigo muerto");
         MoveEnemy(Vector3.zero);
         // TODO: anim.SetBool("isDead", true);
         // TODO: play enemy death sound depending on enemy

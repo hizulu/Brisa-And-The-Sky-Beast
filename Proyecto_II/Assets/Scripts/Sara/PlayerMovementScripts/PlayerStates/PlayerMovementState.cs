@@ -64,8 +64,8 @@ public class PlayerMovementState : IState
             //return;
         }
 
-        if (collider.CompareTag("Enemy"))
-            TakeDamage(50);
+        //if (collider.CompareTag("Enemy"))
+        //    TakeDamage(50);
     }
 
     public virtual void OnTriggerExit(Collider collider)
