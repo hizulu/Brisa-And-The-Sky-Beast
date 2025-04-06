@@ -11,8 +11,8 @@ public class PlayerAirborneState : PlayerMovementState
     protected bool jumpFinish;
     protected bool isJumping = false;
 
-    private float jumpTimeElapsed;
-    private float minTimeBeforeDoubleJump = 0.05f;
+    protected float jumpTimeElapsed;
+    protected float minTimeBeforeDoubleJump = 0.05f;
     protected int maxNumDoubleJump;
 
     public override void Enter()

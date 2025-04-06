@@ -84,7 +84,10 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected virtual void JumpStarted(InputAction.CallbackContext context)
     {
-        stateMachine.ChangeState(stateMachine.JumpState);
+        if (!(stateMachine.CurrentState is PlayerDoubleJumpState || stateMachine.CurrentState is PlayerFallState))
+        {
+            stateMachine.ChangeState(stateMachine.JumpState);
+        }
     }
 
     protected virtual void CrouchStarted(InputAction.CallbackContext context)
