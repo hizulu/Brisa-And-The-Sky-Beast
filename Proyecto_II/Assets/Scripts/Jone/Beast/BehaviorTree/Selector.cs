@@ -9,8 +9,8 @@ namespace BehaviorTree
     // If one child is a success it is a success
     public class Selector : Node
     {
-        public Selector() : base("Selector") { }
-        public Selector(List<Node> children) : base("Selector", children) { }
+        public Selector() : base() { }
+        public Selector(List<Node> children) : base(children) { }
         public override NodeState Evaluate()
         {
             foreach (Node node in children)

@@ -10,15 +10,15 @@ public class GetInterestPoint : Node
     private float _searchRadius;
     private PointOfInterest _highestPoint;
 
-    public GetInterestPoint(string name, Transform transfrom, List<PointOfInterest> interestPoints, float searchRadius) : base(name)
+    public GetInterestPoint(Transform transfrom, float searchRadius) : base()
     {
         _transform = transfrom;
-        _interestPoints = interestPoints;
         _searchRadius = searchRadius;
     }
 
     public override NodeState Evaluate()
     {
+        Debug.Log("GettingPointsOfInterest");
         GetPointsOfInterest();
         _highestPoint = GetHighestInterestPoint(_interestPoints);
         state = NodeState.RUNNING;

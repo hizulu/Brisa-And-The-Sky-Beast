@@ -24,7 +24,7 @@ public class ActionableButtonMovesPlatform : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float moveSpeed = 2f; // Velocidad de movimiento de la plataforma
-    [SerializeField] private string interactMessage = "Pulsa \"E\" para interactuar."; // Mensaje por defecto
+    //[SerializeField] private string interactMessage = "Pulsa \"E\" para interactuar."; // Mensaje por defecto
 
     private bool isPlayerInRange = false; // Verifica si el jugador está dentro del área
     private bool isPlatformAtPosition1 = false; // Estado actual de la plataforma

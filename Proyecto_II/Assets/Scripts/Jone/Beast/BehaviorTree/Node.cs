@@ -10,8 +10,6 @@ namespace BehaviorTree
 
     public class Node
     {
-        public readonly string name; // Para facilitar la comprensión
-
         protected NodeState state;
 
         public Node parent;
@@ -20,15 +18,13 @@ namespace BehaviorTree
         // Diccionario que guardará todas las variables compartidas del árbol
         private Dictionary<string, object> _dataContext = new Dictionary<string, object>();
 
-        public Node(string name)
+        public Node()
         {
-            this.name = name;
             parent = null;
         }
 
-        public Node(string name, List<Node> children)
+        public Node(List<Node> children)
         {
-            this.name = name;
             foreach (Node child in children)
                 _Attach(child);
         }
@@ -78,12 +74,12 @@ namespace BehaviorTree
         }
     }
 
-    public class Leaf : Node
-    {
-        public Leaf(string name) : base(name)
-        {
-        }
-    }
+    //public class Leaf : Node
+    //{
+    //    public Leaf(string name) : base(name)
+    //    {
+    //    }
+    //}
 }
 
 

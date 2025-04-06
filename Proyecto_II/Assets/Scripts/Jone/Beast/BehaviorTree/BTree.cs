@@ -6,7 +6,7 @@ using UnityEngine;
 // 04/04/2025
 namespace BehaviorTree
 {
-    public abstract class Tree : MonoBehaviour
+    public abstract class BTree : MonoBehaviour
     {
         private Node _root = null;
 

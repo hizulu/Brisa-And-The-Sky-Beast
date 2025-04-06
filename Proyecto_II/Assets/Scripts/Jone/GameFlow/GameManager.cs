@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private SaveManager saveManager;
     [SerializeField] GameObject pausePanel;
     [SerializeField] GameObject beastSelectionPanel;
-    bool isPaused = false;
+    //bool isPaused = false;
     bool beastSelectionActive = false;
 
     // Estructura Singleton

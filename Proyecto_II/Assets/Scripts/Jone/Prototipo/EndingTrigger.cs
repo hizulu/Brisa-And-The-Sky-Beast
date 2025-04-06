@@ -9,9 +9,9 @@ public class EndingTrigger : MonoBehaviour
 {
     public static bool beastUp;
     [SerializeField] private GameObject defaultPanel; // Panel de interacción
-    //[SerializeField] private TextMeshProUGUI panelText; // Texto dentro del panel
+    // [SerializeField] private TextMeshProUGUI panelText; // Texto dentro del panel
 
-    [SerializeField] private string panelMessage = "Necesitas que la bestia suba a la plataforma para continuar.";
+    // [SerializeField] private string panelMessage = "Necesitas que la bestia suba a la plataforma para continuar.";
 
     private void Start()
     {
