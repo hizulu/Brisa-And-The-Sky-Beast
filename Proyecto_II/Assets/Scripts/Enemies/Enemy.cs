@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : HittableElement
 {
     public Player player;
     public Animator anim { get; private set; }
@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] float maxHealth = 100f;
     [field:SerializeField] private float currentHealth;
+
+    private bool enemyHurt = false;
 
     private EnemyStateMachine enemyStateMachine;
 
@@ -56,6 +58,11 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
+        
+    }
+
+    private void OnEnable()
+    {
         PlayerAttack01.OnAttack01Enemy += DamageEnemy;
         PlayerAttack02.OnAttack02Enemy += DamageEnemy;
         PlayerAttack03.OnAttack03Enemy += DamageEnemy;
@@ -92,6 +99,11 @@ public class Enemy : MonoBehaviour
         enemyStateMachine.UpdatePhysics();
     }
 
+    public override void OnHit()
+    {
+        enemyHurt = true;
+    }
+
     public void MoveEnemy(Vector3 velocity)
     {
         rb.velocity = velocity;
@@ -99,19 +111,22 @@ public class Enemy : MonoBehaviour
 
     #region DamageRelated Functions
     // Function called from Player script
-    public void DamageEnemy (float damageAmount)
+    public void DamageEnemy (float _damageAmount)
     {
-        //Debug.Log("Brisa ha hecho daño al Enemigo");
-        //Debug.Log("Vida del enemigo: " + " " + currentHealth);
-        currentHealth -= damageAmount;
-        // TODO: anim.SetTrigger("getDamaged");
-        // TODO: play enemy damage sound depending on enemy
-        matForDepuration.color = Color.red; // TEMP
-
-        if (currentHealth <= Mathf.Epsilon)
+        if(enemyHurt)
         {
-            Debug.Log("Vida del enemigo: " + " " + currentHealth);
-            Die();
+            //Debug.Log("Brisa ha hecho daño al Enemigo");
+            //Debug.Log("Vida del enemigo: " + " " + currentHealth);
+            currentHealth -= _damageAmount;
+            // TODO: anim.SetTrigger("getDamaged");
+            // TODO: play enemy damage sound depending on enemy
+            matForDepuration.color = Color.red; // TEMP
+            enemyHurt = false;
+            if (currentHealth <= Mathf.Epsilon)
+            {
+                Debug.Log("Vida del enemigo: " + " " + currentHealth);
+                Die();
+            }
         }
     }
 
