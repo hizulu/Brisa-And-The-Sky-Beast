@@ -74,7 +74,7 @@ public class PickUpWeapons : MonoBehaviour
         {
             playerInRange = false;
             ChangeOutline(outlineOriginalColor, 0.01f);
-            Debug.Log("Player out of range");
+            //Debug.Log("Player out of range");
         }
     }
 

@@ -26,7 +26,7 @@ public class PlayerAttack01 : PlayerAttackState
         float attackDamageCombo01 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
         EventsManager.TriggerSpecialEvent<float>("OnAttack01Enemy", attackDamageCombo01);
         //OnAttack01Enemy?.Invoke(attackDamageCombo01);
-        Debug.Log("Daño del ataque 1: " + " " + attackDamageCombo01);
+        //Debug.Log("Daño del ataque 1: " + " " + attackDamageCombo01);
     }
 
     public override void HandleInput()

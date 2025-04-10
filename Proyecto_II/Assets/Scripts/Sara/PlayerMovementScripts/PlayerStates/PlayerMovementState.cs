@@ -33,7 +33,7 @@ public class PlayerMovementState : IState
     {
         AddInputActionsCallbacks();
         EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
-        EventsManager.CallNormalEvents("AcariciarBestia", AcariciarBestia);
+        EventsManager.CallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         //EnemyAttackZigZagJump.OnAttackPlayer += TakeDamage;
     }
 
@@ -55,7 +55,7 @@ public class PlayerMovementState : IState
     public virtual void Exit()
     {
         EventsManager.StopCallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
-        EventsManager.StopCallNormalEvents("AcariciarBestia", AcariciarBestia);
+        EventsManager.StopCallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         //EnemyAttackZigZagJump.OnAttackPlayer -= TakeDamage;
         RemoveInputActionsCallbacks();
     }
@@ -186,6 +186,7 @@ public class PlayerMovementState : IState
 
     private void AcariciarBestia()
     {
+        // Lógica de acariciar a la Bestia.
         Debug.Log("Estás acariciando a la Bestia.");
     }
 
