@@ -98,9 +98,16 @@ public class DialogManager : MonoBehaviour
     {
         if (!dialogDict.TryGetValue(id, out DialogEntry entry)) return;
 
+        // Normal dialogue flow
         currentID = id;
         currentEntry = entry;
-        unlockedDialogIDs.Add(id);  // Mark dialog as unlocked
+
+        // Solo marcamos como desbloqueado si no lo estaba ya
+        if (!unlockedDialogIDs.Contains(id))
+        {
+            unlockedDialogIDs.Add(id);
+        }
+
         nameText.text = entry.Name;
 
         StopAllCoroutines();
@@ -117,7 +124,7 @@ public class DialogManager : MonoBehaviour
             }
             else
             {
-                ShowOptions(lastOptionsEntry); // Show previous options
+                ShowOptions(lastOptionsEntry);
             }
         }));
     }
@@ -129,7 +136,7 @@ public class DialogManager : MonoBehaviour
 
         int buttonIndex = 0;
 
-        // Show normal options
+        // Mostrar opciones normales (siempre mostramos estas primero)
         for (int i = 0; i < 3; i++)
         {
             if (!string.IsNullOrEmpty(entry.OptionTexts[i]) && entry.OptionNextIDs[i] != -1)
@@ -138,19 +145,69 @@ public class DialogManager : MonoBehaviour
             }
         }
 
-        // Show requirement-based option
-        if (!string.IsNullOrEmpty(entry.OptionWithRequirementText))
+        // Mostrar opción condicional solo si está desbloqueada
+        if (!string.IsNullOrEmpty(entry.OptionWithRequirementText) &&
+            entry.OptionWithRequirementID != -1 &&
+            unlockedDialogIDs.Contains(entry.RequiredID))
         {
-            if (unlockedDialogIDs.Contains(entry.RequiredID))
-            {
-                SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
-            }
+            SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
         }
 
-        // Add "Goodbye" option if space allows
+        // Añadir opción "Adiós" si hay espacio
         if (buttonIndex < optionButtons.Length)
         {
-            SetupOption(buttonIndex, "Goodbye", -1);
+            SetupOption(buttonIndex, "Adiós.", -1);
+        }
+
+        lastOptionsEntry = entry;
+    }
+
+    void OnOptionSelected(int nextID)
+    {
+        HideAllOptions();
+
+        if (nextID != -1)
+        {
+            if (!dialogDict.TryGetValue(nextID, out DialogEntry nextEntry)) return;
+
+            // Mostrar primero el texto de la opción seleccionada (pregunta del jugador)
+            if (lastOptionsEntry != null)
+            {
+                string optionText = "";
+                for (int i = 0; i < 3; i++)
+                {
+                    if (nextID == lastOptionsEntry.OptionNextIDs[i])
+                    {
+                        optionText = lastOptionsEntry.OptionTexts[i];
+                        break;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(optionText) && nextID == lastOptionsEntry.OptionWithRequirementID)
+                {
+                    optionText = lastOptionsEntry.OptionWithRequirementText;
+                }
+
+                if (!string.IsNullOrEmpty(optionText))
+                {
+                    nameText.text = "Brisa";
+                    StartCoroutine(TypeText(optionText, () =>
+                    {
+                        // Solo después de mostrar la pregunta, mostramos la respuesta del NPC
+                        unlockedDialogIDs.Add(nextID);
+                        ShowDialogue(nextID);
+                    }));
+                    return;
+                }
+            }
+
+            // Si no era una pregunta del jugador, continuar normalmente
+            unlockedDialogIDs.Add(nextID);
+            ShowDialogue(nextID);
+        }
+        else
+        {
+            CloseDialog();
         }
     }
 
@@ -162,26 +219,18 @@ public class DialogManager : MonoBehaviour
         foreach (char c in text)
         {
             dialogueText.text += c;
-            yield return new WaitForSeconds(0.015f);
+            yield return new WaitForSeconds(0.015f); // Ajusta este valor si el texto va demasiado rápido o lento
         }
 
         isTyping = false;
         onComplete?.Invoke();
     }
 
-    IEnumerator WaitForInputThenContinue(int nextID)
-    {
-        waitingForInput = true;
-        while (waitingForInput)
-            yield return null;
-
-        ShowDialogue(nextID);
-    }
-
     void ShowOptions(DialogEntry entry)
     {
         StartCoroutine(ShowOptionsAfterText(entry));
     }
+
 
     void SetupOption(int index, string text, int nextID)
     {
@@ -193,38 +242,13 @@ public class DialogManager : MonoBehaviour
         optionButtons[index].onClick.AddListener(() => OnOptionSelected(nextID));
     }
 
-    void OnOptionSelected(int nextID)
+        IEnumerator WaitForInputThenContinue(int nextID)
     {
-        HideAllOptions();
+        waitingForInput = true;
+        while (waitingForInput)
+            yield return null;
 
-        if (nextID != -1)
-        {
-            DialogEntry nextEntry = dialogDict[nextID];
-
-            if (nextEntry.RequiredID != -1 && !unlockedDialogIDs.Contains(nextEntry.RequiredID))
-            {
-                Debug.Log($"Option with RequiredID {nextEntry.RequiredID} is not unlocked. Cannot proceed.");
-                return;
-            }
-
-            unlockedDialogIDs.Add(nextID);
-
-            if (!nextEntry.HasOptions && nextEntry.NextLineID == -1)
-            {
-                StartCoroutine(TypeText(nextEntry.Text, () =>
-                {
-                    ShowOptions(lastOptionsEntry); // Show original options
-                }));
-            }
-            else
-            {
-                ShowDialogue(nextID);
-            }
-        }
-        else
-        {
-            CloseDialog();
-        }
+        ShowDialogue(nextID);
     }
 
     void HideAllOptions()
