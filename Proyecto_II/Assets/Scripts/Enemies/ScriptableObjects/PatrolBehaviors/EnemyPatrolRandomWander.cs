@@ -21,27 +21,33 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
     {
         base.DoEnterLogic();
 
+        base.DoEnterLogic();
+
         playerDetectionRangeSQR = playerDetectionRange * playerDetectionRange;
         targetPos = GetRandomPointInRingAroundEnemy();
+        enemy.MoveEnemy(targetPos);
     }
 
     public override void DoExitLogic()
     {
         base.DoExitLogic();
+
+        enemy.agent.ResetPath();
     }
 
     public override void DoFrameUpdateLogic()
     {
-        base.DoFrameUpdateLogic();       
+        base.DoFrameUpdateLogic();
 
-        if ((enemy.transform.position - targetPos).sqrMagnitude < 0.01f)
+        // Cambia de estado cuando llega al destino
+        if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance && !enemy.agent.pathPending)
         {
             enemy.doIdle = true;
             enemy.doPatrol = false;
         }
 
         float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
-        
+
         if (distanceToPlayerSQR < playerDetectionRangeSQR)
         {
             Debug.Log("Debería perseguir a Brisa");
@@ -53,10 +59,6 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
-
-        direction = (targetPos - enemy.transform.position).normalized;
-
-        enemy.MoveEnemy(direction * randomWanderSpeed);
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)

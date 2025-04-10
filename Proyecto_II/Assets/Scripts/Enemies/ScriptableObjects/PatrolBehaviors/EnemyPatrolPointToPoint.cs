@@ -28,6 +28,7 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
         //Debug.Log("Has entrado en estado de PatrolPointToPoint");
         AddPatrolPoints();
         ReturnFromIdle();
+        enemy.MoveEnemy(_targetPos);
     }
 
     public override void DoExitLogic()
@@ -46,7 +47,6 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
-        SetEnemyMovement();
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)
@@ -67,14 +67,9 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
      */
     private void SetEnemyMovement()
     {
-        _direction = (_targetPos - enemy.transform.position).normalized;
-
-        enemy.MoveEnemy(_direction * PointToPointMovementSpeed);
-
-        if (_direction.sqrMagnitude > 0.001f)
+        if (enemy.agent.enabled && enemy.agent.isOnNavMesh)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(_direction);
-            enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, Time.deltaTime * 5f);
+            enemy.MoveEnemy(_targetPos);
         }
     }
 
@@ -103,7 +98,7 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
      */
     private void ChangePoint()
     {
-        if ((enemy.transform.position - _targetPos).sqrMagnitude < 2f) //Comprueba que la distancia entre el enemigo y el punto al que debe ir sea menor que 2.
+        if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance && !enemy.agent.pathPending) //Comprueba que el enemigo llegue al destino.
         {
             if (!enemy.doIdle && Random.value < randomIdle)
             {
@@ -116,6 +111,7 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
                 //Debug.Log($"Llegó al punto {currentPoint}: {patrolPoints[currentPoint].name}");
                 currentPoint = (currentPoint + 1) % patrolPoints.Count; // El punto actual se actualiza al siguiente de la lista y si es el último punto de todos, reinicia el índice.
                 _targetPos = patrolPoints[currentPoint].position; // Asigna la posición a la que debe ir el enemigo al punto actual de la lista.
+                enemy.MoveEnemy(_targetPos);
             }                
         }
     }

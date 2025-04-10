@@ -7,7 +7,7 @@ using System;
 public class EnemyAttackZigZagJump : EnemyAttackSOBase
 {
     [SerializeField] private float attackDamage = 20f;
-    [SerializeField] private float distanceToStopAttackState = 5f;
+    [SerializeField] private float distanceToStopAttackState = 8f;
 
     [SerializeField] private float jumpDuration = 0.6f;
     [SerializeField] private float lateralOffset = 2f;
@@ -113,7 +113,8 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
 
         OnAttackPlayer?.Invoke(attackDamage); // Evento que llama al método de TakeDamage() de Player, pasando el valor del daño del Slime.
         isAttacking = false;
-        enemy.doAttack = false;
+        Debug.Log("Debería salir del estado de ataque zig-zag");
         enemy.doRetreat = true;
+        enemy.doAttack = false;
     }
 }

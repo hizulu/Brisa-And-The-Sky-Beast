@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
     public Player player;
     public Animator anim { get; private set; }
     public Rigidbody rb;
+    public NavMeshAgent agent;
     public Material matForDepuration;
 
     [SerializeField] float maxHealth = 100f;
@@ -54,6 +56,7 @@ public class Enemy : MonoBehaviour
 
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         Player.OnAttackEnemy += DamageEnemy;
     }
@@ -84,9 +87,12 @@ public class Enemy : MonoBehaviour
         enemyStateMachine.UpdatePhysics();
     }
 
-    public void MoveEnemy(Vector3 velocity)
+    public void MoveEnemy(Vector3 destination)
     {
-        rb.velocity = velocity;
+        if (agent.enabled && agent.isOnNavMesh)
+        {
+            agent.SetDestination(destination);
+        }
     }
 
     #region DamageRelated Functions
