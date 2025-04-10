@@ -18,7 +18,7 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
 
     private float distanceToStopAttackStateSQR = 0f;
 
-    public static event Action<float> OnAttackPlayer;
+    //public static event Action<float> OnAttackPlayer;
 
     public override void DoEnterLogic()
     {
@@ -111,7 +111,8 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
         // TODO: enemy.anim.SetTrigger("ataca");
         // TODO: play enemy attack sound depending on enemy
 
-        OnAttackPlayer?.Invoke(attackDamage); // Evento que llama al método de TakeDamage() de Player, pasando el valor del daño del Slime.
+        EventsManager.TriggerEvent<float>("OnAttackPlayer", attackDamage);
+        //OnAttackPlayer?.Invoke(attackDamage); // Evento que llama al método de TakeDamage() de Player, pasando el valor del daño del Slime.
         isAttacking = false;
         enemy.doAttack = false;
         enemy.doRetreat = true;

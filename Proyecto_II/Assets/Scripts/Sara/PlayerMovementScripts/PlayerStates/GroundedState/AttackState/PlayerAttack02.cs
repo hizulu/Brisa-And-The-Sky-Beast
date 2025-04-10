@@ -11,7 +11,7 @@ public class PlayerAttack02 : PlayerAttackState
 
     }
 
-    public static event Action<float> OnAttack02Enemy;
+    //public static event Action<float> OnAttack02Enemy;
 
     public override void Enter()
     {
@@ -24,7 +24,8 @@ public class PlayerAttack02 : PlayerAttackState
         StartAnimation(stateMachine.Player.PlayerAnimationData.Attack02ParameterHash);
 
         float attackDamageCombo02 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
-        OnAttack02Enemy?.Invoke(attackDamageCombo02);
+        EventsManager.TriggerEvent<float>("OnAttack02Enemy", attackDamageCombo02);
+        //OnAttack02Enemy?.Invoke(attackDamageCombo02);
         Debug.Log("Daño del ataque 2: " + " " + attackDamageCombo02);
     }
 

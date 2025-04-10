@@ -32,7 +32,8 @@ public class PlayerMovementState : IState
     public virtual void Enter()
     {
         AddInputActionsCallbacks();
-        EnemyAttackZigZagJump.OnAttackPlayer += TakeDamage;
+        EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
+        //EnemyAttackZigZagJump.OnAttackPlayer += TakeDamage;
     }
 
     public virtual void HandleInput()
@@ -52,7 +53,8 @@ public class PlayerMovementState : IState
 
     public virtual void Exit()
     {
-        EnemyAttackZigZagJump.OnAttackPlayer -= TakeDamage;
+        EventsManager.StopCallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
+        //EnemyAttackZigZagJump.OnAttackPlayer -= TakeDamage;
         RemoveInputActionsCallbacks();
     }
 

@@ -63,16 +63,16 @@ public class Enemy : HittableElement
 
     private void OnEnable()
     {
-        PlayerAttack01.OnAttack01Enemy += DamageEnemy;
-        PlayerAttack02.OnAttack02Enemy += DamageEnemy;
-        PlayerAttack03.OnAttack03Enemy += DamageEnemy;
+        EventsManager.CallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
+        EventsManager.CallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
+        EventsManager.CallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
     }
 
     private void OnDestroy()
     {
-        PlayerAttack01.OnAttack01Enemy -= DamageEnemy;
-        PlayerAttack02.OnAttack02Enemy -= DamageEnemy;
-        PlayerAttack03.OnAttack03Enemy -= DamageEnemy;
+        EventsManager.StopCallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
+        EventsManager.StopCallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
+        EventsManager.StopCallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
     }
 
     private void Start()

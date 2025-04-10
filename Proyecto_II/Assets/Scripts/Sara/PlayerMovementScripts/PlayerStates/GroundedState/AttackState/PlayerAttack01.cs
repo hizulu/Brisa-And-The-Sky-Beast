@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack01 : PlayerAttackState
 {
-    public static event Action<float> OnAttack01Enemy;
+    //public static event Action<float> OnAttack01Enemy;
 
     public PlayerAttack01(PlayerStateMachine stateMachine) : base(stateMachine)
     {
@@ -24,7 +24,8 @@ public class PlayerAttack01 : PlayerAttackState
         StartAnimation(stateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
 
         float attackDamageCombo01 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
-        OnAttack01Enemy?.Invoke(attackDamageCombo01);
+        EventsManager.TriggerEvent<float>("OnAttack01Enemy", attackDamageCombo01);
+        //OnAttack01Enemy?.Invoke(attackDamageCombo01);
         Debug.Log("Daño del ataque 1: " + " " + attackDamageCombo01);
     }
 
