@@ -33,6 +33,7 @@ public class PlayerMovementState : IState
     {
         AddInputActionsCallbacks();
         EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
+        EventsManager.CallNormalEvents("AcariciarBestia", AcariciarBestia);
         //EnemyAttackZigZagJump.OnAttackPlayer += TakeDamage;
     }
 
@@ -54,6 +55,7 @@ public class PlayerMovementState : IState
     public virtual void Exit()
     {
         EventsManager.StopCallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
+        EventsManager.StopCallNormalEvents("AcariciarBestia", AcariciarBestia);
         //EnemyAttackZigZagJump.OnAttackPlayer -= TakeDamage;
         RemoveInputActionsCallbacks();
     }
@@ -180,6 +182,11 @@ public class PlayerMovementState : IState
     {
         Debug.Log("Has llamado a la Bestia");
         stateMachine.Player.StartCoroutine(StopCallBeast());
+    }
+
+    private void AcariciarBestia()
+    {
+        Debug.Log("Estás acariciando a la Bestia.");
     }
 
     IEnumerator StopCallBeast()

@@ -51,4 +51,9 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
     {
         Debug.Log("Panel clicked!");
     }
+
+    public void AcariciarBestia()
+    {
+        EventsManager.TriggerNormalEvent("AcariciarBestia");
+    }
 }
