@@ -8,4 +8,5 @@ public class DialogueLine
     public string initialText;
     public List<DialogueOption> options = new();
     public int requirementID;
+    public int npcID;
 }

@@ -742,7 +742,6 @@ GameObject:
   m_Component:
   - component: {fileID: 95756586}
   - component: {fileID: 95756585}
-  - component: {fileID: 95756587}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -762,14 +761,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95bbc6745825dba439c39c95eb1b0faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speakerText: {fileID: 2019751158}
+  database: {fileID: 1238902572}
+  characterNameText: {fileID: 2019751158}
   dialogueText: {fileID: 1136156271}
   optionButton1: {fileID: 755625761}
   optionButton2: {fileID: 1156691754}
   optionButton3: {fileID: 277413322}
   goodbyeButton: {fileID: 1538171138}
   dialoguePanel: {fileID: 452042224}
-  typingSpeed: 0.02
 --- !u!4 &95756586
 Transform:
   m_ObjectHideFlags: 0
@@ -785,19 +784,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &95756587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 95756584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a5c31fad54b1764b9990c3b55f65636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  csvFile: {fileID: 4900000, guid: 67eaa0a54a5aa8347bd9a0e8d1489676, type: 3}
 --- !u!1 &124381953
 GameObject:
   m_ObjectHideFlags: 0
@@ -13376,6 +13362,51 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.6130168, y: 0.6726042, z: 0.25169104}
   m_Center: {x: 0.9770745, y: -0.16369799, z: 0.027865317}
+--- !u!1 &1238902571
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1238902573}
+  - component: {fileID: 1238902572}
+  m_Layer: 0
+  m_Name: Dialoge DataBase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1238902572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238902571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5c31fad54b1764b9990c3b55f65636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  csvFile: {fileID: 4900000, guid: 67eaa0a54a5aa8347bd9a0e8d1489676, type: 3}
+--- !u!4 &1238902573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238902571}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1246748384
 GameObject:
   m_ObjectHideFlags: 0
@@ -15075,6 +15106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7696332bdc67f047a480250828c488a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcID: 1
 --- !u!136 &1498776388
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -15379,7 +15411,7 @@ GameObject:
   - component: {fileID: 1538171139}
   - component: {fileID: 1538171138}
   m_Layer: 5
-  m_Name: Option 4 Button
+  m_Name: Adios Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19815,7 +19847,7 @@ GameObject:
   - component: {fileID: 1900112201}
   - component: {fileID: 1900112200}
   m_Layer: 5
-  m_Name: Option 4 Button Text
+  m_Name: Adios Button Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19860,7 +19892,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Option 4
+  m_text: "Adi\xF3s."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fb01418a2842a4348bceafc439a05681, type: 2}
   m_sharedMaterial: {fileID: 2149070473293129310, guid: fb01418a2842a4348bceafc439a05681, type: 2}
@@ -49541,6 +49573,7 @@ SceneRoots:
   - {fileID: 1096655523}
   - {fileID: 1082245062}
   - {fileID: 95756586}
+  - {fileID: 1238902573}
   - {fileID: 471496231}
   - {fileID: 1351116783}
   - {fileID: 1249522389}

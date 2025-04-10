@@ -1,64 +1,55 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class NPCInteraction : MonoBehaviour
 {
-    private bool isPlayerInRange = false;  // Si el jugador está dentro del área de trigger
-    private bool isCoroutineRunning = false;  // Para evitar múltiples corutinas a la vez
-    private DialogueManager dialogueManager;  // Referencia al DialogueManager
+    private bool isPlayerInRange = false;
+    private bool isCoroutineRunning = false;
+    public int npcID;
+    private DialogueManager dialogueManager;
 
     private void Start()
     {
-        // Buscar el DialogueManager en la escena solo una vez
         dialogueManager = FindObjectOfType<DialogueManager>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Cuando el jugador entra en el área de activación
         if (other.CompareTag("Player") && !isCoroutineRunning)
         {
-            isPlayerInRange = true;  // El jugador está dentro del área
-            StartCoroutine(WaitForInteraction());  // Iniciar la espera de interacción
+            isPlayerInRange = true;
+            StartCoroutine(WaitForInteraction());
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        // Cuando el jugador sale del área de activación
         if (other.CompareTag("Player"))
         {
-            isPlayerInRange = false;  // El jugador salió del área
-            StopAllCoroutines();  // Detener todas las corutinas, por si quedaba alguna pendiente
-            isCoroutineRunning = false;  // Resetear el flag de la corutina
+            isPlayerInRange = false;
+            StopAllCoroutines();
+            isCoroutineRunning = false;
         }
     }
 
     private IEnumerator WaitForInteraction()
     {
-        isCoroutineRunning = true;  // Marcar que la corutina está en ejecución
-
-        // Esperar hasta que el jugador presione E
+        isCoroutineRunning = true;
         while (isPlayerInRange)
         {
-            if (Input.GetKeyDown(KeyCode.E))  // Cuando el jugador presiona E
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                StartDialogue();  // Iniciar el diálogo
-                yield break;  // Terminar la corutina para no seguir verificando
+                StartDialogue();
+                yield break;
             }
-            yield return null;  // Esperar el siguiente frame
+            yield return null;
         }
-
-        isCoroutineRunning = false;  // Corutina terminada
+        isCoroutineRunning = false;
     }
 
     private void StartDialogue()
     {
-        // Verificar si el DialogueManager está asignado
         if (dialogueManager != null)
-        {
-            dialogueManager.StartDialogue(0);  // Llamar al método StartDialogue() con el ID del diálogo (0 en este caso)
-            dialogueManager.EnableDialoguePanel(true);  // Activar el panel de diálogo
-        }
+            dialogueManager.StartDialogueForNPC(npcID);
     }
 }
