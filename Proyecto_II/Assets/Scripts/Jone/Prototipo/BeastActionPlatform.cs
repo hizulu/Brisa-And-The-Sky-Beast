@@ -69,7 +69,7 @@ public class BeastActionPlatform : MonoBehaviour
         if (isPlayerInRange && !EndingTrigger.beastUp)
         {
             defaultPanel.SetActive(true);
-            //panelText.text = panelMessage;
+            //panelText.optionText = panelMessage;
         }
         else
         {

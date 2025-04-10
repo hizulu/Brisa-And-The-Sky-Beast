@@ -10,7 +10,7 @@ using UnityEngine.UI;
  * FECHA: 01/12/2024
  * DESCRIPCIÓN: script que cambia la posición de una plataforma con un interruptor accionable
  * VERSIÓN: 1.0 funcionamiento básico levantar plataforma
- *              1.1 mostrar text interactuar
+ *              1.1 mostrar optionText interactuar
  */
 
 public class ActionableButtonMovesPlatform : MonoBehaviour
@@ -67,7 +67,7 @@ public class ActionableButtonMovesPlatform : MonoBehaviour
         if (isPlayerInRange && !isMoving)
         {
             interactionPanel.SetActive(true);
-            //interactionText.text = interactMessage;
+            //interactionText.optionText = interactMessage;
         }
         else
         {
