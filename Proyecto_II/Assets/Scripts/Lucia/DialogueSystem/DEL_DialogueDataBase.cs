@@ -14,16 +14,21 @@ public class DialogueDatabase : MonoBehaviour
         for (int i = 1; i < lines.Length; i++)
         {
             var data = lines[i].Split(';');
-            if (data.Length <= 10)
+            if (data.Length < 12)
                 continue;
+
             DialogueLine line = new DialogueLine
             {
                 ID = TryParseInt(data[0]),
                 name = data[1],
                 initialText = data[2],
-                requirementID = string.IsNullOrEmpty(data[9]) ? -1 : TryParseInt(data[9]),
-                npcID = string.IsNullOrEmpty(data[10]) ? -1 : TryParseInt(data[10])
+                nextLineID = string.IsNullOrEmpty(data[9]) ? -1 : TryParseInt(data[9]),
+                requirementID = string.IsNullOrEmpty(data[10]) ? -1 : TryParseInt(data[10]),
+                npcID = string.IsNullOrEmpty(data[11]) ? -1 : TryParseInt(data[11])
             };
+
+            Debug.Log($"Line ID: {line.ID}, Name: {line.name}, Initial Text: {line.initialText}, RequirementID: {line.requirementID}, NPCID: {line.npcID}");
+
             for (int j = 0; j < 3; j++)
             {
                 string optionText = data[3 + j * 2];
@@ -42,6 +47,7 @@ public class DialogueDatabase : MonoBehaviour
                     }
                 }
             }
+
             dialogueLines[line.ID] = line;
             Debug.Log($"Loaded line ID: {line.ID}, Name: {line.name}, Initial Text: {line.initialText}");
         }

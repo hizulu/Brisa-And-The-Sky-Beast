@@ -9,4 +9,5 @@ public class DialogueLine
     public List<DialogueOption> options = new();
     public int requirementID;
     public int npcID;
+    public int nextLineID;
 }
