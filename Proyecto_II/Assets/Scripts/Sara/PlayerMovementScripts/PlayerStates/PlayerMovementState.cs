@@ -167,15 +167,27 @@ public class PlayerMovementState : IState
 
     private void TakeDamage(float _enemyDamage)
     {
-        Debug.Log("Están atacando a Brisa.");
         statsData.CurrentHealth -= _enemyDamage;
-        Debug.Log(statsData.CurrentHealth);
+        statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
+
         if (statsData.CurrentHealth <= 0)
             stateMachine.ChangeState(stateMachine.HalfDeadState);
     }
 
     private void CallBeast(InputAction.CallbackContext context)
     {
-        Debug.Log("Has llamado a la Bestia");   
+        Debug.Log("Has llamado a la Bestia");
+        stateMachine.Player.StartCoroutine(StopCallBeast());
+    }
+
+    IEnumerator StopCallBeast()
+    {
+        StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
+        StopAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
+        StartAnimation(stateMachine.Player.PlayerAnimationData.CallBeastParameterHash);
+        yield return new WaitForSecondsRealtime(1f);
+        StopAnimation(stateMachine.Player.PlayerAnimationData.CallBeastParameterHash);
+        StartAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
+        StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
 }
