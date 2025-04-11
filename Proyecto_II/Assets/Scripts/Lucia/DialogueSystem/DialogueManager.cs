@@ -17,16 +17,18 @@ public class DialogManager : MonoBehaviour
     public Button[] optionButtons;
     public TextMeshProUGUI[] optionTexts;
 
-    private Dictionary<int, DialogEntry> dialogDict = new();
-    public List<int> unlockedDialogIDs = new();
+    private Dictionary<int, DialogEntry> dialogDict = new Dictionary<int, DialogEntry>();
+    private HashSet<int> unlockedDialogIDs = new HashSet<int>();
+    private HashSet<int> completedDialogIDs = new HashSet<int>();
 
     private int currentID, startID, endID;
     private DialogEntry currentEntry;
     private DialogEntry lastOptionsEntry;
 
     private bool isDialogActive = false;
-    private bool waitingForInput = false;
     private bool isTyping = false;
+    private Coroutine typingCoroutine;
+    private Coroutine waitForInputCoroutine;
 
     void Awake()
     {
@@ -35,47 +37,21 @@ public class DialogManager : MonoBehaviour
         HideAllOptions();
     }
 
-    public void ToggleDialog(int start, int end)
-    {
-        if (isDialogActive)
-        {
-            CloseDialog();
-        }
-        else
-        {
-            startID = start;
-            endID = end;
-            currentID = startID;
-            isDialogActive = true;
-
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-
-            dialogPanel.SetActive(true);
-            ShowDialogue(currentID);
-        }
-    }
-
-    public void AdvanceDialog()
-    {
-        if (!isDialogActive || !waitingForInput || isTyping) return;
-        waitingForInput = false;
-    }
-
     void LoadDialogFromCSV()
     {
         dialogDict.Clear();
-        using StringReader reader = new(csvFile.text);
-        while (reader.Peek() > -1)
+        string[] lines = csvFile.text.Split('\n');
+
+        for (int i = 0; i < lines.Length; i++)
         {
-            string[] values = reader.ReadLine().Split(';');
+            string[] values = lines[i].Split(';');
             if (values.Length < 14 || !int.TryParse(values[0], out int id)) continue;
 
-            DialogEntry entry = new DialogEntry
+            dialogDict[id] = new DialogEntry
             {
                 ID = id,
                 Name = values[1],
-                Text = values[2],
+                Text = values[2].Replace("\\n", "\n"),
                 HasOptions = values[3] == "1",
                 OptionTexts = new string[3] { values[4], values[6], values[8] },
                 OptionNextIDs = new int[3]
@@ -89,189 +65,7 @@ public class DialogManager : MonoBehaviour
                 NextLineID = int.TryParse(values[12], out int next) ? next : -1,
                 RequiredID = int.TryParse(values[13], out int req) ? req : -1
             };
-
-            dialogDict[id] = entry;
         }
-    }
-
-    void ShowDialogue(int id)
-    {
-        if (!dialogDict.TryGetValue(id, out DialogEntry entry)) return;
-
-        // Normal dialogue flow
-        currentID = id;
-        currentEntry = entry;
-
-        // Solo marcamos como desbloqueado si no lo estaba ya
-        if (!unlockedDialogIDs.Contains(id))
-        {
-            unlockedDialogIDs.Add(id);
-        }
-
-        nameText.text = entry.Name;
-
-        StopAllCoroutines();
-        StartCoroutine(TypeText(entry.Text, () =>
-        {
-            if (entry.HasOptions)
-            {
-                lastOptionsEntry = entry;
-                ShowOptions(entry);
-            }
-            else if (entry.NextLineID != -1)
-            {
-                StartCoroutine(WaitForInputThenContinue(entry.NextLineID));
-            }
-            else
-            {
-                ShowOptions(lastOptionsEntry);
-            }
-        }));
-    }
-
-    IEnumerator ShowOptionsAfterText(DialogEntry entry)
-    {
-        yield return new WaitForSeconds(0.5f);
-        HideAllOptions();
-
-        int buttonIndex = 0;
-
-        // Mostrar opciones normales (siempre mostramos estas primero)
-        for (int i = 0; i < 3; i++)
-        {
-            if (!string.IsNullOrEmpty(entry.OptionTexts[i]) && entry.OptionNextIDs[i] != -1)
-            {
-                SetupOption(buttonIndex++, entry.OptionTexts[i], entry.OptionNextIDs[i]);
-            }
-        }
-
-        // Mostrar opción condicional solo si está desbloqueada
-        if (!string.IsNullOrEmpty(entry.OptionWithRequirementText) &&
-            entry.OptionWithRequirementID != -1 &&
-            unlockedDialogIDs.Contains(entry.RequiredID))
-        {
-            SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
-        }
-
-        // Añadir opción "Adiós" si hay espacio
-        if (buttonIndex < optionButtons.Length)
-        {
-            SetupOption(buttonIndex, "Adiós.", -1);
-        }
-
-        lastOptionsEntry = entry;
-    }
-
-    void OnOptionSelected(int nextID)
-    {
-        HideAllOptions();
-
-        if (nextID != -1)
-        {
-            if (!dialogDict.TryGetValue(nextID, out DialogEntry nextEntry)) return;
-
-            // Mostrar primero el texto de la opción seleccionada (pregunta del jugador)
-            if (lastOptionsEntry != null)
-            {
-                string optionText = "";
-                for (int i = 0; i < 3; i++)
-                {
-                    if (nextID == lastOptionsEntry.OptionNextIDs[i])
-                    {
-                        optionText = lastOptionsEntry.OptionTexts[i];
-                        break;
-                    }
-                }
-
-                if (string.IsNullOrEmpty(optionText) && nextID == lastOptionsEntry.OptionWithRequirementID)
-                {
-                    optionText = lastOptionsEntry.OptionWithRequirementText;
-                }
-
-                if (!string.IsNullOrEmpty(optionText))
-                {
-                    nameText.text = "Brisa";
-                    StartCoroutine(TypeText(optionText, () =>
-                    {
-                        // Solo después de mostrar la pregunta, mostramos la respuesta del NPC
-                        unlockedDialogIDs.Add(nextID);
-                        ShowDialogue(nextID);
-                    }));
-                    return;
-                }
-            }
-
-            // Si no era una pregunta del jugador, continuar normalmente
-            unlockedDialogIDs.Add(nextID);
-            ShowDialogue(nextID);
-        }
-        else
-        {
-            CloseDialog();
-        }
-    }
-
-    IEnumerator TypeText(string text, System.Action onComplete)
-    {
-        isTyping = true;
-        dialogueText.text = "";
-
-        foreach (char c in text)
-        {
-            dialogueText.text += c;
-            yield return new WaitForSeconds(0.015f); // Ajusta este valor si el texto va demasiado rápido o lento
-        }
-
-        isTyping = false;
-        onComplete?.Invoke();
-    }
-
-    void ShowOptions(DialogEntry entry)
-    {
-        StartCoroutine(ShowOptionsAfterText(entry));
-    }
-
-
-    void SetupOption(int index, string text, int nextID)
-    {
-        if (index >= optionButtons.Length) return;
-
-        optionButtons[index].gameObject.SetActive(true);
-        optionTexts[index].text = text;
-        optionButtons[index].onClick.RemoveAllListeners();
-        optionButtons[index].onClick.AddListener(() => OnOptionSelected(nextID));
-    }
-
-        IEnumerator WaitForInputThenContinue(int nextID)
-    {
-        waitingForInput = true;
-        while (waitingForInput)
-            yield return null;
-
-        ShowDialogue(nextID);
-    }
-
-    void HideAllOptions()
-    {
-        foreach (var btn in optionButtons)
-        {
-            btn.gameObject.SetActive(false);
-            btn.onClick.RemoveAllListeners();
-        }
-    }
-
-    void CloseDialog()
-    {
-        StopAllCoroutines();
-        HideAllOptions();
-        dialogueText.text = "";
-        nameText.text = "";
-        dialogPanel.SetActive(false);
-        isDialogActive = false;
-        waitingForInput = false;
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void StartDialog(int start, int end)
@@ -290,19 +84,187 @@ public class DialogManager : MonoBehaviour
         ShowDialogue(currentID);
     }
 
-    public void ForceCloseDialog()
+    public void AdvanceDialog()
+    {
+        if (!isDialogActive || isTyping) return;
+
+        if (currentEntry.NextLineID != -1)
+        {
+            ShowDialogue(currentEntry.NextLineID);
+        }
+        else
+        {
+            completedDialogIDs.Add(currentID);
+            CloseDialog();
+        }
+    }
+
+    void ShowDialogue(int id)
+    {
+        if (!dialogDict.TryGetValue(id, out currentEntry)) return;
+
+        currentID = id;
+        unlockedDialogIDs.Add(id);
+        nameText.text = currentEntry.Name;
+
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
+        typingCoroutine = StartCoroutine(TypeText(currentEntry.Text, () =>
+        {
+            if (currentEntry.HasOptions)
+            {
+                lastOptionsEntry = currentEntry;
+                ShowOptions(currentEntry); // Mostrar opciones al terminar de escribir
+            }
+            else
+            {
+                // Iniciar espera para la entrada del jugador
+                waitForInputCoroutine = StartCoroutine(WaitForInput());
+            }
+        }));
+    }
+
+    IEnumerator TypeText(string text, System.Action onComplete)
+    {
+        isTyping = true;
+        dialogueText.text = "";
+        float typingSpeed = 0.015f;
+        float timer = 0f;
+        int visibleChars = 0;
+
+        while (visibleChars < text.Length && isDialogActive)
+        {
+            timer += Time.deltaTime;
+            if (timer >= typingSpeed)
+            {
+                timer = 0f;
+                visibleChars++;
+                dialogueText.text = text.Substring(0, visibleChars);
+            }
+            yield return null;
+        }
+
+        dialogueText.text = text;
+        isTyping = false;
+        onComplete?.Invoke();
+    }
+
+    IEnumerator WaitForInput()
+    {
+        bool inputReceived = false;
+        while (!inputReceived && isDialogActive)
+        {
+            if (Input.GetKeyDown(KeyCode.E)) // Espera por la tecla 'E'
+            {
+                inputReceived = true;
+                AdvanceDialog(); // Avanza el diálogo después de que se presiona 'E'
+            }
+            yield return null;
+        }
+    }
+
+    void ShowOptions(DialogEntry entry)
+    {
+        StartCoroutine(ShowOptionsWithDelay(entry));
+    }
+
+    IEnumerator ShowOptionsWithDelay(DialogEntry entry)
+    {
+        yield return new WaitForSeconds(0.1f);
+        HideAllOptions();
+
+        int buttonIndex = 0;
+
+        // Mostrar opciones normales
+        for (int i = 0; i < 3 && buttonIndex < optionButtons.Length; i++)
+        {
+            if (!string.IsNullOrEmpty(entry.OptionTexts[i]) && entry.OptionNextIDs[i] != -1)
+            {
+                SetupOption(buttonIndex++, entry.OptionTexts[i], entry.OptionNextIDs[i]);
+            }
+        }
+
+        // Mostrar opción condicional si cumple requisitos
+        if (buttonIndex < optionButtons.Length &&
+            !string.IsNullOrEmpty(entry.OptionWithRequirementText) &&
+            entry.OptionWithRequirementID != -1 &&
+            unlockedDialogIDs.Contains(entry.RequiredID) &&
+            !completedDialogIDs.Contains(entry.OptionWithRequirementID))
+        {
+            SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
+        }
+
+        // Mostrar siempre la opción de "Adiós"
+        if (buttonIndex < optionButtons.Length)
+        {
+            SetupOption(buttonIndex, "Adiós.", -1);
+        }
+    }
+
+    void SetupOption(int index, string text, int nextID)
+    {
+        if (index < 0 || index >= optionButtons.Length || optionButtons[index] == null) return;
+
+        optionButtons[index].gameObject.SetActive(true);
+        optionTexts[index].text = text;
+        optionButtons[index].onClick.RemoveAllListeners();
+        optionButtons[index].onClick.AddListener(() => OnOptionSelected(nextID));
+    }
+
+    void OnOptionSelected(int nextID)
     {
         if (!isDialogActive) return;
 
-        StopAllCoroutines();
+        HideAllOptions();
+
+        if (nextID == -1)
+        {
+            CloseDialog();
+            return;
+        }
+
+        if (!dialogDict.TryGetValue(nextID, out DialogEntry nextEntry)) return;
+
+        // Marcar como completado si es opción condicional
+        if (lastOptionsEntry != null && lastOptionsEntry.OptionWithRequirementID == nextID)
+            completedDialogIDs.Add(nextID);
+
+        // Mostrar directamente el diálogo de la siguiente ID
+        ShowDialogue(nextID);
+    }
+
+    void HideAllOptions()
+    {
+        foreach (var btn in optionButtons)
+        {
+            if (btn != null)
+            {
+                btn.gameObject.SetActive(false);
+                btn.onClick.RemoveAllListeners();
+            }
+        }
+    }
+
+    void CloseDialog()
+    {
+        if (!isDialogActive) return;
+
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
         HideAllOptions();
         dialogueText.text = "";
         nameText.text = "";
         dialogPanel.SetActive(false);
         isDialogActive = false;
-        waitingForInput = false;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void ForceCloseDialog()
+    {
+        CloseDialog();
     }
 }

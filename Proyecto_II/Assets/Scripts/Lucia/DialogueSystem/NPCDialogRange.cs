@@ -43,7 +43,7 @@ public class NPCDialogRange : MonoBehaviour
 
         if (!dialogStarted)
         {
-            dialogManager.StartDialog(startID, endID);  // Inicia el diálogo si no ha comenzado
+            dialogManager.StartDialog(startID, endID); // Inicia el diálogo desde el ID inicial
             dialogStarted = true;
         }
         else
