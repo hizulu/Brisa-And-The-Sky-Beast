@@ -92,7 +92,7 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
             {
                 finalJumpTarget = playerTransform.position - directionToTarget * stopDistance;
             }
-
+            enemy.anim.SetTrigger("Jump");
             yield return MoveInArc(enemy.transform.position, jumpTarget, jumpHeight);
             enemy.transform.position = jumpTarget;
         }
