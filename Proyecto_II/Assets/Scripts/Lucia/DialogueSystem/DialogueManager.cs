@@ -19,7 +19,7 @@ public class DialogManager : MonoBehaviour
 
     private Dictionary<int, DialogEntry> dialogDict = new Dictionary<int, DialogEntry>();
     private HashSet<int> unlockedDialogIDs = new HashSet<int>();
-    private HashSet<int> completedDialogIDs = new HashSet<int>();
+    private HashSet<int> seenDialogIDs = new HashSet<int>();
 
     private int currentID, startID, endID;
     private DialogEntry currentEntry;
@@ -93,7 +93,8 @@ public class DialogManager : MonoBehaviour
         }
         else if (lastOptionsEntry != null)
         {
-            ShowOptions(lastOptionsEntry); // Mostrar opciones anteriores al finalizar
+            Debug.Log("Volviendo a mostrar opciones anteriores al finalizar diálogo");
+            ShowOptions(lastOptionsEntry);
         }
         else
         {
@@ -103,10 +104,28 @@ public class DialogManager : MonoBehaviour
 
     void ShowDialogue(int id)
     {
-        if (!dialogDict.TryGetValue(id, out currentEntry)) return;
+        if (!dialogDict.TryGetValue(id, out currentEntry))
+        {
+            Debug.LogError($"Diálogo con ID {id} no encontrado");
+            return;
+        }
 
         currentID = id;
-        unlockedDialogIDs.Add(id);
+
+        // Registrar que hemos visto este diálogo
+        if (!seenDialogIDs.Contains(id))
+        {
+            Debug.Log($"Nuevo diálogo visto - ID: {id}, Texto: {currentEntry.Text}");
+            seenDialogIDs.Add(id);
+        }
+
+        // Si este diálogo tiene un RequiredID, desbloquearlo
+        if (currentEntry.RequiredID != -1 && !unlockedDialogIDs.Contains(currentEntry.RequiredID))
+        {
+            Debug.Log($"Desbloqueando diálogo requerido - ID: {currentEntry.RequiredID}");
+            unlockedDialogIDs.Add(currentEntry.RequiredID);
+        }
+
         nameText.text = currentEntry.Name;
 
         if (typingCoroutine != null)
@@ -116,12 +135,14 @@ public class DialogManager : MonoBehaviour
         {
             if (currentEntry.HasOptions)
             {
+                Debug.Log($"Mostrando opciones para diálogo ID: {id}");
                 lastOptionsEntry = currentEntry;
                 ShowOptions(currentEntry);
             }
             else if (currentEntry.NextLineID == -1 && lastOptionsEntry != null)
             {
-                ShowOptions(lastOptionsEntry); // Volver a mostrar opciones si no hay siguiente línea
+                Debug.Log("No hay siguiente línea, volviendo a opciones anteriores");
+                ShowOptions(lastOptionsEntry);
             }
         }));
     }
@@ -153,6 +174,10 @@ public class DialogManager : MonoBehaviour
 
     void ShowOptions(DialogEntry entry)
     {
+        Debug.Log($"Mostrando opciones para entrada ID: {entry.ID}");
+        Debug.Log($"Diálogos vistos: {string.Join(",", seenDialogIDs)}");
+        Debug.Log($"Diálogos desbloqueados: {string.Join(",", unlockedDialogIDs)}");
+
         HideAllOptions();
 
         int buttonIndex = 0;
@@ -162,54 +187,74 @@ public class DialogManager : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(entry.OptionTexts[i]) && entry.OptionNextIDs[i] != -1)
             {
+                Debug.Log($"Mostrando opción normal {i}: {entry.OptionTexts[i]} -> ID: {entry.OptionNextIDs[i]}");
                 SetupOption(buttonIndex++, entry.OptionTexts[i], entry.OptionNextIDs[i]);
             }
         }
 
-        // Mostrar opción condicional si cumple requisitos
+        // Mostrar opción condicional si:
+        // 1. Tiene texto definido
+        // 2. Tiene un ID válido
+        // 3. El diálogo requerido ha sido visto (no solo desbloqueado)
         if (buttonIndex < optionButtons.Length &&
             !string.IsNullOrEmpty(entry.OptionWithRequirementText) &&
-            entry.OptionWithRequirementID != -1 &&
-            unlockedDialogIDs.Contains(entry.RequiredID) &&
-            !completedDialogIDs.Contains(entry.OptionWithRequirementID))
+            entry.OptionWithRequirementID != -1)
         {
-            SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
+            if (seenDialogIDs.Contains(entry.RequiredID))
+            {
+                Debug.Log($"Mostrando opción condicional: {entry.OptionWithRequirementText} -> ID: {entry.OptionWithRequirementID} (Requiere ID: {entry.RequiredID})");
+                SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
+            }
+            else
+            {
+                Debug.Log($"Opcion condicional requerida no vista aún: {entry.RequiredID}");
+            }
         }
 
         // Opción "Adiós" siempre disponible
         if (buttonIndex < optionButtons.Length)
         {
+            Debug.Log("Mostrando opción 'Adiós'");
             SetupOption(buttonIndex, "Adiós.", -1);
         }
     }
 
     void SetupOption(int index, string text, int nextID)
     {
-        if (index < 0 || index >= optionButtons.Length || optionButtons[index] == null) return;
+        if (index < 0 || index >= optionButtons.Length || optionButtons[index] == null)
+        {
+            Debug.LogError($"Índice de opción inválido: {index}");
+            return;
+        }
 
         optionButtons[index].gameObject.SetActive(true);
         optionTexts[index].text = text;
         optionButtons[index].onClick.RemoveAllListeners();
         optionButtons[index].onClick.AddListener(() => OnOptionSelected(nextID));
+
+        Debug.Log($"Configurada opción {index}: {text} -> {nextID}");
     }
 
     void OnOptionSelected(int nextID)
     {
         if (!isDialogActive) return;
 
+        Debug.Log($"Opción seleccionada, siguiente ID: {nextID}");
+
         HideAllOptions();
 
         if (nextID == -1)
         {
+            Debug.Log("Cerrando diálogo");
             CloseDialog();
             return;
         }
 
-        if (!dialogDict.TryGetValue(nextID, out DialogEntry nextEntry)) return;
-
-        // Marcar como completado si es opción condicional
-        if (lastOptionsEntry != null && lastOptionsEntry.OptionWithRequirementID == nextID)
-            completedDialogIDs.Add(nextID);
+        if (!dialogDict.TryGetValue(nextID, out DialogEntry nextEntry))
+        {
+            Debug.LogError($"Siguiente diálogo con ID {nextID} no encontrado");
+            return;
+        }
 
         ShowDialogue(nextID);
     }
@@ -232,6 +277,8 @@ public class DialogManager : MonoBehaviour
 
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
+
+        Debug.Log("Cerrando diálogo");
 
         HideAllOptions();
         dialogueText.text = "";
