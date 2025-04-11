@@ -6,7 +6,6 @@ using UnityEngine;
 public class EnemyChaseStraightToPlayer : EnemyChaseSOBase
 {
     [SerializeField] private float chasingSpeed = 6f;
-    private Vector3 direction;
     [SerializeField] private float playerAttackRange = 7f;
     [SerializeField] private float playerLostRange = 20f;
 
@@ -19,12 +18,19 @@ public class EnemyChaseStraightToPlayer : EnemyChaseSOBase
 
         playerAttackRangeSQR = playerAttackRange * playerAttackRange;
         playerLostRangeSQR = playerLostRange * playerLostRange;
+
+        enemy.anim.SetBool("isChasing", true);
+
+        enemy.agent.speed = chasingSpeed;
+
+        enemy.agent.SetDestination(playerTransform.position);
     }
 
     public override void DoExitLogic()
     {
         base.DoExitLogic();
         enemy.anim.SetBool("isChasing,", false);
+        enemy.agent.ResetPath();
     }    
 
     public override void DoFrameUpdateLogic()
@@ -32,6 +38,8 @@ public class EnemyChaseStraightToPlayer : EnemyChaseSOBase
         base.DoFrameUpdateLogic();
 
         float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
+
+        enemy.agent.SetDestination(playerTransform.position); // Actualiza el destino para seguir al jugador
 
         if (distanceToPlayerSQR < playerAttackRangeSQR)
         {
@@ -50,10 +58,6 @@ public class EnemyChaseStraightToPlayer : EnemyChaseSOBase
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
-
-        direction = (playerTransform.position - enemy.transform.position).normalized;
-
-        enemy.MoveEnemy(direction * chasingSpeed);
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)

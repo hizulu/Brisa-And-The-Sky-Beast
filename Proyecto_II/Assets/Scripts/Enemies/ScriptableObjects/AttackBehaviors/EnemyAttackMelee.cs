@@ -18,6 +18,8 @@ public class EnemyAttackMelee : EnemyAttackSOBase
     {
         base.DoEnterLogic();
         distanceToStopAttackStateSQR = distanceToStopAttackState * distanceToStopAttackState;
+
+        enemy.agent.ResetPath();
     }
 
     public override void DoExitLogic()
@@ -30,8 +32,6 @@ public class EnemyAttackMelee : EnemyAttackSOBase
     {
         base.DoFrameUpdateLogic();
 
-        enemy.MoveEnemy(Vector3.zero);
-
         if (_timer > _timeBetweenHits)
         {
             _timer = 0f;
@@ -39,11 +39,6 @@ public class EnemyAttackMelee : EnemyAttackSOBase
         }
 
         _timer += Time.deltaTime;
-    }
-
-    public override void DoPhysicsLogic()
-    {
-        base.DoPhysicsLogic();
 
         float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
 
@@ -52,6 +47,11 @@ public class EnemyAttackMelee : EnemyAttackSOBase
             enemy.doAttack = false;
             enemy.doChase = true;
         }
+    }
+
+    public override void DoPhysicsLogic()
+    {
+        base.DoPhysicsLogic();
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)

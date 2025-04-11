@@ -15,7 +15,6 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
     private float playerDetectionRangeSQR = 0f;
 
     private Vector3 targetPos;
-    private Vector3 direction;
 
     public override void DoEnterLogic()
     {
@@ -24,6 +23,9 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
         base.DoEnterLogic();
 
         playerDetectionRangeSQR = playerDetectionRange * playerDetectionRange;
+
+        enemy.agent.speed = randomWanderSpeed;
+
         targetPos = GetRandomPointInRingAroundEnemy();
         enemy.MoveEnemy(targetPos);
     }

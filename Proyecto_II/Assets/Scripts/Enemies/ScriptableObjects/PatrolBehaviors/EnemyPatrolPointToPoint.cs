@@ -15,7 +15,6 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     private int currentPoint = 0; // Guardar el punto en el que están.
 
     private Vector3 _targetPos;
-    private Vector3 _direction;
     private float playerDetectionRangeSQR = 0f;
     private int lastPointSaved = 0;
     #endregion
@@ -28,6 +27,9 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
         //Debug.Log("Has entrado en estado de PatrolPointToPoint");
         AddPatrolPoints();
         ReturnFromIdle();
+
+        enemy.agent.speed = PointToPointMovementSpeed;
+
         enemy.MoveEnemy(_targetPos);
     }
 
@@ -65,13 +67,13 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
      * Método para obtener la dirección que deben seguir los enemigos hasta los puntos de patrullaje.
      * La dirección obtenida se envía al método MoveEnemy del script: "Enemy".
      */
-    private void SetEnemyMovement()
-    {
-        if (enemy.agent.enabled && enemy.agent.isOnNavMesh)
-        {
-            enemy.MoveEnemy(_targetPos);
-        }
-    }
+    //private void SetEnemyMovement()
+    //{
+    //    if (enemy.agent.enabled && enemy.agent.isOnNavMesh)
+    //    {
+    //        enemy.MoveEnemy(_targetPos);
+    //    }
+    //}
 
     /*
      * Método donde se busca un objeto llamado "PatrolPoints" que guarda los puntos que debe recorrer cada enemigo.

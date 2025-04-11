@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour
 {
     public Player player;
     public Animator anim { get; private set; }
-    public Rigidbody rb;
     public NavMeshAgent agent;
     public Material matForDepuration;
 
@@ -55,7 +54,6 @@ public class Enemy : MonoBehaviour
         enemyStateMachine = new EnemyStateMachine(this);
 
         anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         Player.OnAttackEnemy += DamageEnemy;

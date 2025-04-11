@@ -7,11 +7,12 @@ using UnityEngine.AI;
 public class EnemyRetreatRunAway : EnemyRetreatSOBase
 {
     [SerializeField] private float runAwaySpeed = 3.5f;
+    [SerializeField] private float runAwayDistance = 10f;
     [SerializeField] private float playerChaseRange = 10f;
-    [SerializeField] private float playerLostRange = 20f;
 
     private float playerChaseRangeSQR = 0f;
-    private float playerLostRangeSQR = 0f;
+
+    private Vector3 positionToRetreatTo; // Posición inicial a la que tiene que huír
 
     private bool hasRetreated = false;
 
@@ -20,16 +21,16 @@ public class EnemyRetreatRunAway : EnemyRetreatSOBase
         base.DoEnterLogic();
 
         playerChaseRangeSQR = playerChaseRange * playerChaseRange;
-        playerLostRangeSQR = playerLostRange * playerLostRange;
 
         hasRetreated = false;
 
-        // Configurar velocidad del agente
-        enemy.agent.speed = runAwaySpeed;
-        enemy.agent.updateRotation = true;
-        enemy.agent.updatePosition = true;
 
-        SetRetreatDestination();
+        enemy.agent.speed = runAwaySpeed;
+
+        positionToRetreatTo = SetRetreatDestination();
+
+        enemy.MoveEnemy(positionToRetreatTo);
+
         Debug.Log("Entra en estado de huida");
     }
 
@@ -47,7 +48,7 @@ public class EnemyRetreatRunAway : EnemyRetreatSOBase
 
         if (!hasRetreated)
         {
-            if (distanceToPlayerSQR > playerLostRangeSQR)
+            if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance && !enemy.agent.pathPending)
             {
                 hasRetreated = true;
                 Debug.Log("Ha huido con éxito");
@@ -73,7 +74,6 @@ public class EnemyRetreatRunAway : EnemyRetreatSOBase
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
-        // No se necesita lógica física, ya que el NavMeshAgent se encarga del movimiento
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)
@@ -87,19 +87,20 @@ public class EnemyRetreatRunAway : EnemyRetreatSOBase
         hasRetreated = false;
     }
 
-    private void SetRetreatDestination()
+    private Vector3 SetRetreatDestination()
     {
         Vector3 directionAway = (enemy.transform.position - playerTransform.position).normalized;
-        Vector3 targetPos = enemy.transform.position + directionAway * 10f; // Puede ajustarse si quieres que se aleje más
+        Vector3 targetPos = enemy.transform.position + directionAway * runAwayDistance; 
 
         NavMeshHit hit;
         if (NavMesh.SamplePosition(targetPos, out hit, 10f, NavMesh.AllAreas))
         {
-            enemy.agent.SetDestination(hit.position);
+            return hit.position;
         }
         else
         {
             Debug.LogWarning("No se encontró un punto válido en el NavMesh para huir");
+            return Vector3.zero;
         }
     }
 }
