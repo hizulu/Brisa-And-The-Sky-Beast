@@ -93,7 +93,7 @@ public class DialogManager : MonoBehaviour
         }
         else if (lastOptionsEntry != null)
         {
-            Debug.Log("Volviendo a mostrar opciones anteriores al finalizar diálogo");
+            //Debug.Log("Volviendo a mostrar opciones anteriores al finalizar diálogo");
             ShowOptions(lastOptionsEntry);
         }
         else
@@ -106,7 +106,7 @@ public class DialogManager : MonoBehaviour
     {
         if (!dialogDict.TryGetValue(id, out currentEntry))
         {
-            Debug.LogError($"Diálogo con ID {id} no encontrado");
+            //Debug.LogError($"Diálogo con ID {id} no encontrado");
             return;
         }
 
@@ -115,14 +115,14 @@ public class DialogManager : MonoBehaviour
         // Registrar que hemos visto este diálogo
         if (!seenDialogIDs.Contains(id))
         {
-            Debug.Log($"Nuevo diálogo visto - ID: {id}, Texto: {currentEntry.Text}");
+            //Debug.Log($"Nuevo diálogo visto - ID: {id}, Texto: {currentEntry.Text}");
             seenDialogIDs.Add(id);
         }
 
         // Si este diálogo tiene un RequiredID, desbloquearlo
         if (currentEntry.RequiredID != -1 && !unlockedDialogIDs.Contains(currentEntry.RequiredID))
         {
-            Debug.Log($"Desbloqueando diálogo requerido - ID: {currentEntry.RequiredID}");
+            //Debug.Log($"Desbloqueando diálogo requerido - ID: {currentEntry.RequiredID}");
             unlockedDialogIDs.Add(currentEntry.RequiredID);
         }
 
@@ -135,13 +135,13 @@ public class DialogManager : MonoBehaviour
         {
             if (currentEntry.HasOptions)
             {
-                Debug.Log($"Mostrando opciones para diálogo ID: {id}");
+                //Debug.Log($"Mostrando opciones para diálogo ID: {id}");
                 lastOptionsEntry = currentEntry;
                 ShowOptions(currentEntry);
             }
             else if (currentEntry.NextLineID == -1 && lastOptionsEntry != null)
             {
-                Debug.Log("No hay siguiente línea, volviendo a opciones anteriores");
+                //Debug.Log("No hay siguiente línea, volviendo a opciones anteriores");
                 ShowOptions(lastOptionsEntry);
             }
         }));
@@ -174,9 +174,9 @@ public class DialogManager : MonoBehaviour
 
     void ShowOptions(DialogEntry entry)
     {
-        Debug.Log($"Mostrando opciones para entrada ID: {entry.ID}");
-        Debug.Log($"Diálogos vistos: {string.Join(",", seenDialogIDs)}");
-        Debug.Log($"Diálogos desbloqueados: {string.Join(",", unlockedDialogIDs)}");
+        //Debug.Log($"Mostrando opciones para entrada ID: {entry.ID}");
+        //Debug.Log($"Diálogos vistos: {string.Join(",", seenDialogIDs)}");
+        //Debug.Log($"Diálogos desbloqueados: {string.Join(",", unlockedDialogIDs)}");
 
         HideAllOptions();
 
@@ -187,7 +187,7 @@ public class DialogManager : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(entry.OptionTexts[i]) && entry.OptionNextIDs[i] != -1)
             {
-                Debug.Log($"Mostrando opción normal {i}: {entry.OptionTexts[i]} -> ID: {entry.OptionNextIDs[i]}");
+                //Debug.Log($"Mostrando opción normal {i}: {entry.OptionTexts[i]} -> ID: {entry.OptionNextIDs[i]}");
                 SetupOption(buttonIndex++, entry.OptionTexts[i], entry.OptionNextIDs[i]);
             }
         }
@@ -202,19 +202,19 @@ public class DialogManager : MonoBehaviour
         {
             if (seenDialogIDs.Contains(entry.RequiredID))
             {
-                Debug.Log($"Mostrando opción condicional: {entry.OptionWithRequirementText} -> ID: {entry.OptionWithRequirementID} (Requiere ID: {entry.RequiredID})");
+                //Debug.Log($"Mostrando opción condicional: {entry.OptionWithRequirementText} -> ID: {entry.OptionWithRequirementID} (Requiere ID: {entry.RequiredID})");
                 SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
             }
             else
             {
-                Debug.Log($"Opcion condicional requerida no vista aún: {entry.RequiredID}");
+                //Debug.Log($"Opcion condicional requerida no vista aún: {entry.RequiredID}");
             }
         }
 
         // Opción "Adiós" siempre disponible
         if (buttonIndex < optionButtons.Length)
         {
-            Debug.Log("Mostrando opción 'Adiós'");
+            //Debug.Log("Mostrando opción 'Adiós'");
             SetupOption(buttonIndex, "Adiós.", -1);
         }
     }
@@ -223,7 +223,7 @@ public class DialogManager : MonoBehaviour
     {
         if (index < 0 || index >= optionButtons.Length || optionButtons[index] == null)
         {
-            Debug.LogError($"Índice de opción inválido: {index}");
+            //Debug.LogError($"Índice de opción inválido: {index}");
             return;
         }
 
@@ -232,27 +232,27 @@ public class DialogManager : MonoBehaviour
         optionButtons[index].onClick.RemoveAllListeners();
         optionButtons[index].onClick.AddListener(() => OnOptionSelected(nextID));
 
-        Debug.Log($"Configurada opción {index}: {text} -> {nextID}");
+        //Debug.Log($"Configurada opción {index}: {text} -> {nextID}");
     }
 
     void OnOptionSelected(int nextID)
     {
         if (!isDialogActive) return;
 
-        Debug.Log($"Opción seleccionada, siguiente ID: {nextID}");
+        //Debug.Log($"Opción seleccionada, siguiente ID: {nextID}");
 
         HideAllOptions();
 
         if (nextID == -1)
         {
-            Debug.Log("Cerrando diálogo");
+            //Debug.Log("Cerrando diálogo");
             CloseDialog();
             return;
         }
 
         if (!dialogDict.TryGetValue(nextID, out DialogEntry nextEntry))
         {
-            Debug.LogError($"Siguiente diálogo con ID {nextID} no encontrado");
+            //Debug.LogError($"Siguiente diálogo con ID {nextID} no encontrado");
             return;
         }
 
@@ -278,7 +278,7 @@ public class DialogManager : MonoBehaviour
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
-        Debug.Log("Cerrando diálogo");
+        //Debug.Log("Cerrando diálogo");
 
         HideAllOptions();
         dialogueText.text = "";
