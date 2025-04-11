@@ -28,7 +28,6 @@ public class DialogManager : MonoBehaviour
     private bool isDialogActive = false;
     private bool isTyping = false;
     private Coroutine typingCoroutine;
-    private Coroutine waitForInputCoroutine;
 
     void Awake()
     {
@@ -92,9 +91,12 @@ public class DialogManager : MonoBehaviour
         {
             ShowDialogue(currentEntry.NextLineID);
         }
+        else if (lastOptionsEntry != null)
+        {
+            ShowOptions(lastOptionsEntry); // Mostrar opciones anteriores al finalizar
+        }
         else
         {
-            completedDialogIDs.Add(currentID);
             CloseDialog();
         }
     }
@@ -115,12 +117,11 @@ public class DialogManager : MonoBehaviour
             if (currentEntry.HasOptions)
             {
                 lastOptionsEntry = currentEntry;
-                ShowOptions(currentEntry); // Mostrar opciones al terminar de escribir
+                ShowOptions(currentEntry);
             }
-            else
+            else if (currentEntry.NextLineID == -1 && lastOptionsEntry != null)
             {
-                // Iniciar espera para la entrada del jugador
-                waitForInputCoroutine = StartCoroutine(WaitForInput());
+                ShowOptions(lastOptionsEntry); // Volver a mostrar opciones si no hay siguiente línea
             }
         }));
     }
@@ -150,28 +151,8 @@ public class DialogManager : MonoBehaviour
         onComplete?.Invoke();
     }
 
-    IEnumerator WaitForInput()
-    {
-        bool inputReceived = false;
-        while (!inputReceived && isDialogActive)
-        {
-            if (Input.GetKeyDown(KeyCode.E)) // Espera por la tecla 'E'
-            {
-                inputReceived = true;
-                AdvanceDialog(); // Avanza el diálogo después de que se presiona 'E'
-            }
-            yield return null;
-        }
-    }
-
     void ShowOptions(DialogEntry entry)
     {
-        StartCoroutine(ShowOptionsWithDelay(entry));
-    }
-
-    IEnumerator ShowOptionsWithDelay(DialogEntry entry)
-    {
-        yield return new WaitForSeconds(0.1f);
         HideAllOptions();
 
         int buttonIndex = 0;
@@ -195,7 +176,7 @@ public class DialogManager : MonoBehaviour
             SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
         }
 
-        // Mostrar siempre la opción de "Adiós"
+        // Opción "Adiós" siempre disponible
         if (buttonIndex < optionButtons.Length)
         {
             SetupOption(buttonIndex, "Adiós.", -1);
@@ -230,7 +211,6 @@ public class DialogManager : MonoBehaviour
         if (lastOptionsEntry != null && lastOptionsEntry.OptionWithRequirementID == nextID)
             completedDialogIDs.Add(nextID);
 
-        // Mostrar directamente el diálogo de la siguiente ID
         ShowDialogue(nextID);
     }
 
