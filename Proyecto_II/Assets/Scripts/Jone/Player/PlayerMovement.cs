@@ -307,7 +307,7 @@ public class PlayerMovement : MonoBehaviour
         tutorialPanel.GetComponent<Image>().color = Color.gray;
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(true);
-        //textTutorial.text = "Para desplazarte utiliza las teclas W A S D.";
+        //textTutorial.optionText = "Para desplazarte utiliza las teclas W A S D.";
 
         yield return new WaitUntil(() => walkAction.action.IsPressed()); // El tutorial de caminar no se desactiva hasta que no se realiza la acción de "walkAction".
         StartCoroutine(CheckTutorial(tutorialPanel.GetComponent<Image>().color, Color.green, 0.5f));
@@ -332,7 +332,7 @@ public class PlayerMovement : MonoBehaviour
         tutorialPanel.GetComponent<Image>().color = Color.gray;
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(true);
-        //textTutorial.text = "Para correr utiliza las teclas W A S D y mantén pulsado SHIFT izquierdo.";
+        //textTutorial.optionText = "Para correr utiliza las teclas W A S D y mantén pulsado SHIFT izquierdo.";
 
         yield return new WaitUntil(() => runAction.action.IsPressed() && walkAction.action.ReadValue<Vector2>() != Vector2.zero); // El tutorial de correr no se desactiva hasta que no se realiza la acción de correr (pulsar LEFT SHIFT).
         StartCoroutine(CheckTutorial(tutorialPanel.GetComponent<Image>().color, Color.green, 0.5f));
@@ -358,7 +358,7 @@ public class PlayerMovement : MonoBehaviour
         tutorialPanel.GetComponent<Image>().color = Color.gray;
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(true);
-        //textTutorial.text = "Para saltar pulsa la barra espaciadora.";
+        //textTutorial.optionText = "Para saltar pulsa la barra espaciadora.";
         isJumpTutoActive = false;
 
         yield return new WaitUntil(() => jumpAction.action.IsPressed()); // El tutorial de saltar no se desactiva hasta que no se realiza la acción de saltar.
@@ -385,7 +385,7 @@ public class PlayerMovement : MonoBehaviour
         tutorialPanel.GetComponent<Image>().color = Color.gray;
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(true);
-        //textTutorial.text = "Para atacar haz click izquierdo con el ratón.";
+        //textTutorial.optionText = "Para atacar haz click izquierdo con el ratón.";
         isAttackTutoActive = false;
 
         yield return new WaitUntil(() => attackAction.action.IsPressed()); // El tutorial de atacar no se desactiva hasta que no se realiza la acción de atacar.
@@ -413,7 +413,7 @@ public class PlayerMovement : MonoBehaviour
         tutorialPanel.GetComponent<Image>().color = Color.gray;
         yield return new WaitForSecondsRealtime(2f);
         tutorialPanel.SetActive(true);
-        //textTutorial.text = "Para llamar a la bestia pulsa la tecla Q.";
+        //textTutorial.optionText = "Para llamar a la bestia pulsa la tecla Q.";
         isCallBeastTutoActive = false;
 
         yield return new WaitUntil(() => callBeastAction.action.IsPressed()); // El tutorial de atacar no se desactiva hasta que no se realiza la acción de llamar a la bestia.
