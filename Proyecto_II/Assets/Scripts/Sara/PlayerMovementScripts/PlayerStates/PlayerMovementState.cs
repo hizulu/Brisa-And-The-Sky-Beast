@@ -37,10 +37,7 @@ public class PlayerMovementState : IState
     {
         AddInputActionsCallbacks();
         EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
-<<<<<<< HEAD
         //EventsManager.CallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
-=======
->>>>>>> parent of d4eaec9 (Prueba de interacci√≥n Bestia con panel y EventsManager)
         //EnemyAttackZigZagJump.OnAttackPlayer += TakeDamage;
     }
 
@@ -62,10 +59,7 @@ public class PlayerMovementState : IState
     public virtual void Exit()
     {
         EventsManager.StopCallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
-<<<<<<< HEAD
         //EventsManager.StopCallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
-=======
->>>>>>> parent of d4eaec9 (Prueba de interacci√≥n Bestia con panel y EventsManager)
         //EnemyAttackZigZagJump.OnAttackPlayer -= TakeDamage;
         RemoveInputActionsCallbacks();
     }
@@ -196,15 +190,12 @@ public class PlayerMovementState : IState
         stateMachine.Player.StartCoroutine(StopCallBeast());
     }
 
-<<<<<<< HEAD
     //private void AcariciarBestia()
     //{
     //    // LÛgica de acariciar a la Bestia.
     //    Debug.Log("Est·s acariciando a la Bestia.");
     //}
 
-=======
->>>>>>> parent of d4eaec9 (Prueba de interacci√≥n Bestia con panel y EventsManager)
     IEnumerator StopCallBeast()
     {
         StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);

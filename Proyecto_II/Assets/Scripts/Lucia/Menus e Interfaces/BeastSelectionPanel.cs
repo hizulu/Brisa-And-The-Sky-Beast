@@ -55,7 +55,6 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
     {
         Debug.Log("Panel clicked!");
     }
-<<<<<<< HEAD
 
     // LLamar a los eventos de cada personaje.
     public void AcariciarBestia()
@@ -63,6 +62,4 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
         EventsManager.TriggerNormalEvent("AcariciarBestia_Bestia");
         EventsManager.TriggerNormalEvent("AcariciarBestia_Player");
     }
-=======
->>>>>>> parent of d4eaec9 (Prueba de interacción Bestia con panel y EventsManager)
 }

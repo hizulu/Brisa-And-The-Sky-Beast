@@ -24,7 +24,7 @@ public class PlayerAttack02 : PlayerAttackState
         StartAnimation(stateMachine.Player.PlayerAnimationData.Attack02ParameterHash);
 
         float attackDamageCombo02 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
-        EventsManager.TriggerEvent<float>("OnAttack02Enemy", attackDamageCombo02);
+        EventsManager.TriggerSpecialEvent<float>("OnAttack02Enemy", attackDamageCombo02);
         //OnAttack02Enemy?.Invoke(attackDamageCombo02);
         Debug.Log("Daño del ataque 2: " + " " + attackDamageCombo02);
     }
