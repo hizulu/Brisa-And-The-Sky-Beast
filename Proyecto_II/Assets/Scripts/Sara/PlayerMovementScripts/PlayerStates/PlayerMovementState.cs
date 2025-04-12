@@ -20,6 +20,8 @@ public class PlayerMovementState : IState
     protected readonly PlayerAirborneData airborneData;
     protected readonly PlayerStatsData statsData;
 
+    protected AudioManager audioManager;
+
     public PlayerMovementState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
@@ -27,6 +29,8 @@ public class PlayerMovementState : IState
         groundedData = stateMachine.Player.Data.GroundedData;
         airborneData = stateMachine.Player.Data.AirborneData;
         statsData = stateMachine.Player.Data.StatsData;
+
+        audioManager = GameObject.FindObjectOfType<AudioManager>();
     }
 
     public virtual void Enter()
