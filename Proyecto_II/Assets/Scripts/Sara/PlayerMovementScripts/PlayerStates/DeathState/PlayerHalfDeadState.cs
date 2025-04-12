@@ -13,6 +13,7 @@ public class PlayerHalfDeadState : PlayerDeathState
     {
         base.Enter();
         Debug.Log("Has entrado en el estado de MEDIO-MUERTA");
+        statsData.CurrentTimeHalfDead = 60f;
         statsData.CurrentTimeHalfDead = statsData.MaxTimeHalfDead;
         StartAnimation(stateMachine.Player.PlayerAnimationData.HalfDeadParameterHash);
     }

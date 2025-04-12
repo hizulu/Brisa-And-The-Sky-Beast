@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : HittableElement
 {
     public Player player;
     public Animator anim { get; private set; }
@@ -11,11 +11,13 @@ public class Enemy : MonoBehaviour
     public Material matForDepuration;
 
     [SerializeField] float maxHealth = 100f;
-    private float currentHealth;
+    [field:SerializeField] private float currentHealth;
+
+    private bool enemyHurt = false;
 
     public EnemyStateMachine enemyStateMachine {  get; private set; }
 
-    #region Variables temporales para visualizar las áreas: Gizmos
+    #region Variables temporales para visualizar las Ã¡reas: Gizmos
     [Header("Variables Gizmos")]
     [SerializeField] private float playerAttackRange = 1f;
     [SerializeField] private float playerLostRange = 15f;
@@ -57,12 +59,22 @@ public class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        Player.OnAttackEnemy += DamageEnemy;
+
+        
+    }
+
+    private void OnEnable()
+    {
+        EventsManager.CallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
+        EventsManager.CallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
+        EventsManager.CallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
     }
 
     private void OnDestroy()
     {
-        Player.OnAttackEnemy -= DamageEnemy;
+        EventsManager.StopCallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
+        EventsManager.StopCallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
+        EventsManager.StopCallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
     }
 
     private void Start()
@@ -74,6 +86,9 @@ public class Enemy : MonoBehaviour
         EnemyRetreatBaseInstance.Initialize(gameObject, this);
 
         enemyStateMachine.ChangeState(enemyStateMachine.EnemyIdleState);
+
+        currentHealth = maxHealth;
+        Debug.Log(currentHealth);
     }
 
     private void Update()
@@ -96,19 +111,22 @@ public class Enemy : MonoBehaviour
 
     #region DamageRelated Functions
     // Function called from Player script
-    public void DamageEnemy (float damageAmount)
+    public void DamageEnemy (float _damageAmount)
     {
-        Debug.Log("Brisa ha hecho daño al Enemigo");
-        Debug.Log("Vida del enemigo: " + " " + damageAmount);
-        currentHealth -= damageAmount;
-        // TODO: anim.SetTrigger("getDamaged");
-        // TODO: play enemy damage sound depending on enemy
-        matForDepuration.color = Color.red; // TEMP
-
-        if (currentHealth <= Mathf.Epsilon)
+        if(enemyHurt)
         {
-            Debug.Log("Vida del enemigo: " + " " + currentHealth);
-            Die();
+            //Debug.Log("Brisa ha hecho daÃ±o al Enemigo");
+            //Debug.Log("Vida del enemigo: " + " " + currentHealth);
+            currentHealth -= _damageAmount;
+            // TODO: anim.SetTrigger("getDamaged");
+            // TODO: play enemy damage sound depending on enemy
+            matForDepuration.color = Color.red; // TEMP
+            enemyHurt = false;
+            if (currentHealth <= Mathf.Epsilon)
+            {
+                Debug.Log("Vida del enemigo: " + " " + currentHealth);
+                Die();
+            }
         }
     }
 

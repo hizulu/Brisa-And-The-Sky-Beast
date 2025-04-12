@@ -19,7 +19,7 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
 
     private float distanceToStopAttackStateSQR = 0f;
 
-    public static event Action<float> OnAttackPlayer;
+    //public static event Action<float> OnAttackPlayer;
 
     public override void DoEnterLogic()
     {
@@ -133,7 +133,6 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
         }
         else
             Debug.Log("Fuera de rango de ataque");
-
         isAttacking = false;
         enemy.agent.enabled = true; // Reactiva el agente
 
@@ -142,6 +141,6 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
 
         enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyRetreatState);
 
-        Debug.Log("Debería salir del estado de ataque zig-zag");
+        Debug.Log("DeberÃ­a salir del estado de ataque zig-zag");
     }
 }

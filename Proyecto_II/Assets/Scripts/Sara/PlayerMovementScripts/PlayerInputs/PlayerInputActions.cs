@@ -98,6 +98,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CallBeast"",
+                    ""type"": ""Button"",
+                    ""id"": ""4d168c82-1217-4b77-a103-a80aa32a1e2c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LockTarget"",
+                    ""type"": ""Button"",
+                    ""id"": ""b3f5e0f0-b4c0-4290-9709-e6bdaf03a4c0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -243,6 +261,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""BeastPanel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e97f52a-81c1-4ec4-b098-8a8d03f39e4c"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CallBeast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ac048365-26c0-48c2-a4f8-aa6f9cc9c504"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -259,6 +299,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_BeastPanel = m_Player.FindAction("BeastPanel", throwIfNotFound: true);
+        m_Player_CallBeast = m_Player.FindAction("CallBeast", throwIfNotFound: true);
+        m_Player_LockTarget = m_Player.FindAction("LockTarget", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -328,6 +370,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Inventory;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_BeastPanel;
+    private readonly InputAction m_Player_CallBeast;
+    private readonly InputAction m_Player_LockTarget;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -340,6 +384,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @BeastPanel => m_Wrapper.m_Player_BeastPanel;
+        public InputAction @CallBeast => m_Wrapper.m_Player_CallBeast;
+        public InputAction @LockTarget => m_Wrapper.m_Player_LockTarget;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -373,6 +419,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @BeastPanel.started += instance.OnBeastPanel;
             @BeastPanel.performed += instance.OnBeastPanel;
             @BeastPanel.canceled += instance.OnBeastPanel;
+            @CallBeast.started += instance.OnCallBeast;
+            @CallBeast.performed += instance.OnCallBeast;
+            @CallBeast.canceled += instance.OnCallBeast;
+            @LockTarget.started += instance.OnLockTarget;
+            @LockTarget.performed += instance.OnLockTarget;
+            @LockTarget.canceled += instance.OnLockTarget;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -401,6 +453,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @BeastPanel.started -= instance.OnBeastPanel;
             @BeastPanel.performed -= instance.OnBeastPanel;
             @BeastPanel.canceled -= instance.OnBeastPanel;
+            @CallBeast.started -= instance.OnCallBeast;
+            @CallBeast.performed -= instance.OnCallBeast;
+            @CallBeast.canceled -= instance.OnCallBeast;
+            @LockTarget.started -= instance.OnLockTarget;
+            @LockTarget.performed -= instance.OnLockTarget;
+            @LockTarget.canceled -= instance.OnLockTarget;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -428,5 +486,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnInventory(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnBeastPanel(InputAction.CallbackContext context);
+        void OnCallBeast(InputAction.CallbackContext context);
+        void OnLockTarget(InputAction.CallbackContext context);
     }
 }

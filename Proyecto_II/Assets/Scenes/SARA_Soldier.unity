@@ -6828,9 +6828,6 @@ MonoBehaviour:
   agent: {fileID: 0}
   matForDepuration: {fileID: 2100000, guid: c78e026279f76194294efd8c0fb8bc01, type: 2}
   maxHealth: 100
-  playerAttackRange: 1
-  playerLostRange: 15
-  playerDetectionRange: 15
   EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
   EnemyPatrolBase: {fileID: 11400000, guid: 134b982aa64ebec4a837cdbbe039b9d8, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: bc983e81189273949be3796722c61808, type: 2}
@@ -9997,9 +9994,6 @@ MonoBehaviour:
   agent: {fileID: 0}
   matForDepuration: {fileID: 2100000, guid: c78e026279f76194294efd8c0fb8bc01, type: 2}
   maxHealth: 100
-  playerAttackRange: 1
-  playerLostRange: 15
-  playerDetectionRange: 15
   EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
   EnemyPatrolBase: {fileID: 11400000, guid: 134b982aa64ebec4a837cdbbe039b9d8, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: bc983e81189273949be3796722c61808, type: 2}
@@ -12565,9 +12559,7 @@ MonoBehaviour:
   agent: {fileID: 1778289843}
   matForDepuration: {fileID: 2100000, guid: c78e026279f76194294efd8c0fb8bc01, type: 2}
   maxHealth: 100
-  playerAttackRange: 1
-  playerLostRange: 15
-  playerDetectionRange: 15
+
   EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
   EnemyPatrolBase: {fileID: 11400000, guid: 134b982aa64ebec4a837cdbbe039b9d8, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: 59185a98fc89df941bd34e0c757a2e8d, type: 2}
@@ -13679,6 +13671,7 @@ GameObject:
   - component: {fileID: 1960113723}
   - component: {fileID: 1960113722}
   - component: {fileID: 1960113721}
+  - component: {fileID: 1960113724}
   m_Layer: 0
   m_Name: HitBox
   m_TagString: Untagged
@@ -13749,6 +13742,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 530512669}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1960113724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960113720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bab2012f7882664da74c0e9245883d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1990875176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15272,9 +15277,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   matForDepuration: {fileID: 2100000, guid: c78e026279f76194294efd8c0fb8bc01, type: 2}
   maxHealth: 100
-  playerAttackRange: 1
-  playerLostRange: 15
-  playerDetectionRange: 15
+
   EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
   EnemyPatrolBase: {fileID: 11400000, guid: 134b982aa64ebec4a837cdbbe039b9d8, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: bc983e81189273949be3796722c61808, type: 2}

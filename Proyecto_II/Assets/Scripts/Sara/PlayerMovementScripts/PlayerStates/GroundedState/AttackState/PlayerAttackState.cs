@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,11 +22,17 @@ public class PlayerAttackState : PlayerGroundedState
     protected bool canContinueCombo;
     protected bool isWaitingForInput;
 
+    protected float attackDamageModifier;
+
+    //public static event Action<float> OnAttackEnemy;
+
     public override void Enter()
     {
         animator = stateMachine.Player.AnimPlayer;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.AttackParameterHash);
+
+        //OnAttackEnemy?.Invoke(stateMachine.StatsData.AttackDamageBase);
         //Debug.Log("Has entrado en el estado de ATACAR");
     }
 
