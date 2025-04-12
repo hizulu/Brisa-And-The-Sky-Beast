@@ -15,48 +15,52 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
     private float playerDetectionRangeSQR = 0f;
 
     private Vector3 targetPos;
-    private Vector3 direction;
 
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
 
         playerDetectionRangeSQR = playerDetectionRange * playerDetectionRange;
+
+        enemy.agent.speed = randomWanderSpeed;
+
         targetPos = GetRandomPointInRingAroundEnemy();
+        enemy.MoveEnemy(targetPos);
     }
 
     public override void DoExitLogic()
     {
         base.DoExitLogic();
+
+        enemy.agent.ResetPath();
     }
 
     public override void DoFrameUpdateLogic()
     {
-        base.DoFrameUpdateLogic();       
+        base.DoFrameUpdateLogic();
 
-        if ((enemy.transform.position - targetPos).sqrMagnitude < 0.01f)
+        // Cambia de estado cuando llega al destino
+        if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance && !enemy.agent.pathPending)
         {
             enemy.doIdle = true;
             enemy.doPatrol = false;
+            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyIdleState);
         }
 
         float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
-        
+
         if (distanceToPlayerSQR < playerDetectionRangeSQR)
         {
             //Debug.Log("Debería perseguir a Brisa");
             enemy.doChase = true;
             enemy.doPatrol = false;
+            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
         }
     }
 
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
-
-        direction = (targetPos - enemy.transform.position).normalized;
-
-        enemy.MoveEnemy(direction * randomWanderSpeed);
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)

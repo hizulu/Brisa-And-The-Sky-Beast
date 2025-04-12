@@ -3654,138 +3654,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 613531681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &414454327 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-  m_PrefabInstance: {fileID: 854376159}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &414454328 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-  m_PrefabInstance: {fileID: 854376159}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &414454329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 414454327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a641101e5dc20f47ab5f008f961be08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 530512665}
-  agent: {fileID: 414454330}
-  matForDepuration: {fileID: 2100000, guid: c78e026279f76194294efd8c0fb8bc01, type: 2}
-  maxHealth: 100
-  playerAttackRange: 1
-  playerLostRange: 15
-  playerDetectionRange: 15
-  EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
-  EnemyPatrolBase: {fileID: 11400000, guid: 134b982aa64ebec4a837cdbbe039b9d8, type: 2}
-  EnemyChaseBase: {fileID: 11400000, guid: 59185a98fc89df941bd34e0c757a2e8d, type: 2}
-  EnemyAttackBase: {fileID: 11400000, guid: 2ca1387201d44d74890456e83dd96210, type: 2}
-  EnemyRetreatBase: {fileID: 11400000, guid: 3f4d915fcd62bfc48bd2b2dd2993b489, type: 2}
-  doIdle: 1
-  doPatrol: 0
-  doChase: 0
-  doAttack: 0
-  doRetreat: 0
---- !u!195 &414454330
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 414454327}
-  m_Enabled: 1
-  m_AgentTypeID: -1372625422
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!54 &414454331
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 414454327}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
---- !u!136 &414454332
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 414454327}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5329195
-  m_Height: 1.6647761
-  m_Direction: 1
-  m_Center: {x: -0.006334424, y: 0.8261274, z: 0.8481207}
---- !u!95 &414454333
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 414454327}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: df6148f1741bbcd44be698e74896b4e4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &426120930
 GameObject:
   m_ObjectHideFlags: 0
@@ -6494,98 +6362,6 @@ Transform:
   - {fileID: 1668421919}
   m_Father: {fileID: 1322753196}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &854376159
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1046123424}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.34
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.05
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 6.959387
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -5900572701946122095, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 02c387e0ac3b27048858e9af4e9b52ca, type: 2}
-    - target: {fileID: 919132149155446097, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_Name
-      value: BaseSoldierv01
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 414454333}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 414454332}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 414454331}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 414454330}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 414454329}
-  m_SourcePrefab: {fileID: 100100000, guid: b03977bc14ccbeb4ba4f2843c8d30fdd, type: 3}
 --- !u!1 &865117113
 GameObject:
   m_ObjectHideFlags: 0
@@ -6828,16 +6604,14 @@ MonoBehaviour:
   agent: {fileID: 0}
   matForDepuration: {fileID: 2100000, guid: c78e026279f76194294efd8c0fb8bc01, type: 2}
   maxHealth: 100
+  playerAttackRange: 0.5
+  playerLostRange: 20
+  playerDetectionRange: 5
   EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
   EnemyPatrolBase: {fileID: 11400000, guid: 134b982aa64ebec4a837cdbbe039b9d8, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: bc983e81189273949be3796722c61808, type: 2}
   EnemyAttackBase: {fileID: 11400000, guid: 84e821eb56b7f3945afccfac157bfb35, type: 2}
   EnemyRetreatBase: {fileID: 11400000, guid: 3f4d915fcd62bfc48bd2b2dd2993b489, type: 2}
-  doIdle: 1
-  doPatrol: 0
-  doChase: 0
-  doAttack: 0
-  doRetreat: 0
 --- !u!136 &879111206
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7252,10 +7026,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySoldier
       objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: a9aec7d68bdc7224cab0a2ae6d0aed79, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: a9aec7d68bdc7224cab0a2ae6d0aed79, type: 3}
       propertyPath: m_Controller
       value: 
@@ -7273,13 +7043,10 @@ PrefabInstance:
       addedObject: {fileID: 1778289841}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a9aec7d68bdc7224cab0a2ae6d0aed79, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1778289843}
+      addedObject: {fileID: 1778289842}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a9aec7d68bdc7224cab0a2ae6d0aed79, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1778289839}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a9aec7d68bdc7224cab0a2ae6d0aed79, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1778289844}
   m_SourcePrefab: {fileID: 100100000, guid: a9aec7d68bdc7224cab0a2ae6d0aed79, type: 3}
 --- !u!1 &909547689
 GameObject:
@@ -8280,7 +8047,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 414454328}
   - {fileID: 1778289838}
   - {fileID: 879111209}
   - {fileID: 1182251896}
@@ -9994,16 +9760,14 @@ MonoBehaviour:
   agent: {fileID: 0}
   matForDepuration: {fileID: 2100000, guid: c78e026279f76194294efd8c0fb8bc01, type: 2}
   maxHealth: 100
+  playerAttackRange: 0.5
+  playerLostRange: 20
+  playerDetectionRange: 5
   EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
   EnemyPatrolBase: {fileID: 11400000, guid: 134b982aa64ebec4a837cdbbe039b9d8, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: bc983e81189273949be3796722c61808, type: 2}
   EnemyAttackBase: {fileID: 11400000, guid: 2ca1387201d44d74890456e83dd96210, type: 2}
   EnemyRetreatBase: {fileID: 11400000, guid: 3f4d915fcd62bfc48bd2b2dd2993b489, type: 2}
-  doIdle: 1
-  doPatrol: 0
-  doChase: 0
-  doAttack: 0
-  doRetreat: 0
 --- !u!54 &1379237151
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12556,20 +12320,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 530512665}
-  agent: {fileID: 1778289843}
+  agent: {fileID: 1778289842}
   matForDepuration: {fileID: 2100000, guid: c78e026279f76194294efd8c0fb8bc01, type: 2}
   maxHealth: 100
-
+  playerAttackRange: 1
+  playerLostRange: 15
+  playerDetectionRange: 10
   EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
   EnemyPatrolBase: {fileID: 11400000, guid: 134b982aa64ebec4a837cdbbe039b9d8, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: 59185a98fc89df941bd34e0c757a2e8d, type: 2}
   EnemyAttackBase: {fileID: 11400000, guid: 2ca1387201d44d74890456e83dd96210, type: 2}
   EnemyRetreatBase: {fileID: 11400000, guid: 3f4d915fcd62bfc48bd2b2dd2993b489, type: 2}
-  doIdle: 1
-  doPatrol: 0
-  doChase: 0
-  doAttack: 0
-  doRetreat: 0
 --- !u!136 &1778289841
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -12589,11 +12350,11 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4245863
-  m_Height: 1.5676777
+  m_Radius: 0.3355427
+  m_Height: 1.5251795
   m_Direction: 1
-  m_Center: {x: 0.07635519, y: 0.8385917, z: 0.040789057}
---- !u!195 &1778289843
+  m_Center: {x: 0.07635519, y: 0.82400334, z: 0.0704818}
+--- !u!195 &1778289842
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12615,33 +12376,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!54 &1778289844
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1778289837}
-  serializedVersion: 4
-  m_Mass: 10
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!1 &1780407498
 GameObject:
   m_ObjectHideFlags: 0
@@ -13671,7 +13405,6 @@ GameObject:
   - component: {fileID: 1960113723}
   - component: {fileID: 1960113722}
   - component: {fileID: 1960113721}
-  - component: {fileID: 1960113724}
   m_Layer: 0
   m_Name: HitBox
   m_TagString: Untagged
@@ -13742,18 +13475,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 530512669}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1960113724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1960113720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bab2012f7882664da74c0e9245883d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1990875176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15277,17 +14998,14 @@ MonoBehaviour:
   agent: {fileID: 0}
   matForDepuration: {fileID: 2100000, guid: c78e026279f76194294efd8c0fb8bc01, type: 2}
   maxHealth: 100
-
+  playerAttackRange: 0.5
+  playerLostRange: 20
+  playerDetectionRange: 5
   EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
   EnemyPatrolBase: {fileID: 11400000, guid: 134b982aa64ebec4a837cdbbe039b9d8, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: bc983e81189273949be3796722c61808, type: 2}
   EnemyAttackBase: {fileID: 11400000, guid: 2ca1387201d44d74890456e83dd96210, type: 2}
   EnemyRetreatBase: {fileID: 11400000, guid: 3f4d915fcd62bfc48bd2b2dd2993b489, type: 2}
-  doIdle: 1
-  doPatrol: 0
-  doChase: 0
-  doAttack: 0
-  doRetreat: 0
 --- !u!54 &2060360886
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15923,7 +15641,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.33333334
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 666e34d206c10c2418b8250882aef46d, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 937a7df4a68085d4499d299226a2a12f, type: 2}
   m_BuildHeightMesh: 0
 --- !u!64 &2140341445
 MeshCollider:

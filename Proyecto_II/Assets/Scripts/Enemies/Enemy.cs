@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : HittableElement
 {
     public Player player;
     public Animator anim { get; private set; }
-    public Rigidbody rb;
+    public NavMeshAgent agent;
     public Material matForDepuration;
 
     [SerializeField] float maxHealth = 100f;
@@ -14,12 +15,13 @@ public class Enemy : HittableElement
 
     private bool enemyHurt = false;
 
-    private EnemyStateMachine enemyStateMachine;
+    public EnemyStateMachine enemyStateMachine {  get; private set; }
 
-    #region Variables temporales para visualizar las áreas: Gizmos
+    #region Variables temporales para visualizar las Ã¡reas: Gizmos
     [Header("Variables Gizmos")]
-    [SerializeField] private float playerAttackRange = 0.5f;
-    [SerializeField] private float playerLostRange = 20f;
+    [SerializeField] private float playerAttackRange = 1f;
+    [SerializeField] private float playerLostRange = 15f;
+    [SerializeField] private float playerDetectionRange = 15f;
     #endregion
 
     #region States
@@ -55,7 +57,7 @@ public class Enemy : HittableElement
         enemyStateMachine = new EnemyStateMachine(this);
 
         anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
+        agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
         
@@ -99,14 +101,12 @@ public class Enemy : HittableElement
         enemyStateMachine.UpdatePhysics();
     }
 
-    public override void OnHit()
+    public void MoveEnemy(Vector3 destination)
     {
-        enemyHurt = true;
-    }
-
-    public void MoveEnemy(Vector3 velocity)
-    {
-        rb.velocity = velocity;
+        if (agent.enabled && agent.isOnNavMesh)
+        {
+            agent.SetDestination(destination);
+        }
     }
 
     #region DamageRelated Functions
@@ -115,7 +115,7 @@ public class Enemy : HittableElement
     {
         if(enemyHurt)
         {
-            //Debug.Log("Brisa ha hecho daño al Enemigo");
+            //Debug.Log("Brisa ha hecho daÃ±o al Enemigo");
             //Debug.Log("Vida del enemigo: " + " " + currentHealth);
             currentHealth -= _damageAmount;
             // TODO: anim.SetTrigger("getDamaged");
@@ -148,5 +148,8 @@ public class Enemy : HittableElement
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, playerLostRange);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, playerDetectionRange);
     }
 }
