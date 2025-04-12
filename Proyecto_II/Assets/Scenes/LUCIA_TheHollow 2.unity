@@ -2327,7 +2327,6 @@ MonoBehaviour:
     landParameterName: isLanding
     halfDeadParameterName: isHalfDeading
     finalDeadParameterName: isFinalDeading
-    callBeastParameterName: isCallingBeast
   PaloBrisa: {fileID: 1432328130}
   hitBox: {fileID: 873636943}
   attackDuration: 0.2
@@ -5895,6 +5894,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 461398e9c0e67e64dbf4d1aa38db294c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonImage: {fileID: 0}
+  button: {fileID: 0}
+  highlightedColor:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  originalColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
 --- !u!1 &520150589
 GameObject:
   m_ObjectHideFlags: 0
@@ -7307,6 +7318,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 461398e9c0e67e64dbf4d1aa38db294c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonImage: {fileID: 0}
+  button: {fileID: 0}
+  highlightedColor:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  originalColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
 --- !u!1001 &636328408
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9382,6 +9405,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 461398e9c0e67e64dbf4d1aa38db294c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonImage: {fileID: 0}
+  button: {fileID: 0}
+  highlightedColor:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  originalColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
 --- !u!1 &854666049
 GameObject:
   m_ObjectHideFlags: 0
@@ -13726,6 +13761,7 @@ GameObject:
   - component: {fileID: 1430419526}
   - component: {fileID: 1430419525}
   - component: {fileID: 1430419524}
+  - component: {fileID: 1430419527}
   m_Layer: 5
   m_Name: Acariciar Button
   m_TagString: Untagged
@@ -13796,19 +13832,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1430419525}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1351116784}
-        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
-        m_MethodName: AcariciarBestia
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1430419525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13847,6 +13871,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430419522}
   m_CullTransparentMesh: 1
+--- !u!114 &1430419527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430419522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 461398e9c0e67e64dbf4d1aa38db294c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonImage: {fileID: 0}
+  button: {fileID: 0}
+  highlightedColor:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  originalColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
 --- !u!1 &1432328130 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b551cae4b68b8b4e8e7a6fbae202303, type: 3}
@@ -14570,6 +14618,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 461398e9c0e67e64dbf4d1aa38db294c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonImage: {fileID: 0}
+  button: {fileID: 0}
+  highlightedColor:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  originalColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
 --- !u!1 &1577233733
 GameObject:
   m_ObjectHideFlags: 0
