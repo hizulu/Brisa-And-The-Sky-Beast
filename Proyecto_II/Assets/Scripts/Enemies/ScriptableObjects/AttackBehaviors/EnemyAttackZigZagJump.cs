@@ -129,7 +129,7 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
         if (distanceToPlayerSQR < distanceToHit * distanceToHit)
         {
             Debug.Log("En distancia para atacar");
-            OnAttackPlayer?.Invoke(attackDamage);
+            //OnAttackPlayer?.Invoke(attackDamage);
         }
         else
             Debug.Log("Fuera de rango de ataque");

@@ -101,6 +101,11 @@ public class Enemy : HittableElement
         enemyStateMachine.UpdatePhysics();
     }
 
+    public override void OnHit()
+    {
+        enemyHurt = true;
+    }
+
     public void MoveEnemy(Vector3 destination)
     {
         if (agent.enabled && agent.isOnNavMesh)
