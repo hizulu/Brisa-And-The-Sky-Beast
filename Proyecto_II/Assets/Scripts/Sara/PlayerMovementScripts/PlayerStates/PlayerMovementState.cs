@@ -176,6 +176,8 @@ public class PlayerMovementState : IState
 
         if (statsData.CurrentHealth <= 0)
             stateMachine.ChangeState(stateMachine.HalfDeadState);
+        else
+            stateMachine.ChangeState(stateMachine.TakeDamageState);
     }
 
     private void CallBeast(InputAction.CallbackContext context)
