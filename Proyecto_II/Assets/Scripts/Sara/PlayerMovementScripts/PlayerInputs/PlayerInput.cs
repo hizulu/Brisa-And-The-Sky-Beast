@@ -16,11 +16,27 @@ public class PlayerInput : MonoBehaviour
 
     private void OnEnable()
     {
+        EventsManager.CallSpecialEvents<bool>("PauseMode", PauseMode);
         InputActions.Enable();
     }
 
     private void OnDisable()
     {
+        EventsManager.StopCallSpecialEvents<bool>("PauseMode", PauseMode);
         InputActions.Disable();
+    }
+
+    private void PauseMode(bool isPause)
+    {
+        if (isPause)
+        {
+            Debug.Log(isPause);
+            InputActions.Disable();
+        }
+        else
+        {
+            Debug.Log(isPause);
+            InputActions.Enable();
+        }
     }
 }

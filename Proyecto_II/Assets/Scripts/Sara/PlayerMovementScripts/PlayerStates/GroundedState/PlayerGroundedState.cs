@@ -19,6 +19,7 @@ public class PlayerGroundedState : PlayerMovementState
     public override void Enter()
     {
         base.Enter();
+        EventsManager.CallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
 
@@ -35,6 +36,7 @@ public class PlayerGroundedState : PlayerMovementState
     public override void Exit()
     {
         base.Exit();
+        EventsManager.StopCallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
 
@@ -136,5 +138,12 @@ public class PlayerGroundedState : PlayerMovementState
             }
         }
         return false;
+    }
+
+    private void AcariciarBestia()
+    {
+        // Lógica de acariciar a la Bestia.
+        stateMachine.ChangeState(stateMachine.PetBeastState);
+        Debug.Log("Estás acariciando a la Bestia.");
     }
 }

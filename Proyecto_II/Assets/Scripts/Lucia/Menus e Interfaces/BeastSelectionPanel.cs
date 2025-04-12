@@ -32,6 +32,7 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
 
         if (context.control.name == "tab")
         {
+
             if (inventoryEnabled)
             {
                 beastSelectionPanel.SetActive(false);
@@ -42,6 +43,9 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
                 beastSelectionPanel.SetActive(true);
                 inventoryEnabled = true;
             }
+
+            // No está funcionando.
+            //EventsManager.TriggerSpecialEvent<bool>("PauseMode", inventoryEnabled);
             Time.timeScale = inventoryEnabled ? 0f : 1f;
         }
     }

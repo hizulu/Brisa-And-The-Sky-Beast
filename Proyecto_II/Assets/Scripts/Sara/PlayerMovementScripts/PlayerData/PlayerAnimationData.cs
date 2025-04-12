@@ -9,6 +9,7 @@ public class PlayerAnimationData
     [SerializeField] private string attackParameterName = "Attack";
     [SerializeField] private string airborneParameterName = "Airborne";
     [SerializeField] private string deathParameterName = "Death";
+    [SerializeField] private string interactionsParameterName = "InteractionsBeast";
 
     [SerializeField] private string idleParameterName = "isIdle";
     [SerializeField] private string walkParameterName = "isWalking";
@@ -25,12 +26,14 @@ public class PlayerAnimationData
     [SerializeField] private string finalDeadParameterName = "isFinalDeading";
 
     [SerializeField] private string callBeastParameterName = "isCallingBeast";
+    [SerializeField] private string petBeastParameterName = "isPettingBeast";
 
     public int GroundedParameterHash { get; private set; }
     public int MovedParameterHash { get; private set; }
     public int AttackParameterHash { get; private set; }
     public int AirborneParameterHash { get; private set; }
     public int DeathParameterHash { get; private set; }
+    public int InteractionsParameterHash { get; private set; }
 
     public int IdleParameterHash { get; private set; }
     public int WalkParameterHash { get; private set; }
@@ -47,6 +50,7 @@ public class PlayerAnimationData
     public int FinalDeadParameterHash { get; private set; }
 
     public int CallBeastParameterHash { get; private set; }
+    public int PetBeastParameterHash { get; private set; }
 
     public void Initialize()
     {
@@ -55,6 +59,7 @@ public class PlayerAnimationData
         AttackParameterHash = Animator.StringToHash(attackParameterName);
         AirborneParameterHash = Animator.StringToHash(airborneParameterName);
         DeathParameterHash = Animator.StringToHash(deathParameterName);
+        InteractionsParameterHash = Animator.StringToHash(interactionsParameterName);
 
         IdleParameterHash = Animator.StringToHash(idleParameterName);
         WalkParameterHash = Animator.StringToHash(walkParameterName);
@@ -74,5 +79,6 @@ public class PlayerAnimationData
         FinalDeadParameterHash = Animator.StringToHash(finalDeadParameterName);
 
         CallBeastParameterHash = Animator.StringToHash(callBeastParameterName);
+        PetBeastParameterHash = Animator.StringToHash(petBeastParameterName);
     }
 }
