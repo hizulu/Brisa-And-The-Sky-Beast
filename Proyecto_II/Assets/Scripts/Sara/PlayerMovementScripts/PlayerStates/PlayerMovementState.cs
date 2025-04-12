@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -19,6 +20,8 @@ public class PlayerMovementState : IState
     protected readonly PlayerAirborneData airborneData;
     protected readonly PlayerStatsData statsData;
 
+    protected AudioManager audioManager;
+
     public PlayerMovementState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
@@ -26,12 +29,16 @@ public class PlayerMovementState : IState
         groundedData = stateMachine.Player.Data.GroundedData;
         airborneData = stateMachine.Player.Data.AirborneData;
         statsData = stateMachine.Player.Data.StatsData;
+
+        audioManager = GameObject.FindObjectOfType<AudioManager>();
     }
 
     public virtual void Enter()
     {
         AddInputActionsCallbacks();
-        EnemyAttackZigZagJump.OnAttackPlayer += TakeDamage;
+        EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
+        //EventsManager.CallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
+        //EnemyAttackZigZagJump.OnAttackPlayer += TakeDamage;
     }
 
     public virtual void HandleInput()
@@ -51,7 +58,9 @@ public class PlayerMovementState : IState
 
     public virtual void Exit()
     {
-        EnemyAttackZigZagJump.OnAttackPlayer -= TakeDamage;
+        EventsManager.StopCallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
+        //EventsManager.StopCallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
+        //EnemyAttackZigZagJump.OnAttackPlayer -= TakeDamage;
         RemoveInputActionsCallbacks();
     }
 
@@ -96,8 +105,8 @@ public class PlayerMovementState : IState
     {
         stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled += OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
-        
-        
+
+        stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed += CallBeast;
         
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled -= OnMovementCanceled;
     }
@@ -106,6 +115,7 @@ public class PlayerMovementState : IState
     {
         stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled -= OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled -= OnMovementCanceled;
+        stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed -= CallBeast;
     }
 
     protected virtual void Move()
@@ -165,10 +175,35 @@ public class PlayerMovementState : IState
 
     private void TakeDamage(float _enemyDamage)
     {
-        Debug.Log("Están atacando a Brisa.");
         statsData.CurrentHealth -= _enemyDamage;
-        Debug.Log(statsData.CurrentHealth);
+        statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
+
         if (statsData.CurrentHealth <= 0)
             stateMachine.ChangeState(stateMachine.HalfDeadState);
+        else
+            stateMachine.ChangeState(stateMachine.TakeDamageState);
+    }
+
+    private void CallBeast(InputAction.CallbackContext context)
+    {
+        Debug.Log("Has llamado a la Bestia");
+        stateMachine.Player.StartCoroutine(StopCallBeast());
+    }
+
+    //private void AcariciarBestia()
+    //{
+    //    // Lógica de acariciar a la Bestia.
+    //    Debug.Log("Estás acariciando a la Bestia.");
+    //}
+
+    IEnumerator StopCallBeast()
+    {
+        StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
+        StopAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
+        StartAnimation(stateMachine.Player.PlayerAnimationData.CallBeastParameterHash);
+        yield return new WaitForSecondsRealtime(1f);
+        StopAnimation(stateMachine.Player.PlayerAnimationData.CallBeastParameterHash);
+        StartAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
+        StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
 }

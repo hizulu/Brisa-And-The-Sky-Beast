@@ -38,6 +38,16 @@ public class Beast_V3 : MonoBehaviour
         anim.SetBool("bestiaIsWalking", false);
     }
 
+    private void OnEnable()
+    {
+        EventsManager.CallNormalEvents("AcariciarBestia_Bestia", AcariciarBestia);
+    }
+
+    private void OnDisable()
+    {
+        EventsManager.StopCallNormalEvents("AcariciarBestia_Bestia", AcariciarBestia);
+    }
+
     #region Lógica que será sustituida por el árbol de BeastTree
     private void Update()
     {
@@ -246,6 +256,12 @@ public class Beast_V3 : MonoBehaviour
     {
         beastConstrained = true;
         Debug.Log("Beast has been called.");
+    }
+
+    public void AcariciarBestia()
+    {
+        // Lógica de ser acariciado.
+        Debug.Log("La Bestia está siendo acariciada.");
     }
 
     public void SetBeastFreeFromCage()

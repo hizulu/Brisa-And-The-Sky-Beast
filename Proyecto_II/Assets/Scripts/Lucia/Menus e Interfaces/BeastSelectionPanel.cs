@@ -32,6 +32,7 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
 
         if (context.control.name == "tab")
         {
+
             if (inventoryEnabled)
             {
                 beastSelectionPanel.SetActive(false);
@@ -42,6 +43,9 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
                 beastSelectionPanel.SetActive(true);
                 inventoryEnabled = true;
             }
+
+            // No está funcionando.
+            //EventsManager.TriggerSpecialEvent<bool>("PauseMode", inventoryEnabled);
             Time.timeScale = inventoryEnabled ? 0f : 1f;
         }
     }
@@ -50,5 +54,12 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("Panel clicked!");
+    }
+
+    // LLamar a los eventos de cada personaje.
+    public void AcariciarBestia()
+    {
+        EventsManager.TriggerNormalEvent("AcariciarBestia_Bestia");
+        EventsManager.TriggerNormalEvent("AcariciarBestia_Player");
     }
 }
