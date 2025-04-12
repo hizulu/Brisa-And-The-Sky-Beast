@@ -31,17 +31,17 @@ public class EnemyRetreat : EnemyStateTemplate
 
         enemyStateMachine.Enemy.EnemyRetreatBaseInstance.DoFrameUpdateLogic();
 
-        if (!enemyStateMachine.Enemy.doRetreat)
-        {
-            if (enemyStateMachine.Enemy.doChase)
-            {
-                enemyStateMachine.ChangeState(enemyStateMachine.EnemyChaseState);
-            }
-            else if (enemyStateMachine.Enemy.doIdle)
-            {
-                enemyStateMachine.ChangeState(enemyStateMachine.EnemyIdleState);
-            }
-        }
+        //if (!enemyStateMachine.Enemy.doRetreat)
+        //{
+        //    if (enemyStateMachine.Enemy.doChase)
+        //    {
+        //        enemyStateMachine.ChangeState(enemyStateMachine.EnemyChaseState);
+        //    }
+        //    else if (enemyStateMachine.Enemy.doIdle)
+        //    {
+        //        enemyStateMachine.ChangeState(enemyStateMachine.EnemyIdleState);
+        //    }
+        //}
     }
 
     public override void UpdatePhysics()

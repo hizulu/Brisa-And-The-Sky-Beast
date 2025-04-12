@@ -877,6 +877,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 299307703}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!195 &320470589 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 54092524076585749, guid: bae67286130bfff4b86918843e6c3099, type: 3}
+  m_PrefabInstance: {fileID: 8186934564434019547}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &325241770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,6 +1372,7 @@ MonoBehaviour:
   maxHealth: 100
   playerAttackRange: 0.5
   playerLostRange: 20
+  playerDetectionRange: 10
   EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
   EnemyPatrolBase: {fileID: 11400000, guid: b0e5a092ec1ef7440a2c5e8107b4185b, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: bc983e81189273949be3796722c61808, type: 2}
@@ -5775,6 +5781,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1184349725020497000, guid: bae67286130bfff4b86918843e6c3099, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 320470589}
+    - target: {fileID: 1184349725020497000, guid: bae67286130bfff4b86918843e6c3099, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1068607544}
@@ -5822,7 +5832,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6941355228868297547, guid: bae67286130bfff4b86918843e6c3099, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

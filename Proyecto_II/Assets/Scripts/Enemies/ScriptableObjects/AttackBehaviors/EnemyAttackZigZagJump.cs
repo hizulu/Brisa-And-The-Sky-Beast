@@ -53,6 +53,7 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
         {
             enemy.doAttack = false;
             enemy.doChase = true;
+            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
         }
     }
 
@@ -138,6 +139,8 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
 
         enemy.doRetreat = true;
         enemy.doAttack = false;
+
+        enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyRetreatState);
 
         Debug.Log("Debería salir del estado de ataque zig-zag");
     }

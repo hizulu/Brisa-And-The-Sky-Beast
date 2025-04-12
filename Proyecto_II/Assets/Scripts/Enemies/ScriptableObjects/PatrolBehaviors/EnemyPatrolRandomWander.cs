@@ -20,8 +20,6 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
     {
         base.DoEnterLogic();
 
-        base.DoEnterLogic();
-
         playerDetectionRangeSQR = playerDetectionRange * playerDetectionRange;
 
         enemy.agent.speed = randomWanderSpeed;
@@ -46,6 +44,7 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
         {
             enemy.doIdle = true;
             enemy.doPatrol = false;
+            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyIdleState);
         }
 
         float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
@@ -55,6 +54,7 @@ public class EnemyPatrolRandomWander : EnemyPatrolSOBase
             Debug.Log("Debería perseguir a Brisa");
             enemy.doChase = true;
             enemy.doPatrol = false;
+            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
         }
     }
 
