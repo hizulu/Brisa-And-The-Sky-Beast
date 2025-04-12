@@ -30,7 +30,7 @@ public static class EventsManager
         }
     }
 
-    public static void TriggerNormalEvent(string eventName)
+    public static void TriggerEvent(string eventName)
     {
         if (normalEvents.TryGetValue(eventName, out Action action))
         {
@@ -38,7 +38,7 @@ public static class EventsManager
         }
     }
 
-    public static void TriggerSpecialEvent<T>(string eventName, T eventData)
+    public static void TriggerEvent<T>(string eventName, T eventData)
     {
         if (specialEvents.TryGetValue(eventName, out Delegate action))
         {

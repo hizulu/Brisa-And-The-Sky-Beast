@@ -111,7 +111,7 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
         // TODO: enemy.anim.SetTrigger("ataca");
         // TODO: play enemy attack sound depending on enemy
 
-        EventsManager.TriggerSpecialEvent<float>("OnAttackPlayer", attackDamage);
+        EventsManager.TriggerEvent<float>("OnAttackPlayer", attackDamage);
         //OnAttackPlayer?.Invoke(attackDamage); // Evento que llama al método de TakeDamage() de Player, pasando el valor del daño del Slime.
         isAttacking = false;
         enemy.doAttack = false;
