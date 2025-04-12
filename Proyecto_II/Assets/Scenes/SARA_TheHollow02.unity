@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 72a86d73a1f84de488ca0c83ca2cc456, type: 2}
   m_LightingSettings: {fileID: 664481157}
 --- !u!196 &4
 NavMeshSettings:
@@ -317,7 +317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &45438500
 Transform:
   m_ObjectHideFlags: 0
@@ -2314,6 +2314,7 @@ MonoBehaviour:
     attackParameterName: Attack
     airborneParameterName: Airborne
     deathParameterName: Death
+    interactionsParameterName: InteractionsBeast
     idleParameterName: isIdle
     walkParameterName: isWalking
     runParameterName: isRunning
@@ -2321,6 +2322,7 @@ MonoBehaviour:
     attack01ParameterName: isAttacking01
     attack02ParameterName: isAttacking02
     attack03ParameterName: isAttacking03
+    takeDamageParameterName: isTakingDamage
     jumpParameterName: isJumping
     doubleJumpParameterName: isDoubleJumping
     fallParameterName: isFalling
@@ -2328,6 +2330,7 @@ MonoBehaviour:
     halfDeadParameterName: isHalfDeading
     finalDeadParameterName: isFinalDeading
     callBeastParameterName: isCallingBeast
+    petBeastParameterName: isPettingBeast
   PaloBrisa: {fileID: 1432328130}
   hitBox: {fileID: 873636943}
   attackDuration: 0.2
