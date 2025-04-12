@@ -13,12 +13,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] float maxHealth = 100f;
     private float currentHealth;
 
-    private EnemyStateMachine enemyStateMachine;
+    public EnemyStateMachine enemyStateMachine {  get; private set; }
 
     #region Variables temporales para visualizar las áreas: Gizmos
     [Header("Variables Gizmos")]
-    [SerializeField] private float playerAttackRange = 0.5f;
-    [SerializeField] private float playerLostRange = 20f;
+    [SerializeField] private float playerAttackRange = 1f;
+    [SerializeField] private float playerLostRange = 15f;
+    [SerializeField] private float playerDetectionRange = 15f;
     #endregion
 
     #region States
@@ -129,5 +130,8 @@ public class Enemy : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, playerLostRange);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, playerDetectionRange);
     }
 }

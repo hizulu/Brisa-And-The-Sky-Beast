@@ -31,16 +31,16 @@ public class EnemyIdle : EnemyStateTemplate
 
         enemyStateMachine.Enemy.EnemyIdleBaseInstance.DoFrameUpdateLogic();
 
-        if (!enemyStateMachine.Enemy.doIdle)
-        {
-            if (enemyStateMachine.Enemy.doPatrol)
-            {
-                enemyStateMachine.ChangeState(enemyStateMachine.EnemyPatrolState);
-            } else if (enemyStateMachine.Enemy.doChase)
-            {
-                enemyStateMachine.ChangeState(enemyStateMachine.EnemyChaseState);
-            }
-        }
+        //if (!enemyStateMachine.Enemy.doIdle)
+        //{
+        //    if (enemyStateMachine.Enemy.doPatrol)
+        //    {
+        //        enemyStateMachine.ChangeState(enemyStateMachine.EnemyPatrolState);
+        //    } else if (enemyStateMachine.Enemy.doChase)
+        //    {
+        //        enemyStateMachine.ChangeState(enemyStateMachine.EnemyChaseState);
+        //    }
+        //}
     }
 
     public override void UpdatePhysics()

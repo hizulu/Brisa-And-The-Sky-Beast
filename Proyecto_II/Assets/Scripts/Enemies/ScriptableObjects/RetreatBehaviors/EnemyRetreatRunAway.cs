@@ -61,12 +61,14 @@ public class EnemyRetreatRunAway : EnemyRetreatSOBase
                 Debug.Log("Volver a perseguir");
                 enemy.doChase = true;
                 enemy.doRetreat = false;
+                enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
             }
             else
             {
                 Debug.Log("Volver a Idle");
                 enemy.doIdle = true;
                 enemy.doRetreat = false;
+                enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyIdleState);
             }
         }
     }

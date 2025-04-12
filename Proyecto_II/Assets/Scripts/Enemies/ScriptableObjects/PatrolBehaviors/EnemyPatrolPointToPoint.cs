@@ -7,7 +7,7 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
 {
     #region Variables
     [SerializeField] private float PointToPointMovementSpeed = 1f;
-    [SerializeField] private float playerDetectionRange = 12f;
+    [SerializeField] private float playerDetectionRange = 20f;
     [SerializeField] private float randomIdle = 0.3f;
 
     private List<Transform> patrolPoints = new List<Transform>(); // Lista para guardar los puntos a los que deben ir los enemigos (el recorrido de patrulla).
@@ -24,7 +24,7 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     {
         base.DoEnterLogic();
         playerDetectionRangeSQR = playerDetectionRange * playerDetectionRange;
-        //Debug.Log("Has entrado en estado de PatrolPointToPoint");
+        Debug.Log("Has entrado en estado de PatrolPointToPoint");
         AddPatrolPoints();
         ReturnFromIdle();
 
@@ -102,11 +102,12 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     {
         if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance && !enemy.agent.pathPending) //Comprueba que el enemigo llegue al destino.
         {
-            if (!enemy.doIdle && Random.value < randomIdle)
+            if (Random.value < randomIdle)
             {
                 lastPointSaved = currentPoint; // Guardar el punto actual antes de pasar a IdleState.
-                enemy.doIdle = true;
-                enemy.doPatrol = false;
+                //enemy.doIdle = true;
+                //enemy.doPatrol = false;
+                enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyIdleState);
             }
             else
             {
@@ -134,8 +135,9 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
         if (distanceToPlayerSQR < playerDetectionRangeSQR)
         {
             Debug.Log("Debería perseguir a Brisa");
-            enemy.doChase = true;
-            enemy.doPatrol = false;
+            //enemy.doChase = true;
+            //enemy.doPatrol = false;
+            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
         }
     }
     #endregion

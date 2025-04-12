@@ -46,12 +46,14 @@ public class EnemyChaseStraightToPlayer : EnemyChaseSOBase
             Debug.Log("Debería atacar a Brisa");
             enemy.doAttack = true;
             enemy.doChase = false;
+            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyAttackState);
         }
         else if (distanceToPlayerSQR > playerLostRangeSQR)
         {
             Debug.Log("Debería volver a idle");
             enemy.doIdle = true;
             enemy.doChase = false;
+            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyIdleState);
         }
     }
 
