@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class NPCDialogRange : MonoBehaviour
 {
@@ -9,18 +10,33 @@ public class NPCDialogRange : MonoBehaviour
     private bool playerInRange = false;
     private bool dialogStarted = false;
 
+    [SerializeField] private PlayerInput playerInput;
+
+    private void Awake()
+    {
+        playerInput.UIPanelActions.Dialogue.started += OnInteract;        
+    }
+
+    private void OnDestroy()
+    {
+        playerInput.UIPanelActions.Dialogue.started -= OnInteract;
+    }
+
     void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
-        {
-            OnInteract();
-        }
+        //if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        //{
+        //    OnInteract();
+        //}
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
             playerInRange = true;
+            Debug.Log("Puedes hablar con el NPC");
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -37,8 +53,9 @@ public class NPCDialogRange : MonoBehaviour
         }
     }
 
-    public void OnInteract()
+    public void OnInteract(InputAction.CallbackContext context)
     {
+        Debug.Log("Iniciando conversación");
         if (!playerInRange) return;
 
         if (!dialogStarted)

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 //using static UnityEditor.ShaderData;
 
@@ -17,10 +18,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     private SaveManager saveManager;
+    [SerializeField] private PlayerInput playerInput;
     [SerializeField] GameObject pausePanel;
-    [SerializeField] GameObject beastSelectionPanel;
-    bool isPaused = false;
-    bool beastSelectionActive = false;
 
     // Estructura Singleton
     void Awake()
@@ -43,31 +42,35 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Pause.OnPause += PauseGame;
-        Pause.OnResume += ResumeGame;
+        playerInput.UIPanelActions.PauseGame.performed += PauseGame;
+        //Pause.OnPause += PauseGame;
+        //Pause.OnResume += ResumeGame;
     }
     private void OnDisable()
     {
-        Pause.OnPause -= PauseGame;
-        Pause.OnResume -= ResumeGame;
+        playerInput.UIPanelActions.PauseGame.performed -= PauseGame;
+        //Pause.OnPause -= PauseGame;
+        //Pause.OnResume -= ResumeGame;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (Time.timeScale != 0)
-            {
-                Pause.TriggerPause();
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    if (Time.timeScale != 0)
+        //    {
+        //        Pause.TriggerPause();
 
-                Debug.Log("Juego pausado");
-            }
-            else
-            {
-                Pause.TriggerResume();
-                Debug.Log("Juego en marcha");
-            }
-            /*int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        //        Debug.Log("Juego pausado");
+        //    }
+        //    else
+        //    {
+        //        Pause.TriggerResume();
+        //        Debug.Log("Juego en marcha");
+        //    }
+        //}
+
+        /*int sceneIndex = SceneManager.GetActiveScene().buildIndex;
             if (sceneIndex != 0)
                 if (!Cinematicas.CineReproduciendo && !Inventario.estadoInvent)
                 {
@@ -77,27 +80,25 @@ public class GameManager : MonoBehaviour
                     else
                         Pause.TriggerResume();
                 }*/
-        }
-
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            if (beastSelectionActive)
-            {
-                beastSelectionPanel.SetActive(false);
-                Time.timeScale = 1f;
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                beastSelectionActive = false;
-            }
-            else
-            {
-                beastSelectionPanel.SetActive(true);
-                Time.timeScale = 0f;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                beastSelectionActive = true;
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Tab))
+        //{
+        //    if (beastSelectionActive)
+        //    {
+        //        beastSelectionPanel.SetActive(false);
+        //        Time.timeScale = 1f;
+        //        Cursor.lockState = CursorLockMode.Locked;
+        //        Cursor.visible = false;
+        //        beastSelectionActive = false;
+        //    }
+        //    else
+        //    {
+        //        beastSelectionPanel.SetActive(true);
+        //        Time.timeScale = 0f;
+        //        Cursor.lockState = CursorLockMode.None;
+        //        Cursor.visible = true;
+        //        beastSelectionActive = true;
+        //    }
+        //}
     }
 
     public void SaveSceneData()
@@ -118,20 +119,23 @@ public class GameManager : MonoBehaviour
         Checkpoint.GetActiveCheckPointPosition();
     }
 
-    void PauseGame()
+    void PauseGame(InputAction.CallbackContext context)
     {
         Time.timeScale = 0f;
         pausePanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        EventsManager.TriggerNormalEvent("UIPanelOpened");
         //UIManager.Instance.CargarPantallaPausa();
     }
-    public void ResumeGame()
+
+    public void ResumeGame(InputAction.CallbackContext context)
     {
         Time.timeScale = 1f;
         pausePanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        EventsManager.TriggerNormalEvent("UIPanelClosed");
         //UIManager.Instance.QuitarPantallaPausa();
     }
 

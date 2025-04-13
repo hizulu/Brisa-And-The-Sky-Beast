@@ -180,6 +180,7 @@ public class InventoryManager : MonoBehaviour
         {
             inventoryEnabled = true;
             firstTime = false;
+            EventsManager.TriggerNormalEvent("UIPanelOpened");
         }
         else if (context.control.name == "i" && !firstTime)
         {
@@ -189,6 +190,7 @@ public class InventoryManager : MonoBehaviour
             powersEnabled = false;
             firstTime = true;
 
+            EventsManager.TriggerNormalEvent("UIPanelClosed");
             DeselectAllItems();
         }
 

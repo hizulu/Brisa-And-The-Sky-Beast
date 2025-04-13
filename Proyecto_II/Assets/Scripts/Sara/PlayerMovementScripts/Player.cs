@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
 
     public PlayerInput PlayerInput { get; private set; }
 
+    [SerializeField] private BeastSelectionPanel beastPanel;
+
     private void Awake()
     {
         PlayerAnimationData.Initialize();
@@ -49,12 +51,14 @@ public class Player : MonoBehaviour
 
         playerStateMachine = new PlayerStateMachine(this);
 
-        PlayerInput.PlayerActions.Inventory.performed += OpenCloseInventory;
+        PlayerInput.UIPanelActions.Inventory.performed += OpenCloseInventory;
+        PlayerInput.UIPanelActions.BeastPanel.performed += OpenCloseBeastPanel;
     }
 
     private void OnDestroy()
     {
-        PlayerInput.PlayerActions.Inventory.performed -= OpenCloseInventory;
+        PlayerInput.UIPanelActions.Inventory.performed -= OpenCloseInventory;
+        PlayerInput.UIPanelActions.BeastPanel.performed -= OpenCloseBeastPanel;
     }
 
     void Start()
@@ -88,6 +92,11 @@ public class Player : MonoBehaviour
     public void OpenCloseInventory(InputAction.CallbackContext context)
     {
         InventoryManager.Instance.OpenCloseInventory(context);
+    }
+
+    public void OpenCloseBeastPanel(InputAction.CallbackContext context)
+    {
+        beastPanel.OpenCloseBeastPanel(context);
     }
 
     #region Métodos temporales (No se sabe si se quedarán en el script de Player o se moverán).

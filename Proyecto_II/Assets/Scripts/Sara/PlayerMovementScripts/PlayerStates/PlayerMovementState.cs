@@ -38,6 +38,7 @@ public class PlayerMovementState : IState
     {
         AddInputActionsCallbacks();
         EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
+        EventsManager.CallNormalEvents("PickUpItem", PickUp);
         //EventsManager.CallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         //EnemyAttackZigZagJump.OnAttackPlayer += TakeDamage;
     }
@@ -60,6 +61,7 @@ public class PlayerMovementState : IState
     public virtual void Exit()
     {
         EventsManager.StopCallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
+        EventsManager.StopCallNormalEvents("PickUpItem", PickUp);
         //EventsManager.StopCallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         //EnemyAttackZigZagJump.OnAttackPlayer -= TakeDamage;
         RemoveInputActionsCallbacks();
@@ -162,8 +164,9 @@ public class PlayerMovementState : IState
         return movementSpeed;
     }
 
-    protected void PickUp(InputAction.CallbackContext context)
+    protected void PickUp()
     {
+        //Debug.Log("Has llegado al método de PickUp() del jugador.");
         stateMachine.ChangeState(stateMachine.PickUpState);
     }
 

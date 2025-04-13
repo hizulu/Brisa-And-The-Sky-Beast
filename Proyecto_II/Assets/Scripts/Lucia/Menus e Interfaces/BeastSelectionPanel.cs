@@ -34,18 +34,10 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
         {
 
             if (beastPanelEnabled)
-            {
-                beastSelectionPanel.SetActive(false);
-                beastPanelEnabled = false;
-            }
+                ClosePanel();
             else
-            {
-                beastSelectionPanel.SetActive(true);
-                beastPanelEnabled = true;
-            }
+                OpenPanel();
 
-            // No está funcionando.
-            //EventsManager.TriggerSpecialEvent<bool>("PauseMode", inventoryEnabled);
             Time.timeScale = beastPanelEnabled ? 0f : 1f;
         }
     }
@@ -70,5 +62,16 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        EventsManager.TriggerNormalEvent("UIPanelClosed");
+    }
+
+    public void OpenPanel()
+    {
+        beastSelectionPanel.SetActive(true);
+        beastPanelEnabled = true;
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        EventsManager.TriggerNormalEvent("UIPanelOpened");
     }
 }
