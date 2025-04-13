@@ -10,12 +10,16 @@ public class SeesawTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-            seesaw.AddWeight(isLeft);
+            seesaw.AddWeight(isLeft, 1);
+        else if (other.CompareTag("Beast"))
+            seesaw.AddWeight(isLeft, 5);
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
-            seesaw.RemoveWeight(isLeft);
+            seesaw.RemoveWeight(isLeft, 1);
+        else if (other.CompareTag("Beast"))
+            seesaw.RemoveWeight(isLeft, 5);
     }
 }

@@ -1,23 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using Unity.AI.Navigation;
 
 public class Seesaw : MonoBehaviour
 {
-    [SerializeField] private float rotationSpeed = 2f;
+    [SerializeField] private NavMeshSurface seesawSurface;
 
+    [SerializeField] private float rotationSpeed = 2f;
     [SerializeField] private float maxRotation = 20f;
 
-    private int leftWeight = 0;
-    private int rightWeight = 0;
+    private int leftWeight = 10;
+    private int rightWeight = 10;
 
     private Coroutine rotationCoroutine;
 
+    private void Awake()
+    {
+        seesawSurface.navMeshData = new NavMeshData();
+        NavMesh.AddNavMeshData(seesawSurface.navMeshData, transform.position, transform.rotation);
+        seesawSurface.BuildNavMesh(); // Bake inicial
+    }
+
     private float GetTargetRotation()
     {
-        if (leftWeight > 0 && rightWeight == 0)
+        if (leftWeight > rightWeight)
             return maxRotation;
-        else if (rightWeight > 0 && leftWeight == 0)
+        else if (rightWeight > leftWeight)
             return -maxRotation;
         else
             return 0f;
@@ -36,6 +46,7 @@ public class Seesaw : MonoBehaviour
             if (Mathf.Abs(newRotation - targetRotation) < 0.1f)
             {
                 transform.localRotation = Quaternion.Euler(0f, 0f, targetRotation);
+                seesawSurface.UpdateNavMesh(seesawSurface.navMeshData);
                 yield break;
             }
 
@@ -53,22 +64,22 @@ public class Seesaw : MonoBehaviour
         rotationCoroutine = StartCoroutine(RotateToTarget(target));
     }
 
-    public void AddWeight(bool isLeft)
+    public void AddWeight(bool isLeft, int addWeight)
     {
         if (isLeft)
-            leftWeight++;
+            leftWeight += addWeight;
         else
-            rightWeight++;
+            rightWeight += addWeight;
 
         StartRotation();
     }
 
-    public void RemoveWeight(bool isLeft)
+    public void RemoveWeight(bool isLeft, int removeWeight)
     {
         if (isLeft)
-            leftWeight = Mathf.Max(0, leftWeight - 1);
+            leftWeight -= removeWeight;
         else
-            rightWeight = Mathf.Max(0, rightWeight - 1);
+            rightWeight -= removeWeight;
 
         StartRotation();
     }
