@@ -21,11 +21,15 @@ public class PlayerWalkState : PlayerMovedState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+        audioManager.PlaySFX(audioManager.walk);
+        //AudioManager.Instance.PlaySFX(AudioManager.Instance.walk);
     }
 
     public override void Exit()
     {
         base.Exit();
+        audioManager.StopSFX();
+        //AudioManager.Instance.StopSFX();
         StopAnimation(stateMachine.Player.PlayerAnimationData.WalkParameterHash);
         //Debug.Log("Has salido del estado de CAMINAR.");
     }

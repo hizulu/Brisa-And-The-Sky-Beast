@@ -17,33 +17,29 @@ public class EnemyAttackMelee : EnemyAttackSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
+        enemy.anim.SetBool("isAttacking", true);
         distanceToStopAttackStateSQR = distanceToStopAttackState * distanceToStopAttackState;
+        Debug.Log("Has entrado en el estado de Attack Melee");
+        enemy.agent.ResetPath();
     }
 
     public override void DoExitLogic()
     {
         base.DoExitLogic();
         enemy.anim.SetBool("isAttacking", false);
+        Debug.Log("Has salido del estado de Attack Melee");
     }
 
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
 
-        enemy.MoveEnemy(Vector3.zero);
-
         if (_timer > _timeBetweenHits)
         {
             _timer = 0f;
-            enemy.anim.SetBool("isAttacking", true);
         }
 
         _timer += Time.deltaTime;
-    }
-
-    public override void DoPhysicsLogic()
-    {
-        base.DoPhysicsLogic();
 
         float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
 
@@ -51,7 +47,13 @@ public class EnemyAttackMelee : EnemyAttackSOBase
         {
             enemy.doAttack = false;
             enemy.doChase = true;
+            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyRetreatState);
         }
+    }
+
+    public override void DoPhysicsLogic()
+    {
+        base.DoPhysicsLogic();
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)

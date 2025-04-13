@@ -7,7 +7,7 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
 {
     #region Variables
     [SerializeField] private float PointToPointMovementSpeed = 1f;
-    [SerializeField] private float playerDetectionRange = 12f;
+    [SerializeField] private float playerDetectionRange = 20f;
     [SerializeField] private float randomIdle = 0.3f;
 
     private List<Transform> patrolPoints = new List<Transform>(); // Lista para guardar los puntos a los que deben ir los enemigos (el recorrido de patrulla).
@@ -15,7 +15,6 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     private int currentPoint = 0; // Guardar el punto en el que están.
 
     private Vector3 _targetPos;
-    private Vector3 _direction;
     private float playerDetectionRangeSQR = 0f;
     private int lastPointSaved = 0;
     #endregion
@@ -25,9 +24,13 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     {
         base.DoEnterLogic();
         playerDetectionRangeSQR = playerDetectionRange * playerDetectionRange;
-        //Debug.Log("Has entrado en estado de PatrolPointToPoint");
+        Debug.Log("Has entrado en estado de PatrolPointToPoint");
         AddPatrolPoints();
         ReturnFromIdle();
+
+        enemy.agent.speed = PointToPointMovementSpeed;
+
+        enemy.MoveEnemy(_targetPos);
     }
 
     public override void DoExitLogic()
@@ -46,7 +49,6 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
-        SetEnemyMovement();
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)
@@ -65,18 +67,13 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
      * Método para obtener la dirección que deben seguir los enemigos hasta los puntos de patrullaje.
      * La dirección obtenida se envía al método MoveEnemy del script: "Enemy".
      */
-    private void SetEnemyMovement()
-    {
-        _direction = (_targetPos - enemy.transform.position).normalized;
-
-        enemy.MoveEnemy(_direction * PointToPointMovementSpeed);
-
-        if (_direction.sqrMagnitude > 0.001f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(_direction);
-            enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, Time.deltaTime * 5f);
-        }
-    }
+    //private void SetEnemyMovement()
+    //{
+    //    if (enemy.agent.enabled && enemy.agent.isOnNavMesh)
+    //    {
+    //        enemy.MoveEnemy(_targetPos);
+    //    }
+    //}
 
     /*
      * Método donde se busca un objeto llamado "PatrolPoints" que guarda los puntos que debe recorrer cada enemigo.
@@ -103,19 +100,21 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
      */
     private void ChangePoint()
     {
-        if ((enemy.transform.position - _targetPos).sqrMagnitude < 2f) //Comprueba que la distancia entre el enemigo y el punto al que debe ir sea menor que 2.
+        if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance && !enemy.agent.pathPending) //Comprueba que el enemigo llegue al destino.
         {
-            if (!enemy.doIdle && Random.value < randomIdle)
+            if (Random.value < randomIdle)
             {
                 lastPointSaved = currentPoint; // Guardar el punto actual antes de pasar a IdleState.
-                enemy.doIdle = true;
-                enemy.doPatrol = false;
+                //enemy.doIdle = true;
+                //enemy.doPatrol = false;
+                enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyIdleState);
             }
             else
             {
                 //Debug.Log($"Llegó al punto {currentPoint}: {patrolPoints[currentPoint].name}");
                 currentPoint = (currentPoint + 1) % patrolPoints.Count; // El punto actual se actualiza al siguiente de la lista y si es el último punto de todos, reinicia el índice.
                 _targetPos = patrolPoints[currentPoint].position; // Asigna la posición a la que debe ir el enemigo al punto actual de la lista.
+                enemy.MoveEnemy(_targetPos);
             }                
         }
     }
@@ -136,8 +135,9 @@ public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
         if (distanceToPlayerSQR < playerDetectionRangeSQR)
         {
             Debug.Log("Debería perseguir a Brisa");
-            enemy.doChase = true;
-            enemy.doPatrol = false;
+            //enemy.doChase = true;
+            //enemy.doPatrol = false;
+            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
         }
     }
     #endregion

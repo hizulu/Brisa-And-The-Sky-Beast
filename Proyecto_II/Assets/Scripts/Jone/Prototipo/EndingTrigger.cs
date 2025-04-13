@@ -25,7 +25,7 @@ public class EndingTrigger : MonoBehaviour
             if (!beastUp)
             {
                 defaultPanel.SetActive(true);
-                //panelText.text = panelMessage;
+                //panelText.optionText = panelMessage;
             }
             else
             {

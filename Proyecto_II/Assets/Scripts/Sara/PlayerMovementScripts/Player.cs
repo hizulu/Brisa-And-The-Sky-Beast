@@ -1,4 +1,5 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,8 +34,6 @@ public class Player : MonoBehaviour
     private PlayerStateMachine playerStateMachine;
 
     public PlayerInput PlayerInput { get; private set; }
-
-
 
     private void Awake()
     {

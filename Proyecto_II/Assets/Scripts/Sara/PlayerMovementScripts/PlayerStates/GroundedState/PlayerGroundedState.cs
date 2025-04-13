@@ -19,6 +19,7 @@ public class PlayerGroundedState : PlayerMovementState
     public override void Enter()
     {
         base.Enter();
+        EventsManager.CallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
 
@@ -35,6 +36,7 @@ public class PlayerGroundedState : PlayerMovementState
     public override void Exit()
     {
         base.Exit();
+        EventsManager.StopCallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
 
@@ -43,7 +45,7 @@ public class PlayerGroundedState : PlayerMovementState
         base.AddInputActionsCallbacks();
         stateMachine.Player.PlayerInput.PlayerActions.Run.performed += RunStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Jump.started += JumpStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.Crouch.started += CrouchStarted;
+        stateMachine.Player.PlayerInput.PlayerActions.Crouch.performed += CrouchStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Attack.started += AttackStart;
     }
 
@@ -51,18 +53,11 @@ public class PlayerGroundedState : PlayerMovementState
     {
         base.RemoveInputActionsCallbacks();
         stateMachine.Player.PlayerInput.PlayerActions.Jump.started -= JumpStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.Crouch.started -= CrouchStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Attack.started -= AttackStart;
     }
 
     protected virtual void OnMove()
     {
-        if (stateMachine.Player.PlayerInput.PlayerActions.Crouch.IsPressed())
-        {
-            stateMachine.ChangeState(stateMachine.CrouchState);
-            return;
-        }
-
         if (stateMachine.Player.PlayerInput.PlayerActions.Run.IsPressed())
             stateMachine.ChangeState(stateMachine.RunState);
         else
@@ -76,12 +71,18 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected virtual void RunStarted(InputAction.CallbackContext context)
     {
+        if (!IsGrounded())
+            return;
+
         stateMachine.ChangeState(stateMachine.RunState);
     }
 
     protected virtual void JumpStarted(InputAction.CallbackContext context)
     {
-        stateMachine.ChangeState(stateMachine.JumpState);
+        if (!(stateMachine.CurrentState is PlayerDoubleJumpState || stateMachine.CurrentState is PlayerFallState))
+        {
+            stateMachine.ChangeState(stateMachine.JumpState);
+        }
     }
 
     protected virtual void CrouchStarted(InputAction.CallbackContext context)
@@ -91,7 +92,11 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected virtual void AttackStart(InputAction.CallbackContext context)
     {
-        stateMachine.ChangeState(stateMachine.ComboAttack);
+        // Solo cambiar a Attack01 si no estamos en medio de un combo o ataque
+        if (!(stateMachine.CurrentState is PlayerAttack02 || stateMachine.CurrentState is PlayerAttack03))
+        {
+            stateMachine.ChangeState(stateMachine.Attack01State);
+        }
     }
 
     protected override void NoContactWithGround(Collider collider)
@@ -126,5 +131,12 @@ public class PlayerGroundedState : PlayerMovementState
             }
         }
         return false;
+    }
+
+    private void AcariciarBestia()
+    {
+        // Lógica de acariciar a la Bestia.
+        stateMachine.ChangeState(stateMachine.PetBeastState);
+        Debug.Log("Estás acariciando a la Bestia.");
     }
 }

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Attack-Zig Zag Jump
   m_EditorClassIdentifier: 
   attackDamage: 20
-  distanceToStopAttackState: 5
-  jumpForce: 10
+  distanceToStopAttackState: 8
+  jumpDuration: 0.6
   lateralOffset: 3
-  timeBetweenJumps: 0.5
+  jumpHeight: 1.5
+  stopDistance: 0.5
+  distanceToHit: 2
