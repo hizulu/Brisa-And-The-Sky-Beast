@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 /*
@@ -103,6 +104,10 @@ public class PlayerMovementState : IState
 
     protected virtual void AddInputActionsCallbacks()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled += OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
 
@@ -155,6 +160,11 @@ public class PlayerMovementState : IState
         float movementSpeed = groundedData.BaseSpeed * stateMachine.MovementData.MovementSpeedModifier;
 
         return movementSpeed;
+    }
+
+    protected void PickUp(InputAction.CallbackContext context)
+    {
+        stateMachine.ChangeState(stateMachine.PickUpState);
     }
 
     protected virtual void OnMovementCanceled(InputAction.CallbackContext context)

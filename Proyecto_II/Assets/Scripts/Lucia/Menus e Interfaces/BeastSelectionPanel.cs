@@ -16,7 +16,7 @@ using UnityEngine.EventSystems;
 public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GameObject beastSelectionPanel;
-    private bool inventoryEnabled = false;
+    private bool beastPanelEnabled = false;
 
     private void Awake()
     {
@@ -33,20 +33,20 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
         if (context.control.name == "tab")
         {
 
-            if (inventoryEnabled)
+            if (beastPanelEnabled)
             {
                 beastSelectionPanel.SetActive(false);
-                inventoryEnabled = false;
+                beastPanelEnabled = false;
             }
             else
             {
                 beastSelectionPanel.SetActive(true);
-                inventoryEnabled = true;
+                beastPanelEnabled = true;
             }
 
             // No está funcionando.
             //EventsManager.TriggerSpecialEvent<bool>("PauseMode", inventoryEnabled);
-            Time.timeScale = inventoryEnabled ? 0f : 1f;
+            Time.timeScale = beastPanelEnabled ? 0f : 1f;
         }
     }
 
@@ -61,5 +61,14 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
     {
         EventsManager.TriggerNormalEvent("AcariciarBestia_Bestia");
         EventsManager.TriggerNormalEvent("AcariciarBestia_Player");
+    }
+
+    public void ClosePanel()
+    {
+        beastSelectionPanel.SetActive(false);
+        beastPanelEnabled = false;
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

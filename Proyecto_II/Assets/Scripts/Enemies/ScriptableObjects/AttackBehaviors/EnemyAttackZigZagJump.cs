@@ -129,6 +129,7 @@ public class EnemyAttackZigZagJump : EnemyAttackSOBase
         if (distanceToPlayerSQR < distanceToHit * distanceToHit)
         {
             Debug.Log("En distancia para atacar");
+            EventsManager.TriggerSpecialEvent<float>("OnAttackPlayer", attackDamage);
             //OnAttackPlayer?.Invoke(attackDamage);
         }
         else

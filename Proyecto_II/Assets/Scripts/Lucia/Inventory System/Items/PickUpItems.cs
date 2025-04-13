@@ -53,12 +53,12 @@ public class PickUpItems : MonoBehaviour
             Debug.LogError("No se encontró Renderer o materiales en el objeto o sus hijos");
         }
 
-        player.PlayerInput.PlayerActions.Interact.performed += PickUpItem; // Suscribirse a la acción de recoger objetos.
+        //player.PlayerInput.PlayerActions.Interact.performed += PickUpItem; // Suscribirse a la acción de recoger objetos.
     }
 
     private void OnDestroy()
     {
-        player.PlayerInput.PlayerActions.Interact.performed -= PickUpItem; // Desuscribirse a la acción de recoger objetos.
+        //player.PlayerInput.PlayerActions.Interact.performed -= PickUpItem; // Desuscribirse a la acción de recoger objetos.
     }
 
     private void OnTriggerEnter(Collider other)

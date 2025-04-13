@@ -37,6 +37,7 @@ public class PlayerStateMachine : StateMachine
     public PlayerHalfDeadState HalfDeadState { get; }
     public PlayerFinalDeadState FinalDeadState { get; }
     public PlayerPetBeastState PetBeastState { get; }
+    public PlayerPickUpState PickUpState { get; }
     #endregion
 
     public PlayerStateMachine(Player player)
@@ -63,5 +64,6 @@ public class PlayerStateMachine : StateMachine
         HalfDeadState = new PlayerHalfDeadState(this);
         FinalDeadState = new PlayerFinalDeadState(this);
         PetBeastState = new PlayerPetBeastState(this);
+        PickUpState = new PlayerPickUpState(this);
     }
 }

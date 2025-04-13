@@ -18,11 +18,12 @@ public class PlayerAttack02 : PlayerAttackState
         maxTimeToNextAttack = 0.7f;
         attackTimeElapsed = 0;
         attackFinish = false;
-        attackDamageModifier = 1.5f;
+        attackDamageModifierMin = 1.31f;
+        attackDamageModifierMin = 1.5f;
         base.Enter();
         stateMachine.Player.GolpearPrueba();
         StartAnimation(stateMachine.Player.PlayerAnimationData.Attack02ParameterHash);
-
+        float attackDamageModifier = UnityEngine.Random.Range(attackDamageModifierMin, attackDamageModifierMax);
         float attackDamageCombo02 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
         EventsManager.TriggerSpecialEvent<float>("OnAttack02Enemy", attackDamageCombo02);
         //OnAttack02Enemy?.Invoke(attackDamageCombo02);
