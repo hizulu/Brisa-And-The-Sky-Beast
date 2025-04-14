@@ -19,7 +19,7 @@ public class PlayerJumpState : PlayerAirborneState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        FinishJump();
+        FinishAnimation();
     }
 
     public override void UpdatePhysics()
@@ -38,7 +38,7 @@ public class PlayerJumpState : PlayerAirborneState
         //Debug.Log("Has salido del estado de SALTAR.");
     }
 
-    protected override void FinishJump()
+    protected override void FinishAnimation()
     {
         Animator animator = stateMachine.Player.AnimPlayer;
 

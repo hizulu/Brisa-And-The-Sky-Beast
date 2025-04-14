@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //playerInput.UIPanelActions.PauseGame.performed += TooglePauseResume;
+        playerInput.UIPanelActions.PauseGame.performed += TooglePauseResume;
     }
 
     private void Start()
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        //playerInput.UIPanelActions.PauseGame.performed -= TooglePauseResume;        
+        playerInput.UIPanelActions.PauseGame.performed -= TooglePauseResume;
     }
 
     private void OnDisable()

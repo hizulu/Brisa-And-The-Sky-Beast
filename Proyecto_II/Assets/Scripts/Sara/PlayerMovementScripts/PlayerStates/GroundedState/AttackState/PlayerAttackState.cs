@@ -53,6 +53,4 @@ public class PlayerAttackState : PlayerGroundedState
         StopAnimation(stateMachine.Player.PlayerAnimationData.AttackParameterHash);
         //Debug.Log("Has salido del estado de ATACAR");
     }
-
-    protected virtual void FinishAttack() { }
 }

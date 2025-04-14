@@ -20,8 +20,10 @@ public class PlayerMovementState : IState
     protected readonly PlayerGroundedData groundedData;
     protected readonly PlayerAirborneData airborneData;
     protected readonly PlayerStatsData statsData;
+    //protected readonly ItemData itemData;
 
     protected AudioManager audioManager;
+    protected Animator animPlayer;
 
     public PlayerMovementState(PlayerStateMachine _stateMachine)
     {
@@ -30,6 +32,9 @@ public class PlayerMovementState : IState
         groundedData = stateMachine.Player.Data.GroundedData;
         airborneData = stateMachine.Player.Data.AirborneData;
         statsData = stateMachine.Player.Data.StatsData;
+        //itemData = stateMachine.Player.Data.ItemData;
+
+        animPlayer = stateMachine.Player.AnimPlayer;
 
         audioManager = GameObject.FindObjectOfType<AudioManager>();
     }
@@ -185,6 +190,10 @@ public class PlayerMovementState : IState
 
     }
 
+    protected virtual void FinishAnimation()
+    {
+
+    }
 
     private void TakeDamage(float _enemyDamage)
     {

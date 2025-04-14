@@ -14,6 +14,7 @@ public class PlayerGroundedState : PlayerMovementState
 {
     public PlayerGroundedState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
+
     }
 
     public override void Enter()
@@ -47,6 +48,7 @@ public class PlayerGroundedState : PlayerMovementState
         stateMachine.Player.PlayerInput.PlayerActions.Jump.started += JumpStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.performed += CrouchStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Attack.started += AttackStart;
+        stateMachine.Player.PlayerInput.PlayerActions.Heal.started += HealPlayer;
     }
 
     protected override void RemoveInputActionsCallbacks()
@@ -54,6 +56,7 @@ public class PlayerGroundedState : PlayerMovementState
         base.RemoveInputActionsCallbacks();
         stateMachine.Player.PlayerInput.PlayerActions.Jump.started -= JumpStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Attack.started -= AttackStart;
+        stateMachine.Player.PlayerInput.PlayerActions.Heal.started -= HealPlayer;
     }
 
     protected virtual void OnMove()
@@ -97,6 +100,27 @@ public class PlayerGroundedState : PlayerMovementState
         {
             stateMachine.ChangeState(stateMachine.Attack01State);
         }
+    }
+
+    protected virtual void HealPlayer(InputAction.CallbackContext context)
+    {
+        if (statsData.CurrentHealth >= statsData.MaxHealth) return; // Si la vida actual está al máximo, no hacemos nada.
+
+        string[] healingItemNames = { "Mango Luminoso", "Baya Voladora" }; // Guardamos en un array los items específicos que curan.
+
+        foreach (string itemName in healingItemNames)
+        {
+            ItemData healingItem = InventoryManager.Instance.GetItemByName(itemName); // Los buscamos en el inventario por el nombre específico (puesto en el ItemDataSO).
+
+            if (healingItem != null && InventoryManager.Instance.CheckForItem(healingItem)) // Comprobamos que estén en el inventario.
+            {
+                stateMachine.HealState.SetHealingItem(healingItem); // Pasamos el valor de curación del item específico que vayamos a comer.
+                stateMachine.ChangeState(stateMachine.HealState);
+            }
+        }
+
+        // TODO : Poner un recuadro o algo en la pantalla para avisar de que estás curado al completo. (¿O simplemente se da por hecho y no pasa nada?).
+        Debug.Log("No tienes para curarte");
     }
 
     protected override void NoContactWithGround(Collider collider)

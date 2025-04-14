@@ -78,11 +78,6 @@ public class PlayerAirborneState : PlayerMovementState
 
     }
 
-    protected virtual void FinishJump()
-    {
-
-    }
-
     protected override void Move()
     {
         Vector2 input = stateMachine.MovementData.MovementInput;
