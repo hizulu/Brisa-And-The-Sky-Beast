@@ -1630,7 +1630,7 @@ PrefabInstance:
     - target: {fileID: -3893282528146514212, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -991800203965777521, guid: e1ef46633a3880b42a70adc8478562a7, type: 3}
+      objectReference: {fileID: -991800203965777521, guid: 008350fd597289d499859a6d8b425a78, type: 3}
     - target: {fileID: -3893282528146514212, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -2929,7 +2929,7 @@ MonoBehaviour:
   PaloBrisa: {fileID: 1432328130}
   hitBox: {fileID: 873636943}
   attackDuration: 0.2
-  beastPanel: {fileID: 0}
+  beastPanel: {fileID: 504655145}
 --- !u!54 &141740097
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13219,7 +13219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5d42b1f014fa74d86c92a0eb783f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
+  playerInput: {fileID: 141740095}
   pausePanel: {fileID: 584455987}
 --- !u!4 &1126499751
 Transform:
@@ -15893,7 +15893,6 @@ GameObject:
   - component: {fileID: 1337259774}
   - component: {fileID: 1337259773}
   - component: {fileID: 1337259772}
-  - component: {fileID: 1337259771}
   m_Layer: 5
   m_Name: Acariciar Button
   m_TagString: Untagged
@@ -15921,18 +15920,6 @@ RectTransform:
   m_AnchoredPosition: {x: 128, y: 0}
   m_SizeDelta: {x: 170, y: 361}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1337259771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1337259769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 461398e9c0e67e64dbf4d1aa38db294c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1337259772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15976,7 +15963,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1337259773}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 504655145}
+        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
+        m_MethodName: AcariciarBestia
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 504655145}
+        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
+        m_MethodName: ClosePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1337259773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18429,8 +18440,6 @@ MonoBehaviour:
   - {fileID: 382660419}
   itemSlotPrefab: {fileID: 382660417}
   inventoryPanel: {fileID: 2109332527}
-  HUDPanel: {fileID: 1856394781}
-  HUDEnabled: 0
 --- !u!114 &1593700179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23169,7 +23178,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!224 &1993653725
 RectTransform:

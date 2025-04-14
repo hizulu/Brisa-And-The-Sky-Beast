@@ -35,9 +35,6 @@ public class InventoryManager : MonoBehaviour
     public Dictionary<ItemData, int> inventory = new Dictionary<ItemData, int>();
     public GameObject itemSlotPrefab;
     public Transform inventoryPanel;
-
-    public GameObject HUDPanel;
-    public bool HUDEnabled = false;
     #endregion
 
     #region Instancia Singleton
@@ -197,7 +194,6 @@ public class InventoryManager : MonoBehaviour
         {
             inventoryEnabled = true;
             firstTime = false;
-            HUDEnabled = false;
             EventsManager.TriggerNormalEvent("UIPanelOpened");
         }
         else if ((keyPressed == "i" || keyPressed == "escape") && !firstTime)
@@ -207,7 +203,6 @@ public class InventoryManager : MonoBehaviour
             mapEnabled = false;
             powersEnabled = false;
             firstTime = true;
-            HUDEnabled = true;
 
             EventsManager.TriggerNormalEvent("UIPanelClosed");
             DeselectAllItems();
@@ -215,7 +210,6 @@ public class InventoryManager : MonoBehaviour
 
         inventoryMenu.SetActive(inventoryEnabled);
         AppearanceChangeMenu.SetActive(appearanceChangeEnabled);
-        HUDPanel.SetActive(HUDEnabled);
         mapMenu.SetActive(mapEnabled);
         powersMenu.SetActive(powersEnabled);
         Time.timeScale = inventoryEnabled ? 0 : 1;
