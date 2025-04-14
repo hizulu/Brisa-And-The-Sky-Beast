@@ -19,6 +19,19 @@ public class Blackboard
     }
 
     public bool HasKey(string key) => _data.ContainsKey(key);
+
+    public bool TryGetValue<T>(string key, out T value)
+    {
+        if (_data.TryGetValue(key, out var obj) && obj is T)
+        {
+            value = (T)obj;
+            return true;
+        }
+
+        value = default;
+        return false;
+    }
+
     public void ClearKey(string key) => _data.Remove(key);
 }
 

@@ -21,27 +21,43 @@ public class GetInterestPoint : Node
 
     public override NodeState Evaluate()
     {
-        PointOfInterest currentTarget = _blackboard.GetValue<PointOfInterest>("target");
-        if (currentTarget == null)
+        // Inicializa lookForTarget si no existe
+        if (!_blackboard.TryGetValue("lookForTarget", out bool lookForTarget))
         {
-            GetPointsOfInterest();
-            PointOfInterest bestPoint = GetHighestInterestPoint(_interestPoints);
-            if (bestPoint != null)
-            {
-                _blackboard.SetValue("target", bestPoint);
-                state = NodeState.SUCCESS;
-            }
-            else
-            {
-                state = NodeState.FAILURE;
-                Debug.Log("No se ha encontrado ningún punto de interés.");
-            }
+            lookForTarget = true;
+            _blackboard.SetValue("lookForTarget", lookForTarget);
+        }
+
+        // Si no debe buscar, devuelve failure directamente
+        if (!lookForTarget)
+        {
+            state = NodeState.FAILURE;
+            return state;
+        }
+
+        // Comprueba si ya tiene un objetivo asignado
+        PointOfInterest currentTarget = _blackboard.GetValue<PointOfInterest>("target");
+
+        if (currentTarget != null)
+        {
+            state = NodeState.SUCCESS;
+            return state;
+        }
+
+        // Busca nuevos puntos de interés
+        GetPointsOfInterest();
+        PointOfInterest bestPoint = GetHighestInterestPoint(_interestPoints);
+
+        if (bestPoint != null)
+        {
+            _blackboard.SetValue("target", bestPoint);
+            state = NodeState.SUCCESS;
         }
         else
         {
-            Debug.Log("Ya tiene un objetivo, saliendo de GetInterestPoint sin recalcular...");
-            state = NodeState.SUCCESS;
+            state = NodeState.FAILURE;
         }
+
         return state;
     }
 

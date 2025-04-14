@@ -116,6 +116,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveBeast"",
+                    ""type"": ""Button"",
+                    ""id"": ""b31bac57-ee50-4aa1-8114-4154c1408175"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -283,6 +292,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""LockTarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a317997a-4590-48e4-b2eb-adad89f3c1be"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveBeast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -301,6 +321,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_BeastPanel = m_Player.FindAction("BeastPanel", throwIfNotFound: true);
         m_Player_CallBeast = m_Player.FindAction("CallBeast", throwIfNotFound: true);
         m_Player_LockTarget = m_Player.FindAction("LockTarget", throwIfNotFound: true);
+        m_Player_MoveBeast = m_Player.FindAction("MoveBeast", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -372,6 +393,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_BeastPanel;
     private readonly InputAction m_Player_CallBeast;
     private readonly InputAction m_Player_LockTarget;
+    private readonly InputAction m_Player_MoveBeast;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -386,6 +408,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @BeastPanel => m_Wrapper.m_Player_BeastPanel;
         public InputAction @CallBeast => m_Wrapper.m_Player_CallBeast;
         public InputAction @LockTarget => m_Wrapper.m_Player_LockTarget;
+        public InputAction @MoveBeast => m_Wrapper.m_Player_MoveBeast;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -425,6 +448,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LockTarget.started += instance.OnLockTarget;
             @LockTarget.performed += instance.OnLockTarget;
             @LockTarget.canceled += instance.OnLockTarget;
+            @MoveBeast.started += instance.OnMoveBeast;
+            @MoveBeast.performed += instance.OnMoveBeast;
+            @MoveBeast.canceled += instance.OnMoveBeast;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -459,6 +485,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LockTarget.started -= instance.OnLockTarget;
             @LockTarget.performed -= instance.OnLockTarget;
             @LockTarget.canceled -= instance.OnLockTarget;
+            @MoveBeast.started -= instance.OnMoveBeast;
+            @MoveBeast.performed -= instance.OnMoveBeast;
+            @MoveBeast.canceled -= instance.OnMoveBeast;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -488,5 +517,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnBeastPanel(InputAction.CallbackContext context);
         void OnCallBeast(InputAction.CallbackContext context);
         void OnLockTarget(InputAction.CallbackContext context);
+        void OnMoveBeast(InputAction.CallbackContext context);
     }
 }

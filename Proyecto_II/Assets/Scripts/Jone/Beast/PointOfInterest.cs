@@ -13,7 +13,7 @@ public class PointOfInterest : MonoBehaviour
     private float baseInterest;
     private float currentInterest;
     private float maxDistance = 50f; // Rango máximo de influencia
-    private float resetTime = 120f; // 2 minutos
+    private float resetTime = 60f; // 1 minuto
     private bool interestConsumed = false;
 
     private void Start()
@@ -81,11 +81,11 @@ public class PointOfInterest : MonoBehaviour
             {
                 currentInterest = 0f;
             }
-            //UnityEditor.Handles.Label(transform.position + Vector3.up * 2, $"Interest: {currentInterest}");
+            UnityEditor.Handles.Label(transform.position + Vector3.up * 2, $"Interest: {currentInterest}");
         }
         else
         {
-            //UnityEditor.Handles.Label(transform.position + Vector3.up * 2, "Agent not found");
+            UnityEditor.Handles.Label(transform.position + Vector3.up * 2, "Agent not found");
         }
     }
 }

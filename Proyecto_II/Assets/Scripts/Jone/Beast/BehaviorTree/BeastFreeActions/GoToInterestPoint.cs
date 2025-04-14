@@ -40,13 +40,12 @@ public class GoToInterestPoint : Node
             if (_wasWalking)
             {
                 BeastBehaviorTree.anim.SetBool("isWalking", false);
+                target.ConsumeInterest();
+                _blackboard.SetValue("hasArrived", true);
+
+                Debug.Log($"Reached {target.name}, interest consumed.");
                 _wasWalking = false;
             }
-
-            target.ConsumeInterest();
-            _blackboard.SetValue("hasArrived", true);
-
-            Debug.Log($"Reached {target.name}, interest consumed.");
             state = NodeState.SUCCESS;
             return state;
         }
