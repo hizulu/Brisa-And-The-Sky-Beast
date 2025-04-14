@@ -34,10 +34,10 @@ public class BeastBasicMovement : MonoBehaviour
     private float baseSpeed = 6f;
     private float baseAcceleration = 10f;
 
-    [SerializeField] float treeDetectionProbabilityWalking = 0.3f;
-    [SerializeField] float treeDetectionProbabilityWandering = 0.6f;
+    // [SerializeField] float treeDetectionProbabilityWalking = 0.3f;
+    // [SerializeField] float treeDetectionProbabilityWandering = 0.6f;
 
-    private bool playerWalking = false;
+    // private bool playerWalking = false;
     private static bool playerRunning = false; // Se gestiona desde el script de player
     private static bool beastCalled = false;
     private bool beastMenuOpen = false;
@@ -58,7 +58,7 @@ public class BeastBasicMovement : MonoBehaviour
     private enum BeastState { Free, Constrained }
     private enum BeastFreeState { Walk, Run, Wander, Sleep }
     private enum BeastConstrainedState { Approach, Wait, Sit }
-    private BeastState currentState = BeastState.Free;
+    private BeastState currentState;
     private BeastFreeState currentFreeState = BeastFreeState.Walk;
     private BeastConstrainedState currentConstrainedState = BeastConstrainedState.Approach;
 
@@ -66,7 +66,7 @@ public class BeastBasicMovement : MonoBehaviour
 
     private Vector3 lastPlayerPosition; // Última posición registrada.
 
-    private float idleTime = 0f;
+    //private float idleTime = 0f;
 
     private void OnEnable()
     {

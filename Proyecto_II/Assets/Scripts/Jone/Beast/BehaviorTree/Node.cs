@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -5,12 +6,8 @@ using System.Collections.Generic;
 // 04/04/2025
 namespace BehaviorTree
 {
-    public enum NodeState
-    {
-        RUNNING,
-        SUCCESS,
-        FAILURE
-    }
+    public enum NodeState {RUNNING, SUCCESS, FAILURE}   
+
     public class Node
     {
         protected NodeState state;
@@ -18,8 +15,8 @@ namespace BehaviorTree
         public Node parent;
         protected List<Node> children = new List<Node>();
 
-        // Diccionario que guardará todas las variables compartidas del árbol
-        private Dictionary<string, object> _dataContext = new Dictionary<string, object>();
+        // Diccionario que guarda todas las variables compartidas del árbol
+        //private Dictionary<string, object> _dataContext = new Dictionary<string, object>();
 
         public Node()
         {
@@ -40,6 +37,9 @@ namespace BehaviorTree
 
         public virtual NodeState Evaluate() => NodeState.FAILURE;
 
+        // TODO: borrar esto
+        // Estos son unos métodos previos a la implementación de la blackboard
+        /*
         // Añadir datos al diccionario
         public void SetData(string key, object value)
         {
@@ -50,46 +50,31 @@ namespace BehaviorTree
         // Hay que buscar la key en todo el árbol, no solo en el nodo
         public object GetData(string key)
         {
-            object value = null;
-
-            // Se busca en el nodo actual
-            if(_dataContext.TryGetValue(key, out value))
-                return value;
-
-
-            Node node = parent;
-            while (node != null)
+            Node currentNode = this;
+            while (currentNode != null)
             {
-                value = node.GetData(key);
-                if (value != null)
+                if (currentNode._dataContext.TryGetValue(key, out var value))
                     return value;
-                node = node.parent;
+                currentNode = currentNode.parent;
             }
-
-            // Ha llegado a la raíz del árbol sin encontrar la key
-            return null;
+            return null; // No se ha encontrado la clave
         }
 
         // Método recursivo que elimina datos del diccionario
         public bool ClearData(string key)
         {
-            if (_dataContext.ContainsKey(key))
+            Node currentNode = this;
+            while (currentNode != null)
             {
-                _dataContext.Remove(key);
-                return true;
-            }
-
-            Node node = parent;
-            while (node != null)
-            {
-                bool cleared = node.ClearData(key);
-                if (cleared)
+                if (currentNode._dataContext.ContainsKey(key))
+                {
+                    currentNode._dataContext.Remove(key);
                     return true;
-                node = node.parent;
+                }
+                currentNode = currentNode.parent;
             }
-
-            return false;
-        }
+            return false; // No se ha encontrado la clave
+        }*/
     }
 }
 

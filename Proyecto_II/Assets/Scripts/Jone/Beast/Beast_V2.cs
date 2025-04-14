@@ -14,11 +14,11 @@ public class Beast_V2 : MonoBehaviour
     [Header("Ranges and distances")]
     [SerializeField] float treesDetectionRange = 5f;
     [SerializeField] float waitingRange = 15f;
-    [SerializeField] float runningDistance = 18f;
+    //[SerializeField] float runningDistance = 18f;
     [SerializeField] float freeCloseDistance = 20f;
     [SerializeField] float walkingRange = 28f;
     [SerializeField] float wanderingRange = 40f;
-    [SerializeField] float playerOutOfRange = 150f;
+    //[SerializeField] float playerOutOfRange = 150f;
 
     private float rotationSpeed = 6f;
     private float baseSpeed = 5f;
@@ -26,10 +26,10 @@ public class Beast_V2 : MonoBehaviour
     private float stopTimer = 0f;
     private float stopTime = 3f;
 
-    private bool playerWalking = false;
+    //private bool playerWalking = false;
     private static bool playerRunning = false;
     private static bool beastCalled = false;
-    private bool beastMenuOpen = false;
+    //private bool beastMenuOpen = false;
 
     private Vector3 randomRunningDestination = Vector3.zero;
     private Vector3 randomMovement = Vector3.zero;

@@ -1,10 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// Jone Sainz Egea
+// 16/03/2025
 public class PointOfInterest : MonoBehaviour
 {
-    public enum InterestType { Tree, Rock }
+    public enum InterestType { Tree, Rock, Flower }
     public InterestType interestType;
 
     private Transform agentTransform;
@@ -12,14 +13,29 @@ public class PointOfInterest : MonoBehaviour
     private float baseInterest;
     private float currentInterest;
     private float maxDistance = 50f; // Rango máximo de influencia
-    private float resetTime = 120f; // 2 minutos
+    private float resetTime = 60f; // 1 minuto
     private bool interestConsumed = false;
 
     private void Start()
     {
-        baseInterest = interestType == InterestType.Tree ? 10f : 5f;
+        baseInterest = GetBaseInterest();
         currentInterest = baseInterest;
-        agentTransform = FindObjectOfType<Beast_V3>().transform;
+        agentTransform = FindObjectOfType<BeastBehaviorTree>().transform;
+    }
+
+    private float GetBaseInterest()
+    {
+        switch (interestType)
+        {
+            case InterestType.Tree:
+                return 10f;
+            case InterestType.Rock:
+                return 5f;
+            case InterestType.Flower:
+                return 2f;
+            default:
+                return 1f;
+        }
     }
 
     public float GetInterestValue(Transform agent)
@@ -65,11 +81,11 @@ public class PointOfInterest : MonoBehaviour
             {
                 currentInterest = 0f;
             }
-            //UnityEditor.Handles.Label(transform.position + Vector3.up * 2, $"Interest: {currentInterest}");
+            UnityEditor.Handles.Label(transform.position + Vector3.up * 2, $"Interest: {currentInterest}");
         }
         else
         {
-            //UnityEditor.Handles.Label(transform.position + Vector3.up * 2, "Agent not found");
+            UnityEditor.Handles.Label(transform.position + Vector3.up * 2, "Agent not found");
         }
     }
 }

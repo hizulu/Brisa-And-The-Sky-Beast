@@ -9,8 +9,8 @@ using UnityEngine.SceneManagement;
 /* NOMBRE CLASE: GameManager
  * AUTOR: Jone Sainz Egea
  * FECHA: 12/03/2025
- * DESCRIPCIÓN: Script base que se encarga del flujo del juego
- * VERSIÓN: 1.0 estructura básica de singleton y funciones de pausa
+ * DESCRIPCIÃ“N: Script base que se encarga del flujo del juego
+ * VERSIÃ“N: 1.0 estructura bÃ¡sica de singleton y funciones de pausa
  *              1.1 funciones de guardado y cargado
  */
 
