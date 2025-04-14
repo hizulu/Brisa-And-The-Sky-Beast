@@ -11,6 +11,7 @@ public class BeastBehaviorTree : BTree
 {
     [SerializeField] private float searchRadius = 30f;
     [SerializeField] private float arrivalThreshold = 5.5f;
+    [SerializeField] private Transform playerTransform;
     
     public static bool isConstrained = false;
     public static bool beastWaitingOrder = false; // Cuando se va a abrir el menú de interacción hay que comp
@@ -19,7 +20,7 @@ public class BeastBehaviorTree : BTree
     public static Animator anim;
     private Coroutine waitCoroutine; // Para gestionar que solo haya una corrutina en marcha a la vez
 
-    [SerializeField] private Blackboard blackboard = new Blackboard(); // Mostrar en inspector
+    [SerializeField] private static Blackboard blackboard = new Blackboard(); // Mostrar en inspector
 
     private void Awake()
     {
@@ -34,10 +35,16 @@ public class BeastBehaviorTree : BTree
     {
         Node root = new Selector (new List<Node>
         {
+            // Beast Constrained Tree:
+            new Selector (new List<Node>
+            {
+                new CheckFlag(blackboard, "isConstrained", new GoToPlayer(blackboard, transform, playerTransform, agent, arrivalThreshold))
+            }),
+            // Beast Free tree:
             new Sequence(new List<Node>
             {
                 new CheckFlag(blackboard, "lookForTarget", new GetInterestPoint(transform, searchRadius, blackboard)),
-                new GoToInterestPoint(transform, agent, arrivalThreshold, blackboard),
+                new GoToInterestPoint(blackboard, transform, agent, arrivalThreshold),
                 new Sequence (new List<Node>
                 {
                     new CheckFlag(blackboard, "isConstrained", new Sequence(new List<Node>
@@ -81,7 +88,7 @@ public class BeastBehaviorTree : BTree
     }
 
     // Called from Brisa
-    public void ConstrainBeast()
+    public static void CallBeast()
     {
         isConstrained = true;
         blackboard.SetValue("isConstrained", true);

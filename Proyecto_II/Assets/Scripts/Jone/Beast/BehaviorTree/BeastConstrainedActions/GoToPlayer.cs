@@ -1,49 +1,41 @@
-using BehaviorTree;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BehaviorTree;
 using UnityEngine.AI;
 
-// Jone Sainz Egea
-// 06/04/2025
-// Nodo que va al punto de mayor interés, éxito si llega a él
-public class GoToInterestPoint : Node
+public class GoToPlayer : Node
 {
     private Blackboard _blackboard;
     private Transform _transform;
-    private float _arrivalThreshold;
+    private Transform _playerTransform;
     private NavMeshAgent _agent;
+    private float _arrivalThreshold;
+
     private bool _wasWalking = false;
 
-    public GoToInterestPoint(Blackboard blackboard, Transform transform, NavMeshAgent agent, float arrivalThreshold) : base()
+    public GoToPlayer(Blackboard blackboard, Transform transform, Transform playerTransform, NavMeshAgent agent, float arrivalThreshold)
     {
         _blackboard = blackboard;
         _transform = transform;
+        _playerTransform = playerTransform;
         _agent = agent;
         _arrivalThreshold = arrivalThreshold;
     }
 
     public override NodeState Evaluate()
     {
-        PointOfInterest target = _blackboard.GetValue<PointOfInterest>("target");
-
-        if (target == null)
-        {
-            state = NodeState.FAILURE;
-            return state;
-        }
-
-        float distance = Vector3.Distance(_transform.position, target.transform.position);
+        float distance = Vector3.Distance(_transform.position, _playerTransform.position);
 
         if (distance < _arrivalThreshold)
         {
             if (_wasWalking)
             {
                 BeastBehaviorTree.anim.SetBool("isWalking", false);
-                target.ConsumeInterest();
+                // Cambiaría a wait for order
                 _blackboard.SetValue("hasArrived", true);
 
-                Debug.Log($"Reached {target.name}, interest consumed.");
+                Debug.Log("Reached player.");
                 _wasWalking = false;
             }
             state = NodeState.SUCCESS;
@@ -56,13 +48,13 @@ public class GoToInterestPoint : Node
             _wasWalking = true;
         }
 
-        if (_agent.destination != target.transform.position)
-            _agent.SetDestination(target.transform.position);
+        if (_agent.destination != _playerTransform.position)
+            _agent.SetDestination(_playerTransform.position);
 
         // Verificar si el destino es alcanzable
         if (_agent.pathStatus == NavMeshPathStatus.PathInvalid || _agent.pathStatus == NavMeshPathStatus.PathPartial)
         {
-            Debug.LogWarning($"Path to {target.name} is invalid or partial.");
+            Debug.LogWarning("Path to player is invalid or partial.");
             state = NodeState.FAILURE;
             return state;
         }
