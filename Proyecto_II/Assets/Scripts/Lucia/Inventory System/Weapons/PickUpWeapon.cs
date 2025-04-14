@@ -50,12 +50,12 @@ public class PickUpWeapons : MonoBehaviour
             Debug.LogError("No se encontró Renderer o materiales en el objeto o sus hijos");
         }
 
-        player.PlayerInput.PlayerActions.Interact.performed += PickUpWeapon;
+        player.PlayerInput.UIPanelActions.PickUpItem.performed += PickUpWeapon;
     }
 
     private void OnDestroy()
     {
-        player.PlayerInput.PlayerActions.Interact.performed -= PickUpWeapon;
+        player.PlayerInput.UIPanelActions.PickUpItem.performed -= PickUpWeapon;
     }
 
     private void OnTriggerEnter(Collider other)

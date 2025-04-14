@@ -13,7 +13,7 @@ public class PlayerInteractionState : PlayerGroundedState
     {
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.InteractionsParameterHash);
-        Debug.Log("Has entrado en estado de Interacción con la Bestia.");
+        //Debug.Log("Has entrado en estado de Interacción con la Bestia.");
     }
 
     public override void UpdateLogic()
@@ -30,6 +30,6 @@ public class PlayerInteractionState : PlayerGroundedState
     {
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.InteractionsParameterHash);
-        Debug.Log("Has salido del estado de Interacción con la Bestia.");
+        //Debug.Log("Has salido del estado de Interacción con la Bestia.");
     }
 }

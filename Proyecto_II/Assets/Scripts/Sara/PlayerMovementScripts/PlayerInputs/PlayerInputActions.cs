@@ -73,33 +73,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Inventory"",
-                    ""type"": ""Button"",
-                    ""id"": ""42229a90-c461-4d80-8fca-91de62421b9c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Interact"",
-                    ""type"": ""Button"",
-                    ""id"": ""35c11aac-203e-49d9-abc6-1acc6eda82fc"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""BeastPanel"",
-                    ""type"": ""Button"",
-                    ""id"": ""3507e7b0-3e53-426f-af18-c3cd4405fd35"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""CallBeast"",
                     ""type"": ""Button"",
                     ""id"": ""4d168c82-1217-4b77-a103-a80aa32a1e2c"",
@@ -220,50 +193,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""500dcb7c-7289-4a2b-8fb3-a04ae9010012"",
-                    ""path"": ""<Keyboard>/i"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Inventory"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""259f7984-f5b0-4682-923e-d8d123fc69d2"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Inventory"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8d59b6f9-b9b2-4fa4-8dfd-537df65ba7cc"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a59619fd-684c-4502-a54c-c7971b2736f0"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BeastPanel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""4e97f52a-81c1-4ec4-b098-8a8d03f39e4c"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
@@ -285,6 +214,134 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UIPanel"",
+            ""id"": ""f86092bc-4013-4475-9e86-90db8207e063"",
+            ""actions"": [
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""3f4df6f5-ef3b-465e-bb38-69e82a3e41d9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PickUpItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""cda0200f-4e8a-40ef-b16c-954cc46a48e3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BeastPanel"",
+                    ""type"": ""Button"",
+                    ""id"": ""85ab1cc0-c978-4f57-9853-7aa5b27ee289"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""32592172-a683-4d0c-9ba7-83c051177861"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dialogue"",
+                    ""type"": ""Button"",
+                    ""id"": ""71fa7f07-e1d4-45c3-804e-1fc5f44ecbc8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ClosePanelGeneral"",
+                    ""type"": ""Button"",
+                    ""id"": ""c0d61bf3-9bce-4cd6-bccb-97c4eb4aaf30"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f32fa5a6-4503-4439-9043-5ce4ee8947cf"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a245b15f-a760-45c0-b275-4e3e78d5276e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PickUpItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""661a1a15-4645-4ce7-bc21-e70f1fe7e075"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BeastPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""01e87917-9aab-4482-8409-b7624a2f17ad"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5a5c50b-1da4-449f-af53-0bc9b1bb99ac"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0683e2ee-bbc3-4441-b8e0-2526845406b0"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ClosePanelGeneral"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -296,11 +353,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
-        m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
-        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_BeastPanel = m_Player.FindAction("BeastPanel", throwIfNotFound: true);
         m_Player_CallBeast = m_Player.FindAction("CallBeast", throwIfNotFound: true);
         m_Player_LockTarget = m_Player.FindAction("LockTarget", throwIfNotFound: true);
+        // UIPanel
+        m_UIPanel = asset.FindActionMap("UIPanel", throwIfNotFound: true);
+        m_UIPanel_Inventory = m_UIPanel.FindAction("Inventory", throwIfNotFound: true);
+        m_UIPanel_PickUpItem = m_UIPanel.FindAction("PickUpItem", throwIfNotFound: true);
+        m_UIPanel_BeastPanel = m_UIPanel.FindAction("BeastPanel", throwIfNotFound: true);
+        m_UIPanel_PauseGame = m_UIPanel.FindAction("PauseGame", throwIfNotFound: true);
+        m_UIPanel_Dialogue = m_UIPanel.FindAction("Dialogue", throwIfNotFound: true);
+        m_UIPanel_ClosePanelGeneral = m_UIPanel.FindAction("ClosePanelGeneral", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -367,9 +429,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Crouch;
-    private readonly InputAction m_Player_Inventory;
-    private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_BeastPanel;
     private readonly InputAction m_Player_CallBeast;
     private readonly InputAction m_Player_LockTarget;
     public struct PlayerActions
@@ -381,9 +440,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
-        public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
-        public InputAction @Interact => m_Wrapper.m_Player_Interact;
-        public InputAction @BeastPanel => m_Wrapper.m_Player_BeastPanel;
         public InputAction @CallBeast => m_Wrapper.m_Player_CallBeast;
         public InputAction @LockTarget => m_Wrapper.m_Player_LockTarget;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -410,15 +466,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
-            @Inventory.started += instance.OnInventory;
-            @Inventory.performed += instance.OnInventory;
-            @Inventory.canceled += instance.OnInventory;
-            @Interact.started += instance.OnInteract;
-            @Interact.performed += instance.OnInteract;
-            @Interact.canceled += instance.OnInteract;
-            @BeastPanel.started += instance.OnBeastPanel;
-            @BeastPanel.performed += instance.OnBeastPanel;
-            @BeastPanel.canceled += instance.OnBeastPanel;
             @CallBeast.started += instance.OnCallBeast;
             @CallBeast.performed += instance.OnCallBeast;
             @CallBeast.canceled += instance.OnCallBeast;
@@ -444,15 +491,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
-            @Inventory.started -= instance.OnInventory;
-            @Inventory.performed -= instance.OnInventory;
-            @Inventory.canceled -= instance.OnInventory;
-            @Interact.started -= instance.OnInteract;
-            @Interact.performed -= instance.OnInteract;
-            @Interact.canceled -= instance.OnInteract;
-            @BeastPanel.started -= instance.OnBeastPanel;
-            @BeastPanel.performed -= instance.OnBeastPanel;
-            @BeastPanel.canceled -= instance.OnBeastPanel;
             @CallBeast.started -= instance.OnCallBeast;
             @CallBeast.performed -= instance.OnCallBeast;
             @CallBeast.canceled -= instance.OnCallBeast;
@@ -476,6 +514,92 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // UIPanel
+    private readonly InputActionMap m_UIPanel;
+    private List<IUIPanelActions> m_UIPanelActionsCallbackInterfaces = new List<IUIPanelActions>();
+    private readonly InputAction m_UIPanel_Inventory;
+    private readonly InputAction m_UIPanel_PickUpItem;
+    private readonly InputAction m_UIPanel_BeastPanel;
+    private readonly InputAction m_UIPanel_PauseGame;
+    private readonly InputAction m_UIPanel_Dialogue;
+    private readonly InputAction m_UIPanel_ClosePanelGeneral;
+    public struct UIPanelActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public UIPanelActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Inventory => m_Wrapper.m_UIPanel_Inventory;
+        public InputAction @PickUpItem => m_Wrapper.m_UIPanel_PickUpItem;
+        public InputAction @BeastPanel => m_Wrapper.m_UIPanel_BeastPanel;
+        public InputAction @PauseGame => m_Wrapper.m_UIPanel_PauseGame;
+        public InputAction @Dialogue => m_Wrapper.m_UIPanel_Dialogue;
+        public InputAction @ClosePanelGeneral => m_Wrapper.m_UIPanel_ClosePanelGeneral;
+        public InputActionMap Get() { return m_Wrapper.m_UIPanel; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIPanelActions set) { return set.Get(); }
+        public void AddCallbacks(IUIPanelActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIPanelActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIPanelActionsCallbackInterfaces.Add(instance);
+            @Inventory.started += instance.OnInventory;
+            @Inventory.performed += instance.OnInventory;
+            @Inventory.canceled += instance.OnInventory;
+            @PickUpItem.started += instance.OnPickUpItem;
+            @PickUpItem.performed += instance.OnPickUpItem;
+            @PickUpItem.canceled += instance.OnPickUpItem;
+            @BeastPanel.started += instance.OnBeastPanel;
+            @BeastPanel.performed += instance.OnBeastPanel;
+            @BeastPanel.canceled += instance.OnBeastPanel;
+            @PauseGame.started += instance.OnPauseGame;
+            @PauseGame.performed += instance.OnPauseGame;
+            @PauseGame.canceled += instance.OnPauseGame;
+            @Dialogue.started += instance.OnDialogue;
+            @Dialogue.performed += instance.OnDialogue;
+            @Dialogue.canceled += instance.OnDialogue;
+            @ClosePanelGeneral.started += instance.OnClosePanelGeneral;
+            @ClosePanelGeneral.performed += instance.OnClosePanelGeneral;
+            @ClosePanelGeneral.canceled += instance.OnClosePanelGeneral;
+        }
+
+        private void UnregisterCallbacks(IUIPanelActions instance)
+        {
+            @Inventory.started -= instance.OnInventory;
+            @Inventory.performed -= instance.OnInventory;
+            @Inventory.canceled -= instance.OnInventory;
+            @PickUpItem.started -= instance.OnPickUpItem;
+            @PickUpItem.performed -= instance.OnPickUpItem;
+            @PickUpItem.canceled -= instance.OnPickUpItem;
+            @BeastPanel.started -= instance.OnBeastPanel;
+            @BeastPanel.performed -= instance.OnBeastPanel;
+            @BeastPanel.canceled -= instance.OnBeastPanel;
+            @PauseGame.started -= instance.OnPauseGame;
+            @PauseGame.performed -= instance.OnPauseGame;
+            @PauseGame.canceled -= instance.OnPauseGame;
+            @Dialogue.started -= instance.OnDialogue;
+            @Dialogue.performed -= instance.OnDialogue;
+            @Dialogue.canceled -= instance.OnDialogue;
+            @ClosePanelGeneral.started -= instance.OnClosePanelGeneral;
+            @ClosePanelGeneral.performed -= instance.OnClosePanelGeneral;
+            @ClosePanelGeneral.canceled -= instance.OnClosePanelGeneral;
+        }
+
+        public void RemoveCallbacks(IUIPanelActions instance)
+        {
+            if (m_Wrapper.m_UIPanelActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIPanelActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIPanelActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIPanelActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIPanelActions @UIPanel => new UIPanelActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -483,10 +607,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
-        void OnInventory(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
-        void OnBeastPanel(InputAction.CallbackContext context);
         void OnCallBeast(InputAction.CallbackContext context);
         void OnLockTarget(InputAction.CallbackContext context);
+    }
+    public interface IUIPanelActions
+    {
+        void OnInventory(InputAction.CallbackContext context);
+        void OnPickUpItem(InputAction.CallbackContext context);
+        void OnBeastPanel(InputAction.CallbackContext context);
+        void OnPauseGame(InputAction.CallbackContext context);
+        void OnDialogue(InputAction.CallbackContext context);
+        void OnClosePanelGeneral(InputAction.CallbackContext context);
     }
 }

@@ -5,38 +5,45 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     public PlayerInputActions InputActions { get; private set; }
-    public PlayerInputActions.PlayerActions PlayerActions { get; private set; }
+    public PlayerInputActions.PlayerActions PlayerActions { get; private set; } // Mapa de acciones del Player.
+    public PlayerInputActions.UIPanelActions UIPanelActions { get; private set; } // Mapa de acciones de UI, paneles, etc.
 
     private void Awake()
     {
         InputActions = new PlayerInputActions();
 
         PlayerActions = InputActions.Player;
+
+        UIPanelActions = InputActions.UIPanel;
     }
 
     private void OnEnable()
     {
-        EventsManager.CallSpecialEvents<bool>("PauseMode", PauseMode);
-        InputActions.Enable();
+        InputActions.Player.Enable();
+        InputActions.UIPanel.Enable();
+
+        EventsManager.CallNormalEvents("UIPanelOpened", ActiveUIActions);
+        EventsManager.CallNormalEvents("UIPanelClosed", ActivePlayerActions);
     }
 
     private void OnDisable()
     {
-        EventsManager.StopCallSpecialEvents<bool>("PauseMode", PauseMode);
-        InputActions.Disable();
+        InputActions.Player.Disable();
+        InputActions.UIPanel.Disable();
+
+        EventsManager.StopCallNormalEvents("UIPanelOpened", ActiveUIActions);
+        EventsManager.StopCallNormalEvents("UIPanelClosed", ActivePlayerActions);
     }
 
-    private void PauseMode(bool isPause)
+    public void ActiveUIActions()
     {
-        if (isPause)
-        {
-            Debug.Log(isPause);
-            InputActions.Disable();
-        }
-        else
-        {
-            Debug.Log(isPause);
-            InputActions.Enable();
-        }
+        InputActions.UIPanel.Enable();
+        InputActions.Player.Disable();
+    }
+
+    public void ActivePlayerActions()
+    {
+        InputActions.Player.Enable();
+        InputActions.UIPanel.Enable();
     }
 }

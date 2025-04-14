@@ -22,7 +22,8 @@ public class PlayerAttackState : PlayerGroundedState
     protected bool canContinueCombo;
     protected bool isWaitingForInput;
 
-    protected float attackDamageModifier;
+    protected float attackDamageModifierMin;
+    protected float attackDamageModifierMax;
 
     //public static event Action<float> OnAttackEnemy;
 
