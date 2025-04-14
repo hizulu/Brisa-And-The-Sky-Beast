@@ -118,10 +118,12 @@ public class Enemy : HittableElement
     // Function called from Player script
     public void DamageEnemy (float _damageAmount)
     {
+        Debug.Log("Estás haciendo daño al enemigo.");
+
         if(enemyHurt)
         {
-            //Debug.Log("Brisa ha hecho daño al Enemigo");
-            //Debug.Log("Vida del enemigo: " + " " + currentHealth);
+            Debug.Log("Brisa ha hecho daño al Enemigo");
+            Debug.Log("Vida del enemigo: " + " " + currentHealth);
             currentHealth -= _damageAmount;
             // TODO: anim.SetTrigger("getDamaged");
             // TODO: play enemy damage sound depending on enemy

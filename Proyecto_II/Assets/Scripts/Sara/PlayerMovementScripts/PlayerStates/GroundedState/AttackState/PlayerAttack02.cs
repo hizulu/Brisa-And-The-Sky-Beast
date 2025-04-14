@@ -18,11 +18,12 @@ public class PlayerAttack02 : PlayerAttackState
         maxTimeToNextAttack = 0.7f;
         attackTimeElapsed = 0;
         attackFinish = false;
-        attackDamageModifier = 1.5f;
+        attackDamageModifierMin = 1.31f;
+        attackDamageModifierMin = 1.5f;
         base.Enter();
         stateMachine.Player.GolpearPrueba();
         StartAnimation(stateMachine.Player.PlayerAnimationData.Attack02ParameterHash);
-
+        float attackDamageModifier = UnityEngine.Random.Range(attackDamageModifierMin, attackDamageModifierMax);
         float attackDamageCombo02 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
         EventsManager.TriggerSpecialEvent<float>("OnAttack02Enemy", attackDamageCombo02);
         //OnAttack02Enemy?.Invoke(attackDamageCombo02);
@@ -39,7 +40,7 @@ public class PlayerAttack02 : PlayerAttackState
 
     public override void UpdateLogic()
     {
-        FinishAttack();
+        FinishAnimation();
         attackTimeElapsed += Time.deltaTime;
 
         if (attackFinish && canContinueCombo)
@@ -60,7 +61,7 @@ public class PlayerAttack02 : PlayerAttackState
         StopAnimation(stateMachine.Player.PlayerAnimationData.Attack02ParameterHash);
     }
 
-    protected override void FinishAttack()
+    protected override void FinishAnimation()
     {
         //Animator animator = stateMachine.Player.AnimPlayer;
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack02") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)

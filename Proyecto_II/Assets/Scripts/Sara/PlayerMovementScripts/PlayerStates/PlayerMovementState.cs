@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 /*
@@ -19,8 +20,10 @@ public class PlayerMovementState : IState
     protected readonly PlayerGroundedData groundedData;
     protected readonly PlayerAirborneData airborneData;
     protected readonly PlayerStatsData statsData;
+    //protected readonly ItemData itemData;
 
     protected AudioManager audioManager;
+    protected Animator animPlayer;
 
     public PlayerMovementState(PlayerStateMachine _stateMachine)
     {
@@ -29,6 +32,9 @@ public class PlayerMovementState : IState
         groundedData = stateMachine.Player.Data.GroundedData;
         airborneData = stateMachine.Player.Data.AirborneData;
         statsData = stateMachine.Player.Data.StatsData;
+        //itemData = stateMachine.Player.Data.ItemData;
+
+        animPlayer = stateMachine.Player.AnimPlayer;
 
         audioManager = GameObject.FindObjectOfType<AudioManager>();
     }
@@ -37,6 +43,7 @@ public class PlayerMovementState : IState
     {
         AddInputActionsCallbacks();
         EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
+        EventsManager.CallNormalEvents("PickUpItem", PickUp);
         //EventsManager.CallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         //EnemyAttackZigZagJump.OnAttackPlayer += TakeDamage;
     }
@@ -59,6 +66,7 @@ public class PlayerMovementState : IState
     public virtual void Exit()
     {
         EventsManager.StopCallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
+        EventsManager.StopCallNormalEvents("PickUpItem", PickUp);
         //EventsManager.StopCallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         //EnemyAttackZigZagJump.OnAttackPlayer -= TakeDamage;
         RemoveInputActionsCallbacks();
@@ -103,6 +111,10 @@ public class PlayerMovementState : IState
 
     protected virtual void AddInputActionsCallbacks()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled += OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
 
@@ -157,6 +169,12 @@ public class PlayerMovementState : IState
         return movementSpeed;
     }
 
+    protected void PickUp()
+    {
+        //Debug.Log("Has llegado al método de PickUp() del jugador.");
+        stateMachine.ChangeState(stateMachine.PickUpState);
+    }
+
     protected virtual void OnMovementCanceled(InputAction.CallbackContext context)
     {
 
@@ -172,6 +190,10 @@ public class PlayerMovementState : IState
 
     }
 
+    protected virtual void FinishAnimation()
+    {
+
+    }
 
     private void TakeDamage(float _enemyDamage)
     {

@@ -16,11 +16,12 @@ public class PlayerAttack03 : PlayerAttackState
     public override void Enter()
     {
         attackFinish = false;
-        attackDamageModifier = 2;
+        attackDamageModifierMin = 1.51f;
+        attackDamageModifierMax = 2f;
         base.Enter();
         stateMachine.Player.GolpearPrueba();
         StartAnimation(stateMachine.Player.PlayerAnimationData.Attack03ParameterHash);
-
+        float attackDamageModifier = UnityEngine.Random.Range(attackDamageModifierMin, attackDamageModifierMax);
         float attackDamageCombo03 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
         EventsManager.TriggerSpecialEvent<float>("OnAttack03Enemy", attackDamageCombo03);
         //OnAttack03Enemy?.Invoke(attackDamageCombo03);
@@ -29,7 +30,7 @@ public class PlayerAttack03 : PlayerAttackState
 
     public override void UpdateLogic()
     {
-        FinishAttack();
+        FinishAnimation();
     }
 
     public override void Exit()
@@ -39,7 +40,7 @@ public class PlayerAttack03 : PlayerAttackState
         StopAnimation(stateMachine.Player.PlayerAnimationData.Attack03ParameterHash);
     }
 
-    protected override void FinishAttack()
+    protected override void FinishAnimation()
     {
         //Animator animator = stateMachine.Player.AnimPlayer;
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack03") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)

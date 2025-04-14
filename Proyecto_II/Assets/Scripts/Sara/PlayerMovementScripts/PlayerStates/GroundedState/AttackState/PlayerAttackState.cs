@@ -22,7 +22,8 @@ public class PlayerAttackState : PlayerGroundedState
     protected bool canContinueCombo;
     protected bool isWaitingForInput;
 
-    protected float attackDamageModifier;
+    protected float attackDamageModifierMin;
+    protected float attackDamageModifierMax;
 
     //public static event Action<float> OnAttackEnemy;
 
@@ -52,6 +53,4 @@ public class PlayerAttackState : PlayerGroundedState
         StopAnimation(stateMachine.Player.PlayerAnimationData.AttackParameterHash);
         //Debug.Log("Has salido del estado de ATACAR");
     }
-
-    protected virtual void FinishAttack() { }
 }

@@ -15,14 +15,14 @@ public class PlayerPetBeastState : PlayerInteractionState
     {
         petBeastFinish = false;
         base.Enter();
-        Debug.Log("Has entrado en estado de Acariciar a la Bestia.");
+        //Debug.Log("Has entrado en estado de Acariciar a la Bestia.");
         StartAnimation(stateMachine.Player.PlayerAnimationData.PetBeastParameterHash);
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        FinishPettingBeast();
+        FinishAnimation();
     }
 
     public override void UpdatePhysics()
@@ -33,15 +33,13 @@ public class PlayerPetBeastState : PlayerInteractionState
     public override void Exit()
     {
         base.Exit();
-        Debug.Log("Has salido del estado de Acariciar a la Bestia.");
+        //Debug.Log("Has salido del estado de Acariciar a la Bestia.");
         StopAnimation(stateMachine.Player.PlayerAnimationData.PetBeastParameterHash);
     }
 
-    private void FinishPettingBeast()
+    protected override void FinishAnimation()
     {
-        Animator animator = stateMachine.Player.AnimPlayer;
-
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("AcariciarBestia_Brisa") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        if (animPlayer.GetCurrentAnimatorStateInfo(0).IsName("AcariciarBestia_Brisa") && animPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             petBeastFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);

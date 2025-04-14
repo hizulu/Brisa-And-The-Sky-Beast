@@ -170,18 +170,33 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // Método para comprobar por el nombre de un item.
+    public ItemData GetItemByName(string itemName)
+    {
+        foreach (ItemData item in inventory.Keys) // Recorremos el diccionario
+        {
+            if (item.itemName == itemName) // Comprobamos si está el objeto con el nombre escpecífico que queremos.
+                return item; // Si está, nos devuelve el item específico.
+        }
+
+        return null; // Si no está, nos devuelve un nulo.
+    }
+
     //Abrir y cerrar inventario usando el Input System
     public void OpenCloseInventory(InputAction.CallbackContext context)
     {
+        string keyPressed = context.control.name;
+
         if (!context.performed)
             return;
 
-        if (context.control.name == "i" && firstTime)
+        if (keyPressed == "i" && firstTime)
         {
             inventoryEnabled = true;
             firstTime = false;
+            EventsManager.TriggerNormalEvent("UIPanelOpened");
         }
-        else if (context.control.name == "i" && !firstTime)
+        else if ((keyPressed == "i" || keyPressed == "escape") && !firstTime)
         {
             inventoryEnabled = false;
             appearanceChangeEnabled = false;
@@ -189,6 +204,7 @@ public class InventoryManager : MonoBehaviour
             powersEnabled = false;
             firstTime = true;
 
+            EventsManager.TriggerNormalEvent("UIPanelClosed");
             DeselectAllItems();
         }
 
