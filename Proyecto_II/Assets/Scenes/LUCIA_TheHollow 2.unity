@@ -7132,6 +7132,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 503028112}
   m_CullTransparentMesh: 1
+--- !u!1001 &504850051
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.06274759
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.06274759
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.06274759
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.492
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.57
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 29.92
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1.279003e-23
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -1.5700928e-16
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 27e45754b388a724991cc369f9fa9b32, type: 2}
+    - target: {fileID: 919132149155446097, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
+      propertyPath: m_Name
+      value: Cetro3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 83a922071f76e6f44832c8104cdaf7de, type: 3}
 --- !u!1 &510956387
 GameObject:
   m_ObjectHideFlags: 0
@@ -12805,8 +12878,6 @@ MonoBehaviour:
   - {fileID: 1082261845}
   itemSlotPrefab: {fileID: 1082261844}
   inventoryPanel: {fileID: 526193195}
-  HUDPanel: {fileID: 395157919}
-  HUDEnabled: 1
 --- !u!114 &1082245059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13514,7 +13585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5d42b1f014fa74d86c92a0eb783f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
+  playerInput: {fileID: 141740095}
   pausePanel: {fileID: 584455987}
 --- !u!4 &1126499751
 Transform:
@@ -18133,7 +18204,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!224 &1673622121
 RectTransform:
@@ -52683,3 +52754,4 @@ SceneRoots:
   - {fileID: 905502140}
   - {fileID: 1449401179}
   - {fileID: 1111673660}
+  - {fileID: 504850051}
