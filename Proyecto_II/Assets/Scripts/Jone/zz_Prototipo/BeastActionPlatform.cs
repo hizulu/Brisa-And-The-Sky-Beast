@@ -8,14 +8,14 @@ using UnityEngine.UI;
 
 public class BeastActionPlatform : MonoBehaviour
 {
-    private static bool actionPressed = false;
+    // private static bool actionPressed = false;
     static GameObject beast;
     private static Transform platformTransform;
 
     [SerializeField] private GameObject defaultPanel; // Panel de interacción
     //[SerializeField] private TextMeshProUGUI panelText; // Texto dentro del panel
 
-    [SerializeField] private string panelMessage = "Para que la bestia se suba a la plataforma, llámala (Q) y cuando esté esperando sobre la plataforma pulsa TAB.";
+    //[SerializeField] private string panelMessage = "Para que la bestia se suba a la plataforma, llámala (Q) y cuando esté esperando sobre la plataforma pulsa TAB.";
     private bool isPlayerInRange = false; // Verifica si el jugador está dentro del área
 
     private void Awake()
