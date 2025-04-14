@@ -48,7 +48,7 @@ public class Beast_V4_GoToClick : MonoBehaviour
 
     private void AssignInputs()
     {
-        input.Player.MoveBeast.performed += ctx => MoveToClick();
+        //input.Player.MoveBeast.performed += ctx => MoveToClick();
     }
 
     private void OnEnable()
