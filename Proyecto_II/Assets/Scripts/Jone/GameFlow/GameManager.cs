@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] GameObject pausePanel;
 
+    bool isPaused = false;
+
     // Estructura Singleton
     void Awake()
     {
@@ -33,6 +35,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        //playerInput.UIPanelActions.PauseGame.performed += TooglePauseResume;
     }
 
     private void Start()
@@ -42,13 +46,17 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        playerInput.UIPanelActions.PauseGame.performed += PauseGame;
         //Pause.OnPause += PauseGame;
         //Pause.OnResume += ResumeGame;
     }
+
+    private void OnDestroy()
+    {
+        //playerInput.UIPanelActions.PauseGame.performed -= TooglePauseResume;        
+    }
+
     private void OnDisable()
     {
-        playerInput.UIPanelActions.PauseGame.performed -= PauseGame;
         //Pause.OnPause -= PauseGame;
         //Pause.OnResume -= ResumeGame;
     }
@@ -119,22 +127,45 @@ public class GameManager : MonoBehaviour
         Checkpoint.GetActiveCheckPointPosition();
     }
 
-    void PauseGame(InputAction.CallbackContext context)
+    void TooglePauseResume(InputAction.CallbackContext context)
+    {
+        if (InventoryManager.Instance.inventoryEnabled)
+        {
+            InventoryManager.Instance.OpenCloseInventory(context);
+            return;
+        }
+
+        if (isPaused)
+        {
+            Debug.Log("Has vuelto al juego");
+            ResumeGame();
+        }
+        else
+        {
+            Debug.Log("Has parado el juego");
+            PauseGame();
+            Debug.Log(Time.timeScale);
+        }
+    }
+
+    void PauseGame()
     {
         Time.timeScale = 0f;
         pausePanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        isPaused = true;
         EventsManager.TriggerNormalEvent("UIPanelOpened");
         //UIManager.Instance.CargarPantallaPausa();
     }
 
-    public void ResumeGame(InputAction.CallbackContext context)
+    public void ResumeGame()
     {
         Time.timeScale = 1f;
         pausePanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        isPaused = false;
         EventsManager.TriggerNormalEvent("UIPanelClosed");
         //UIManager.Instance.QuitarPantallaPausa();
     }

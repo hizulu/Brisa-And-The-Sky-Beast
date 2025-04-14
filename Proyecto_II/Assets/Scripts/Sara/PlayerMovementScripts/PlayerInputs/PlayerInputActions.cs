@@ -263,6 +263,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ClosePanelGeneral"",
+                    ""type"": ""Button"",
+                    ""id"": ""c0d61bf3-9bce-4cd6-bccb-97c4eb4aaf30"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -270,17 +279,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""f32fa5a6-4503-4439-9043-5ce4ee8947cf"",
                     ""path"": ""<Keyboard>/i"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Inventory"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b0239c88-0a74-4de6-9b71-fd1c6de31571"",
-                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -331,6 +329,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Dialogue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0683e2ee-bbc3-4441-b8e0-2526845406b0"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ClosePanelGeneral"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -353,6 +362,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UIPanel_BeastPanel = m_UIPanel.FindAction("BeastPanel", throwIfNotFound: true);
         m_UIPanel_PauseGame = m_UIPanel.FindAction("PauseGame", throwIfNotFound: true);
         m_UIPanel_Dialogue = m_UIPanel.FindAction("Dialogue", throwIfNotFound: true);
+        m_UIPanel_ClosePanelGeneral = m_UIPanel.FindAction("ClosePanelGeneral", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -513,6 +523,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UIPanel_BeastPanel;
     private readonly InputAction m_UIPanel_PauseGame;
     private readonly InputAction m_UIPanel_Dialogue;
+    private readonly InputAction m_UIPanel_ClosePanelGeneral;
     public struct UIPanelActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -522,6 +533,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @BeastPanel => m_Wrapper.m_UIPanel_BeastPanel;
         public InputAction @PauseGame => m_Wrapper.m_UIPanel_PauseGame;
         public InputAction @Dialogue => m_Wrapper.m_UIPanel_Dialogue;
+        public InputAction @ClosePanelGeneral => m_Wrapper.m_UIPanel_ClosePanelGeneral;
         public InputActionMap Get() { return m_Wrapper.m_UIPanel; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -546,6 +558,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dialogue.started += instance.OnDialogue;
             @Dialogue.performed += instance.OnDialogue;
             @Dialogue.canceled += instance.OnDialogue;
+            @ClosePanelGeneral.started += instance.OnClosePanelGeneral;
+            @ClosePanelGeneral.performed += instance.OnClosePanelGeneral;
+            @ClosePanelGeneral.canceled += instance.OnClosePanelGeneral;
         }
 
         private void UnregisterCallbacks(IUIPanelActions instance)
@@ -565,6 +580,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dialogue.started -= instance.OnDialogue;
             @Dialogue.performed -= instance.OnDialogue;
             @Dialogue.canceled -= instance.OnDialogue;
+            @ClosePanelGeneral.started -= instance.OnClosePanelGeneral;
+            @ClosePanelGeneral.performed -= instance.OnClosePanelGeneral;
+            @ClosePanelGeneral.canceled -= instance.OnClosePanelGeneral;
         }
 
         public void RemoveCallbacks(IUIPanelActions instance)
@@ -599,5 +617,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnBeastPanel(InputAction.CallbackContext context);
         void OnPauseGame(InputAction.CallbackContext context);
         void OnDialogue(InputAction.CallbackContext context);
+        void OnClosePanelGeneral(InputAction.CallbackContext context);
     }
 }

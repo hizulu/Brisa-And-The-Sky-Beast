@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class NPCDialogRange : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class NPCDialogRange : MonoBehaviour
     private bool dialogStarted = false;
 
     [SerializeField] private PlayerInput playerInput;
+
+    [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private Transform dialogCameraPosition;
+
+
+    private Transform originalFollowTarget;
 
     private void Awake()
     {
@@ -49,6 +56,7 @@ public class NPCDialogRange : MonoBehaviour
             {
                 dialogManager.ForceCloseDialog(); // Cierra el diálogo cuando el jugador sale del rango
                 dialogStarted = false;
+                ResumePlayerCamera();
             }
         }
     }
@@ -62,10 +70,42 @@ public class NPCDialogRange : MonoBehaviour
         {
             dialogManager.StartDialog(startID, endID); // Inicia el diálogo desde el ID inicial
             dialogStarted = true;
+            StartDialogCamera();
         }
         else
         {
             dialogManager.AdvanceDialog();  // Avanza al siguiente paso del diálogo
+        }
+    }
+
+    private void StartDialogCamera()
+    {
+        if (virtualCamera != null && dialogCameraPosition != null)
+        {
+            virtualCamera.enabled = false;
+
+            originalFollowTarget = virtualCamera.Follow;
+
+            virtualCamera.Follow = null;
+
+            virtualCamera.transform.position = dialogCameraPosition.position;
+            virtualCamera.transform.rotation = dialogCameraPosition.rotation;
+
+            virtualCamera.LookAt = dialogCameraPosition;
+
+            virtualCamera.m_Lens.FieldOfView = 30;
+        }
+    }
+
+    private void ResumePlayerCamera()
+    {
+        if (virtualCamera != null)
+        {
+            virtualCamera.enabled = true;
+
+            virtualCamera.Follow = originalFollowTarget;
+
+            virtualCamera.m_Lens.FieldOfView = 60;
         }
     }
 }

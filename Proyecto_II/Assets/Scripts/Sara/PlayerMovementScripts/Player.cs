@@ -52,12 +52,14 @@ public class Player : MonoBehaviour
         playerStateMachine = new PlayerStateMachine(this);
 
         PlayerInput.UIPanelActions.Inventory.performed += OpenCloseInventory;
+        PlayerInput.UIPanelActions.ClosePanelGeneral.performed += OpenCloseInventory;
         PlayerInput.UIPanelActions.BeastPanel.performed += OpenCloseBeastPanel;
     }
 
     private void OnDestroy()
     {
         PlayerInput.UIPanelActions.Inventory.performed -= OpenCloseInventory;
+        PlayerInput.UIPanelActions.ClosePanelGeneral.performed -= OpenCloseInventory;
         PlayerInput.UIPanelActions.BeastPanel.performed -= OpenCloseBeastPanel;
     }
 
