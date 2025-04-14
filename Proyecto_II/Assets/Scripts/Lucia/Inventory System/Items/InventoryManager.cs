@@ -173,6 +173,18 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // Método para comprobar por el nombre de un item.
+    public ItemData GetItemByName(string itemName)
+    {
+        foreach (ItemData item in inventory.Keys) // Recorremos el diccionario
+        {
+            if (item.itemName == itemName) // Comprobamos si está el objeto con el nombre escpecífico que queremos.
+                return item; // Si está, nos devuelve el item específico.
+        }
+
+        return null; // Si no está, nos devuelve un nulo.
+    }
+
     //Abrir y cerrar inventario usando el Input System
     public void OpenCloseInventory(InputAction.CallbackContext context)
     {

@@ -53,7 +53,7 @@ public class PlayerAttack01 : PlayerAttackState
 
     public override void UpdateLogic()
     {
-        FinishAttack();
+        FinishAnimation();
         attackTimeElapsed += Time.deltaTime;
     }
 
@@ -66,7 +66,7 @@ public class PlayerAttack01 : PlayerAttackState
         StopAnimation(stateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
     }
 
-    protected override void FinishAttack()
+    protected override void FinishAnimation()
     {
         //Animator animator = stateMachine.Player.AnimPlayer;
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)

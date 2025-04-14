@@ -17,7 +17,7 @@ public class PlayerDoubleJumpState : PlayerAirborneState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        FinishJump();
+        FinishAnimation();
     }
 
     public override void UpdatePhysics()
@@ -48,7 +48,7 @@ public class PlayerDoubleJumpState : PlayerAirborneState
         }
     }
 
-    protected override void FinishJump()
+    protected override void FinishAnimation()
     {
         Animator animator = stateMachine.Player.AnimPlayer;
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("DoubleJump") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)

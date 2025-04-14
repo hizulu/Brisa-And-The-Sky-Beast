@@ -22,7 +22,7 @@ public class PlayerPetBeastState : PlayerInteractionState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        FinishPettingBeast();
+        FinishAnimation();
     }
 
     public override void UpdatePhysics()
@@ -37,11 +37,9 @@ public class PlayerPetBeastState : PlayerInteractionState
         StopAnimation(stateMachine.Player.PlayerAnimationData.PetBeastParameterHash);
     }
 
-    private void FinishPettingBeast()
+    protected override void FinishAnimation()
     {
-        Animator animator = stateMachine.Player.AnimPlayer;
-
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("AcariciarBestia_Brisa") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        if (animPlayer.GetCurrentAnimatorStateInfo(0).IsName("AcariciarBestia_Brisa") && animPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             petBeastFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
