@@ -1565,15 +1565,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 31.94
+      value: -22.709503
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.34
+      value: 31.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 75.03
+      value: 139.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7385,8 +7385,8 @@ Transform:
   m_GameObject: {fileID: 494980033}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2, y: 0.829, z: -0.13}
-  m_LocalScale: {x: 0.30456, y: 1.7716913, z: 1}
+  m_LocalPosition: {x: 0.2, y: 0.829, z: -0.18807}
+  m_LocalScale: {x: 0.30456, y: 1.7716913, z: 1.6086609}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1469340867}
@@ -8755,7 +8755,7 @@ Transform:
   m_GameObject: {fileID: 573680102}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 31.990294, y: 9.497796, z: 42.04149}
+  m_LocalPosition: {x: -22.65921, y: 31.657797, z: 106.91148}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9286,6 +9286,7 @@ MonoBehaviour:
   oneActiveLever: {fileID: 1299163436}
   twoActiveLever: {fileID: 769191194}
   movementDuration: 3
+  beastNavMeshSurface: {fileID: 0}
 --- !u!1 &618212068
 GameObject:
   m_ObjectHideFlags: 0
@@ -17711,7 +17712,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1469340867}
   - component: {fileID: 1469340866}
-  - component: {fileID: 1469340865}
+  - component: {fileID: 1469340868}
   m_Layer: 0
   m_Name: TEMPDrawbridge
   m_TagString: Untagged
@@ -17719,22 +17720,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1469340865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1469340864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Size: {x: 0.93169594, y: 1.7866714, z: 1.209166}
-  m_Center: {x: 0.28502417, y: 0.88307154, z: -0.12621808}
-  m_Area: 0
-  m_AffectedAgents: ffffffff
 --- !u!114 &1469340866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17750,6 +17735,7 @@ MonoBehaviour:
   oneActiveLever: {fileID: 924586595}
   twoActiveLever: {fileID: 1754318957}
   movementDuration: 3
+  beastNavMeshSurface: {fileID: 550037601}
 --- !u!4 &1469340867
 Transform:
   m_ObjectHideFlags: 0
@@ -17768,6 +17754,22 @@ Transform:
   - {fileID: 494980034}
   m_Father: {fileID: 1847195341}
   m_LocalEulerAnglesHint: {x: 0, y: 24, z: 0}
+--- !u!114 &1469340868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469340864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 2.2694807, y: 3, z: 1.7449753}
+  m_Center: {x: 0.20707554, y: 1, z: -0.1711582}
+  m_Area: 0
+  m_AffectedAgents: ffffffff
 --- !u!1001 &1474282855
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18810,7 +18812,7 @@ Transform:
   m_GameObject: {fileID: 1577233733}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 31.990294, y: 9.497796, z: 42.04149}
+  m_LocalPosition: {x: -22.65921, y: 31.657797, z: 106.91148}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

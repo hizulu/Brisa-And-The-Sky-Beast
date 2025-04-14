@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 // Jone Sainz Egea
 // 30/03/2025
@@ -10,8 +11,10 @@ public class DrawbridgeMover : MonoBehaviour, IMovableElement
     [SerializeField] private Transform oneActiveLever;
     [SerializeField] private Transform twoActiveLever;
     [SerializeField] private float movementDuration = 3f;
+    [SerializeField] NavMeshSurface beastNavMeshSurface;
 
     private NavMeshModifierVolume navMeshModifier;
+    private NavMeshData navMeshData;
     private Coroutine moveCoroutine;
     private bool leverOneActive;
     private bool leverTwoActive;
@@ -69,8 +72,10 @@ public class DrawbridgeMover : MonoBehaviour, IMovableElement
         // Gestión del NavMesh
         if (target == twoActiveLever)
         {
+            navMeshData = beastNavMeshSurface.navMeshData;
             navMeshModifier.enabled = false;
-            Debug.Log("NavMeshModifier should not be activated");
+            beastNavMeshSurface.UpdateNavMesh(navMeshData);
+            Debug.Log("NavMesh should be updated");
         }
     }
 
