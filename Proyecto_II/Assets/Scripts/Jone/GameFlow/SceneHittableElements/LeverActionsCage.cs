@@ -9,7 +9,7 @@ public class LeverActionsCage : LeverActionBase
     private GameObject cage;
     private float movementSpeed = 2f;
     private Vector3 targetPosition;
-    private Beast_V3 beast;
+    private BeastTrapped beast;
 
     private bool cageIsUp = false;
 
@@ -24,7 +24,7 @@ public class LeverActionsCage : LeverActionBase
     {
         if (beast == null)
         {
-            beast = GameObject.FindGameObjectWithTag("Beast").GetComponent<Beast_V3>();
+            beast = GameObject.FindGameObjectWithTag("Beast").GetComponent<BeastTrapped>();
         }
     }
 
