@@ -19,6 +19,7 @@ public class PlayerAnimationData
     [SerializeField] private string attack02ParameterName = "isAttacking02";
     [SerializeField] private string attack03ParameterName = "isAttacking03";
     [SerializeField] private string takeDamageParameterName = "isTakingDamage";
+    [SerializeField] private string healParameterName = "isHealing";
     [SerializeField] private string jumpParameterName = "isJumping";
     [SerializeField] private string doubleJumpParameterName = "isDoubleJumping";
     [SerializeField] private string fallParameterName = "isFalling";
@@ -46,6 +47,7 @@ public class PlayerAnimationData
     public int Attack02ParameterHash { get; private set; }
     public int Attack03ParameterHash { get; private set; }
     public int TakeDamageParameterHash { get; private set; }
+    public int HealParameterHash { get; private set; }
     public int JumpParameterHash { get; private set; }
     public int DoubleJumpParameterHash { get; private set; }
     public int FallParameterHash { get; private set; }
@@ -76,6 +78,7 @@ public class PlayerAnimationData
         Attack02ParameterHash = Animator.StringToHash(attack02ParameterName);
         Attack03ParameterHash = Animator.StringToHash(attack03ParameterName);
         TakeDamageParameterHash = Animator.StringToHash(takeDamageParameterName);
+        HealParameterHash = Animator.StringToHash(healParameterName);
 
         JumpParameterHash = Animator.StringToHash(jumpParameterName);
         DoubleJumpParameterHash = Animator.StringToHash(doubleJumpParameterName);
