@@ -401,7 +401,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &45438500
 Transform:
   m_ObjectHideFlags: 0
@@ -2944,9 +2944,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 141740100}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 141740101}
   m_SourcePrefab: {fileID: 100100000, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
 --- !u!1 &141740092 stripped
 GameObject:
@@ -3007,6 +3004,7 @@ MonoBehaviour:
     attack02ParameterName: isAttacking02
     attack03ParameterName: isAttacking03
     takeDamageParameterName: isTakingDamage
+    healParameterName: isHealing
     jumpParameterName: isJumping
     doubleJumpParameterName: isDoubleJumping
     fallParameterName: isFalling
@@ -3104,19 +3102,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterRenderer: {fileID: 890035829}
---- !u!114 &141740101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 141740092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43e0e5bf9b3f3864e82368eeef80b492, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBarSlider: {fileID: 1880761694}
 --- !u!1 &153292084
 GameObject:
   m_ObjectHideFlags: 0
@@ -12820,6 +12805,7 @@ MonoBehaviour:
   - {fileID: 1082261845}
   itemSlotPrefab: {fileID: 1082261844}
   inventoryPanel: {fileID: 526193195}
+  HUDPanel: {fileID: 395157919}
   HUDEnabled: 1
 --- !u!114 &1082245059
 MonoBehaviour:
