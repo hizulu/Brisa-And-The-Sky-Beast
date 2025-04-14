@@ -94,15 +94,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "MoveBeast",
-                    "type": "Button",
-                    "id": "b31bac57-ee50-4aa1-8114-4154c1408175",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -268,17 +259,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "LockTarget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a317997a-4590-48e4-b2eb-adad89f3c1be",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveBeast",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
