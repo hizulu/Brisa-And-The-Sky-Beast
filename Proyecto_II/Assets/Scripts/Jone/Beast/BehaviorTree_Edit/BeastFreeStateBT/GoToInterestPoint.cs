@@ -27,10 +27,7 @@ public class GoToInterestPoint : Node
 
     public override NodeState Evaluate()
     {
-        var target = _blackboard.GetValue<PointOfInterest>("target");
-
-        if (target == null)
-            return Failure("No target found");
+        PointOfInterest target = _blackboard.GetValue<PointOfInterest>("target");
 
         float distance = Vector3.Distance(_transform.position, target.transform.position);
 
@@ -52,6 +49,8 @@ public class GoToInterestPoint : Node
     {
         SetWalkingState(false);
         target.ConsumeInterest();
+        _blackboard.SetValue("reachedTarget", true);
+        _blackboard.ClearKey("target");
 
         Debug.Log($"Reached {target.name}, interest consumed.");
         state = NodeState.SUCCESS;

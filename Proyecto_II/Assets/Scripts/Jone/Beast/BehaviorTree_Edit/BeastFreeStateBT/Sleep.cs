@@ -68,6 +68,8 @@ public class Sleep : Node, ICoroutineNode
     {
         if (_hasFinished) return;
 
+        _blackboard.SetValue("isCoroutineActive", false);
+
         _beast.anim.SetBool("isSleeping", false);
 
         _blackboard.SetValue("lookForTarget", true);

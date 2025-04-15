@@ -209,7 +209,7 @@ public class PlayerMovementState : IState
     private void CallBeast(InputAction.CallbackContext context)
     {
         Debug.Log("Has llamado a la Bestia");
-        BeastBehaviorTree.CallBeast();
+        // BeastBehaviorTree.CallBeast();
         stateMachine.Player.StartCoroutine(StopCallBeast());
     }
 

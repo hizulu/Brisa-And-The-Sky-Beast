@@ -14,9 +14,10 @@ public class BeastFreeState : BeastState
     {
         Debug.Log("Beast has entered Free State");
 
-        // Activamos la flag en el Blackboard
+        // Activamos las flag en el Blackboard
         beast.blackboard.SetValue("isConstrained", false);
         beast.blackboard.SetValue("lookForTarget", true);
+        beast.blackboard.SetValue("isCoroutineActive", false);
 
         // Creamos el árbol de comportamiento libre
         behaviorTree = SetupFreeBehaviorTree(beast);
@@ -24,6 +25,11 @@ public class BeastFreeState : BeastState
 
     public override void OnUpdate(Beast beast)
     {
+        //Debug.Log($"[Tree] lookForTarget: {beast.blackboard.GetValue<bool>("lookForTarget")}, " +
+        //      $"target: {beast.blackboard.HasKey("target")}, " +
+        //      $"reachedTarget: {beast.blackboard.GetValue<bool>("reachedTarget")}, " +
+        //      $"isCoroutineActive: {beast.blackboard.GetValue<bool>("isCoroutineActive")}");
+
         if (behaviorTree != null)
             behaviorTree.Evaluate();
     }
@@ -37,28 +43,30 @@ public class BeastFreeState : BeastState
     {
         Blackboard blackboard = beast.blackboard;
 
-        // Subárbol: Comportamiento de punto de interés
-        Node interestSubtree = new Sequence(new List<Node>
+        // Comportamiento del sistema de puntos de interés
+        Node interestSubtree = new Selector(new List<Node>
         {
-            new GetInterestPoint(beast, beast.freeRoamRadius),
-            new GoToInterestPoint(beast, beast.arrivalThreshold),
-            new Selector(new List<Node>
-            {
-                new CheckSmellable(blackboard),
-                new Smell(blackboard, beast, 0.5f, 5f),
-                new AlwaysTrue() // Si no se puede oler, continuar
-            }),
-            new IdleBehavior(blackboard, beast)
+            new CheckFlag(blackboard, "lookForTarget",
+                new GetInterestPoint(beast, beast.freeRoamRadius)),
+            new CheckHasKey(blackboard, "target",
+                new GoToInterestPoint(beast, beast.arrivalThreshold)),
+            new CheckFlag(blackboard, "reachedTarget",
+                new Sequence(new List<Node>
+                {
+                    new CheckFlag(blackboard, "isCoroutineActive",
+                        new Smell(blackboard, beast, 1f, 6f), false),
+                    new IdleBehavior(blackboard, beast, 40f, 20f)
+                })),
+            new IdleBehavior(blackboard, beast, 60f, 40f), // Cuando no encuentra ningún objetivo
+            new AlwaysTrue()
         });
 
-        // Subárbol: Comportamiento si no se encuentra objetivo
-        Node idleFallback = new IdleBehavior(blackboard, beast);
-
-        // Selector principal: decide si hace algo con un POI o si descansa
-        return new Selector(new List<Node>
+        Node beastFreeTree = new Selector(new List<Node>
         {
-            interestSubtree,
-            idleFallback
+            new CheckFlag(blackboard, "isCoroutineActive", interestSubtree, false),
+            new AlwaysTrue()
         });
+
+        return beastFreeTree;
     }
 }

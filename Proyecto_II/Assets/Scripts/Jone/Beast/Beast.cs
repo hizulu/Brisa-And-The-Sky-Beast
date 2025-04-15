@@ -53,6 +53,7 @@ public class Beast : MonoBehaviour
 
         coroutineOwner = owner;
         activeCoroutine = StartCoroutine(routine);
+        blackboard.SetValue("isCoroutineActive", true);
     }
 
     public bool IsNearPlayer()

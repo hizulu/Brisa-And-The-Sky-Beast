@@ -4,7 +4,7 @@ using BehaviorTree;
 
 // Jone Sainz Egea
 // 05/04/2025
-// Nodo que busca el punto de mayor interés, falla si no encuentra ninguno
+// Nodo que busca el punto de mayor interés, nunca falla, si no encuentra simplemente no hay target
 public class GetInterestPoint : Node
 {
     private Blackboard _blackboard;
@@ -24,8 +24,7 @@ public class GetInterestPoint : Node
     public override NodeState Evaluate()
     {
         // Si ya tiene un objetivo válido, no hace falta buscar otro
-        PointOfInterest currentTarget = _blackboard.GetValue<PointOfInterest>("target");
-        if (currentTarget != null)
+        if (_blackboard.HasKey("target"))
         {
             state = NodeState.SUCCESS;
             return state;
@@ -38,11 +37,8 @@ public class GetInterestPoint : Node
         if (bestPoint != null)
         {
             _blackboard.SetValue("target", bestPoint);
+            _blackboard.SetValue("lookForTarget", false); // Ya ha encontrado un objetivo
             state = NodeState.SUCCESS;
-        }
-        else
-        {
-            state = NodeState.FAILURE;
         }
 
         return state;

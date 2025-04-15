@@ -67,6 +67,8 @@ public class Sit : Node, ICoroutineNode
     {
         if (_hasFinished) return;
 
+        _blackboard.SetValue("isCoroutineActive", false);
+
         _beast.anim.SetBool("isSitting", false);
 
         _blackboard.SetValue("lookForTarget", true);

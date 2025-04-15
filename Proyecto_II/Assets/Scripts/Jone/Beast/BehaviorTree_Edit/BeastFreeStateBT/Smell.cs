@@ -71,13 +71,13 @@ public class Smell : Node, ICoroutineNode
     {
         if (_hasFinished) return;
 
+        _blackboard.SetValue("isCoroutineActive", false);
+
         _beast.anim.SetBool("isSmelling", false);
 
         Debug.Log("Finished smelling");
 
-        _blackboard.ClearKey("target");
-        _blackboard.SetValue("hasArrived", false); // reset
-        _blackboard.SetValue("lookForTarget", false);
+        _blackboard.SetValue("reachedTarget", false); 
 
         _hasFinished = true;
     }
