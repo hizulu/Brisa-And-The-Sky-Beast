@@ -6,7 +6,7 @@ using BehaviorTree;
 // Jone Sainz Egea
 // 14/04/2025
 // Nodo que realiza la acción de estar sentado por un tiempo aleatorio
-public class Sit : Node
+public class Sit : Node, ICoroutineNode
 {
     private BeastBehaviorTree _beastBehaviorTree;
     private Blackboard _blackboard;
@@ -32,7 +32,7 @@ public class Sit : Node
             {
                 _isRunning = true;
                 _hasFinished = false;
-                _beastBehaviorTree.StartNewCoroutine(Sitting(Random.Range(_minDuration, _maxDuration)));
+                _beastBehaviorTree.StartNewCoroutine(Sitting(Random.Range(_minDuration, _maxDuration)), this);
             }
 
             if (_hasFinished)
@@ -62,13 +62,21 @@ public class Sit : Node
 
         yield return new WaitForSeconds(duration);
 
-        BeastBehaviorTree.anim.SetBool("isSitting", false);
+        OnCoroutineEnd();
+    }
 
-        _blackboard.SetValue("lookForTarget", true);
-        _blackboard.ClearKey("shouldSit");
+    public void OnCoroutineEnd()
+    {
+        if (!_hasFinished)
+        {
+            BeastBehaviorTree.anim.SetBool("isSitting", false);
 
-        Debug.Log("Finished sitting");
+            _blackboard.SetValue("lookForTarget", true);
+            _blackboard.ClearKey("shouldSit");
 
-        _hasFinished = true;
+            Debug.Log("Finished sitting");
+
+            _hasFinished = true;
+        }
     }
 }

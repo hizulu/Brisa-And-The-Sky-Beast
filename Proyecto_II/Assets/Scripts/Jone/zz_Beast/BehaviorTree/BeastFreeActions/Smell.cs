@@ -6,7 +6,7 @@ using System.Collections;
 // Jone Sainz Egea
 // 06/04/2025
 // Nodo que realiza la acción de olfatear por un tiempo aleatorio
-public class Smell : Node
+public class Smell : Node, ICoroutineNode
 {
     private BeastBehaviorTree _beastBehaviorTree;
     private NavMeshAgent _agent;
@@ -52,7 +52,7 @@ public class Smell : Node
         {
             _isRunning = true;
             _hasFinished = false;
-            _beastBehaviorTree.StartNewCoroutine(Smelling(Random.Range(_minDuration, _maxDuration)));
+            _beastBehaviorTree.StartNewCoroutine(Smelling(Random.Range(_minDuration, _maxDuration)), this);
         }
 
         if (_hasFinished)
@@ -66,7 +66,7 @@ public class Smell : Node
         }
 
         return state;
-    }
+    }   
 
     private IEnumerator Smelling(float duration)
     {
@@ -77,14 +77,22 @@ public class Smell : Node
         Debug.Log("Iniciando animación de oler");
         yield return new WaitForSeconds(duration);
 
-        BeastBehaviorTree.anim.SetBool("isSmelling", false);
+        OnCoroutineEnd();
+    }
 
-        Debug.Log("Finished smelling");
+    public void OnCoroutineEnd()
+    {
+        if (!_hasFinished)
+        {
+            BeastBehaviorTree.anim.SetBool("isSmelling", false);
 
-        _blackboard.ClearKey("target");
-        _blackboard.SetValue("hasArrived", false); // reset
-        _blackboard.SetValue("lookForTarget", false);
+            Debug.Log("Finished smelling");
 
-        _hasFinished = true;
+            _blackboard.ClearKey("target");
+            _blackboard.SetValue("hasArrived", false); // reset
+            _blackboard.SetValue("lookForTarget", false);
+
+            _hasFinished = true;
+        }
     }
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviorTree;
 
+// Jone Sainz Egea
+// 14/04/2025
+// Nodo que funciona para guardar si debe hacer una acción o no de forma aleatoria
 public class SetRandomFlag : Node
 {
     private Blackboard _blackboard;

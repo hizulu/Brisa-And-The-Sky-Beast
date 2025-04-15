@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviorTree;
-
+// Jone Sainz Egea
+// 15/04/2025
 public class CheckFlag : Node
 {
     private Blackboard _blackboard;
@@ -23,7 +24,8 @@ public class CheckFlag : Node
         if (_blackboard.TryGetValue(_key, out bool flag) && flag == _expectedValue)
         {
             return _child.Evaluate();
-        }
+        } else if (!_blackboard.HasKey(_key))
+            Debug.LogWarning($"Looking for a flag that doesn't exist: {_key}");
 
         return NodeState.FAILURE;
     }
