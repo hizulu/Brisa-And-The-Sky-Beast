@@ -4,6 +4,9 @@ using UnityEngine;
 using BehaviorTree;
 using UnityEngine.AI;
 
+// Jone Sainz Egea
+// 15/04/2025
+// Nodo que se encarga de que la bestia vaya a la posición del jugador cuando se le llama
 public class GoToPlayer : Node
 {
     private Blackboard _blackboard;

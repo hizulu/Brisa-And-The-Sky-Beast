@@ -16,8 +16,9 @@ public class BeastBehaviorTree : BTree
     public static bool isConstrained = false;
     public static bool beastWaitingOrder = false; // Cuando se va a abrir el menú de interacción hay que comprobar
     public static bool beastMenuOpened = false;
+    public static bool beastMenuClosed = false;
 
-    private NavMeshAgent agent;
+    public static NavMeshAgent agent;
     public static Animator anim;
 
     private Coroutine waitCoroutine; // Para gestionar que solo haya una corrutina en marcha a la vez
@@ -80,10 +81,13 @@ public class BeastBehaviorTree : BTree
     // Método que gestiona que solo haya una corrutina en marcha cada vez
     public void StartNewCoroutine(IEnumerator newCoroutine, ICoroutineNode owner)
     {
-        if (waitCoroutine != null && coroutineOwner != null)
+        if (waitCoroutine != null)
         {
-            Debug.LogWarning("Deteniendo corrutina anterior antes de iniciar nueva");
-            coroutineOwner.OnCoroutineEnd(); // Para asegurar que termine lo que tiene que terminar
+            StopCoroutine(waitCoroutine);
+            if (coroutineOwner != null)
+            {
+                coroutineOwner.OnCoroutineEnd();
+            }
         }
 
         coroutineOwner = owner;
@@ -93,13 +97,30 @@ public class BeastBehaviorTree : BTree
     // Called from Brisa
     public static void CallBeast()
     {
+        if (blackboard.GetValue<bool>("isConstrained"))
+        {
+            Debug.LogWarning("CallBeast fue llamado, pero ya estaba en modo constrained");
+            return;
+        }
+
         isConstrained = true;
         blackboard.SetValue("isConstrained", true);
+        agent.ResetPath();
+        Debug.Log("Bestia llamada por el jugador");
     }
 
     public static void OpenBeastMenu()
     {
         beastMenuOpened = true;
         blackboard.SetValue("isMenuOpen", true);
+    }
+
+    public static void CloseBeastMenu(bool optionSelected)
+    {
+        beastMenuOpened = false;
+        blackboard.SetValue("isMenuOpen", false);
+
+        if (!optionSelected)
+            beastMenuClosed = true;
     }
 }
