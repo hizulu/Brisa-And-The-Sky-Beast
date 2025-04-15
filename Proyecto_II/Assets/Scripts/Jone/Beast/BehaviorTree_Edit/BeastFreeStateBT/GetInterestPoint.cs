@@ -7,45 +7,32 @@ using BehaviorTree;
 // Nodo que busca el punto de mayor interés, falla si no encuentra ninguno
 public class GetInterestPoint : Node
 {
-    private Transform _transform;
-    private float _searchRadius;
     private Blackboard _blackboard;
+    private Beast _beast;
+    private float _searchRadius;
+
     private List<PointOfInterest> _interestPoints;
 
-    public GetInterestPoint(Transform transform, float searchRadius, Blackboard blackboard)
+    public GetInterestPoint(Beast beast, float searchRadius)
     {
-        _transform = transform;
+        _beast = beast;
         _searchRadius = searchRadius;
-        _blackboard = blackboard;
+
+        _blackboard = _beast.blackboard;
     }
 
     public override NodeState Evaluate()
     {
-        // Inicializa lookForTarget si no existe
-        if (!_blackboard.TryGetValue("lookForTarget", out bool lookForTarget))
-        {
-            lookForTarget = true;
-            _blackboard.SetValue("lookForTarget", lookForTarget);
-        }
-
-        // Si no debe buscar, devuelve failure directamente
-        if (!lookForTarget)
-        {
-            state = NodeState.FAILURE;
-            return state;
-        }
-
-        // Comprueba si ya tiene un objetivo asignado
+        // Si ya tiene un objetivo válido, no hace falta buscar otro
         PointOfInterest currentTarget = _blackboard.GetValue<PointOfInterest>("target");
-
         if (currentTarget != null)
         {
             state = NodeState.SUCCESS;
             return state;
         }
 
-        // Busca nuevos puntos de interés
-        GetPointsOfInterest();
+        // Buscar nuevos puntos de interés
+        _interestPoints = GetPointsOfInterest();
         PointOfInterest bestPoint = GetHighestInterestPoint(_interestPoints);
 
         if (bestPoint != null)
@@ -61,10 +48,10 @@ public class GetInterestPoint : Node
         return state;
     }
 
-    private void GetPointsOfInterest()
+    private List<PointOfInterest> GetPointsOfInterest()
     {
-        _interestPoints = new List<PointOfInterest>();
-        Collider[] colliders = Physics.OverlapSphere(_transform.position, _searchRadius);
+        List<PointOfInterest> foundInterestPoints = new List<PointOfInterest>();
+        Collider[] colliders = Physics.OverlapSphere(_beast.transform.position, _searchRadius);
 
         foreach (Collider col in colliders)
         {
@@ -73,10 +60,12 @@ public class GetInterestPoint : Node
                 PointOfInterest poi = col.GetComponent<PointOfInterest>();
                 if (poi != null)
                 {
-                    _interestPoints.Add(poi);
+                    foundInterestPoints.Add(poi);
                 }
             }
         }
+
+        return foundInterestPoints;
     }
 
     private PointOfInterest GetHighestInterestPoint(List<PointOfInterest> points)
@@ -86,7 +75,7 @@ public class GetInterestPoint : Node
 
         foreach (var point in points)
         {
-            float interestValue = point.GetInterestValue(_transform);
+            float interestValue = point.GetInterestValue(_beast.transform);
             if (interestValue > highestInterest)
             {
                 highestInterest = interestValue;

@@ -10,31 +10,28 @@ using UnityEngine.AI;
 public class GoToPlayer : Node
 {
     private Blackboard _blackboard;
-    private Transform _transform;
+    private Beast _beast;
     private Transform _playerTransform;
-    private NavMeshAgent _agent;
     private float _arrivalThreshold;
 
     private bool _wasWalking = false;
 
-    public GoToPlayer(Blackboard blackboard, Transform transform, Transform playerTransform, NavMeshAgent agent, float arrivalThreshold)
+    public GoToPlayer(Blackboard blackboard, Beast beast, Transform playerTransform, float arrivalThreshold)
     {
         _blackboard = blackboard;
-        _transform = transform;
         _playerTransform = playerTransform;
-        _agent = agent;
         _arrivalThreshold = arrivalThreshold;
     }
 
     public override NodeState Evaluate()
     {
-        float distance = Vector3.Distance(_transform.position, _playerTransform.position);
+        float distance = Vector3.Distance(_beast.transform.position, _playerTransform.position);
 
         if (distance < _arrivalThreshold)
         {
             if (_wasWalking)
             {
-                BeastBehaviorTree.anim.SetBool("isWalking", false);
+                _beast.anim.SetBool("isWalking", false);
                 // Cambiaría a wait for order
                 _blackboard.SetValue("hasArrived", true);
 
@@ -47,15 +44,15 @@ public class GoToPlayer : Node
 
         if (!_wasWalking)
         {
-            BeastBehaviorTree.anim.SetBool("isWalking", true);
+            _beast.anim.SetBool("isWalking", true);
             _wasWalking = true;
         }
 
-        if (_agent.destination != _playerTransform.position && !BeastBehaviorTree.beastWaitingOrder)
-            _agent.SetDestination(_playerTransform.position);
+        if (_beast.agent.destination != _playerTransform.position) //&& !_beast.beastWaitingOrder)
+            _beast.agent.SetDestination(_playerTransform.position);
 
         // Verificar si el destino es alcanzable
-        if (_agent.pathStatus == NavMeshPathStatus.PathInvalid || _agent.pathStatus == NavMeshPathStatus.PathPartial)
+        if (_beast.agent.pathStatus == NavMeshPathStatus.PathInvalid || _beast.agent.pathStatus == NavMeshPathStatus.PathPartial)
         {
             Debug.LogWarning("Path to player is invalid or partial.");
             state = NodeState.FAILURE;

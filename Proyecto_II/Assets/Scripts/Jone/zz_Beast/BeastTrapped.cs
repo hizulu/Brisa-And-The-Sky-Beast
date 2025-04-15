@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class BeastTrapped : MonoBehaviour
 {
-    BeastBehaviorTree beastBTScript;
+    Beast beastScript;
 
     private void Awake()
     {
-        beastBTScript = GetComponent<BeastBehaviorTree>();
-        beastBTScript.enabled = false;
+        beastScript = GetComponent<Beast>();
+        beastScript.enabled = false;
     }
 
     public void SetBeastFreeFromCage()
     {
-        beastBTScript.enabled = true;
+        beastScript.enabled = true;
     }
 }

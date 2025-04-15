@@ -20,7 +20,7 @@ public struct PlayerState
     // Weapon?
 }
 [System.Serializable]
-public struct BeastState
+public struct Beast_State
 {
     public Vector3 beastPosition;
     public float beastHealth;

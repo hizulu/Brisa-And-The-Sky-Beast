@@ -4803,6 +4803,9 @@ PrefabInstance:
       addedObject: {fileID: 848941451}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 913a75838466089459146be7b2bd36f0, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 848941457}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 913a75838466089459146be7b2bd36f0, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 848941455}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 913a75838466089459146be7b2bd36f0, type: 3}
       insertIndex: -1
@@ -4962,7 +4965,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 848941439}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3e1f9a3c96848841a303775d1b7c0ab, type: 3}
   m_Name: 
@@ -4986,6 +4989,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   clickEffect: {fileID: 8090311335322828726, guid: b2361ecba567152408014af5f641d9f9, type: 3}
+--- !u!114 &848941457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848941439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e75291673fb70499837f0aa2a83db7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 848941441}
+  anim: {fileID: 848941442}
+  playerTransform: {fileID: 737434255}
+  arrivalThreshold: 5.5
+  freeRoamRadius: 30
 --- !u!1001 &852514488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7777,7 +7797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AgentTypeID: -1372625422
-  m_CollectObjects: 3
+  m_CollectObjects: 0
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
