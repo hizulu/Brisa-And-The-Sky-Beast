@@ -6,7 +6,12 @@ using System.Collections.Generic;
 // 04/04/2025
 namespace BehaviorTree
 {
-    public enum NodeState {RUNNING, SUCCESS, FAILURE}   
+    public enum NodeState {RUNNING, SUCCESS, FAILURE}
+
+    public interface ICoroutineNode
+    {
+        void OnCoroutineEnd();
+    }
 
     public class Node
     {

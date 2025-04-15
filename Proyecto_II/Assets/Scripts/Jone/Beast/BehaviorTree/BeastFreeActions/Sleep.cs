@@ -6,7 +6,7 @@ using BehaviorTree;
 // Jone Sainz Egea
 // 14/04/2025
 // Nodo que realiza la acción de dormir por un tiempo aleatorio
-public class Sleep : Node
+public class Sleep : Node, ICoroutineNode
 {
     private BeastBehaviorTree _beastBehaviorTree;
     private Blackboard _blackboard;
@@ -32,7 +32,7 @@ public class Sleep : Node
             {
                 _isRunning = true;
                 _hasFinished = false;
-                _beastBehaviorTree.StartNewCoroutine(Sleeping(Random.Range(_minDuration, _maxDuration)));
+                _beastBehaviorTree.StartNewCoroutine(Sleeping(Random.Range(_minDuration, _maxDuration)), this);
             }
 
             if (_hasFinished)
@@ -53,6 +53,7 @@ public class Sleep : Node
         return state;
     }
 
+
     private IEnumerator Sleeping(float duration)
     {
         BeastBehaviorTree.anim.SetBool("isWalking", false);
@@ -62,13 +63,21 @@ public class Sleep : Node
 
         yield return new WaitForSeconds(duration);
 
-        BeastBehaviorTree.anim.SetBool("isSleeping", false);
+        OnCoroutineEnd();
+    }
 
-        _blackboard.SetValue("lookForTarget", true);
-        _blackboard.ClearKey("shouldSleep");
+    public void OnCoroutineEnd()
+    {
+        if (!_hasFinished)
+        {
+            BeastBehaviorTree.anim.SetBool("isSleeping", false);
 
-        Debug.Log("Finished sleeping");
+            _blackboard.SetValue("lookForTarget", true);
+            _blackboard.ClearKey("shouldSleep");
 
-        _hasFinished = true;
+            Debug.Log("Finished sleeping");
+
+            _hasFinished = true;
+        }        
     }
 }

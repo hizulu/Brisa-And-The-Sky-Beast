@@ -48,7 +48,7 @@ public class GoToPlayer : Node
             _wasWalking = true;
         }
 
-        if (_agent.destination != _playerTransform.position)
+        if (_agent.destination != _playerTransform.position && !BeastBehaviorTree.beastWaitingOrder)
             _agent.SetDestination(_playerTransform.position);
 
         // Verificar si el destino es alcanzable

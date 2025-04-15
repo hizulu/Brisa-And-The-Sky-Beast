@@ -14,11 +14,14 @@ public class BeastBehaviorTree : BTree
     [SerializeField] private Transform playerTransform;
     
     public static bool isConstrained = false;
-    public static bool beastWaitingOrder = false; // Cuando se va a abrir el menú de interacción hay que comp
+    public static bool beastWaitingOrder = false; // Cuando se va a abrir el menú de interacción hay que comprobar
+    public static bool beastMenuOpened = false;
 
     private NavMeshAgent agent;
     public static Animator anim;
+
     private Coroutine waitCoroutine; // Para gestionar que solo haya una corrutina en marcha a la vez
+    private ICoroutineNode coroutineOwner;
 
     [SerializeField] private static Blackboard blackboard = new Blackboard(); // Mostrar en inspector
 
@@ -28,6 +31,7 @@ public class BeastBehaviorTree : BTree
         anim = GetComponent<Animator>();
 
         blackboard.SetValue("isConstrained", false);
+        blackboard.SetValue("lookForTarget", true);
     }
 
     // Árbol de comportamiento de la Bestia:
@@ -38,7 +42,11 @@ public class BeastBehaviorTree : BTree
             // Beast Constrained Tree:
             new Selector (new List<Node>
             {
-                new CheckFlag(blackboard, "isConstrained", new GoToPlayer(blackboard, transform, playerTransform, agent, arrivalThreshold))
+                new Sequence(new List<Node>
+                {
+                    new CheckFlag(blackboard, "isConstrained", new GoToPlayer(blackboard, transform, playerTransform, agent, arrivalThreshold)),
+                    new WaitForOrder(blackboard, this, transform, playerTransform, 7f, 8f),
+                })
             }),
             // Beast Free tree:
             new Sequence(new List<Node>
@@ -63,28 +71,23 @@ public class BeastBehaviorTree : BTree
                     
                 })
             }),
-            new Sleep(blackboard, this, 2f, 10f) // Always true
+            new AlwaysTrue()
+            //new Sleep(blackboard, this, 2f, 10f) // Always true
         });
         return root;
     }
 
     // Método que gestiona que solo haya una corrutina en marcha cada vez
-    public void StartNewCoroutine(IEnumerator newCoroutine)
+    public void StartNewCoroutine(IEnumerator newCoroutine, ICoroutineNode owner)
     {
-        if (waitCoroutine != null)
+        if (waitCoroutine != null && coroutineOwner != null)
         {
-            Debug.LogWarning("Ya hay una corrutina activa. Ignorando nueva solicitud.");
-            return;
+            Debug.LogWarning("Deteniendo corrutina anterior antes de iniciar nueva");
+            coroutineOwner.OnCoroutineEnd(); // Para asegurar que termine lo que tiene que terminar
         }
 
-        Debug.Log("Iniciando nueva corrutina");
-        waitCoroutine = StartCoroutine(WrapCoroutine(newCoroutine));
-    }
-
-    private IEnumerator WrapCoroutine(IEnumerator coroutine)
-    {
-        yield return coroutine;
-        waitCoroutine = null;
+        coroutineOwner = owner;
+        waitCoroutine = StartCoroutine(newCoroutine);
     }
 
     // Called from Brisa
@@ -92,5 +95,11 @@ public class BeastBehaviorTree : BTree
     {
         isConstrained = true;
         blackboard.SetValue("isConstrained", true);
+    }
+
+    public static void OpenBeastMenu()
+    {
+        beastMenuOpened = true;
+        blackboard.SetValue("isMenuOpen", true);
     }
 }
