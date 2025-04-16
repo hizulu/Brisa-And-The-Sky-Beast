@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -20,9 +21,10 @@ public class Beast_V4_GoToClick : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        EventsManager.CallSpecialEvents<Vector3>("MoveBeast", MoveToTarget);
 
-        input = new PlayerInputActions();
-        AssignInputs();
+        //input = new PlayerInputActions();
+        //AssignInputs();
     }
 
     private void Update()
@@ -33,31 +35,40 @@ public class Beast_V4_GoToClick : MonoBehaviour
             anim.SetBool("isWalking", true);
     }
 
-    private void MoveToClick()
+    private void MoveToTarget(Vector3 targetPosition)
     {
-        RaycastHit hit;
-        if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 50f, clickableLayers))
+        if (agent != null)
         {
-            agent.destination = hit.point;
-            if(clickEffect != null)
-            {
-                Instantiate(clickEffect, hit.point += new Vector3(0, 0.1f, 0), clickEffect.transform.rotation);
-            }
+            agent.destination = targetPosition;
+            //Debug.Log("Moving to target position: " + targetPosition);
         }
     }
 
-    private void AssignInputs()
-    {
-        //input.Player.MoveBeast.performed += ctx => MoveToClick();
-    }
+    //private void MoveToClick()
+    //{
+    //    RaycastHit hit;
+    //    if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 50f, clickableLayers))
+    //    {
+    //        agent.destination = hit.point;
+    //        if(clickEffect != null)
+    //        {
+    //            Instantiate(clickEffect, hit.point += new Vector3(0, 0.1f, 0), clickEffect.transform.rotation);
+    //        }
+    //    }
+    //}
 
-    private void OnEnable()
-    {
-        input.Enable();
-    }
+    //private void AssignInputs()
+    //{
+    //    input.Player.MoveBeast.performed += ctx => MoveToClick();
+    //}
 
-    private void OnDisable()
-    {
-        input.Disable();
-    }
+    //private void OnEnable()
+    //{
+    //    input.Enable();
+    //}
+
+    //private void OnDisable()
+    //{
+    //    input.Disable();
+    //}
 }

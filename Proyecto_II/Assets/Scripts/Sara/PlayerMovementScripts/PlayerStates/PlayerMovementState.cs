@@ -111,10 +111,10 @@ public class PlayerMovementState : IState
 
     protected virtual void AddInputActionsCallbacks()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
+        //if (EventSystem.current.IsPointerOverGameObject())
+        //{
+        //    return;
+        //}
         stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled += OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
 

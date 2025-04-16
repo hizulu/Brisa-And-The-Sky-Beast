@@ -29,13 +29,17 @@ public class Player : MonoBehaviour
     public Rigidbody RbPlayer { get; private set; }
     public BoxCollider GroundCheckCollider { get; private set; }
     public Animator AnimPlayer { get; private set; }
-    public CinemachineVirtualCamera CamPlayer { get; private set; }
+    //public CinemachineVirtualCamera CamPlayer { get; private set; }
 
     private PlayerStateMachine playerStateMachine;
 
     public PlayerInput PlayerInput { get; private set; }
 
-    [SerializeField] private BeastSelectionPanel beastPanel;
+    //[SerializeField] private BeastSelectionPanel beastPanel;
+
+    [SerializeField] public CinemachineVirtualCamera playerCam;
+    public CinemachinePOV CamComponents;
+    [SerializeField] public GameObject AreaMoveBeast;
 
     private void Awake()
     {
@@ -48,6 +52,8 @@ public class Player : MonoBehaviour
         AnimPlayer = GetComponent<Animator>();
 
         PlayerInput = GetComponent<PlayerInput>();
+
+        //CamComponents = playerCam.GetCinemachineComponent<CinemachinePOV>();
 
         playerStateMachine = new PlayerStateMachine(this);
 
@@ -98,7 +104,7 @@ public class Player : MonoBehaviour
 
     public void OpenCloseBeastPanel(InputAction.CallbackContext context)
     {
-        beastPanel.OpenCloseBeastPanel(context);
+        //beastPanel.OpenCloseBeastPanel(context);
     }
 
     #region Métodos temporales (No se sabe si se quedarán en el script de Player o se moverán).

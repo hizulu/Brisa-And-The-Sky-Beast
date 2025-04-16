@@ -98,6 +98,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PointedMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""e54219ef-98c6-4cde-9470-64984ddffff0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveBeast"",
+                    ""type"": ""Button"",
+                    ""id"": ""c6d88009-4caa-4583-8a3b-a769f363f5ce"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -230,6 +248,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Heal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""42928623-eaf1-4126-bc17-65e84c34ac14"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveBeast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ebaf2878-f38a-41a9-ba2c-1189999ad43e"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PointedMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -376,6 +416,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_CallBeast = m_Player.FindAction("CallBeast", throwIfNotFound: true);
         m_Player_LockTarget = m_Player.FindAction("LockTarget", throwIfNotFound: true);
         m_Player_Heal = m_Player.FindAction("Heal", throwIfNotFound: true);
+        m_Player_PointedMode = m_Player.FindAction("PointedMode", throwIfNotFound: true);
+        m_Player_MoveBeast = m_Player.FindAction("MoveBeast", throwIfNotFound: true);
         // UIPanel
         m_UIPanel = asset.FindActionMap("UIPanel", throwIfNotFound: true);
         m_UIPanel_Inventory = m_UIPanel.FindAction("Inventory", throwIfNotFound: true);
@@ -453,6 +495,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_CallBeast;
     private readonly InputAction m_Player_LockTarget;
     private readonly InputAction m_Player_Heal;
+    private readonly InputAction m_Player_PointedMode;
+    private readonly InputAction m_Player_MoveBeast;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -465,6 +509,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @CallBeast => m_Wrapper.m_Player_CallBeast;
         public InputAction @LockTarget => m_Wrapper.m_Player_LockTarget;
         public InputAction @Heal => m_Wrapper.m_Player_Heal;
+        public InputAction @PointedMode => m_Wrapper.m_Player_PointedMode;
+        public InputAction @MoveBeast => m_Wrapper.m_Player_MoveBeast;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -498,6 +544,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Heal.started += instance.OnHeal;
             @Heal.performed += instance.OnHeal;
             @Heal.canceled += instance.OnHeal;
+            @PointedMode.started += instance.OnPointedMode;
+            @PointedMode.performed += instance.OnPointedMode;
+            @PointedMode.canceled += instance.OnPointedMode;
+            @MoveBeast.started += instance.OnMoveBeast;
+            @MoveBeast.performed += instance.OnMoveBeast;
+            @MoveBeast.canceled += instance.OnMoveBeast;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -526,6 +578,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Heal.started -= instance.OnHeal;
             @Heal.performed -= instance.OnHeal;
             @Heal.canceled -= instance.OnHeal;
+            @PointedMode.started -= instance.OnPointedMode;
+            @PointedMode.performed -= instance.OnPointedMode;
+            @PointedMode.canceled -= instance.OnPointedMode;
+            @MoveBeast.started -= instance.OnMoveBeast;
+            @MoveBeast.performed -= instance.OnMoveBeast;
+            @MoveBeast.canceled -= instance.OnMoveBeast;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -639,6 +697,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnCallBeast(InputAction.CallbackContext context);
         void OnLockTarget(InputAction.CallbackContext context);
         void OnHeal(InputAction.CallbackContext context);
+        void OnPointedMode(InputAction.CallbackContext context);
+        void OnMoveBeast(InputAction.CallbackContext context);
     }
     public interface IUIPanelActions
     {
