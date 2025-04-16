@@ -16,6 +16,7 @@ public class Beast : MonoBehaviour
     [Header("Parámetros")]
     [SerializeField] public float arrivalThreshold = 5f;
     [SerializeField] public float freeRoamRadius = 30f;
+    [SerializeField] public float interactionThreshold = 8f;
 
     private BeastState currentState;
 
@@ -46,6 +47,7 @@ public class Beast : MonoBehaviour
         currentState?.OnEnter(this);
     }
 
+    // Gestión de corrutinas de la Bestia
     public void StartNewCoroutine(IEnumerator routine, ICoroutineNode owner)
     {
         if (activeCoroutine != null)
@@ -56,8 +58,14 @@ public class Beast : MonoBehaviour
         blackboard.SetValue("isCoroutineActive", true);
     }
 
-    public bool IsNearPlayer()
+    // Called from Brisa script
+    public void CallBeast()
     {
-        return Vector3.Distance(transform.position, playerTransform.position) < arrivalThreshold;
+        blackboard.SetValue("isConstrained", true);
+        agent.ResetPath();
+
+        TransitionToState(new BeastConstrainedState());
+
+        Debug.Log("Bestia llamada por el jugador");
     }
 }

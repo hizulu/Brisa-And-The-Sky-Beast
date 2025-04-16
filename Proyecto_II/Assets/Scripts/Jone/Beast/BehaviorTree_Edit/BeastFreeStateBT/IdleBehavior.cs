@@ -25,7 +25,7 @@ public class IdleBehavior : Node
         Node sequence = new Sequence(new List<Node>
         {
             new SetRandomFlag(_blackboard, "shouldSit", _probabilityToSit),
-            new Selector(new List<Node>
+            new Selector(new List<Node> // Es un selector para que siempre devuelva true y siga al siguiente paso aunque no se realice la acción
             {
                 new CheckFlag(_blackboard, "shouldSit",
                     new CheckFlag(_blackboard, "isCoroutineActive",

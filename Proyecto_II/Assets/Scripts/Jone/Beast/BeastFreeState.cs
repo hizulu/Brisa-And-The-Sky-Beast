@@ -9,13 +9,15 @@ using UnityEngine;
 public class BeastFreeState : BeastState
 {
     private Node behaviorTree;
+    private Blackboard blackboard;
 
     public override void OnEnter(Beast beast)
     {
         Debug.Log("Beast has entered Free State");
 
+        blackboard = beast.blackboard;
+
         // Activamos las flag en el Blackboard
-        beast.blackboard.SetValue("isConstrained", false);
         beast.blackboard.SetValue("lookForTarget", true);
         beast.blackboard.SetValue("isCoroutineActive", false);
 
@@ -41,8 +43,6 @@ public class BeastFreeState : BeastState
 
     private Node SetupFreeBehaviorTree(Beast beast)
     {
-        Blackboard blackboard = beast.blackboard;
-
         // Comportamiento del sistema de puntos de interés
         Node interestSubtree = new Selector(new List<Node>
         {

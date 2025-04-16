@@ -20,11 +20,11 @@ public class WaitForOrder : Node, ICoroutineNode
     private bool _isRunning = false;
     private bool _hasFinished = false;
 
-    public WaitForOrder(Blackboard blackboard, Beast beast, Transform transform, Transform playerTransform, float freeDistance, float duration)
+    public WaitForOrder(Blackboard blackboard, Beast beast, Transform playerTransform, float freeDistance, float duration)
     {
         _blackboard = blackboard;
         _beast = beast;
-        _transform = transform;
+        _transform = _beast.transform;
         _playerTransform = playerTransform;
         _freeDistance = freeDistance;
         _duration = duration;
@@ -120,9 +120,7 @@ public class WaitForOrder : Node, ICoroutineNode
             //BeastBehaviorTree.beastMenuOpened = false;
             //BeastBehaviorTree.beastMenuClosed = false;
 
-            _blackboard.SetValue("isConstrained", false);
-            _blackboard.SetValue("menuOpened", false);
-            _blackboard.SetValue("isMenuOpen", false);
+            _blackboard.SetValue("reachedPlayer", false);
 
             _blackboard.SetValue("lookForTarget", true);
 

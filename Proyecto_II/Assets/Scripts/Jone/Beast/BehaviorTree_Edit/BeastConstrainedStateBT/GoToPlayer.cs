@@ -19,6 +19,7 @@ public class GoToPlayer : Node
     public GoToPlayer(Blackboard blackboard, Beast beast, Transform playerTransform, float arrivalThreshold)
     {
         _blackboard = blackboard;
+        _beast = beast;
         _playerTransform = playerTransform;
         _arrivalThreshold = arrivalThreshold;
     }
@@ -33,7 +34,8 @@ public class GoToPlayer : Node
             {
                 _beast.anim.SetBool("isWalking", false);
                 // Cambiaría a wait for order
-                _blackboard.SetValue("hasArrived", true);
+                _blackboard.SetValue("reachedPlayer", true);
+                _blackboard.SetValue("goToPlayer", false);
 
                 Debug.Log("Reached player.");
                 _wasWalking = false;
