@@ -5,15 +5,18 @@ using BehaviorTree;
 
 public class TransitionToBeastState : Node
 {
-    // Start is called before the first frame update
-    void Start()
+    private Beast _beast;
+    private BeastState _newBeastState;
+
+    public TransitionToBeastState(Beast beast, BeastState newState)
     {
-        
+        _beast = beast;
+        _newBeastState = newState;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override NodeState Evaluate()
     {
-        
+        _beast.TransitionToState(_newBeastState);
+        return NodeState.SUCCESS;
     }
 }

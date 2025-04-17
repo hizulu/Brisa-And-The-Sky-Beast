@@ -18,8 +18,9 @@ public class BeastFreeState : BeastState
         blackboard = beast.blackboard;
 
         // Activamos las flag en el Blackboard
-        beast.blackboard.SetValue("lookForTarget", true);
-        beast.blackboard.SetValue("isCoroutineActive", false);
+        blackboard.SetValue("isConstrained", false);
+        blackboard.SetValue("lookForTarget", true);
+        blackboard.SetValue("isCoroutineActive", false);
 
         // Creamos el árbol de comportamiento libre
         behaviorTree = SetupFreeBehaviorTree(beast);
@@ -63,6 +64,8 @@ public class BeastFreeState : BeastState
 
         Node beastFreeTree = new Selector(new List<Node>
         {
+            new CheckFlag(blackboard, "isConstrained",
+                new TransitionToBeastState(beast, new BeastConstrainedState())),
             new CheckFlag(blackboard, "isCoroutineActive", interestSubtree, false),
             new AlwaysTrue()
         });

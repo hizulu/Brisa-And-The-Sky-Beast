@@ -61,6 +61,7 @@ public class WaitForOrder : Node, ICoroutineNode
         // Cuando termina el nodo
         if (_hasFinished)
         {
+            Debug.Log("Ya ha terminado de esperar al menú");
             _isRunning = false;
             state = NodeState.SUCCESS;
         }
@@ -73,7 +74,6 @@ public class WaitForOrder : Node, ICoroutineNode
 
     private IEnumerator WaitingForOrder(float duration)
     {
-        //_beast.beastWaitingOrder = true;
         _beast.anim.SetBool("isWalking", false);
         _beast.anim.SetBool("isSitting", true);
         Debug.Log("Activo sentrarse");
@@ -85,8 +85,7 @@ public class WaitForOrder : Node, ICoroutineNode
             if (Input.GetKeyDown(KeyCode.Tab)) //TODO: sustituirlo por NEW INPUT SYSTEM
             {
                 _blackboard.SetValue("menuOpened", true);
-                Debug.Log("Detecta que se abre menú");
-                //BeastBehaviorTree.OpenBeastMenu(); // Simula abrir menú
+                OnCoroutineEnd();
                 yield break; // Termina la corrutina inmediatamente
             }
 
@@ -96,32 +95,23 @@ public class WaitForOrder : Node, ICoroutineNode
 
         Debug.Log("Tiempo de espera completado: Ejecutando función por timeout.");
 
-        // Si no se ha abierto el menú, probabilidad de quedarse sentado unos segundos más
-        //if (!BeastBehaviorTree.beastMenuOpened)
-        //{
-        //    float chance = Random.Range(0f, 100f);
-        //    if (chance <= 40f) // 40% de que se quede sentado
-        //    {
-        //        Debug.Log("Se queda sentado unos segundos más tras no recibir orden");
-        //        yield return new WaitForSeconds(3f);
-        //    }
-        //}
-
         OnCoroutineEnd();       
     }
 
     public void OnCoroutineEnd()
     {
-        if (!_hasFinished)
-        {
-            _beast.anim.SetBool("isSitting", false);
-            Debug.Log("Desactivo sitting");
+        if (_hasFinished)
+            return;
 
-            _blackboard.SetValue("isCoroutineActive", false);
+        _beast.anim.SetBool("isSitting", false);
+        Debug.Log("Desactivo sitting");
 
-            Debug.Log("Finished waiting and cleaned up flags");
+        _blackboard.SetValue("isCoroutineActive", false);
 
-            _hasFinished = true;
-        }
+        _blackboard.SetValue("reachedPlayer", false);
+
+        Debug.Log("Finished waiting and cleaned up flags");
+
+        _hasFinished = true;
     }
 }

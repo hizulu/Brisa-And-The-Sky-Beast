@@ -33,7 +33,7 @@ public class Beast : MonoBehaviour
         if (blackboard == null) blackboard = new Blackboard();
 
         // Comenzamos en estado de libertad
-        TransitionToState(new BeastFreeState());
+        TransitionToState(new BeastFreeState());        
     }
 
     private void Update()
@@ -76,6 +76,14 @@ public class Beast : MonoBehaviour
         Debug.Log("Bestia llamada por el jugador");
     }
 
+    public void OpenBeastMenu()
+    {
+        // Por si se abre el menú sin estar en estado de constrained
+        agent.ResetPath();
+        blackboard.SetValue("menuOpenedFromOtherState", true);
+        blackboard.SetValue("isConstrained", true);       
+    }
+
     public void BeastSelection(int selectedOption)
     {
         // Resetear todos los valores
@@ -107,5 +115,10 @@ public class Beast : MonoBehaviour
                 blackboard.SetValue("menuOpened", false);
                 break;
         }
+    }
+
+    public bool IsPlayerWithinInteractionDistance()
+    {
+        return Vector3.Distance(transform.position, playerTransform.position) < interactionThreshold;
     }
 }

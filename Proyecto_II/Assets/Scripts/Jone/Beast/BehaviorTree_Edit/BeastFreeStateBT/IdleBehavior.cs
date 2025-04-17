@@ -32,6 +32,7 @@ public class IdleBehavior : Node
                         new Sit(_blackboard, _beast, 4f, 7f)), false),
                 new AlwaysTrue()
             }),
+            //TODO: creo que sit y sleep se pisan
             new SetRandomFlag(_blackboard, "shouldSleep", _probabilityToSleep),
             new Selector(new List<Node>
             {

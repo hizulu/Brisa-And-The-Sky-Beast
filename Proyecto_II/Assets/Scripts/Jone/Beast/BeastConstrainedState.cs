@@ -2,6 +2,7 @@ using BehaviorTree;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // Jone Sainz Egea
 // 16/04/2025
@@ -17,10 +18,7 @@ public class BeastConstrainedState : BeastState
         Debug.Log("Beast has entered Constrained State");
 
         blackboard = beast.blackboard;
-        blackboard.SetValue("isConstrained", true);
-        blackboard.SetValue("goToPlayer", true);
-        blackboard.SetValue("reachedPlayer", false);
-        blackboard.SetValue("isCoroutineActive", false);
+        SetUpFlags();
 
         playerTransform = beast.playerTransform;
 
@@ -36,6 +34,7 @@ public class BeastConstrainedState : BeastState
     {
         Debug.Log("Beast is leaving Constrained State");
 
+        blackboard.SetValue("menuOpenedFromOtherState", false);
         blackboard.SetValue("isConstrained", false);
     }
 
@@ -55,53 +54,43 @@ public class BeastConstrainedState : BeastState
                     new CheckFlag(blackboard, "isOptionHeal",
                         new HealBeast()),
                     new CheckFlag(blackboard, "isOptionAttack",
-                        new TransitionToBeastState()),
+                        new TransitionToBeastState(beast, new BeastCombatState())),
                     new CheckFlag(blackboard, "isOptionMount",
-                        new TransitionToBeastState()),
+                        new TransitionToBeastState(beast, new BeastMountedState())),
                     new CheckFlag(blackboard, "isOptionAction",
                         new SpecificActions()),
                     new AlwaysTrue()
-                }))
-            //new Selector(new List<Node>
-            //{
-            //    // Si jugador se aleja mientras está sentado
-            //    new Sequence(new List<Node>
-            //    {
-            //        new CheckFlag(blackboard, "playerIsNear", new AlwaysTrue(), false), // jugador se alejó
-            //        new Wait(beast, 2f), // espera 2 seg
-            //        new IdleBehavior(blackboard, beast, 40f, 20f),
-            //        new ExitToFreeState(beast)
-            //    }),
-
-            //    // Si se abre el menú de interacción
-            //    new Sequence(new List<Node>
-            //    {
-            //        new CheckFlag(blackboard, "interactionMenuOpen", new WaitUntilClosed(blackboard)), // nodo que espera a que el menú se cierre
-            //        new Selector(new List<Node>
-            //        {
-            //            new CheckFlag(blackboard, "interactionSelected",
-            //                new Sequence(new List<Node>
-            //                {
-            //                    new PerformInteraction(blackboard, beast), // ejecuta según lo elegido
-            //                    new IdleBehavior(blackboard, beast, 40f, 20f),
-            //                    new ExitToFreeState(beast)
-            //                })),
-            //            new Sequence(new List<Node>
-            //            {
-            //                new IdleBehavior(blackboard, beast, 40f, 20f),
-            //                new ExitToFreeState(beast)
-            //            })
-            //        })
-            //    }),
-
-            //    // Si jugador se mantiene cerca y no hay menú
-            //    new Sequence(new List<Node>
-            //    {
-            //        new Wait(beast, 8f),
-            //        new IdleBehavior(blackboard, beast, 40f, 20f),
-            //        new ExitToFreeState(beast)
-            //    })
-            //})
+                })),
+            new Sequence(new List<Node>
+            {
+                new IdleBehavior(blackboard, beast, 40f, 20f),
+                new TransitionToBeastState(beast, new BeastFreeState())
+            })
         });
+    }
+
+    private void SetUpFlags()
+    {
+        blackboard.SetValue("isConstrained", true);
+        if (blackboard.TryGetValue("menuOpenedFromOtherState", out bool flag) && flag == true)
+        {
+            blackboard.SetValue("goToPlayer", false);
+            blackboard.SetValue("reachedPlayer", false);
+            blackboard.SetValue("menuOpened", true);
+            Debug.Log("Flags set from other state");
+        }
+        else
+        {           
+            blackboard.SetValue("goToPlayer", true);
+            blackboard.SetValue("reachedPlayer", false);
+            blackboard.SetValue("menuOpened", false);
+            Debug.Log("Flags set from called");
+        }
+        blackboard.SetValue("isCoroutineActive", false);
+        blackboard.SetValue("isOptionPet", false);
+        blackboard.SetValue("isOptionHeal", false);
+        blackboard.SetValue("isOptionAttack", false);
+        blackboard.SetValue("isOptionMount", false);
+        blackboard.SetValue("isOptionAction", false);
     }
 }

@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BeastCombatState : MonoBehaviour
+public class BeastCombatState : BeastState
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void OnEnter(Beast beast)
     {
-        
+    
     }
-
-    // Update is called once per frame
-    void Update()
+    public override void OnUpdate(Beast beast)
     {
-        
+    
+    }
+    public override void OnExit(Beast beast)
+    {
+    
     }
 }
