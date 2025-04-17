@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviorTree;
 
+// Jone Sainz Egea
+// 17/04/2025
 public class TransitionToBeastState : Node
 {
     private Beast _beast;

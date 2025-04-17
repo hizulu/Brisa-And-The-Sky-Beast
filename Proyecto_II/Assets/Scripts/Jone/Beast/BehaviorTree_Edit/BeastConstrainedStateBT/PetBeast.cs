@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Jone Sainz Egea
+// 17/04/2025
 public class PetBeast : Node, ICoroutineNode
 {
     private Blackboard _blackboard;

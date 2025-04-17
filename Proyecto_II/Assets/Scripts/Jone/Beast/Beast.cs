@@ -13,6 +13,7 @@ public class Beast : MonoBehaviour
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Animator anim;
     [SerializeField] public Transform playerTransform;
+    [SerializeField] public Transform mountPoint;
 
     [Header("Parámetros")]
     [SerializeField] public float arrivalThreshold = 5f;
