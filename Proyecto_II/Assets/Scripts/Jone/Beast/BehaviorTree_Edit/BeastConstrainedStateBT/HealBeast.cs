@@ -78,6 +78,7 @@ public class HealBeast : Node, ICoroutineNode
         _beast.anim.SetBool("isHealing", false);
         _blackboard.SetValue("isCoroutineActive", false);
         _blackboard.SetValue("menuOpened", false);
+        _blackboard.SetValue("isOptionHeal", false);
 
         Debug.Log("Finished healing");
 

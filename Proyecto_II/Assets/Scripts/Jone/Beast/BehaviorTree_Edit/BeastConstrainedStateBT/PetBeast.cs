@@ -68,6 +68,7 @@ public class PetBeast : Node, ICoroutineNode
         _beast.anim.SetBool("isPetting", false);
         _blackboard.SetValue("isCoroutineActive", false);
         _blackboard.SetValue("menuOpened", false);
+        _blackboard.SetValue("isOptionPet", false);
 
         Debug.Log("Finished petting");
 

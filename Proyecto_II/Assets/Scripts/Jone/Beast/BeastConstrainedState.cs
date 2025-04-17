@@ -58,7 +58,7 @@ public class BeastConstrainedState : BeastState
                     new CheckFlag(blackboard, "isOptionMount",
                         new TransitionToBeastState(beast, new BeastMountedState())),
                     new CheckFlag(blackboard, "isOptionAction",
-                        new SpecificActions()),
+                        new SpecificActions(blackboard, beast)),
                     new AlwaysTrue()
                 })),
             new Sequence(new List<Node>
