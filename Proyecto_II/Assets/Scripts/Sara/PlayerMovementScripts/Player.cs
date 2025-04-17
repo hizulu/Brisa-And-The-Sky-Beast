@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     [SerializeField] public CinemachineVirtualCamera playerCam;
     public CinemachinePOV CamComponents;
     [SerializeField] public GameObject AreaMoveBeast;
+    [SerializeField] public GameObject CursorMarker;
 
     private void Awake()
     {

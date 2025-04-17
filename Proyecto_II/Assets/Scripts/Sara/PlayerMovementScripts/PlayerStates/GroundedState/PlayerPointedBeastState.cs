@@ -12,17 +12,15 @@ public class PlayerPointedBeastState : PlayerGroundedState
 
     }
 
-    bool isPressed;
-
     public override void Enter()
     {
         CamEnterSetting();
         stateMachine.Player.PlayerInput.PlayerActions.Attack.Disable();
         base.Enter();
         stateMachine.Player.AreaMoveBeast.SetActive(true);
-        //stateMachine.Player.PlayerInput.PlayerActions.PointedMode.performed += OnPointedStateCanceled;
+        stateMachine.Player.CursorMarker.SetActive(true);
+        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled += OnPointedStateCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.MoveBeast.performed += OnLeftClick;
-        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started += OnRightClickPressed;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -32,26 +30,20 @@ public class PlayerPointedBeastState : PlayerGroundedState
 
     public override void UpdateLogic()
     {
-        isPressed = true;
         base.UpdateLogic();
-        //Debug.Log("Estás en MODO APUNTAR");
+        stateMachine.Player.CursorMarker.transform.position = CursorPosition();
     }
 
     public override void Exit()
     {
-        isPressed = false;
-        stateMachine.Player.PlayerInput.PlayerActions.Attack.Enable();
-        base.Exit();
-
-        stateMachine.Player.AreaMoveBeast.SetActive(false);
-
         stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled -= OnPointedStateCanceled;
-
-        stateMachine.Player.playerCam.m_Lens.FieldOfView = 60f;
-
-        stateMachine.Player.playerCam.transform.position -= new Vector3(0, 0, -5);
+        base.Exit();
+        stateMachine.Player.PlayerInput.PlayerActions.Attack.Enable();
+        stateMachine.Player.CursorMarker.SetActive(false);
 
         Debug.Log("Has salido del estado de APUNTANDO");
+
+        CamExitSetting();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -60,38 +52,64 @@ public class PlayerPointedBeastState : PlayerGroundedState
     protected void CamEnterSetting()
     {
         float orbitMouseX = 50f;
-        float orbitmouseY = 50f;
+        float orbitmouseY = 0f;
 
         stateMachine.Player.CamComponents = stateMachine.Player.playerCam.GetCinemachineComponent<CinemachinePOV>();
-        stateMachine.Player.playerCam.m_Lens.FieldOfView = 90f;
+        stateMachine.Player.playerCam.m_Lens.FieldOfView = 70f;
         stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = orbitMouseX;
         stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = orbitmouseY;
-        stateMachine.Player.playerCam.transform.position += new Vector3(0, 0, -5);
+        stateMachine.Player.playerCam.transform.position += new Vector3(0, 50, -10);
+    }
+
+    private void CamExitSetting()
+    {
+        stateMachine.Player.AreaMoveBeast.SetActive(false);        
+        stateMachine.Player.playerCam.m_Lens.FieldOfView = 60f;
+        stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 300f;
+        stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 300f;
+        stateMachine.Player.playerCam.transform.position -= new Vector3(0, 50, -10);
     }
 
     protected override void OnPointedStateCanceled(InputAction.CallbackContext context)
     {
-        if (isPressed) return;
         stateMachine.ChangeState(stateMachine.IdleState);
     }
 
-    private void OnRightClickPressed(InputAction.CallbackContext context)
+    private Vector3 CursorPosition()
     {
-        isPressed = true;
+        SpriteRenderer circleArea = stateMachine.Player.AreaMoveBeast.GetComponent<SpriteRenderer>();
+        float areaRadius = circleArea.bounds.extents.x;
+
+        Ray ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
+        Vector3 areaCenter = stateMachine.Player.AreaMoveBeast.transform.position;
+
+        if (Physics.Raycast(ray, out RaycastHit hit, areaRadius, groundedData.ClickableLayers))
+        {
+            Vector3 hitPoint = hit.point;
+
+            Vector3 flatHit = new Vector3(hitPoint.x, areaCenter.y, hitPoint.z);
+            Vector3 direction = flatHit - areaCenter;
+            float distance = direction.magnitude;
+
+            if (distance > areaRadius)
+                stateMachine.Player.CursorMarker.SetActive(false);
+            else
+                stateMachine.Player.CursorMarker.SetActive(true);
+
+            return flatHit;
+        }
+        return stateMachine.Player.CursorMarker.transform.position;
     }
 
     private void MoveToClick()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition), out hit, 50f, groundedData.ClickableLayers))
+        Vector3 clickPosition = CursorPosition();
+
+        if (groundedData.ClickEffect != null)
         {
-            //agent.destination = hit.point;
-            if (groundedData.ClickEffect != null)
-            {
-                GameObject.Instantiate(groundedData.ClickEffect, hit.point += new Vector3(0, 0.1f, 0), groundedData.ClickEffect.transform.rotation);
-                EventsManager.TriggerSpecialEvent<Vector3>("MoveBeast", hit.point);
-                Debug.Log("Has hecho click en la posición: " + " " +  hit.point);
-            }
+            GameObject.Instantiate(groundedData.ClickEffect, clickPosition + new Vector3(0, 0.1f, 0), groundedData.ClickEffect.transform.rotation);
+            EventsManager.TriggerSpecialEvent<Vector3>("MoveBeast", clickPosition);
+            Debug.Log("Has hecho click en la posición: " + " " + clickPosition);
         }
     }
 
