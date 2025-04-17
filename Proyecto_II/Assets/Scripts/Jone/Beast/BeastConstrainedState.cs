@@ -44,10 +44,24 @@ public class BeastConstrainedState : BeastState
         return new Selector(new List<Node>
         {
             new CheckFlag(blackboard, "goToPlayer",
-                new GoToPlayer(blackboard, beast, playerTransform, beast.arrivalThreshold), false),
+                new GoToPlayer(blackboard, beast, playerTransform, beast.arrivalThreshold)),
             new CheckFlag(blackboard, "reachedPlayer",
                 new WaitForOrder(blackboard, beast, playerTransform, beast.interactionThreshold, 8f)),
-            new AlwaysTrue()
+            new CheckFlag(blackboard, "menuOpened",
+                new Selector (new List<Node>
+                {
+                    new CheckFlag(blackboard, "isOptionPet",
+                        new PetBeast(blackboard, beast)),
+                    new CheckFlag(blackboard, "isOptionHeal",
+                        new HealBeast()),
+                    new CheckFlag(blackboard, "isOptionAttack",
+                        new TransitionToBeastState()),
+                    new CheckFlag(blackboard, "isOptionMount",
+                        new TransitionToBeastState()),
+                    new CheckFlag(blackboard, "isOptionAction",
+                        new SpecificActions()),
+                    new AlwaysTrue()
+                }))
             //new Selector(new List<Node>
             //{
             //    // Si jugador se aleja mientras está sentado

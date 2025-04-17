@@ -76,7 +76,7 @@ public class WaitForOrder : Node, ICoroutineNode
         //_beast.beastWaitingOrder = true;
         _beast.anim.SetBool("isWalking", false);
         _beast.anim.SetBool("isSitting", true);
-
+        Debug.Log("Activo sentrarse");
         float elapsedTime = 0f;
         Debug.Log($"Empieza cuenta atrás de {duration} segundos");
 
@@ -85,6 +85,7 @@ public class WaitForOrder : Node, ICoroutineNode
             if (Input.GetKeyDown(KeyCode.Tab)) //TODO: sustituirlo por NEW INPUT SYSTEM
             {
                 _blackboard.SetValue("menuOpened", true);
+                Debug.Log("Detecta que se abre menú");
                 //BeastBehaviorTree.OpenBeastMenu(); // Simula abrir menú
                 yield break; // Termina la corrutina inmediatamente
             }
@@ -114,15 +115,9 @@ public class WaitForOrder : Node, ICoroutineNode
         if (!_hasFinished)
         {
             _beast.anim.SetBool("isSitting", false);
+            Debug.Log("Desactivo sitting");
 
-            //BeastBehaviorTree.isConstrained = false;
-            //BeastBehaviorTree.beastWaitingOrder = false;
-            //BeastBehaviorTree.beastMenuOpened = false;
-            //BeastBehaviorTree.beastMenuClosed = false;
-
-            _blackboard.SetValue("reachedPlayer", false);
-
-            _blackboard.SetValue("lookForTarget", true);
+            _blackboard.SetValue("isCoroutineActive", false);
 
             Debug.Log("Finished waiting and cleaned up flags");
 

@@ -8,6 +8,7 @@ using UnityEngine.AI;
 // 15/04/2025
 public class Beast : MonoBehaviour
 {
+
     [Header("Componentes")]
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Animator anim;
@@ -43,7 +44,13 @@ public class Beast : MonoBehaviour
     public void TransitionToState(BeastState newState)
     {
         currentState?.OnExit(this);
+
+        // Para asegurar que se realizan las acciones de fin de corrutina al cambiar de estado:
+        if (activeCoroutine != null)
+            coroutineOwner?.OnCoroutineEnd();
+
         currentState = newState;
+
         currentState?.OnEnter(this);
     }
 
@@ -67,5 +74,38 @@ public class Beast : MonoBehaviour
         TransitionToState(new BeastConstrainedState());
 
         Debug.Log("Bestia llamada por el jugador");
+    }
+
+    public void BeastSelection(int selectedOption)
+    {
+        // Resetear todos los valores
+        blackboard.SetValue("isOptionPet", false);
+        blackboard.SetValue("isOptionHeal", false);
+        blackboard.SetValue("isOptionAttack", false);
+        blackboard.SetValue("isOptionMount", false);
+        blackboard.SetValue("isOptionAction", false);
+
+        switch (selectedOption)
+        {
+            case 1:
+                blackboard.SetValue("isOptionPet", true);
+                Debug.Log("Ha seleccionado pet");
+                break;
+            case 2:
+                blackboard.SetValue("isOptionHeal", true);
+                break;
+            case 3:
+                blackboard.SetValue("isOptionAttack", true);
+                break;
+            case 4:
+                blackboard.SetValue("isOptionMount", true);
+                break;
+            case 5:
+                blackboard.SetValue("isOptionAction", true);
+                break;
+            default:
+                blackboard.SetValue("menuOpened", false);
+                break;
+        }
     }
 }
