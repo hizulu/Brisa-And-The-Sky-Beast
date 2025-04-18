@@ -15,7 +15,6 @@ public class EnemyIdleStandStill : EnemyIdleSOBase
         base.DoEnterLogic();
 
         stillTime = Random.Range(minStillTime, maxStillTime);
-        Debug.Log($"Time to stay still: {stillTime}");
     }
 
     public override void DoExitLogic()
@@ -31,7 +30,6 @@ public class EnemyIdleStandStill : EnemyIdleSOBase
 
         if (stillTime <= 0)
         {
-            Debug.Log("Finished idle time.");
             enemy.doIdle = false;
             enemy.doPatrol = true;
             enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyPatrolState);
