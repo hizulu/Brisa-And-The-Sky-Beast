@@ -39,12 +39,18 @@ public class Beast : MonoBehaviour
 
         EventsManager.CallNormalEvents("AcariciarBestia_Bestia", PetBeastSelected);
         EventsManager.CallNormalEvents("SanarBestia_Bestia", HealBeastSelected);
+        EventsManager.CallNormalEvents("AtaqueBestia_Bestia", AttackBeastSelected);
+        EventsManager.CallNormalEvents("MontarBestia_Bestia", MountBeastSelected);
+        EventsManager.CallNormalEvents("AccionBestia_Bestia", ActionBeastSelected);
     }
 
     private void OnDestroy()
     {
         EventsManager.StopCallNormalEvents("AcariciarBestia_Bestia", PetBeastSelected);
         EventsManager.StopCallNormalEvents("SanarBestia_Bestia", HealBeastSelected);
+        EventsManager.StopCallNormalEvents("AtaqueBestia_Bestia", AttackBeastSelected);
+        EventsManager.StopCallNormalEvents("MontarBestia_Bestia", MountBeastSelected);
+        EventsManager.StopCallNormalEvents("AccionBestia_Bestia", ActionBeastSelected);
     }
 
     private void Update()
@@ -95,7 +101,7 @@ public class Beast : MonoBehaviour
         blackboard.SetValue("isConstrained", true);       
     }
 
-    public void BeastSelection(int selectedOption)
+    public void ResetBeastSelection()
     {
         // Resetear todos los valores
         blackboard.SetValue("isOptionPet", false);
@@ -103,40 +109,40 @@ public class Beast : MonoBehaviour
         blackboard.SetValue("isOptionAttack", false);
         blackboard.SetValue("isOptionMount", false);
         blackboard.SetValue("isOptionAction", false);
-
-        switch (selectedOption)
-        {
-            case 1:
-                blackboard.SetValue("isOptionPet", true);
-                Debug.Log("Ha seleccionado pet");
-                break;
-            case 2:
-                blackboard.SetValue("isOptionHeal", true);
-                break;
-            case 3:
-                blackboard.SetValue("isOptionAttack", true);
-                break;
-            case 4:
-                blackboard.SetValue("isOptionMount", true);
-                break;
-            case 5:
-                blackboard.SetValue("isOptionAction", true);
-                break;
-            default:
-                blackboard.SetValue("menuOpened", false);
-                break;
-        }
     }
 
     public void PetBeastSelected()
     {
+        ResetBeastSelection();
         blackboard.SetValue("isOptionPet", true);
         Debug.Log("Ha seleccionado pet");
     }
 
     public void HealBeastSelected()
     {
+        ResetBeastSelection();
         blackboard.SetValue("isOptionHeal", true);
+        Debug.Log("Ha seleccionado heal");
+    }
+
+    public void AttackBeastSelected()
+    {
+        ResetBeastSelection();
+        blackboard.SetValue("isOptionAttack", true);
+        Debug.Log("Ha seleccionado heal");
+    }
+
+    public void MountBeastSelected()
+    {
+        ResetBeastSelection();
+        blackboard.SetValue("isOptionMount", true);
+        Debug.Log("Ha seleccionado heal");
+    }
+
+    public void ActionBeastSelected()
+    {
+        ResetBeastSelection();
+        blackboard.SetValue("isOptionAction", true);
         Debug.Log("Ha seleccionado heal");
     }
 
