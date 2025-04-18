@@ -22,6 +22,8 @@ public class Item : MonoBehaviour
         isCollected = true;
 
         InventoryManager.Instance.AddItem(itemData, itemQuantity);
+        NotificationManager.Instance?.ShowNotification(itemData, itemQuantity);
+
         gameObject.SetActive(false);  // Desactiva el objeto
         Destroy(gameObject, 1f);  // Lo destruye después de un pequeño delay
     }

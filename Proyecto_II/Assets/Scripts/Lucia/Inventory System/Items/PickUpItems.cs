@@ -17,6 +17,7 @@ public class PickUpItems : MonoBehaviour
     #region Variables
     private bool playerInRange = false;
     private Item itemScript;
+    private ItemData itemData;
     private Renderer outline;
     private Material outlineMaterial;
     private Player player;

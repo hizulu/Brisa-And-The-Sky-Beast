@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using static UnityEditor.Progress;
 #endregion
 
 /* NOMBRE CLASE: Inventory Manager
@@ -20,6 +21,7 @@ using UnityEngine.InputSystem;
 public class InventoryManager : MonoBehaviour
 {
     #region Variables
+    [Header("Paneles")]
     public GameObject inventoryMenu;
     public bool inventoryEnabled = false;
     public GameObject AppearanceChangeMenu;
