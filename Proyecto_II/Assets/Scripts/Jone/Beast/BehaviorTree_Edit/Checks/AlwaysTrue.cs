@@ -8,11 +8,10 @@ using UnityEngine;
 // Nodo que sirve para debugging del árbol (ver en qué punto falla)
 public class AlwaysTrue : Node
 {
-    public AlwaysTrue() { }
-
     public override NodeState Evaluate()
     {
-        Debug.Log("Always true");
+        Debug.Log("Doing always true");
+
         return NodeState.SUCCESS;
     }
 }

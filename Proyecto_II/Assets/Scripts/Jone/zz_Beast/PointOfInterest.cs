@@ -20,7 +20,7 @@ public class PointOfInterest : MonoBehaviour
     {
         baseInterest = GetBaseInterest();
         currentInterest = baseInterest;
-        agentTransform = FindObjectOfType<BeastBehaviorTree>().transform;
+        agentTransform = FindObjectOfType<Beast>().transform;
     }
 
     private float GetBaseInterest()

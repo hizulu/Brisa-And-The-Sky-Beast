@@ -2,18 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Jone Sainz Egea
+// 09/04/2025
 public class BeastTrapped : MonoBehaviour
 {
-    BeastBehaviorTree beastBTScript;
+    Beast beastScript;
 
     private void Awake()
     {
-        beastBTScript = GetComponent<BeastBehaviorTree>();
-        beastBTScript.enabled = false;
+        beastScript = GetComponent<Beast>();
+        beastScript.enabled = false;
     }
 
     public void SetBeastFreeFromCage()
     {
-        beastBTScript.enabled = true;
+        beastScript.enabled = true;
     }
 }

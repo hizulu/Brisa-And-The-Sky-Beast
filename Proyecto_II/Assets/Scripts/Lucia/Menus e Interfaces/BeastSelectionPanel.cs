@@ -16,6 +16,7 @@ using UnityEngine.EventSystems;
 public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GameObject beastSelectionPanel;
+    [SerializeField] private Beast beast;
     private bool beastPanelEnabled = false;
 
     private void Awake()
@@ -29,6 +30,12 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
     {
         if (!context.performed)
             return;
+
+        if (!beast.IsPlayerWithinInteractionDistance())
+        {
+            ClosePanel();
+            return;
+        }
 
         if (context.control.name == "tab")
         {
@@ -69,6 +76,7 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
     {
         beastSelectionPanel.SetActive(true);
         beastPanelEnabled = true;
+        beast.OpenBeastMenu();
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

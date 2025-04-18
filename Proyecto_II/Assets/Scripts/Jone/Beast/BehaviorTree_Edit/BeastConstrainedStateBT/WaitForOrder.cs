@@ -10,7 +10,7 @@ using UnityEngine.AI;
 public class WaitForOrder : Node, ICoroutineNode
 {
     private Blackboard _blackboard;
-    private BeastBehaviorTree _beastBehaviorTree;
+    private Beast _beast;
     private Transform _transform;
     private Transform _playerTransform;
 
@@ -20,11 +20,11 @@ public class WaitForOrder : Node, ICoroutineNode
     private bool _isRunning = false;
     private bool _hasFinished = false;
 
-    public WaitForOrder(Blackboard blackboard, BeastBehaviorTree beastBT, Transform transform, Transform playerTransform, float freeDistance, float duration)
+    public WaitForOrder(Blackboard blackboard, Beast beast, Transform playerTransform, float freeDistance, float duration)
     {
         _blackboard = blackboard;
-        _beastBehaviorTree = beastBT;
-        _transform = transform;
+        _beast = beast;
+        _transform = _beast.transform;
         _playerTransform = playerTransform;
         _freeDistance = freeDistance;
         _duration = duration;
@@ -42,25 +42,26 @@ public class WaitForOrder : Node, ICoroutineNode
         }
 
         // Si el menú se ha cerrado sin seleccionar
-        if (BeastBehaviorTree.beastMenuClosed)
-        {
-            BeastBehaviorTree.beastMenuClosed = false;
-            OnCoroutineEnd();
-            state = NodeState.SUCCESS;
-            return state;
-        }
+        //if (BeastBehaviorTree.beastMenuClosed)
+        //{
+        //    BeastBehaviorTree.beastMenuClosed = false;
+        //    OnCoroutineEnd();
+        //    state = NodeState.SUCCESS;
+        //    return state;
+        //}
 
         // Iniciar estado de espera al llegar
         if (!_isRunning)
         {
             _isRunning = true;
             _hasFinished = false;
-            _beastBehaviorTree.StartNewCoroutine(WaitingForOrder(_duration), this);
+            _beast.StartNewCoroutine(WaitingForOrder(_duration), this);
         }
 
         // Cuando termina el nodo
         if (_hasFinished)
         {
+            Debug.Log("Ya ha terminado de esperar al menú");
             _isRunning = false;
             state = NodeState.SUCCESS;
         }
@@ -73,10 +74,9 @@ public class WaitForOrder : Node, ICoroutineNode
 
     private IEnumerator WaitingForOrder(float duration)
     {
-        BeastBehaviorTree.beastWaitingOrder = true;
-        BeastBehaviorTree.anim.SetBool("isWalking", false);
-        BeastBehaviorTree.anim.SetBool("isSitting", true);
-
+        _beast.anim.SetBool("isWalking", false);
+        _beast.anim.SetBool("isSitting", true);
+        Debug.Log("Activo sentrarse");
         float elapsedTime = 0f;
         Debug.Log($"Empieza cuenta atrás de {duration} segundos");
 
@@ -85,7 +85,7 @@ public class WaitForOrder : Node, ICoroutineNode
             if (Input.GetKeyDown(KeyCode.Tab)) //TODO: sustituirlo por NEW INPUT SYSTEM
             {
                 _blackboard.SetValue("menuOpened", true);
-                BeastBehaviorTree.OpenBeastMenu(); // Simula abrir menú
+                OnCoroutineEnd();
                 yield break; // Termina la corrutina inmediatamente
             }
 
@@ -95,40 +95,23 @@ public class WaitForOrder : Node, ICoroutineNode
 
         Debug.Log("Tiempo de espera completado: Ejecutando función por timeout.");
 
-        // Si no se ha abierto el menú, probabilidad de quedarse sentado unos segundos más
-        if (!BeastBehaviorTree.beastMenuOpened)
-        {
-            float chance = Random.Range(0f, 100f);
-            if (chance <= 40f) // 40% de que se quede sentado
-            {
-                Debug.Log("Se queda sentado unos segundos más tras no recibir orden");
-                yield return new WaitForSeconds(3f);
-            }
-        }
-
         OnCoroutineEnd();       
     }
 
     public void OnCoroutineEnd()
     {
-        if (!_hasFinished)
-        {
-            BeastBehaviorTree.anim.SetBool("isSitting", false);
+        if (_hasFinished)
+            return;
 
-            BeastBehaviorTree.isConstrained = false;
-            BeastBehaviorTree.beastWaitingOrder = false;
-            BeastBehaviorTree.beastMenuOpened = false;
-            BeastBehaviorTree.beastMenuClosed = false;
+        _beast.anim.SetBool("isSitting", false);
+        Debug.Log("Desactivo sitting");
 
-            _blackboard.SetValue("isConstrained", false);
-            _blackboard.SetValue("menuOpened", false);
-            _blackboard.SetValue("isMenuOpen", false);
+        _blackboard.SetValue("isCoroutineActive", false);
 
-            _blackboard.SetValue("lookForTarget", true);
+        _blackboard.SetValue("reachedPlayer", false);
 
-            Debug.Log("Finished waiting and cleaned up flags");
+        Debug.Log("Finished waiting and cleaned up flags");
 
-            _hasFinished = true;
-        }
+        _hasFinished = true;
     }
 }

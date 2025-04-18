@@ -25,6 +25,8 @@ public class PlayerMovementState : IState
     protected AudioManager audioManager;
     protected Animator animPlayer;
 
+    private Beast beast;
+
     public PlayerMovementState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
@@ -37,6 +39,7 @@ public class PlayerMovementState : IState
         animPlayer = stateMachine.Player.AnimPlayer;
 
         audioManager = GameObject.FindObjectOfType<AudioManager>();
+        beast = GameObject.FindObjectOfType<Beast>();
     }
 
     public virtual void Enter()
@@ -209,7 +212,7 @@ public class PlayerMovementState : IState
     private void CallBeast(InputAction.CallbackContext context)
     {
         Debug.Log("Has llamado a la Bestia");
-        BeastBehaviorTree.CallBeast();
+        beast.CallBeast();
         stateMachine.Player.StartCoroutine(StopCallBeast());
     }
 

@@ -1529,7 +1529,6 @@ GameObject:
   - component: {fileID: 270474074}
   - component: {fileID: 270474073}
   - component: {fileID: 270474072}
-  - component: {fileID: 270474071}
   m_Layer: 5
   m_Name: Sanar Button
   m_TagString: Untagged
@@ -1557,18 +1556,6 @@ RectTransform:
   m_AnchoredPosition: {x: -131, y: 0}
   m_SizeDelta: {x: 170, y: 361}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &270474071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 270474069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 461398e9c0e67e64dbf4d1aa38db294c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &270474072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1612,7 +1599,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 270474073}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 848941457}
+        m_TargetAssemblyTypeName: Beast, Assembly-CSharp
+        m_MethodName: BeastSelection
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1251696101}
+        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
+        m_MethodName: ClosePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &270474073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3595,6 +3606,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578928486}
   m_CullTransparentMesh: 1
+--- !u!1 &604160553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 604160556}
+  - component: {fileID: 604160555}
+  - component: {fileID: 604160554}
+  m_Layer: 0
+  m_Name: BeastHollowEnd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &604160554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604160553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2032a00d25c15c469df7fb6e5d22e90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &604160555
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604160553}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 8.095407, y: 6.1955013, z: 8.353421}
+  m_Center: {x: 3.5477033, y: 2.5977507, z: -3.6767106}
+--- !u!4 &604160556
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604160553}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.8, y: 0.0000014305115, z: -3.7037592}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &660576019
 GameObject:
   m_ObjectHideFlags: 0
@@ -4108,13 +4185,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1880749317761311338, guid: 05faa6b918087d84ab95f700e4be0a6f, type: 3}
+      propertyPath: beastPanel
+      value: 
+      objectReference: {fileID: 1251696101}
     - target: {fileID: 1993793182950175317, guid: 05faa6b918087d84ab95f700e4be0a6f, type: 3}
       propertyPath: m_Name
       value: Player (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1216166489391327471, guid: 05faa6b918087d84ab95f700e4be0a6f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1897576275}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05faa6b918087d84ab95f700e4be0a6f, type: 3}
 --- !u!4 &737434254 stripped
@@ -4800,13 +4884,7 @@ PrefabInstance:
       addedObject: {fileID: 848941448}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 913a75838466089459146be7b2bd36f0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 848941451}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 913a75838466089459146be7b2bd36f0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 848941455}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 913a75838466089459146be7b2bd36f0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 848941456}
+      addedObject: {fileID: 848941457}
   m_SourcePrefab: {fileID: 100100000, guid: 913a75838466089459146be7b2bd36f0, type: 3}
 --- !u!1 &848941439 stripped
 GameObject:
@@ -4827,7 +4905,7 @@ NavMeshAgent:
   m_Acceleration: 999
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 3
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -4923,39 +5001,12 @@ CapsuleCollider:
   m_Height: 7.2590714
   m_Direction: 2
   m_Center: {x: 0, y: 3.4500003, z: -1.1294241}
---- !u!54 &848941451
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 848941439}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!4 &848941454 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 913a75838466089459146be7b2bd36f0, type: 3}
   m_PrefabInstance: {fileID: 848941438}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &848941455
+--- !u!114 &848941457
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4964,28 +5015,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 848941439}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3e1f9a3c96848841a303775d1b7c0ab, type: 3}
+  m_Script: {fileID: 11500000, guid: 02e75291673fb70499837f0aa2a83db7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  searchRadius: 30
-  arrivalThreshold: 5.5
+  agent: {fileID: 848941441}
+  anim: {fileID: 848941442}
+  rb: {fileID: 0}
   playerTransform: {fileID: 737434255}
---- !u!114 &848941456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 848941439}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ecd6a222176ece40bbda41c109dbc70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickableLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  clickEffect: {fileID: 8090311335322828726, guid: b2361ecba567152408014af5f641d9f9, type: 3}
+  mountPoint: {fileID: 1897576275}
+  arrivalThreshold: 5.5
+  freeRoamRadius: 30
+  interactionThreshold: 8
 --- !u!1001 &852514488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5482,7 +5522,6 @@ GameObject:
   - component: {fileID: 902289968}
   - component: {fileID: 902289967}
   - component: {fileID: 902289966}
-  - component: {fileID: 902289965}
   m_Layer: 5
   m_Name: Accion Button
   m_TagString: Untagged
@@ -5510,18 +5549,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.43787, y: 134.26}
   m_SizeDelta: {x: 361, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &902289965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 902289963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 461398e9c0e67e64dbf4d1aa38db294c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &902289966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5565,7 +5592,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 902289967}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 848941457}
+        m_TargetAssemblyTypeName: Beast, Assembly-CSharp
+        m_MethodName: BeastSelection
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1251696101}
+        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
+        m_MethodName: ClosePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &902289967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6587,7 +6638,6 @@ GameObject:
   - component: {fileID: 1170588322}
   - component: {fileID: 1170588321}
   - component: {fileID: 1170588320}
-  - component: {fileID: 1170588319}
   m_Layer: 5
   m_Name: Acariciar Button
   m_TagString: Untagged
@@ -6615,18 +6665,6 @@ RectTransform:
   m_AnchoredPosition: {x: 128, y: 0}
   m_SizeDelta: {x: 170, y: 361}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1170588319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1170588317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 461398e9c0e67e64dbf4d1aa38db294c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1170588320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6670,7 +6708,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1170588321}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 848941457}
+        m_TargetAssemblyTypeName: Beast, Assembly-CSharp
+        m_MethodName: BeastSelection
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1251696101}
+        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
+        m_MethodName: ClosePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1170588321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7050,6 +7112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beastSelectionPanel: {fileID: 163188370}
+  beast: {fileID: 848941457}
 --- !u!114 &1251696102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7777,7 +7840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AgentTypeID: -1372625422
-  m_CollectObjects: 3
+  m_CollectObjects: 0
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
@@ -9788,6 +9851,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881292310}
   m_CullTransparentMesh: 1
+--- !u!1 &1897576274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1897576275}
+  m_Layer: 0
+  m_Name: MountPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1897576275
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897576274}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -3.87, z: -1.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 737434255}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1929875518
 GameObject:
   m_ObjectHideFlags: 0
@@ -9800,7 +9894,6 @@ GameObject:
   - component: {fileID: 1929875523}
   - component: {fileID: 1929875522}
   - component: {fileID: 1929875521}
-  - component: {fileID: 1929875520}
   m_Layer: 5
   m_Name: Montar Button
   m_TagString: Untagged
@@ -9828,18 +9921,6 @@ RectTransform:
   m_AnchoredPosition: {x: -1, y: -136}
   m_SizeDelta: {x: 361, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1929875520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1929875518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 461398e9c0e67e64dbf4d1aa38db294c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1929875521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9883,7 +9964,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1929875522}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 848941457}
+        m_TargetAssemblyTypeName: Beast, Assembly-CSharp
+        m_MethodName: BeastSelection
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1251696101}
+        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
+        m_MethodName: ClosePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1929875522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10685,7 +10790,6 @@ GameObject:
   - component: {fileID: 2092204471}
   - component: {fileID: 2092204470}
   - component: {fileID: 2092204469}
-  - component: {fileID: 2092204468}
   m_Layer: 5
   m_Name: MandarleAtacar Button
   m_TagString: Untagged
@@ -10713,18 +10817,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.4378697, y: 0}
   m_SizeDelta: {x: 284, y: 282}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2092204468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092204466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 461398e9c0e67e64dbf4d1aa38db294c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2092204469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10768,7 +10860,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2092204470}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 848941457}
+        m_TargetAssemblyTypeName: Beast, Assembly-CSharp
+        m_MethodName: BeastSelection
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1251696101}
+        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
+        m_MethodName: ClosePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2092204470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11081,3 +11197,4 @@ SceneRoots:
   - {fileID: 555970256}
   - {fileID: 1238023811}
   - {fileID: 1251696105}
+  - {fileID: 604160556}
