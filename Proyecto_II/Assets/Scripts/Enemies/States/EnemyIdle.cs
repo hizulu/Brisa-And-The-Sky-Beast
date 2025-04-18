@@ -12,7 +12,6 @@ public class EnemyIdle : EnemyStateTemplate
     { 
         base.Enter();
 
-        enemyStateMachine.Enemy.matForDepuration.color = Color.green; // Depuración temporal
         enemyStateMachine.Enemy.anim.SetBool("isMoving", false);
         enemyStateMachine.Enemy.EnemyIdleBaseInstance.DoEnterLogic();
     }
@@ -21,7 +20,6 @@ public class EnemyIdle : EnemyStateTemplate
     {
         base.Exit();
 
-        enemyStateMachine.Enemy.matForDepuration.color = Color.gray; // Depuración temporal
         enemyStateMachine.Enemy.EnemyIdleBaseInstance.DoExitLogic();
     }
 
@@ -30,17 +28,6 @@ public class EnemyIdle : EnemyStateTemplate
         base.UpdateLogic();
 
         enemyStateMachine.Enemy.EnemyIdleBaseInstance.DoFrameUpdateLogic();
-
-        //if (!enemyStateMachine.Enemy.doIdle)
-        //{
-        //    if (enemyStateMachine.Enemy.doPatrol)
-        //    {
-        //        enemyStateMachine.ChangeState(enemyStateMachine.EnemyPatrolState);
-        //    } else if (enemyStateMachine.Enemy.doChase)
-        //    {
-        //        enemyStateMachine.ChangeState(enemyStateMachine.EnemyChaseState);
-        //    }
-        //}
     }
 
     public override void UpdatePhysics()
