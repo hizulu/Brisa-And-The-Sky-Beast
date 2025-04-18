@@ -22,7 +22,7 @@ public class BeastMountedState : BeastState
         float alturaBestia = 4.5f;
         beast.playerTransform.position += new Vector3(0, alturaBestia, 0);
 
-        beast.rb.constraints = RigidbodyConstraints.FreezeAll;
+        //beast.rb.constraints = RigidbodyConstraints.FreezeAll;
 
 
         beast.transform.SetParent(beast.mountPoint);
@@ -71,7 +71,7 @@ public class BeastMountedState : BeastState
         beast.transform.SetParent(null);
         beast.playerTransform.position -= new Vector3(0, 2f, 0);
         beast.agent.enabled = true;
-        beast.rb.constraints = RigidbodyConstraints.None;
+        //beast.rb.constraints = RigidbodyConstraints.None;
 
         beast.anim.SetBool("isWalking", false);
     }

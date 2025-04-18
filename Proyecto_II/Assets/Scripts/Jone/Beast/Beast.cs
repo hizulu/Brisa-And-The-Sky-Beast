@@ -12,7 +12,7 @@ public class Beast : MonoBehaviour
     [Header("Componentes")]
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Animator anim;
-    [SerializeField] public Rigidbody rb;
+    //[SerializeField] public Rigidbody rb;
     [SerializeField] public Transform playerTransform;
     [SerializeField] public Transform mountPoint;
 
