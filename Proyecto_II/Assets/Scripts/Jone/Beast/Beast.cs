@@ -35,7 +35,16 @@ public class Beast : MonoBehaviour
         if (blackboard == null) blackboard = new Blackboard();
 
         // Comenzamos en estado de libertad
-        TransitionToState(new BeastFreeState());        
+        TransitionToState(new BeastFreeState());
+
+        EventsManager.CallNormalEvents("AcariciarBestia_Bestia", PetBeastSelected);
+        EventsManager.CallNormalEvents("SanarBestia_Bestia", HealBeastSelected);
+    }
+
+    private void OnDestroy()
+    {
+        EventsManager.StopCallNormalEvents("AcariciarBestia_Bestia", PetBeastSelected);
+        EventsManager.StopCallNormalEvents("SanarBestia_Bestia", HealBeastSelected);
     }
 
     private void Update()
@@ -117,6 +126,18 @@ public class Beast : MonoBehaviour
                 blackboard.SetValue("menuOpened", false);
                 break;
         }
+    }
+
+    public void PetBeastSelected()
+    {
+        blackboard.SetValue("isOptionPet", true);
+        Debug.Log("Ha seleccionado pet");
+    }
+
+    public void HealBeastSelected()
+    {
+        blackboard.SetValue("isOptionHeal", true);
+        Debug.Log("Ha seleccionado heal");
     }
 
     public bool IsPlayerWithinInteractionDistance()

@@ -28,18 +28,20 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
     // Método para abrir y cerrar el panel de selección de bestias
     public void OpenCloseBeastPanel(InputAction.CallbackContext context)
     {
+        Debug.Log("Detecta acción openclosebeast");
         if (!context.performed)
             return;
 
         if (!beast.IsPlayerWithinInteractionDistance())
         {
             ClosePanel();
+            Debug.Log("No va a abrir el menú");
             return;
         }
 
         if (context.control.name == "tab")
         {
-
+            Debug.Log("Debería funcionar abrir menú");
             if (beastPanelEnabled)
                 ClosePanel();
             else
@@ -60,6 +62,13 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
     {
         EventsManager.TriggerNormalEvent("AcariciarBestia_Bestia");
         EventsManager.TriggerNormalEvent("AcariciarBestia_Player");
+    }
+
+    // LLamar a los eventos de cada personaje.
+    public void SanarBestia()
+    {
+        EventsManager.TriggerNormalEvent("SanarBestia_Bestia");
+        EventsManager.TriggerNormalEvent("SanarBestia_Player");
     }
 
     public void ClosePanel()

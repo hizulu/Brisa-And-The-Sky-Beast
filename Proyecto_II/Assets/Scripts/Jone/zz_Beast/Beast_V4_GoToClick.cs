@@ -9,9 +9,9 @@ public class Beast_V4_GoToClick : MonoBehaviour
     [SerializeField] LayerMask clickableLayers;
     [SerializeField] ParticleSystem clickEffect;
     
-    PlayerInputActions input;
+    //PlayerInputActions input;
 
-    private float lookRotationSpeed = 8f;
+    //private float lookRotationSpeed = 8f;
 
 
     private NavMeshAgent agent;

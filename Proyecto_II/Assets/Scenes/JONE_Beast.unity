@@ -1600,21 +1600,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 848941457}
-        m_TargetAssemblyTypeName: Beast, Assembly-CSharp
-        m_MethodName: BeastSelection
-        m_Mode: 3
+      - m_Target: {fileID: 1251696101}
+        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
+        m_MethodName: ClosePanel
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1251696101}
         m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
-        m_MethodName: ClosePanel
+        m_MethodName: SanarBestia
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5020,7 +5020,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 848941441}
   anim: {fileID: 848941442}
-  rb: {fileID: 0}
   playerTransform: {fileID: 737434255}
   mountPoint: {fileID: 1897576275}
   arrivalThreshold: 5.5
@@ -6709,14 +6708,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 848941457}
-        m_TargetAssemblyTypeName: Beast, Assembly-CSharp
-        m_MethodName: BeastSelection
-        m_Mode: 3
+      - m_Target: {fileID: 1251696101}
+        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
+        m_MethodName: AcariciarBestia
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

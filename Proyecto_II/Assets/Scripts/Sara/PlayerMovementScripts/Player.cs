@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
     public PlayerInput PlayerInput { get; private set; }
 
-    //[SerializeField] private BeastSelectionPanel beastPanel;
+    [SerializeField] private BeastSelectionPanel beastPanel;
 
     [SerializeField] public CinemachineVirtualCamera playerCam;
     public CinemachinePOV CamComponents;
@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
 
     public void OpenCloseBeastPanel(InputAction.CallbackContext context)
     {
-        //beastPanel.OpenCloseBeastPanel(context);
+        beastPanel.OpenCloseBeastPanel(context);
     }
 
     #region Métodos temporales (No se sabe si se quedarán en el script de Player o se moverán).
