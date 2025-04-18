@@ -10,43 +10,43 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.11
+      value: -43.916004
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.4116211
+      value: -24.50103
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.3230543
+      value: -9.887527
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.779174
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.6268078
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -67,6 +67,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
       propertyPath: m_Name
       value: Slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 8584438441049367939, guid: 63ec368a0c0013a4796dfa44c263fc5f, type: 3}
       propertyPath: m_Name
@@ -110,11 +114,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  agent: {fileID: 0}
+  agent: {fileID: 54092524076585749}
   matForDepuration: {fileID: 2100000, guid: c78e026279f76194294efd8c0fb8bc01, type: 2}
   maxHealth: 100
+  currentHealth: 0
   playerAttackRange: 0.5
   playerLostRange: 20
+  playerDetectionRange: 15
   EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
   EnemyPatrolBase: {fileID: 11400000, guid: b0e5a092ec1ef7440a2c5e8107b4185b, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: bc983e81189273949be3796722c61808, type: 2}
@@ -169,9 +175,9 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!136 &704816961359414130
 CapsuleCollider:
@@ -204,12 +210,12 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4950161966951956096}
   m_Enabled: 1
-  m_AgentTypeID: -1372625422
+  m_AgentTypeID: -334000983
   m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 5
+  m_Acceleration: 90
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 180
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
