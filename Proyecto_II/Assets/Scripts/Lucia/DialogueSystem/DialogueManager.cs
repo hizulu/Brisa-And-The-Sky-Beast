@@ -286,6 +286,7 @@ public class DialogManager : MonoBehaviour
         dialogPanel.SetActive(false);
         isDialogActive = false;
 
+        EventsManager.TriggerNormalEvent("ResetCameraDialogue");
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
