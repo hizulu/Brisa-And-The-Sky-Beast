@@ -12,8 +12,6 @@ public class EnemyAttack : EnemyStateTemplate
     {
         base.Enter();
 
-        enemyStateMachine.Enemy.matForDepuration.color = Color.red; // Depuración temporal
-        //enemyStateMachine.Enemy.anim.SetTrigger("Attack");
         enemyStateMachine.Enemy.EnemyAttackBaseInstance.DoEnterLogic();
     }
 
@@ -21,7 +19,6 @@ public class EnemyAttack : EnemyStateTemplate
     {
         base.Exit();
 
-        enemyStateMachine.Enemy.matForDepuration.color = Color.gray; // Depuración temporal
         enemyStateMachine.Enemy.EnemyAttackBaseInstance.DoExitLogic();
     }
 
@@ -30,18 +27,6 @@ public class EnemyAttack : EnemyStateTemplate
         base.UpdateLogic();
 
         enemyStateMachine.Enemy.EnemyAttackBaseInstance.DoFrameUpdateLogic();
-
-        //if (!enemyStateMachine.Enemy.doAttack)
-        //{
-        //    if (enemyStateMachine.Enemy.doChase)
-        //    {
-        //        enemyStateMachine.ChangeState(enemyStateMachine.EnemyChaseState);
-        //    }
-        //    else if (enemyStateMachine.Enemy.doRetreat)
-        //    {
-        //        enemyStateMachine.ChangeState(enemyStateMachine.EnemyRetreatState);
-        //    }
-        //}
     }
 
     public override void UpdatePhysics()

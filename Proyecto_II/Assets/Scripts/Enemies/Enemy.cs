@@ -8,7 +8,6 @@ public class Enemy : HittableElement
     public Player player;
     public Animator anim { get; private set; }
     public NavMeshAgent agent;
-    public Material matForDepuration;
 
     [SerializeField] float maxHealth = 100f;
     [field:SerializeField] private float currentHealth;
@@ -127,7 +126,6 @@ public class Enemy : HittableElement
             currentHealth -= _damageAmount;
             // TODO: anim.SetTrigger("getDamaged");
             // TODO: play enemy damage sound depending on enemy
-            matForDepuration.color = Color.red; // TEMP
             enemyHurt = false;
             if (currentHealth <= Mathf.Epsilon)
             {

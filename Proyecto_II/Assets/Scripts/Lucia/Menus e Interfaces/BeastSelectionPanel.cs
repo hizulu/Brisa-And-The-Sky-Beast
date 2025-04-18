@@ -63,12 +63,27 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
         EventsManager.TriggerNormalEvent("AcariciarBestia_Bestia");
         EventsManager.TriggerNormalEvent("AcariciarBestia_Player");
     }
-
-    // LLamar a los eventos de cada personaje.
     public void SanarBestia()
     {
         EventsManager.TriggerNormalEvent("SanarBestia_Bestia");
         EventsManager.TriggerNormalEvent("SanarBestia_Player");
+    }
+
+    public void MontarBestia()
+    {
+        EventsManager.TriggerNormalEvent("MontarBestia_Bestia");
+        EventsManager.TriggerNormalEvent("MontarBestia_Player");
+    }
+
+    public void AccionBestia()
+    {
+        EventsManager.TriggerNormalEvent("AccionBestia_Bestia");
+        //EventsManager.TriggerNormalEvent("MontarBestia_Player");
+    }
+    public void AtaqueBestia()
+    {
+        EventsManager.TriggerNormalEvent("AtaqueBestia_Bestia");
+        //EventsManager.TriggerNormalEvent("MontarBestia_Player");
     }
 
     public void ClosePanel()
