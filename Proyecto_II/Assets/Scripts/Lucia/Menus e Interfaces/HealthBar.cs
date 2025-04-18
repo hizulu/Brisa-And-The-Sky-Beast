@@ -6,6 +6,8 @@ public class HealthBar : MonoBehaviour
     private Player player;
     private PlayerStatsData statsData;
     private Slider healthBarSlider;
+    public Gradient gradient;
+    private Image fill;
 
     void Start()
     {
@@ -18,6 +20,8 @@ public class HealthBar : MonoBehaviour
             healthBarSlider = GetComponent<Slider>();
             healthBarSlider.maxValue = statsData.MaxHealth;
             healthBarSlider.value = statsData.CurrentHealth;
+            fill = healthBarSlider.fillRect.GetComponent<Image>();
+            fill.color = gradient.Evaluate(1f);
         }
         else
         {
@@ -30,6 +34,7 @@ public class HealthBar : MonoBehaviour
         if (statsData != null)
         {
             SetHealth(statsData.CurrentHealth);
+            fill.color = gradient.Evaluate(healthBarSlider.normalizedValue);
         }
     }
 

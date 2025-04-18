@@ -14903,6 +14903,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1211014657}
   - component: {fileID: 1211014658}
+  - component: {fileID: 1211014659}
   m_Layer: 5
   m_Name: BrisaHealthBar
   m_TagString: Untagged
@@ -14982,6 +14983,48 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1211014659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211014656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e0e5bf9b3f3864e82368eeef80b492, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gradient:
+    serializedVersion: 2
+    key0: {r: 0.58431375, g: 0.07058824, b: 0.07058824, a: 1}
+    key1: {r: 0.9245283, g: 0.81504464, b: 0, a: 1}
+    key2: {r: 0.16804203, g: 0.58431375, b: 0.070588246, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 21823
+    ctime1: 43646
+    ctime2: 65535
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 1
+    m_ColorSpace: -1
+    m_NumColorKeys: 3
+    m_NumAlphaKeys: 2
 --- !u!1 &1227811769
 GameObject:
   m_ObjectHideFlags: 0
@@ -21391,7 +21434,8 @@ MonoBehaviour:
   notificationPrefab: {fileID: 5287768615193140970, guid: 3e8520ce8d7f310409cc40255f47f40c, type: 3}
   notificationParent: {fileID: 456748925}
   displayDuration: 3
-  fadeDuration: 0.5
+  fadeInDuration: 0.01
+  fadeOutDuration: 0.5
   maxNotifications: 3
 --- !u!1 &1801138919
 GameObject:
@@ -23454,7 +23498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1954446586
 Transform:
   m_ObjectHideFlags: 0
