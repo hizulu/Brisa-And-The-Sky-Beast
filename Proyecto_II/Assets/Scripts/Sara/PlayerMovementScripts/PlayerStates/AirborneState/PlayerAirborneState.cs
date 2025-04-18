@@ -99,6 +99,12 @@ public class PlayerAirborneState : PlayerMovementState
 
         Vector3 newVelocity = new Vector3(movementDirection.x * airSpeed, stateMachine.Player.RbPlayer.velocity.y, movementDirection.z * airSpeed);
 
+        if (IsTouchingWall(movementDirection))
+        {
+            newVelocity.x = 0;
+            newVelocity.z = 0;
+        }
+
         stateMachine.Player.RbPlayer.velocity = Vector3.Lerp(stateMachine.Player.RbPlayer.velocity, newVelocity, airControl * Time.deltaTime);
         //stateMachine.Player.RbPlayer.velocity = newVelocity; // Línea que hay que poner si elimino la variable de "airControl".
         Rotate(movementDirection);
@@ -114,5 +120,26 @@ public class PlayerAirborneState : PlayerMovementState
     protected void ResetDoubleJump()
     {
         maxNumDoubleJump = 0;
+    }
+
+    /*
+     * Método que devuelve True/False dependiendo si detecta una pared pegada al Player o no.
+     */
+    private bool IsTouchingWall(Vector3 direction)
+    {
+        float wallDistance = 0.5f;
+        Vector3 posOrigin = stateMachine.Player.transform.position;
+        Vector3 horizontalDirection = new Vector3(direction.x, 0, direction.z).normalized;
+
+        if (horizontalDirection == Vector3.zero)
+            return false;
+
+        if (Physics.Raycast(posOrigin, horizontalDirection, out RaycastHit hit, wallDistance, LayerMask.GetMask("Enviroment")))
+        {
+            float angle = Vector3.Angle(hit.normal, Vector3.up);
+            return angle > 75f && angle < 105f;
+        }
+
+        return false;
     }
 }

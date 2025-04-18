@@ -17,9 +17,14 @@ public class PlayerGroundedState : PlayerMovementState
 
     }
 
+    protected bool isPointed = false;
+    private float timePressed = 0f;
+
     public override void Enter()
     {
         base.Enter();
+        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started += ctx => OnPointedStarted(ctx);
+        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled += ctx => OnPointedCanceled(ctx);
         EventsManager.CallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
@@ -27,6 +32,17 @@ public class PlayerGroundedState : PlayerMovementState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+
+        if (isPointed)
+        {
+            timePressed += Time.deltaTime;
+
+            if (timePressed >= 2f)
+            {
+                stateMachine.ChangeState(stateMachine.PointedBeastState);
+                isPointed = false;
+            }
+        }
     }
 
     public override void UpdatePhysics()
@@ -37,6 +53,8 @@ public class PlayerGroundedState : PlayerMovementState
     public override void Exit()
     {
         base.Exit();
+        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started -= ctx => OnPointedStarted(ctx);
+        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled -= ctx => OnPointedCanceled(ctx);
         EventsManager.StopCallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
@@ -162,5 +180,21 @@ public class PlayerGroundedState : PlayerMovementState
         // Lógica de acariciar a la Bestia.
         stateMachine.ChangeState(stateMachine.PetBeastState);
         Debug.Log("Estás acariciando a la Bestia.");
+    }
+
+    protected virtual void OnPointedStarted(InputAction.CallbackContext context)
+    {
+        isPointed = true;
+    }
+
+    protected virtual void OnPointedCanceled(InputAction.CallbackContext context)
+    {
+        isPointed = false;
+        timePressed = 0f;
+    }
+
+    protected virtual void OnPointedStateCanceled(InputAction.CallbackContext context)
+    {
+
     }
 }
