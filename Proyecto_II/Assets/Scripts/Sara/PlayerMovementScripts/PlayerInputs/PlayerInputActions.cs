@@ -332,6 +332,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Map"",
+                    ""type"": ""Button"",
+                    ""id"": ""0599d1d1-af9c-4b39-9ba8-df7fba8f986b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -400,6 +409,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""ClosePanelGeneral"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96d34b8f-1f3d-47f1-a30d-8fd8a5f58afc"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Map"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -426,6 +446,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UIPanel_PauseGame = m_UIPanel.FindAction("PauseGame", throwIfNotFound: true);
         m_UIPanel_Dialogue = m_UIPanel.FindAction("Dialogue", throwIfNotFound: true);
         m_UIPanel_ClosePanelGeneral = m_UIPanel.FindAction("ClosePanelGeneral", throwIfNotFound: true);
+        m_UIPanel_Map = m_UIPanel.FindAction("Map", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -611,6 +632,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UIPanel_PauseGame;
     private readonly InputAction m_UIPanel_Dialogue;
     private readonly InputAction m_UIPanel_ClosePanelGeneral;
+    private readonly InputAction m_UIPanel_Map;
     public struct UIPanelActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -621,6 +643,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @PauseGame => m_Wrapper.m_UIPanel_PauseGame;
         public InputAction @Dialogue => m_Wrapper.m_UIPanel_Dialogue;
         public InputAction @ClosePanelGeneral => m_Wrapper.m_UIPanel_ClosePanelGeneral;
+        public InputAction @Map => m_Wrapper.m_UIPanel_Map;
         public InputActionMap Get() { return m_Wrapper.m_UIPanel; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -648,6 +671,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ClosePanelGeneral.started += instance.OnClosePanelGeneral;
             @ClosePanelGeneral.performed += instance.OnClosePanelGeneral;
             @ClosePanelGeneral.canceled += instance.OnClosePanelGeneral;
+            @Map.started += instance.OnMap;
+            @Map.performed += instance.OnMap;
+            @Map.canceled += instance.OnMap;
         }
 
         private void UnregisterCallbacks(IUIPanelActions instance)
@@ -670,6 +696,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ClosePanelGeneral.started -= instance.OnClosePanelGeneral;
             @ClosePanelGeneral.performed -= instance.OnClosePanelGeneral;
             @ClosePanelGeneral.canceled -= instance.OnClosePanelGeneral;
+            @Map.started -= instance.OnMap;
+            @Map.performed -= instance.OnMap;
+            @Map.canceled -= instance.OnMap;
         }
 
         public void RemoveCallbacks(IUIPanelActions instance)
@@ -708,5 +737,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnPauseGame(InputAction.CallbackContext context);
         void OnDialogue(InputAction.CallbackContext context);
         void OnClosePanelGeneral(InputAction.CallbackContext context);
+        void OnMap(InputAction.CallbackContext context);
     }
 }

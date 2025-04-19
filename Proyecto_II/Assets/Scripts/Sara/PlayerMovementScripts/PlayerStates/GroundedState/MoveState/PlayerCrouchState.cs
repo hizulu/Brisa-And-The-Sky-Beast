@@ -1,15 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
+ * NOMBRE CLASE: PlayerCrouchState
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: Clase que hereda de PlayerMovedState
+ * VERSIÓN: 1.0. 
+ */
 public class PlayerCrouchState : PlayerMovedState
 {
-    public PlayerCrouchState(PlayerStateMachine stateMachine) : base(stateMachine)
-    {
+    public PlayerCrouchState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
-    }
-
+    #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
         stateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.CrouchSpeedModif;
@@ -25,9 +28,6 @@ public class PlayerCrouchState : PlayerMovedState
 
         if (stateMachine.MovementData.MovementInput == Vector2.zero)
             stateMachine.ChangeState(stateMachine.IdleState);
-
-        if(!stateMachine.Player.PlayerInput.PlayerActions.Crouch.IsPressed())
-            stateMachine.ChangeState(stateMachine.WalkState);
     }
 
     public override void Exit()
@@ -37,10 +37,13 @@ public class PlayerCrouchState : PlayerMovedState
         EventsManager.TriggerSpecialEvent<bool>("CrouchState", false);
         Debug.Log("Has salido del estado de AGACHARSE.");
     }
+    #endregion
 
+    #region Método Cancelar Entrada Input
     protected override void OnMovementCanceled(InputAction.CallbackContext context)
     {
         stateMachine.ChangeState(stateMachine.IdleState);
         base.OnMovementCanceled(context);
     }
+    #endregion
 }

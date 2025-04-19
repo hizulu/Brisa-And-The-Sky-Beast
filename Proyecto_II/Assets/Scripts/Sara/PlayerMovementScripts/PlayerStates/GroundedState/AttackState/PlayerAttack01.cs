@@ -1,18 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
+/*
+ * NOMBRE CLASE: PlayerAttack01
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: Clase que hereda de PlayerAttackState
+ * VERSIÓN: 1.0. 
+ */
 public class PlayerAttack01 : PlayerAttackState
 {
-    //public static event Action<float> OnAttack01Enemy;
+    public PlayerAttack01(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
-    public PlayerAttack01(PlayerStateMachine stateMachine) : base(stateMachine)
-    {
-
-    }
-
+    #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
         maxTimeToNextAttack = 0.5f;
@@ -25,8 +24,7 @@ public class PlayerAttack01 : PlayerAttackState
         StartAnimation(stateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
         float attackDamageModifier = UnityEngine.Random.Range(attackDamageModifierMin, attackDamageModifierMax);
         float attackDamageCombo01 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
-        EventsManager.TriggerSpecialEvent<float>("OnAttack01Enemy", attackDamageCombo01);
-        //OnAttack01Enemy?.Invoke(attackDamageCombo01);
+        EventsManager.TriggerSpecialEvent<float>("OnAttack01Enemy", attackDamageCombo01); // EVENTO: Crear evento de dañar al enemigo con daño del ComboAttack01.
         //Debug.Log("Daño del ataque 1: " + " " + attackDamageCombo01);
     }
 
@@ -41,13 +39,9 @@ public class PlayerAttack01 : PlayerAttackState
         if (attackFinish && canContinueCombo)
         {
             if (attackTimeElapsed < maxTimeToNextAttack && isWaitingForInput)
-            {
                 stateMachine.ChangeState(stateMachine.Attack02State);
-            }
             else
-            {
                 stateMachine.ChangeState(stateMachine.IdleState);
-            }
         }
     }
 
@@ -65,19 +59,21 @@ public class PlayerAttack01 : PlayerAttackState
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
     }
+    #endregion
 
+    #region Métodos Propios Attack01State
+    /*
+     * Método para comprobar que la animación del ataque 1 se ha terminado para pasar al siguiente estado requerido.
+     */
     protected override void FinishAnimation()
     {
-        //Animator animator = stateMachine.Player.AnimPlayer;
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
+        if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Attack01") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             attackFinish = true;
-        }
     }
 
     protected override void Move()
     {
-        if (!attackFinish)
-            return;
+        if (!attackFinish) return;
     }
+    #endregion
 }

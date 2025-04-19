@@ -1,18 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
+/*
+ * NOMBRE CLASE: PlayerAttack02
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: Clase que hereda de PlayerAttackState
+ * VERSIÓN: 1.0. 
+ */
 public class PlayerAttack02 : PlayerAttackState
 {
-    public PlayerAttack02(PlayerStateMachine stateMachine) : base(stateMachine)
-    {
+    public PlayerAttack02(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
-    }
-
-    //public static event Action<float> OnAttack02Enemy;
-
+    #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
         maxTimeToNextAttack = 0.7f;
@@ -25,9 +24,8 @@ public class PlayerAttack02 : PlayerAttackState
         StartAnimation(stateMachine.Player.PlayerAnimationData.Attack02ParameterHash);
         float attackDamageModifier = UnityEngine.Random.Range(attackDamageModifierMin, attackDamageModifierMax);
         float attackDamageCombo02 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
-        EventsManager.TriggerSpecialEvent<float>("OnAttack02Enemy", attackDamageCombo02);
-        //OnAttack02Enemy?.Invoke(attackDamageCombo02);
-        Debug.Log("Daño del ataque 2: " + " " + attackDamageCombo02);
+        EventsManager.TriggerSpecialEvent<float>("OnAttack02Enemy", attackDamageCombo02); // EVENTO: Crear evento de dañar al enemigo con daño del ComboAttack02.
+        //Debug.Log("Daño del ataque 2: " + " " + attackDamageCombo02);
     }
 
     public override void HandleInput()
@@ -60,20 +58,21 @@ public class PlayerAttack02 : PlayerAttackState
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.Attack02ParameterHash);
     }
+    #endregion
 
+    #region Métodos Propios Attack02
+    /*
+     * Método para comprobar que la animación del ataque 2 se ha terminado para pasar al siguiente estado requerido.
+     */
     protected override void FinishAnimation()
     {
-        //Animator animator = stateMachine.Player.AnimPlayer;
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack02") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-        {
-            //Debug.Log("Animación de Attack02 acabada");
+        if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Attack02") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             attackFinish = true;
-        }
     }
 
     protected override void Move()
     {
-        if (!attackFinish)
-            return;
+        if (!attackFinish) return;
     }
+    #endregion
 }

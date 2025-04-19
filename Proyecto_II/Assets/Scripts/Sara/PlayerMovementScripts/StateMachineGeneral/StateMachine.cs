@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /*
- * NOMBRE SCRIPT: StateMachine
+ * NOMBRE CLASE (Abstracta): StateMachine
  * AUTOR: Sara Yue Madruga Martín
  * FECHA: 09/03/2025
  * DESCRIPCIÓN: Clase abstracta que gestiona el estado actual y las transciones de los diferentes estados.
@@ -26,13 +24,16 @@ public abstract class StateMachine
         CurrentState.Enter();
     }
 
+    /*
+     * Método que lee la entrada de inputs del estado actual (si existe).
+    */
     public void HandleInput()
     {
         CurrentState?.HandleInput();
     }
 
     /*
-     * Método que actualiza la lógica del estado actual. 
+     * Método que actualiza la lógica del estado actual (si existe).
     */
     public void UpdateLogic()
     {
@@ -40,18 +41,26 @@ public abstract class StateMachine
     }
 
     /*
-     * Método que actualiza la física del estado actual. 
+     * Método que actualiza la física del estado actual (si existe).
     */
     public void UpdatePhysics()
     {
         CurrentState?.UpdatePhysics();
     }
 
+    /*
+     * Método que recibe la entrada de una colisión de un trigger del estado actual (si existe).
+     * @param1: collider - El collider con el que choca el Player.
+    */
     public void OnTriggerEnter(Collider collider)
     {
         CurrentState?.OnTriggerEnter(collider);
     }
 
+    /*
+     * Método que recibe la salida de una colisión de un trigger del estado actual (si existe).
+     * @param1: collider - El collider del que sale el Player.
+    */
     public void OnTriggerExit(Collider collider)
     {
         CurrentState?.OnTriggerExit(collider);

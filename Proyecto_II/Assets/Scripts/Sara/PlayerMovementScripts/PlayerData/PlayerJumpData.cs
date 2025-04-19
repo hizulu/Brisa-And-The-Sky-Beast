@@ -1,8 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * NOMBRE CLASE: PlayerJumpData
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: Clase que almacena los modificadores de salto del jugador, tanto para el salto normal como para el doble salto.
+ * VERSIÓN: 1.0
+ */
 [Serializable]
 public class PlayerJumpData
 {
