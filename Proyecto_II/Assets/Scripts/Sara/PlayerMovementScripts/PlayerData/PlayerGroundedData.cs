@@ -1,8 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * NOMBRE CLASE: PlayerGroundedData
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: Clase que contiene los datos necesarios para el estado del jugador en el suelo.
+ * VERSIÓN: 1.0
+ */
 [Serializable]
 public class PlayerGroundedData
 {

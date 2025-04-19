@@ -1,20 +1,27 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
+ * NOMBRE CLASE: PlayerAirborneState
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: Clase que hereda de PlayerMovementState
+ * VERSIÓN: 1.0. 
+ */
 public class PlayerAirborneState : PlayerMovementState
 {
-    public PlayerAirborneState(PlayerStateMachine _stateMachine) : base(_stateMachine)
-    {
+    public PlayerAirborneState(PlayerStateMachine _stateMachine) : base(_stateMachine) { }
 
-    }
-
+    #region Variables AirborneState Y Derivados
     protected bool jumpFinish;
     protected bool isJumping = false;
 
     protected float jumpTimeElapsed;
     protected float minTimeBeforeDoubleJump = 0.05f;
     protected int maxNumDoubleJump;
+    #endregion
 
+    #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
         base.Enter();
@@ -52,32 +59,17 @@ public class PlayerAirborneState : PlayerMovementState
         base .Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.AirborneParameterHash);
     }
+    #endregion
 
-    protected virtual void Jump()
-    {
+    #region Métodos para Sobrescribir de Airborne
+    protected virtual void Jump() { }
+    protected override void ContactWithGround(Collider collider) { }
+    #endregion
 
-    }
-
-    protected virtual bool IsGrounded()
-    {
-        float radius = groundedData.GroundCheckDistance;
-        Vector3 groundCheckPosition = stateMachine.Player.GroundCheckCollider.transform.position;
-
-        Collider[] colliders = Physics.OverlapSphere(groundCheckPosition, radius);
-
-        foreach (Collider collider in colliders)
-        {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
-                return true;
-        }
-        return false;
-    }
-
-    protected override void ContactWithGround(Collider collider)
-    {
-
-    }
-
+    #region Métodos Propios AirborneState
+    /*
+     * Método para mover a Player mientras está en el aire.
+     */
     protected override void Move()
     {
         Vector2 input = stateMachine.MovementData.MovementInput;
@@ -110,13 +102,9 @@ public class PlayerAirborneState : PlayerMovementState
         Rotate(movementDirection);
     }
 
-
-    protected override void OnMovementCanceled(InputAction.CallbackContext context)
-    {
-        if (stateMachine.CurrentState is PlayerJumpState || stateMachine.CurrentState is PlayerFallState)
-            stateMachine.MovementData.MovementInput = Vector2.zero;
-    }
-
+    /*
+     * Método que resetea a 0 el número de doble saltos realizados.
+     */
     protected void ResetDoubleJump()
     {
         maxNumDoubleJump = 0;
@@ -142,4 +130,37 @@ public class PlayerAirborneState : PlayerMovementState
 
         return false;
     }
+    #endregion
+
+    #region Método Comprobar si Player Toca Suelo
+    /*
+     * Método que devuelve True/False para comprobar si Player ha tocado suelo o no.
+     */
+    protected virtual bool IsGrounded()
+    {
+        float radius = groundedData.GroundCheckDistance;
+        Vector3 groundCheckPosition = stateMachine.Player.GroundCheckCollider.transform.position;
+
+        Collider[] colliders = Physics.OverlapSphere(groundCheckPosition, radius);
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
+                return true;
+        }
+        return false;
+    }
+    #endregion
+
+    #region Método Cancelar Entrada Input
+    /*
+     * Método sobrescrito que se ejecuta cuando se cancela la entrada de movimiento.
+     * Si Player está en el estado de salto o de caída, se resetea el input de movimiento a cero.
+     */
+    protected override void OnMovementCanceled(InputAction.CallbackContext context)
+    {
+        if (stateMachine.CurrentState is PlayerJumpState || stateMachine.CurrentState is PlayerFallState)
+            stateMachine.MovementData.MovementInput = Vector2.zero;
+    }
+    #endregion
 }

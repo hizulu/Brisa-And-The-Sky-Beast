@@ -1,32 +1,32 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 /*
- * NOMBRE SCRIPT: PlayerMovementState
+ * NOMBRE CLASE: PlayerMovementState
  * AUTOR: Sara Yue Madruga Martín
  * FECHA: 09/03/2025
- * DESCRIPCIÓN: Clase que hereda de IState
- * VERSIÓN: 1.0.
+ * DESCRIPCIÓN: Clase que hereda de IState y contiene la lógica básica de Player.
+ *              Gestiona las entradas de movimiento, las transiciones de animaciones y las interacciones con el mundo (colliders).
+ * VERSIÓN: 1.0. Entradas del Input System y entrada y salida de animaciones.
+ * VERSIÓN: 2.0. Entradas y salidas de triggers.
  */
 public class PlayerMovementState : IState
 {
+    #region Variables
     protected PlayerStateMachine stateMachine;
 
     protected readonly PlayerGroundedData groundedData;
     protected readonly PlayerAirborneData airborneData;
     protected readonly PlayerStatsData statsData;
-    //protected readonly ItemData itemData;
 
     protected AudioManager audioManager;
-    protected Animator animPlayer;
+    #endregion
 
-    private Beast beast;
-
+    /*
+     * Constructor de PlayerMovementState.
+     * @param1 _stateMachine - Recibe una referencia de PlayerStateMachine para poder acceder a su información.
+     */
     public PlayerMovementState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
@@ -34,14 +34,16 @@ public class PlayerMovementState : IState
         groundedData = stateMachine.Player.Data.GroundedData;
         airborneData = stateMachine.Player.Data.AirborneData;
         statsData = stateMachine.Player.Data.StatsData;
-        //itemData = stateMachine.Player.Data.ItemData;
-
-        animPlayer = stateMachine.Player.AnimPlayer;
 
         audioManager = GameObject.FindObjectOfType<AudioManager>();
-        beast = GameObject.FindObjectOfType<Beast>();
     }
 
+
+    #region Métodos Base de la Máquina de Estados
+    /*
+     * Método de entrada.
+     * Se suscriben las entradas del Input System y los eventos.
+     */
     public virtual void Enter()
     {
         AddInputActionsCallbacks();
@@ -49,70 +51,122 @@ public class PlayerMovementState : IState
         EventsManager.CallNormalEvents("PickUpItem", PickUp);
     }
 
+    /*
+     * Método de lectura de entrada de los inputs.
+     * Lee la entrada del Player.
+     */
     public virtual void HandleInput()
     {
         ReadMovementInput();
     }
 
+    /*
+     * Método que actualiza la lógica del juego.
+     */
     public virtual void UpdateLogic()
     {
         //Debug.Log("Actualizando");
     }
 
+    /*
+     * Método que actualiza las físicas del juego.
+     * Mueve al jugador.
+     */
     public virtual void UpdatePhysics()
     {
         Move();
     }
 
-    public virtual void Exit()
-    {
-        EventsManager.StopCallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
-        EventsManager.StopCallNormalEvents("PickUpItem", PickUp);
-        RemoveInputActionsCallbacks();
-    }
-
+    /*
+     * Método que recibe la entrada de colisiones de triggers del mundo.
+     * Comprueba si el jugador ha entrado en contacto con el suelo.
+     * @param1: collider - El collider con el que choca el Player.
+     */
     public virtual void OnTriggerEnter(Collider collider)
     {
         if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
             ContactWithGround(collider);
     }
 
+    /*
+     * Método que recibe la salida de colisiones de triggers del mundo.
+     * Comprueba si el jugador ha dejado de estar en contacto con el suelo.
+     * @param1: collider - El collider del que sale el Player.
+     */
     public virtual void OnTriggerExit(Collider collider)
     {
         if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
             NoContactWithGround(collider);
     }
 
+    /*
+     * Método de salida.
+     * Se desuscriben las entradas del Input System y los eventos.
+     */
+    public virtual void Exit()
+    {
+        EventsManager.StopCallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
+        EventsManager.StopCallNormalEvents("PickUpItem", PickUp);
+        RemoveInputActionsCallbacks();
+    }
+    #endregion
+
+    #region Métodos Suscripción Acciones Input System
+    /*
+     * Método donde se suscriben las acciones de los inputs correspondientes.
+     */
+    protected virtual void AddInputActionsCallbacks()
+    {
+        stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled += OnMovementCanceled;
+        stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
+        stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled += OnMovementCanceled;
+        stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed += CallBeast;
+    }
+
+    /*
+     * Método donde se desuscriben las acciones de los inputs correspondientes.
+     */
+    protected virtual void RemoveInputActionsCallbacks()
+    {
+        stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled -= OnMovementCanceled;
+        stateMachine.Player.PlayerInput.PlayerActions.Run.canceled -= OnMovementCanceled;
+        stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled -= OnMovementCanceled;
+        stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed -= CallBeast;
+    }
+
+    /*
+     * Método que lee el valor de la entrada de movimiento del jugador y la asigna al estado de movimiento.
+     */
     public void ReadMovementInput()
     {
         stateMachine.MovementData.MovementInput = stateMachine.Player.PlayerInput.PlayerActions.Movement.ReadValue<Vector2>();
     }
+    #endregion
 
+    #region Métodos Gestión Animaciones
+    /*
+     * Método que activa la animación correspondiente en el Animator.
+     * @param hashNumAnimation - Número (hash) que identifica la animación que debe activarse en el Animator.
+     */
     protected void StartAnimation(int hashNumAnimation)
     {
         stateMachine.Player.AnimPlayer.SetBool(hashNumAnimation, true);
     }
 
+    /*
+     * Método que desactiva la animación correspondiente en el Animator.
+     * @param hashNumAnimation - Número (hash) que identifica la animación que debe desactivarse en el Animator.
+     */
     protected void StopAnimation(int hashNumAnimation)
     {
         stateMachine.Player.AnimPlayer.SetBool(hashNumAnimation, false);
     }
+    #endregion
 
-    protected virtual void AddInputActionsCallbacks()
-    {
-        stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled += OnMovementCanceled;
-        stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
-        stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed += CallBeast;        
-        stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled -= OnMovementCanceled;
-    }
-
-    protected virtual void RemoveInputActionsCallbacks()
-    {
-        stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled -= OnMovementCanceled;
-        stateMachine.Player.PlayerInput.PlayerActions.Run.canceled -= OnMovementCanceled;
-        stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed -= CallBeast;
-    }
-
+    #region Métodos Físicas de Movimiento
+    /*
+     * Método que gestiona el movimiento del personaje según la dirección y velocidad actual.
+     */
     protected virtual void Move()
     {
         if (stateMachine.MovementData.MovementInput == Vector2.zero || stateMachine.MovementData.MovementSpeedModifier == 0f)
@@ -131,32 +185,40 @@ public class PlayerMovementState : IState
         Rotate(movementDirection);
     }
 
-    public void Rotate(Vector3 movementDirection)
+    /*
+     * Método que rota al personaje hacia la dirección del movimiento.
+     * @param _movementDirection - Dirección hacia la que se debe orientar el personaje.
+     */
+    public void Rotate(Vector3 _movementDirection)
     {
-        if (movementDirection != Vector3.zero)
+        if (_movementDirection != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(movementDirection); // Hace que el personaje gire en la dirección donde se produce el movimiento.
+            Quaternion targetRotation = Quaternion.LookRotation(_movementDirection); // Hace que el personaje gire en la dirección donde se produce el movimiento.
             stateMachine.Player.RbPlayer.rotation = Quaternion.Slerp(stateMachine.Player.RbPlayer.rotation, targetRotation, Time.deltaTime * 10f);
         }
     }
 
+    /*
+     * Método que devuelve la dirección del input de movimiento en un Vector3.
+     * @return Vector3 - Devuelve la dirección del movimiento.
+     */
     protected Vector3 GetMovementInputDirection()
     {
         return new Vector3(stateMachine.MovementData.MovementInput.x, 0f, stateMachine.MovementData.MovementInput.y);
     }
 
+    /*
+     * Método que calcula y devuelve la velocidad actual del personaje.
+     * @return float - Devuelve la velocidad del personaje.
+     */
     protected float GetMovementSpeed()
     {
         float movementSpeed = groundedData.BaseSpeed * stateMachine.MovementData.MovementSpeedModifier;
-
         return movementSpeed;
     }
+    #endregion
 
-    protected void PickUp()
-    {
-        stateMachine.ChangeState(stateMachine.PickUpState);
-    }
-
+    #region Métodos para Sobrescribir
     protected virtual void OnMovementCanceled(InputAction.CallbackContext context) { }
 
     protected virtual void ContactWithGround(Collider collider) { }
@@ -164,7 +226,22 @@ public class PlayerMovementState : IState
     protected virtual void NoContactWithGround(Collider collider) { }
 
     protected virtual void FinishAnimation() { }
+    #endregion
 
+    #region Métodos de Llamadas de Eventos
+    /*
+     * Método que cambia el estado del jugador a PickUpState.
+     */
+    protected void PickUp()
+    {
+        stateMachine.ChangeState(stateMachine.PickUpState);
+    }
+
+    /*
+     * Método de recibir daño.
+     * Disminuye la salud del jugador en función del daño recibido y cambia al estado de Medio-Muerta si la salud llega a cero.
+     * @param _enemyDamage - Daño recibido por parte del enemigo.
+     */
     private void TakeDamage(float _enemyDamage)
     {
         statsData.CurrentHealth -= _enemyDamage;
@@ -176,13 +253,19 @@ public class PlayerMovementState : IState
             stateMachine.ChangeState(stateMachine.TakeDamageState);
     }
 
+    /*
+     * Método que gestiona la llamada a la Bestia.
+     * @param context - Información sobre la tecla / acción que se activa.
+     */
     private void CallBeast(InputAction.CallbackContext context)
     {
-        Debug.Log("Has llamado a la Bestia");
-        beast.CallBeast();
+        //Debug.Log("Has llamado a la Bestia");
         stateMachine.Player.StartCoroutine(StopCallBeast());
     }
 
+    /*
+     * Corrutina que gestiona que la animación de llamar a la Bestia se realice correctamente.
+     */
     IEnumerator StopCallBeast()
     {
         StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
@@ -193,4 +276,19 @@ public class PlayerMovementState : IState
         StartAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
         StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
+    #endregion
+
+    #region Métodos Cursor
+    public void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+    #endregion
 }

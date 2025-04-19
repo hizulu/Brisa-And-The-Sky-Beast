@@ -1,7 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * NOMBRE CLASE: PlayerSO
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: ScriptableObject que almacena todos los datos del Player.
+ * VERSIÓN: 1.0
+ */
 [CreateAssetMenu(fileName = "NewPlayerData", menuName = "ScriptableObjects/Player")]
 public class PlayerSO : ScriptableObject
 {

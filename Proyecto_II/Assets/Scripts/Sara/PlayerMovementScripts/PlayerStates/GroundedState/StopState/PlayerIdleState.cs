@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /*
- * NOMBRE SCRIPT: PlayerIdleState
+ * NOMBRE CLASE: PlayerIdleState
  * AUTOR: Sara Yue Madruga Martín
  * FECHA: 09/03/2025
  * DESCRIPCIÓN: Clase que hereda de PlayerGroundeState
@@ -11,10 +9,9 @@ using UnityEngine;
  */
 public class PlayerIdleState : PlayerGroundedState
 {
-    public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine)
-    {
-    }
+    public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
+    #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
         stateMachine.MovementData.MovementSpeedModifier = 0f;
@@ -27,10 +24,7 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.UpdateLogic();
 
-        if (stateMachine.MovementData.MovementInput == Vector2.zero)
-        {
-            return;
-        }
+        if (stateMachine.MovementData.MovementInput == Vector2.zero) return;
 
         OnMove();
     }
@@ -46,4 +40,5 @@ public class PlayerIdleState : PlayerGroundedState
         StopAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
         //Debug.Log("Has salido del estado de IDLE.");
     }
+    #endregion
 }

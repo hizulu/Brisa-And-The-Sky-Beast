@@ -1,7 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * NOMBRE CLASE: PlayerInput
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: 
+ * VERSIÓN: 1.0. 
+ */
 public class PlayerInput : MonoBehaviour
 {
     public PlayerInputActions InputActions { get; private set; }

@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 /*
- * NOMBRE SCRIPT: PlayerStateMachine
+ * NOMBRE CLASE: PlayerStateMachine
  * AUTOR: Sara Yue Madruga Martín
  * FECHA: 09/03/2025
  * DESCRIPCIÓN: Clase que hereda de StateMachine y se encarga de instanciar y dar acceso a los estados del jugador.
@@ -43,6 +39,11 @@ public class PlayerStateMachine : StateMachine
     public PlayerPickUpState PickUpState { get; }
     #endregion
 
+    /*
+     * Constructor de la máquina de estados del Player.
+     * Inicializa los estados para dejarlos preparados para los cambios de estado.
+     * @param1 player - Recibe una referencia del Player para poder acceder a su información.
+     */
     public PlayerStateMachine(Player player)
     {
         Player = player;

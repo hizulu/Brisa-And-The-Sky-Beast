@@ -1,6 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+/*
+ * NOMBRE CLASE: PlayerMovementData
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: Clase que almacena los datos de movimiento del jugador. La dirección de entrada y el modificador de velocidad.
+ * VERSIÓN: 1.0
+ */
 
 public class PlayerMovementData
 {

@@ -1,14 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
+ * NOMBRE CLASE: PlayerRunState
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: Clase que hereda de PlayerMovedState
+ * VERSIÓN: 1.0. 
+ */
 public class PlayerRunState : PlayerMovedState
 {
-    public PlayerRunState(PlayerStateMachine stateMachine) : base(stateMachine)
-    {
-    }
+    public PlayerRunState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
+    #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
         stateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.RunSpeedModif;
@@ -35,10 +39,13 @@ public class PlayerRunState : PlayerMovedState
         StopAnimation(stateMachine.Player.PlayerAnimationData.RunParameterHash);
         //Debug.Log("Has salido del estado de CORRER.");
     }
+    #endregion
 
+    #region Método Cancelar Entrada Input
     protected override void OnMovementCanceled(InputAction.CallbackContext context)
     {
         stateMachine.ChangeState(stateMachine.IdleState);
         base.OnMovementCanceled(context);
     }
+    #endregion
 }
