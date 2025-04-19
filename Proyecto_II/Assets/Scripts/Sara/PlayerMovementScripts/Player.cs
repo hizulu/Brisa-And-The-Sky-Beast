@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     public PlayerInput PlayerInput { get; private set; }
 
     [SerializeField] private BeastSelectionPanel beastPanel;
+    [SerializeField] private MapPanel mapPanel;
 
     [SerializeField] public CinemachineVirtualCamera playerCam;
     public CinemachinePOV CamComponents;
@@ -61,6 +62,7 @@ public class Player : MonoBehaviour
         PlayerInput.UIPanelActions.Inventory.performed += OpenCloseInventory;
         PlayerInput.UIPanelActions.ClosePanelGeneral.performed += OpenCloseInventory;
         PlayerInput.UIPanelActions.BeastPanel.performed += OpenCloseBeastPanel;
+        PlayerInput.UIPanelActions.Map.performed += OpenCloseMapPanel;
     }
 
     private void OnDestroy()
@@ -68,6 +70,7 @@ public class Player : MonoBehaviour
         PlayerInput.UIPanelActions.Inventory.performed -= OpenCloseInventory;
         PlayerInput.UIPanelActions.ClosePanelGeneral.performed -= OpenCloseInventory;
         PlayerInput.UIPanelActions.BeastPanel.performed -= OpenCloseBeastPanel;
+        PlayerInput.UIPanelActions.Map.performed -= OpenCloseMapPanel;
     }
 
     void Start()
@@ -108,9 +111,19 @@ public class Player : MonoBehaviour
         beastPanel.OpenCloseBeastPanel(context);
     }
 
-    #region Métodos temporales (No se sabe si se quedarán en el script de Player o se moverán).
+    public void OpenCloseMapPanel(InputAction.CallbackContext context)
+    {
+        if (mapPanel == null)
+        {
+            Debug.LogError("mapPanel is null! Please assign it in the inspector.");
+            return;
+        }
+        mapPanel.OpenCloseMapPanel(context);
+    }
 
-    public void GolpearPrueba()
+        #region Métodos temporales (No se sabe si se quedarán en el script de Player o se moverán).
+
+        public void GolpearPrueba()
     {
         StartCoroutine(EnableHitBox());
     }
