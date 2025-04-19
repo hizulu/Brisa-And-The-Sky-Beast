@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -27,6 +28,8 @@ public class DrawbridgeMover : MonoBehaviour, IMovableElement
         {
             Debug.LogWarning("The drawbridge doesn't have a NavMeshModifierVolume assigned.");
         }
+
+        StartCoroutine(TemporarilyUpdateNavMesh());
     }
     public void SetLeverOneToActive() => leverOneActive = true;
     public void SetLeverTwoToActive() => leverTwoActive = true;
@@ -72,13 +75,55 @@ public class DrawbridgeMover : MonoBehaviour, IMovableElement
         // Gestión del NavMesh
         if (target == twoActiveLever)
         {
-            navMeshData = beastNavMeshSurface.navMeshData;
-            navMeshModifier.enabled = false;
-            beastNavMeshSurface.UpdateNavMesh(navMeshData);
-            Debug.Log("NavMesh should be updated");
+            UpdateNavMesh();
         }
     }
 
     public void StartMoving(Vector3 target, float speed) { } // No usado aquí
     public bool IsMoving() => isMoving;
+
+    private void UpdateNavMesh()
+    {
+        StartCoroutine(TemporarilyUpdateNavMesh());
+    }
+
+    private IEnumerator TemporarilyUpdateNavMesh()
+    {
+        // Obtener todos los renderers con los tags correspondientes
+        MeshRenderer[] toAdd = GameObject.FindGameObjectsWithTag("AddForNavMesh")
+            .SelectMany(go => go.GetComponentsInChildren<MeshRenderer>(true)).ToArray();
+
+        MeshRenderer[] toRemove = GameObject.FindGameObjectsWithTag("RemoveForNavMesh")
+            .SelectMany(go => go.GetComponentsInChildren<MeshRenderer>(true)).ToArray();
+
+        // Guardar estado original
+        Dictionary<MeshRenderer, bool> originalStates = new Dictionary<MeshRenderer, bool>();
+        foreach (var rend in toAdd)
+        {
+            originalStates[rend] = rend.enabled;
+            rend.enabled = true; // Asegurar que estén activos para ser considerados
+        }
+        foreach (var rend in toRemove)
+        {
+            originalStates[rend] = rend.enabled;
+            rend.enabled = false; // Asegurar que no se incluyan en el bake
+        }
+
+        // Desactivar temporalmente el Modifier para que no interfiera
+        navMeshModifier.enabled = false;
+
+        // Espera 1 frame para asegurarse de que Unity registre los cambios
+        yield return null;
+
+        // Actualizar el NavMesh
+        navMeshData = beastNavMeshSurface.navMeshData;
+        beastNavMeshSurface.UpdateNavMesh(navMeshData);
+        Debug.Log("NavMesh updated");
+
+        // Restaurar el estado original
+        foreach (var kvp in originalStates)
+        {
+            kvp.Key.enabled = kvp.Value;
+        }
+    }
 }

@@ -2504,11 +2504,10 @@ GameObject:
   - component: {fileID: 186230216}
   - component: {fileID: 186230220}
   - component: {fileID: 186230219}
-  - component: {fileID: 186230218}
   - component: {fileID: 186230217}
   m_Layer: 6
   m_Name: NavMesh_Troncos
-  m_TagString: Untagged
+  m_TagString: AddForNavMesh
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2547,27 +2546,6 @@ MonoBehaviour:
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
---- !u!65 &186230218
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186230215}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &186230219
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2575,7 +2553,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 186230215}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8887,7 +8865,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 193
-  m_UseGeometry: 1
+  m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
   m_IgnoreNavMeshAgent: 1
@@ -18913,7 +18891,7 @@ GameObject:
   - component: {fileID: 1358140897}
   m_Layer: 6
   m_Name: Seesaw
-  m_TagString: Untagged
+  m_TagString: RemoveForNavMesh
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44026,11 +44004,11 @@ GameObject:
   - component: {fileID: 8347264400014081473}
   m_Layer: 6
   m_Name: puente2
-  m_TagString: Untagged
+  m_TagString: RemoveForNavMesh
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &5370582881566181482
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -44432,6 +44410,7 @@ GameObject:
   - component: {fileID: 1049455662591943348}
   - component: {fileID: 8994758171846288281}
   - component: {fileID: 8994758171846288282}
+  - component: {fileID: 8994758171846288283}
   m_Layer: 6
   m_Name: SueloRio
   m_TagString: Untagged
@@ -48528,6 +48507,7 @@ GameObject:
   - component: {fileID: 1423387468391873558}
   - component: {fileID: 8375975879556118115}
   - component: {fileID: 8375975879556118116}
+  - component: {fileID: 8375975879556118117}
   m_Layer: 6
   m_Name: "R\xEDo"
   m_TagString: Untagged
@@ -53780,6 +53760,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!208 &8375975879556118117
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6784821590531597987}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.209, y: 0.156, z: 0.606}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.109000005, y: 0.134, z: 0.597}
+  m_TimeToStationary: 0.5
 --- !u!23 &8389649883486260865
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -55855,6 +55851,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6152716048077104253, guid: 91bb4507ba3756e40a2e9840372b9aad, type: 3}
+--- !u!208 &8994758171846288283
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5571938226978027900}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.21800001, y: 0.54700005, z: 0.034}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.049000002, y: 0.47500002, z: -0.060000002}
+  m_TimeToStationary: 0.5
 --- !u!23 &8995134602349273617
 MeshRenderer:
   m_ObjectHideFlags: 0
