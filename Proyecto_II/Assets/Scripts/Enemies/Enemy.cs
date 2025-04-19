@@ -87,7 +87,6 @@ public class Enemy : HittableElement
         enemyStateMachine.ChangeState(enemyStateMachine.EnemyIdleState);
 
         currentHealth = maxHealth;
-        Debug.Log(currentHealth);
     }
 
     private void Update()
