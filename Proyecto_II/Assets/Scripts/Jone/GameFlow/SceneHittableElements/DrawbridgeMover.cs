@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 // Jone Sainz Egea
 // 30/03/2025
+    // 19/04/2025 Nav Mesh Update fixed
 public class DrawbridgeMover : MonoBehaviour, IMovableElement
 {
     [SerializeField] private Transform oneActiveLever;

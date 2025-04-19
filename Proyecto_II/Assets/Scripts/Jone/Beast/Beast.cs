@@ -21,6 +21,9 @@ public class Beast : MonoBehaviour
     [SerializeField] public float freeRoamRadius = 30f;
     [SerializeField] public float interactionThreshold = 8f;
 
+    [SerializeField] float baseInterestInBrisa = 1f;
+    [SerializeField] float growthFactorInterestInBrisa = 0.05f;
+
     private BeastState currentState;
 
     public Blackboard blackboard { get; private set; }
@@ -149,5 +152,16 @@ public class Beast : MonoBehaviour
     public bool IsPlayerWithinInteractionDistance()
     {
         return Vector3.Distance(transform.position, playerTransform.position) < interactionThreshold;
+    }
+
+    // TODO: borrar esto
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, freeRoamRadius);
+        if (playerTransform == null) return;
+        float distance = Vector3.Distance(transform.position, playerTransform.position);
+        float printInterestInBrisa = baseInterestInBrisa * Mathf.Exp(growthFactorInterestInBrisa * distance);
+        UnityEditor.Handles.Label(playerTransform.position + Vector3.up * 4, $"Interest: {printInterestInBrisa}");
     }
 }

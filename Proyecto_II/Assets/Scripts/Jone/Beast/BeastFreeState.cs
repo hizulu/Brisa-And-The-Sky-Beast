@@ -48,7 +48,7 @@ public class BeastFreeState : BeastState
         Node interestSubtree = new Selector(new List<Node>
         {
             new CheckFlag(blackboard, "lookForTarget",
-                new GetInterestPoint(beast, beast.freeRoamRadius)),
+                new GetInterestPoint(beast, beast.playerTransform, beast.freeRoamRadius)),
             new CheckHasKey(blackboard, "target",
                 new GoToInterestPoint(beast, beast.arrivalThreshold)),
             new CheckFlag(blackboard, "reachedTarget",
