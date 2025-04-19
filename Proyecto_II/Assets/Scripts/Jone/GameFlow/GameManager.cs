@@ -144,7 +144,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Has parado el juego");
             PauseGame();
-            Debug.Log(Time.timeScale);
         }
     }
 
