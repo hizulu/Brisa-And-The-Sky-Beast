@@ -9,20 +9,25 @@ using UnityEngine.AI;
 public class Beast : MonoBehaviour
 {
 
-    [Header("Componentes")]
+    [Header("Components")]
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Animator anim;
     //[SerializeField] public Rigidbody rb;
     [SerializeField] public Transform playerTransform;
     [SerializeField] public Transform mountPoint;
 
-    [Header("Parámetros")]
+    [Header("Parameters")]
     [SerializeField] public float arrivalThreshold = 5f;
     [SerializeField] public float freeRoamRadius = 30f;
     [SerializeField] public float interactionThreshold = 8f;
 
-    [SerializeField] float baseInterestInBrisa = 1f;
-    [SerializeField] float growthFactorInterestInBrisa = 0.05f;
+    [Header("Stats")]
+    [SerializeField] public float maxHealth = 500f;
+
+    private float currentHealth;
+
+    float baseInterestInBrisa = 1f;
+    float growthFactorInterestInBrisa = 0.05f;
 
     private BeastState currentState;
 
@@ -37,9 +42,12 @@ public class Beast : MonoBehaviour
         if (anim == null) anim = GetComponent<Animator>();
         if (blackboard == null) blackboard = new Blackboard();
 
+        currentHealth = maxHealth;
+
         // Comenzamos en estado de libertad
         TransitionToState(new BeastFreeState());
 
+        EventsManager.CallNormalEvents("CallBeast", CallBeast);
         EventsManager.CallNormalEvents("AcariciarBestia_Bestia", PetBeastSelected);
         EventsManager.CallNormalEvents("SanarBestia_Bestia", HealBeastSelected);
         EventsManager.CallNormalEvents("AtaqueBestia_Bestia", AttackBeastSelected);
@@ -49,6 +57,7 @@ public class Beast : MonoBehaviour
 
     private void OnDestroy()
     {
+        EventsManager.StopCallNormalEvents("CallBeast", CallBeast);
         EventsManager.StopCallNormalEvents("AcariciarBestia_Bestia", PetBeastSelected);
         EventsManager.StopCallNormalEvents("SanarBestia_Bestia", HealBeastSelected);
         EventsManager.StopCallNormalEvents("AtaqueBestia_Bestia", AttackBeastSelected);
@@ -96,6 +105,7 @@ public class Beast : MonoBehaviour
         Debug.Log("Bestia llamada por el jugador");
     }
 
+    #region Beast Selection Menu
     public void OpenBeastMenu()
     {
         // Por si se abre el menú sin estar en estado de constrained
@@ -148,6 +158,16 @@ public class Beast : MonoBehaviour
         blackboard.SetValue("isOptionAction", true);
         Debug.Log("Ha seleccionado heal");
     }
+    #endregion
+
+    #region Damage Related Functions
+    public void DamageBeast(float damage)
+    {
+        anim.SetTrigger("damageBeast");
+
+        // TODO: beast gets damaged sound
+    }
+    #endregion
 
     public bool IsPlayerWithinInteractionDistance()
     {
