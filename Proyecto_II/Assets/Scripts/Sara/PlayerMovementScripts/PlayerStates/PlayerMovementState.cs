@@ -261,6 +261,7 @@ public class PlayerMovementState : IState
     {
         //Debug.Log("Has llamado a la Bestia");
         stateMachine.Player.StartCoroutine(StopCallBeast());
+        EventsManager.TriggerNormalEvent("CallBeast");
     }
 
     /*
