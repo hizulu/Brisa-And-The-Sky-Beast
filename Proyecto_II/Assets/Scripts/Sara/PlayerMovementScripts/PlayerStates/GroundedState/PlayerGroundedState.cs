@@ -79,6 +79,8 @@ public class PlayerGroundedState : PlayerMovementState
     {
         if (stateMachine.Player.PlayerInput.PlayerActions.Run.IsPressed())
             stateMachine.ChangeState(stateMachine.RunState);
+        else if(stateMachine.Player.PlayerInput.PlayerActions.Crouch.IsPressed())
+            stateMachine.ChangeState(stateMachine.CrouchState);
         else
             stateMachine.ChangeState(stateMachine.WalkState);
     }
@@ -91,6 +93,9 @@ public class PlayerGroundedState : PlayerMovementState
     protected virtual void RunStarted(InputAction.CallbackContext context)
     {
         if (!IsGrounded())
+            return;
+
+        if (stateMachine.CurrentState == stateMachine.CrouchState)
             return;
 
         stateMachine.ChangeState(stateMachine.RunState);
@@ -106,6 +111,9 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected virtual void CrouchStarted(InputAction.CallbackContext context)
     {
+        if (stateMachine.CurrentState == stateMachine.RunState)
+            return;
+
         stateMachine.ChangeState(stateMachine.CrouchState);
     }
 
