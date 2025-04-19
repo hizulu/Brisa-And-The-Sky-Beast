@@ -53,13 +53,16 @@ public class MapPanel : MonoBehaviour
             return;
         }
 
-        mapPanel.SetActive(true);
-        mapEnabled = true;
+        if (!mapPanel.activeSelf)  // Solo lo activas si no está ya activo
+        {
+            mapPanel.SetActive(true);
+            mapEnabled = true;
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
 
-        EventsManager.TriggerNormalEvent("UIPanelOpened");
+            EventsManager.TriggerNormalEvent("UIPanelOpened");
+        }
     }
 
     public void ClosePanel()
@@ -70,12 +73,15 @@ public class MapPanel : MonoBehaviour
             return;
         }
 
-        mapPanel.SetActive(false);
-        mapEnabled = false;
+        if (mapPanel.activeSelf)  // Solo lo desactivas si está activo
+        {
+            mapPanel.SetActive(false);
+            mapEnabled = false;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
 
-        EventsManager.TriggerNormalEvent("UIPanelClosed");
+            EventsManager.TriggerNormalEvent("UIPanelClosed");
+        }
     }
 }
