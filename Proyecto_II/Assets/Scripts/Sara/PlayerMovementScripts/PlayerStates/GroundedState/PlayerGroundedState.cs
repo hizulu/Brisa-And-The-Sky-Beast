@@ -23,8 +23,8 @@ public class PlayerGroundedState : PlayerMovementState
     public override void Enter()
     {
         base.Enter();
-        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started += ctx => OnPointedStarted(ctx);
-        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled += ctx => OnPointedCanceled(ctx);
+        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started += OnPointedStarted;
+        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled += OnPointedCanceled;
         EventsManager.CallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
@@ -53,8 +53,6 @@ public class PlayerGroundedState : PlayerMovementState
     public override void Exit()
     {
         base.Exit();
-        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started -= ctx => OnPointedStarted(ctx);
-        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled -= ctx => OnPointedCanceled(ctx);
         EventsManager.StopCallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
         StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
@@ -113,10 +111,14 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected virtual void AttackStart(InputAction.CallbackContext context)
     {
-        // Solo cambiar a Attack01 si no estamos en medio de un combo o ataque
-        if (!(stateMachine.CurrentState is PlayerAttack02 || stateMachine.CurrentState is PlayerAttack03))
+        // Player no puede atacar si no tiene el palo activo en la jerarquía (recoger en el juego).
+        if (!stateMachine.Player.PaloBrisa.activeInHierarchy) return;
+
+        else
         {
-            stateMachine.ChangeState(stateMachine.Attack01State);
+            // Solo cambiar a Attack01 si no estamos en medio de un combo o ataque
+            if (!(stateMachine.CurrentState is PlayerAttack02 || stateMachine.CurrentState is PlayerAttack03))
+                stateMachine.ChangeState(stateMachine.Attack01State);
         }
     }
 
