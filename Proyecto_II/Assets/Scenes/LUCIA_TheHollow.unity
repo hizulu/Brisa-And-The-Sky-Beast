@@ -5774,6 +5774,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 353271124}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 353271130}
   m_SourcePrefab: {fileID: 100100000, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
 --- !u!1 &353271120 stripped
 GameObject:
@@ -5866,7 +5869,7 @@ MonoBehaviour:
   hitBox: {fileID: 2144534697}
   attackDuration: 0.2
   beastPanel: {fileID: 504655145}
-  mapPanel: {fileID: 0}
+  mapPanel: {fileID: 353271130}
   playerCam: {fileID: 1577233736}
   CamComponents: {fileID: 0}
   AreaMoveBeast: {fileID: 837753718}
@@ -5942,6 +5945,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &353271130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353271120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28074c9e8238fca4e92410065ea605f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapPanel: {fileID: 509327053}
+  mapCamera: {fileID: 1763145512}
 --- !u!4 &357783213 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2498268502582333856, guid: d5fed1c01e1354743803c5a7da4b02e2, type: 3}
@@ -8224,6 +8241,7 @@ GameObject:
   - component: {fileID: 497497650}
   - component: {fileID: 497497649}
   - component: {fileID: 497497651}
+  - component: {fileID: 497497652}
   m_Layer: 5
   m_Name: RawImage
   m_TagString: Untagged
@@ -8302,6 +8320,20 @@ MonoBehaviour:
   zoomSpeed: 5
   minZoom: 20
   maxZoom: 100
+--- !u!114 &497497652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497497647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ca4942ff907e34a95dbf7a9bd920d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapCamera: {fileID: 1763145512}
+  markerPrefab: {fileID: 6744370427643567276, guid: 08a7749e4a241dd409bf0718657fc4a2, type: 3}
 --- !u!1 &498761171
 GameObject:
   m_ObjectHideFlags: 0
@@ -8718,7 +8750,6 @@ GameObject:
   - component: {fileID: 509327054}
   - component: {fileID: 509327056}
   - component: {fileID: 509327055}
-  - component: {fileID: 509327057}
   m_Layer: 5
   m_Name: Map Panel
   m_TagString: Untagged
@@ -8784,20 +8815,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 509327053}
   m_CullTransparentMesh: 1
---- !u!114 &509327057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 509327053}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28074c9e8238fca4e92410065ea605f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapPanel: {fileID: 509327053}
-  mapCamera: {fileID: 1763145512}
 --- !u!64 &520803325
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -26361,7 +26378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 350}
+  m_AnchoredPosition: {x: 0, y: -389}
   m_SizeDelta: {x: 500, y: 107.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1936709488
