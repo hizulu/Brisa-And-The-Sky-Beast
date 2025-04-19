@@ -10,7 +10,7 @@ public class MapPanel : MonoBehaviour
     private InputAction openMapAction;
     private bool mapEnabled = false;
 
-    private void OnEnable()
+    private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
 
