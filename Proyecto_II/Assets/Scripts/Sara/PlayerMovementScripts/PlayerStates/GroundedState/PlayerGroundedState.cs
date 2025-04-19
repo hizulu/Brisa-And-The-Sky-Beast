@@ -23,9 +23,8 @@ public class PlayerGroundedState : PlayerMovementState
     public override void Enter()
     {
         base.Enter();
-        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started += OnPointedStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled += OnPointedCanceled;
         EventsManager.CallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
+        EventsManager.CallNormalEvents("MontarBestia_Player", RideBeast);
         StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
 
@@ -54,6 +53,7 @@ public class PlayerGroundedState : PlayerMovementState
     {
         base.Exit();
         EventsManager.StopCallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
+        EventsManager.StopCallNormalEvents("MontarBestia_Player", RideBeast);
         StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
 
@@ -65,6 +65,8 @@ public class PlayerGroundedState : PlayerMovementState
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.performed += CrouchStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Attack.started += AttackStart;
         stateMachine.Player.PlayerInput.PlayerActions.Heal.started += HealPlayer;
+        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started += OnPointedStarted;
+        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled += OnPointedCanceled;
     }
 
     protected override void RemoveInputActionsCallbacks()
@@ -161,12 +163,9 @@ public class PlayerGroundedState : PlayerMovementState
 
     private bool IsGrounded()
     {
-        //Debug.Log("Se ha ejecutado el método IsGrounded");
-
         float radius = groundedData.GroundCheckDistance;
         Vector3 groundCheckPosition = stateMachine.Player.GroundCheckCollider.transform.position;
         Collider[] colliders = Physics.OverlapSphere(groundCheckPosition, radius);
-        //Debug.Log($"Número de colisiones detectadas: {colliders.Length}");
 
         foreach (Collider collider in colliders)
         {
@@ -174,23 +173,25 @@ public class PlayerGroundedState : PlayerMovementState
             string layerName = LayerMask.LayerToName(collider.gameObject.layer);
             bool isTrigger = collider.isTrigger;
 
-            //Debug.Log($"Detectado: {objName} | Capa: {layerName} | isTrigger: {isTrigger}");
-
             if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
-            {
-                //Debug.Log("Se ha detectado suelo");
                 return true;
-            }
         }
         return false;
     }
 
+    #region Métodos de Interacción con la Bestia
     private void AcariciarBestia()
     {
         // Lógica de acariciar a la Bestia.
         stateMachine.ChangeState(stateMachine.PetBeastState);
         Debug.Log("Estás acariciando a la Bestia.");
     }
+
+    private void RideBeast()
+    {
+        stateMachine.ChangeState(stateMachine.RideBeastState);
+    }
+    #endregion
 
     protected virtual void OnPointedStarted(InputAction.CallbackContext context)
     {

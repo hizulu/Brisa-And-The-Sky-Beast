@@ -47,8 +47,6 @@ public class PlayerMovementState : IState
         AddInputActionsCallbacks();
         EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
         EventsManager.CallNormalEvents("PickUpItem", PickUp);
-        //EventsManager.CallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
-        //EnemyAttackZigZagJump.OnAttackPlayer += TakeDamage;
     }
 
     public virtual void HandleInput()
@@ -70,31 +68,19 @@ public class PlayerMovementState : IState
     {
         EventsManager.StopCallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
         EventsManager.StopCallNormalEvents("PickUpItem", PickUp);
-        //EventsManager.StopCallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
-        //EnemyAttackZigZagJump.OnAttackPlayer -= TakeDamage;
         RemoveInputActionsCallbacks();
     }
 
     public virtual void OnTriggerEnter(Collider collider)
     {
         if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
-        {
             ContactWithGround(collider);
-            //Debug.Log(collider.gameObject.name);
-            //return;
-        }
-
-        //if (collider.CompareTag("Enemy"))
-        //    TakeDamage(50);
     }
 
     public virtual void OnTriggerExit(Collider collider)
     {
         if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
-        {
             NoContactWithGround(collider);
-            //return;
-        }
     }
 
     public void ReadMovementInput()
@@ -114,15 +100,9 @@ public class PlayerMovementState : IState
 
     protected virtual void AddInputActionsCallbacks()
     {
-        //if (EventSystem.current.IsPointerOverGameObject())
-        //{
-        //    return;
-        //}
         stateMachine.Player.PlayerInput.PlayerActions.Movement.canceled += OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
-
-        stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed += CallBeast;
-        
+        stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed += CallBeast;        
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled -= OnMovementCanceled;
     }
 
@@ -174,29 +154,16 @@ public class PlayerMovementState : IState
 
     protected void PickUp()
     {
-        //Debug.Log("Has llegado al método de PickUp() del jugador.");
         stateMachine.ChangeState(stateMachine.PickUpState);
     }
 
-    protected virtual void OnMovementCanceled(InputAction.CallbackContext context)
-    {
+    protected virtual void OnMovementCanceled(InputAction.CallbackContext context) { }
 
-    }
+    protected virtual void ContactWithGround(Collider collider) { }
 
-    protected virtual void ContactWithGround(Collider collider)
-    {
+    protected virtual void NoContactWithGround(Collider collider) { }
 
-    }
-
-    protected virtual void NoContactWithGround(Collider collider)
-    {
-
-    }
-
-    protected virtual void FinishAnimation()
-    {
-
-    }
+    protected virtual void FinishAnimation() { }
 
     private void TakeDamage(float _enemyDamage)
     {
@@ -215,12 +182,6 @@ public class PlayerMovementState : IState
         beast.CallBeast();
         stateMachine.Player.StartCoroutine(StopCallBeast());
     }
-
-    //private void AcariciarBestia()
-    //{
-    //    // Lógica de acariciar a la Bestia.
-    //    Debug.Log("Estás acariciando a la Bestia.");
-    //}
 
     IEnumerator StopCallBeast()
     {

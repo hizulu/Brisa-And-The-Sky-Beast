@@ -1,19 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 public class PlayerPointedBeastState : PlayerGroundedState
 {
-    public PlayerPointedBeastState(PlayerStateMachine stateMachine) : base(stateMachine)
-    {
-
-    }
+    public PlayerPointedBeastState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
     public override void Enter()
     {
+        stateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.WalkSpeedModif;
         CamEnterSetting();
         stateMachine.Player.PlayerInput.PlayerActions.Attack.Disable();
         base.Enter();
@@ -28,10 +23,20 @@ public class PlayerPointedBeastState : PlayerGroundedState
         Debug.Log("Has entrado en el estado de APUNTANDO");
     }
 
+    public override void HandleInput()
+    {
+        base.HandleInput();
+    }
+
     public override void UpdateLogic()
     {
         base.UpdateLogic();
         stateMachine.Player.CursorMarker.transform.position = CursorPosition();
+    }
+
+    public override void UpdatePhysics()
+    {
+        base.UpdatePhysics();
     }
 
     public override void Exit()
