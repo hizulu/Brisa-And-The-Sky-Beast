@@ -19,22 +19,23 @@ public class BeastMountedState : BeastState
         beast.agent.enabled = false;
 
         // Subir al jugador para que al colocar la bestia no atraviese el suelo
-        float alturaBestia = 4.5f;
+        beast.transform.SetParent(beast.mountPoint);
+        beast.transform.localPosition = Vector3.zero;
+        beast.transform.localRotation = Quaternion.identity;
+
+        float alturaBestia = 4f;
         beast.playerTransform.position += new Vector3(0, alturaBestia, 0);
 
         //beast.rb.constraints = RigidbodyConstraints.FreezeAll;
 
 
-        beast.transform.SetParent(beast.mountPoint);
-        beast.transform.localPosition = Vector3.zero;
-        beast.transform.localRotation = Quaternion.identity;
 
         lastPosition = beast.transform.position;
         beast.anim.SetBool("isWalking", false);
     }
     public override void OnUpdate(Beast beast)
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) //TODO: sustituirlo por NEW INPUT SYSTEM
+        if (Input.GetKeyDown(KeyCode.LeftControl)) //TODO: sustituirlo por NEW INPUT SYSTEM
         {
             beast.TransitionToState(new BeastFreeState());
         }

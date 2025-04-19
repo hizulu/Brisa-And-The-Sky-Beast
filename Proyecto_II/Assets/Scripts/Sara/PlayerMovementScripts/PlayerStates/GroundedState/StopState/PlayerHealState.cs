@@ -1,17 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * NOMBRE CLASE: PlayerHealState
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState
+ * VERSIÓN: 1.0. 
+ */
 public class PlayerHealState : PlayerGroundedState
 {
+    public PlayerHealState(PlayerStateMachine stateMachine) : base(stateMachine) { }
+
+    #region Variables
     bool healFinish;
     private ItemData healIncreaseSpecificItem;
+    #endregion
 
-    public PlayerHealState(PlayerStateMachine stateMachine) : base(stateMachine)
-    {
-
-    }
-
+    #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
         HealPlayer();
@@ -33,10 +38,15 @@ public class PlayerHealState : PlayerGroundedState
         Debug.Log("Has salido del estado de curarte");
         StopAnimation(stateMachine.Player.PlayerAnimationData.HealParameterHash);
     }
+    #endregion
 
+    #region Métodos Propios HealState
+    /*
+     * Método para comprobar que la animación de curar se ha terminado para pasar al siguiente estado requerido.
+     */
     protected override void FinishAnimation()
     {
-        if (animPlayer.GetCurrentAnimatorStateInfo(0).IsName("Heal") && animPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Heal") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             healFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
@@ -55,4 +65,5 @@ public class PlayerHealState : PlayerGroundedState
 
         InventoryManager.Instance.RemoveItem(healIncreaseSpecificItem);
     }
+    #endregion
 }

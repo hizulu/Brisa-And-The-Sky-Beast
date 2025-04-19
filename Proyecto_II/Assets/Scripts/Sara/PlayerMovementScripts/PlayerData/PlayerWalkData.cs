@@ -1,8 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * NOMBRE CLASE: PlayerWalkData
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: Clase serializable que contiene modificadores de velocidad para los diferentes modos de movimiento de Player.
+ * VERSIÓN: 1.0
+ */
 [Serializable]
 public class PlayerWalkData
 {

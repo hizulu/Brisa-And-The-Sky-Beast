@@ -1,12 +1,17 @@
 using UnityEngine;
 
+/*
+ * NOMBRE CLASE: PlayerDoubleJumpState
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: Clase que hereda de PlayerAirborneState
+ * VERSIÓN: 1.0. 
+ */
 public class PlayerDoubleJumpState : PlayerAirborneState
 {
-    public PlayerDoubleJumpState(PlayerStateMachine _stateMachine) : base(_stateMachine)
-    {
+    public PlayerDoubleJumpState(PlayerStateMachine _stateMachine) : base(_stateMachine) { }
 
-    }
-
+    #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
         base.Enter();
@@ -32,7 +37,12 @@ public class PlayerDoubleJumpState : PlayerAirborneState
         //Debug.Log("Has salido del estado de DOBLE-SALTO");
         StopAnimation(stateMachine.Player.PlayerAnimationData.DoubleJumpParameterHash);
     }
+    #endregion
 
+    #region Métodos Propios DoubleJumpState
+    /*
+     * Método que gestiona la física del doble salto.
+     */
     protected override void Jump()
     {
         if(!isJumping)
@@ -48,13 +58,16 @@ public class PlayerDoubleJumpState : PlayerAirborneState
         }
     }
 
+    /*
+     * Método para comprobar que la animación del doble salto se ha terminado para pasar al siguiente estado requerido.
+     */
     protected override void FinishAnimation()
     {
-        Animator animator = stateMachine.Player.AnimPlayer;
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("DoubleJump") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("DoubleJump") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             isJumping = false;
             stateMachine.ChangeState(stateMachine.FallState);
         }
     }
+    #endregion
 }

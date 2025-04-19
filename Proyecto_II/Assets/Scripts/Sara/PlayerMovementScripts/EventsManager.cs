@@ -1,8 +1,13 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
+/*
+ * NOMBRE CLASE: EventsManager
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: Clase estática para gestionar eventos normales y especiales mediante delegados. Permite suscribir, desencadenar y desuscribir eventos.
+ * VERSIÓN: 1.0
+ */
 public static class EventsManager
 {
     private static Dictionary<string, Action> normalEvents = new Dictionary<string, Action>();
@@ -33,25 +38,19 @@ public static class EventsManager
     public static void TriggerNormalEvent(string eventName)
     {
         if (normalEvents.TryGetValue(eventName, out Action action))
-        {
             action?.Invoke();
-        }
     }
 
     public static void TriggerSpecialEvent<T>(string eventName, T eventData)
     {
         if (specialEvents.TryGetValue(eventName, out Delegate action))
-        {
             ((Action<T>)action)?.Invoke(eventData);
-        }
     }
 
     public static void StopCallNormalEvents(string eventName, Action _action)
     {
         if (normalEvents.TryGetValue(eventName, out Action action))
-        {
             action -= _action;
-        }
     }
 
     public static void StopCallSpecialEvents<T>(string eventName, Action<T> _action)
@@ -59,9 +58,7 @@ public static class EventsManager
         if (specialEvents.TryGetValue(eventName, out Delegate action))
         {
             if (action is Action<T> typedAction)
-            {
                 typedAction -= _action;
-            }
         }
     }
 }

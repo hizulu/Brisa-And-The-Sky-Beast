@@ -1,18 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
-
+/*
+ * NOMBRE CLASE: PlayerAttackState
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 
+ * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState
+ * VERSIÓN: 1.0. 
+ */
 public class PlayerAttackState : PlayerGroundedState
 {
-    public PlayerAttackState(PlayerStateMachine stateMachine) : base(stateMachine)
-    {
+    public PlayerAttackState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
-    }
-
-    protected Animator animator;
-
+    #region Variables
     protected bool attackFinish;
 
     protected float attackTimeElapsed;
@@ -24,16 +21,13 @@ public class PlayerAttackState : PlayerGroundedState
 
     protected float attackDamageModifierMin;
     protected float attackDamageModifierMax;
+    #endregion
 
-    //public static event Action<float> OnAttackEnemy;
-
+    #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        animator = stateMachine.Player.AnimPlayer;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.AttackParameterHash);
-
-        //OnAttackEnemy?.Invoke(stateMachine.StatsData.AttackDamageBase);
         //Debug.Log("Has entrado en el estado de ATACAR");
     }
 
@@ -53,4 +47,5 @@ public class PlayerAttackState : PlayerGroundedState
         StopAnimation(stateMachine.Player.PlayerAnimationData.AttackParameterHash);
         //Debug.Log("Has salido del estado de ATACAR");
     }
+    #endregion
 }

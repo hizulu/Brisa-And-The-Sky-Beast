@@ -2376,10 +2376,12 @@ MonoBehaviour:
     finalDeadParameterName: isFinalDeading
     callBeastParameterName: isCallingBeast
     petBeastParameterName: isPettingBeast
+    rideBeastParameterName: isRidingBeast
     pickUpParameterName: isPickUp
   PaloBrisa: {fileID: 1432328130}
   hitBox: {fileID: 873636943}
   attackDuration: 0.2
+  beastPanel: {fileID: 0}
   playerCam: {fileID: 0}
   CamComponents: {fileID: 0}
   AreaMoveBeast: {fileID: 0}
@@ -6075,6 +6077,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beastSelectionPanel: {fileID: 928201311}
+  beast: {fileID: 0}
 --- !u!114 &504655146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7568,6 +7571,7 @@ MonoBehaviour:
   oneActiveLever: {fileID: 1299163436}
   twoActiveLever: {fileID: 769191194}
   movementDuration: 3
+  beastNavMeshSurface: {fileID: 0}
 --- !u!224 &619250877 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6072325611186201357, guid: d8e00fca11e2fe647beec58ed1e79bb8, type: 3}
@@ -16258,6 +16262,7 @@ MonoBehaviour:
   oneActiveLever: {fileID: 924586595}
   twoActiveLever: {fileID: 1754318957}
   movementDuration: 3
+  beastNavMeshSurface: {fileID: 0}
 --- !u!4 &1469340867
 Transform:
   m_ObjectHideFlags: 0
@@ -19431,7 +19436,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.33333334
+  m_VoxelSize: 0.6666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 04868b6a113cb9e46a9bee1b7a6c3f62, type: 2}
   m_BuildHeightMesh: 0
@@ -21464,7 +21469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1954446586
 Transform:
   m_ObjectHideFlags: 0
