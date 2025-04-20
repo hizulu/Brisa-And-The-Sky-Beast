@@ -72,16 +72,16 @@ public struct SceneState
 #endregion
 public class SaveManager : MonoBehaviour
 {
-    public static SaveManager instance;
+    public static SaveManager Instance;
 
     private SceneState savedSceneState;
 
     // Singleton
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -160,5 +160,21 @@ public class SaveManager : MonoBehaviour
             }
             #endregion
         }
+    }
+
+    // Para crear una partida nueva y empezar con todos los datos de 0
+    public void ResetProgress()
+    {
+
+    }
+
+    public void SavePlayerSettings()
+    {
+        Debug.Log("Saving player settings");
+    }
+
+    public void LoadPlayerSettings()
+    {
+        Debug.Log("Loading player settings");
     }
 }
