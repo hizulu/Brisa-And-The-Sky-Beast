@@ -16,6 +16,6 @@ public class BeastBrisaHalfDeadState : BeastState
     }
     public override void OnExit(Beast beast)
     {
-
+        // Vuelve a estado de libertad
     }
 }

@@ -23,6 +23,7 @@ public class Beast : MonoBehaviour
 
     [Header("Stats")]
     [SerializeField] public float maxHealth = 500f;
+    [SerializeField] public float healingAmount = 50f;
     [SerializeField] public float halfDeadDuration = 30f;
 
     public float currentHealth;

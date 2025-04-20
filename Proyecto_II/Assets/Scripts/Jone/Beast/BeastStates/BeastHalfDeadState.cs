@@ -55,7 +55,7 @@ public class BeastHalfDeadState : BeastState
 
     private void ReviveBeast()
     {
-        // TODO: revive animation
+        // TODO: revive animation, sound effect, visual effect
         _beastRevived = true;
     }
 }

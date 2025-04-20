@@ -52,7 +52,7 @@ public class BeastConstrainedState : BeastState
                     new CheckFlag(blackboard, "isOptionPet",
                         new PetBeast(blackboard, beast)),
                     new CheckFlag(blackboard, "isOptionHeal",
-                        new HealBeast(blackboard, beast)),
+                        new HealBeast(blackboard, beast, beast.healingAmount)),
                     new CheckFlag(blackboard, "isOptionAttack",
                         new TransitionToBeastState(beast, new BeastCombatState())),
                     new CheckFlag(blackboard, "isOptionMount",
