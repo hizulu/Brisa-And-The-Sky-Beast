@@ -19,7 +19,7 @@ public class EnemyAttackMelee : EnemyAttackSOBase
         base.DoEnterLogic();
         enemy.anim.SetBool("isAttacking", true);
         distanceToStopAttackStateSQR = distanceToStopAttackState * distanceToStopAttackState;
-        Debug.Log("Has entrado en el estado de Attack Melee");
+        //Debug.Log("Has entrado en el estado de Attack Melee");
         enemy.agent.ResetPath();
     }
 
@@ -27,7 +27,7 @@ public class EnemyAttackMelee : EnemyAttackSOBase
     {
         base.DoExitLogic();
         enemy.anim.SetBool("isAttacking", false);
-        Debug.Log("Has salido del estado de Attack Melee");
+        //Debug.Log("Has salido del estado de Attack Melee");
     }
 
     public override void DoFrameUpdateLogic()

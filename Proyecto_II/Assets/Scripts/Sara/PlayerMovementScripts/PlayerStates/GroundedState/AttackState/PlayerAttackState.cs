@@ -5,6 +5,8 @@
  * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState
  * VERSIÓN: 1.0. 
  */
+using UnityEngine;
+
 public class PlayerAttackState : PlayerGroundedState
 {
     public PlayerAttackState(PlayerStateMachine stateMachine) : base(stateMachine) { }
@@ -48,4 +50,5 @@ public class PlayerAttackState : PlayerGroundedState
         //Debug.Log("Has salido del estado de ATACAR");
     }
     #endregion
+
 }

@@ -43,6 +43,8 @@ public class Player : MonoBehaviour
     [SerializeField] public GameObject AreaMoveBeast;
     [SerializeField] public GameObject CursorMarker;
 
+    [SerializeField] public PointTarget pointTarget;
+
     private void Awake()
     {
         PlayerAnimationData.Initialize();
@@ -146,4 +148,11 @@ public class Player : MonoBehaviour
         //Debug.Log("Se ha reseteado la vida" + Data.StatsData.CurrentHealth);
     }
     #endregion
+
+    [SerializeField] private float playerTargetEnemiesRange = 20f;
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, playerTargetEnemiesRange);
+    }
 }
