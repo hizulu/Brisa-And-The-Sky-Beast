@@ -1,21 +1,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviorTree;
+using UnityEngine.Rendering;
 
 // Jone Sainz Egea
 // 05/04/2025
 // Nodo que busca el punto de mayor interés, nunca falla, si no encuentra simplemente no hay target
+    // 19/04/2025 Añadido interés en Brisa
 public class GetInterestPoint : Node
 {
     private Blackboard _blackboard;
     private Beast _beast;
+    private Transform _playerTransform;
     private float _searchRadius;
 
     private List<PointOfInterest> _interestPoints;
 
-    public GetInterestPoint(Beast beast, float searchRadius)
+    private float baseInterestInBrisa = 1f;
+    private float growthFactorInterestInBrisa = 0.05f;
+
+
+    public GetInterestPoint(Beast beast, Transform playerTransform, float searchRadius)
     {
         _beast = beast;
+        _playerTransform = playerTransform;
         _searchRadius = searchRadius;
 
         _blackboard = _beast.blackboard;
@@ -32,17 +40,44 @@ public class GetInterestPoint : Node
 
         // Buscar nuevos puntos de interés
         _interestPoints = GetPointsOfInterest();
-        PointOfInterest bestPoint = GetHighestInterestPoint(_interestPoints);
+        PointOfInterest bestPoint = GetHighestInterestPoint(_interestPoints);     
 
         if (bestPoint != null)
         {
-            _blackboard.SetValue("target", bestPoint);
+            CompareWithInterestInBrisa(bestPoint);           
             _blackboard.SetValue("lookForTarget", false); // Ya ha encontrado un objetivo
             state = NodeState.SUCCESS;
+        }
+        else if (GetInterestInBrisa() > 10) // No hay puntos de interés y Brisa está lejos
+        {
+            Debug.Log("No interest points and Brisa is far");
         }
 
         return state;
     }
+
+    private void CompareWithInterestInBrisa(PointOfInterest bestPoint)
+    {
+        float interestPointValue = bestPoint.GetInterestValue(_beast.transform);
+        float interestInBrisa = GetInterestInBrisa();
+        if (interestInBrisa > interestPointValue)
+        {
+            Debug.Log("Brisa is more interesting");
+            _blackboard.SetValue("target", _playerTransform);
+        }
+        else
+        {
+            Debug.Log("Point is more interesting");
+            _blackboard.SetValue("target", bestPoint);
+        }
+    }
+
+    private float GetInterestInBrisa()
+    {
+        float distance = Vector3.Distance(_beast.transform.position, _playerTransform.position);
+        return baseInterestInBrisa * Mathf.Exp(growthFactorInterestInBrisa * distance); // Aumento exponencial del interés en Brisa conforme se aleja    
+    }
+
 
     private List<PointOfInterest> GetPointsOfInterest()
     {

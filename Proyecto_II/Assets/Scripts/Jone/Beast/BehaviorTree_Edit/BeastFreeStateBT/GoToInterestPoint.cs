@@ -14,6 +14,9 @@ public class GoToInterestPoint : Node
     private Transform _transform;
     private float _arrivalThreshold;
 
+    private Transform _target;
+    private PointOfInterest _pointOfInterest;
+    private bool _targetIsBrisa = false;
     private bool _wasWalking = false;
 
     public GoToInterestPoint(Beast beast, float arrivalThreshold)
@@ -27,17 +30,27 @@ public class GoToInterestPoint : Node
 
     public override NodeState Evaluate()
     {
-        PointOfInterest target = _blackboard.GetValue<PointOfInterest>("target");
+        if(_blackboard.TryGetValue("target", out PointOfInterest targetPoint))
+        {
+            _targetIsBrisa = false;
+            _target = targetPoint.transform;
+            _pointOfInterest = targetPoint;
+        }
+        else if(_blackboard.TryGetValue("target", out Transform targetBrisa))
+        {
+            _targetIsBrisa = true;
+            _target = targetBrisa;
+        }
 
-        float distance = Vector3.Distance(_transform.position, target.transform.position);
+        float distance = Vector3.Distance(_transform.position, _target.transform.position);
 
         if (distance < _arrivalThreshold)
-            return ArriveAtTarget(target);
+            return ArriveAtTarget();
 
-        UpdateDestinationIfNeeded(target);
+        UpdateDestinationIfNeeded(_target);
 
         if (!IsPathValid())
-            return Failure($"Path to {target.name} is invalid or partial.");
+            return Failure($"Path to {_target.name} is invalid or partial.");
 
         SetWalkingState(true);
         state = NodeState.RUNNING;
@@ -45,23 +58,31 @@ public class GoToInterestPoint : Node
         return state;
     }
 
-    private NodeState ArriveAtTarget(PointOfInterest target)
+    private NodeState ArriveAtTarget()
     {
         SetWalkingState(false);
-        target.ConsumeInterest();
+        if (_targetIsBrisa)
+        {
+            // TODO: ConsumeInterestInBrisa
+            Debug.Log("Consume interés en Brisa");
+        }
+        else
+        {
+            _pointOfInterest.ConsumeInterest();
+        }
         _blackboard.SetValue("reachedTarget", true);
         _blackboard.ClearKey("target");
 
-        Debug.Log($"Reached {target.name}, interest consumed.");
+        Debug.Log($"Reached {_target.name}, interest consumed.");
         state = NodeState.SUCCESS;
         return state;
     }
 
-    private void UpdateDestinationIfNeeded(PointOfInterest target)
+    private void UpdateDestinationIfNeeded(Transform target)
     {
-        if (_beast.agent.destination != target.transform.position)
+        if (_beast.agent.destination != target.position)
         {
-            _beast.agent.SetDestination(target.transform.position);
+            _beast.agent.SetDestination(target.position);
         }
     }
 

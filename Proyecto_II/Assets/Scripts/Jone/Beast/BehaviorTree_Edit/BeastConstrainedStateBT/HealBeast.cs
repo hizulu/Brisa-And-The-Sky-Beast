@@ -5,18 +5,21 @@ using UnityEngine;
 
 // Jone Sainz Egea
 // 17/04/2025
+    // 20/04/2025 añadido funcionalidad de sanación
 public class HealBeast : Node, ICoroutineNode
 {
     private Blackboard _blackboard;
     private Beast _beast;
+    private float _healthAmount;
 
     private bool _isRunning = false;
     private bool _hasFinished = false;
 
-    public HealBeast(Blackboard blackboard, Beast beast)
+    public HealBeast(Blackboard blackboard, Beast beast, float healthAmount)
     {
         _blackboard = blackboard;
         _beast = beast;
+        _healthAmount = healthAmount;
     }
 
     public override NodeState Evaluate()
@@ -31,7 +34,7 @@ public class HealBeast : Node, ICoroutineNode
             _beast.anim.SetBool("isWalking", false);
             _beast.anim.SetBool("isHealing", true);
 
-            Heal();// TODO: añadir funcionalidad de sanación
+            Heal(_healthAmount);// TODO: añadir funcionalidad de sanación
 
             Debug.Log("Starting to heal");
             _beast.StartNewCoroutine(Healing(2f), this);
@@ -51,12 +54,19 @@ public class HealBeast : Node, ICoroutineNode
         return state;
     }
 
-    public void Heal()
+    public void Heal(float health)
     {
         // TODO: check if there are fruits
         // TODO: consume fruit
-        // TODO: healing particle effect
-        // TODO: increase health
+
+        // TODO: beast gets healed sound
+
+        // TODO: beast gets healed visual effect
+
+        _beast.currentHealth += health;
+
+        if (_beast.currentHealth > _beast.maxHealth)
+            _beast.currentHealth = _beast.maxHealth;
     }
 
     private IEnumerator Healing(float duration)

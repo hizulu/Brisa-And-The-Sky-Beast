@@ -9,17 +9,27 @@ using UnityEngine.AI;
 public class Beast : MonoBehaviour
 {
 
-    [Header("Componentes")]
+    [Header("Components")]
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Animator anim;
     //[SerializeField] public Rigidbody rb;
     [SerializeField] public Transform playerTransform;
     [SerializeField] public Transform mountPoint;
 
-    [Header("Parámetros")]
+    [Header("Parameters")]
     [SerializeField] public float arrivalThreshold = 5f;
     [SerializeField] public float freeRoamRadius = 30f;
     [SerializeField] public float interactionThreshold = 8f;
+
+    [Header("Stats")]
+    [SerializeField] public float maxHealth = 500f;
+    [SerializeField] public float healingAmount = 50f;
+    [SerializeField] public float halfDeadDuration = 30f;
+
+    public float currentHealth;
+
+    float baseInterestInBrisa = 1f;
+    float growthFactorInterestInBrisa = 0.05f;
 
     private BeastState currentState;
 
@@ -34,23 +44,31 @@ public class Beast : MonoBehaviour
         if (anim == null) anim = GetComponent<Animator>();
         if (blackboard == null) blackboard = new Blackboard();
 
+        currentHealth = maxHealth;
+
         // Comenzamos en estado de libertad
         TransitionToState(new BeastFreeState());
 
+        EventsManager.CallNormalEvents("CallBeast", CallBeast);
         EventsManager.CallNormalEvents("AcariciarBestia_Bestia", PetBeastSelected);
         EventsManager.CallNormalEvents("SanarBestia_Bestia", HealBeastSelected);
         EventsManager.CallNormalEvents("AtaqueBestia_Bestia", AttackBeastSelected);
         EventsManager.CallNormalEvents("MontarBestia_Bestia", MountBeastSelected);
         EventsManager.CallNormalEvents("AccionBestia_Bestia", ActionBeastSelected);
+
+        EventsManager.CallNormalEvents("BrisaHalfDead", BrisaIsHalfDead);
     }
 
     private void OnDestroy()
     {
+        EventsManager.StopCallNormalEvents("CallBeast", CallBeast);
         EventsManager.StopCallNormalEvents("AcariciarBestia_Bestia", PetBeastSelected);
         EventsManager.StopCallNormalEvents("SanarBestia_Bestia", HealBeastSelected);
         EventsManager.StopCallNormalEvents("AtaqueBestia_Bestia", AttackBeastSelected);
         EventsManager.StopCallNormalEvents("MontarBestia_Bestia", MountBeastSelected);
         EventsManager.StopCallNormalEvents("AccionBestia_Bestia", ActionBeastSelected);
+
+        EventsManager.StopCallNormalEvents("BrisaHalfDead", BrisaIsHalfDead);
     }
 
     private void Update()
@@ -83,7 +101,7 @@ public class Beast : MonoBehaviour
     }
 
     // Called from Brisa script
-    public void CallBeast()
+    private void CallBeast()
     {
         blackboard.SetValue("isConstrained", true);
         agent.ResetPath();
@@ -93,6 +111,13 @@ public class Beast : MonoBehaviour
         Debug.Log("Bestia llamada por el jugador");
     }
 
+    private void BrisaIsHalfDead()
+    {
+        blackboard.SetValue("brisaIsHalfDead", true);
+        TransitionToState(new BeastBrisaHalfDeadState());
+    }
+
+    #region Beast Selection Menu
     public void OpenBeastMenu()
     {
         // Por si se abre el menú sin estar en estado de constrained
@@ -145,9 +170,38 @@ public class Beast : MonoBehaviour
         blackboard.SetValue("isOptionAction", true);
         Debug.Log("Ha seleccionado heal");
     }
+    #endregion
+
+    #region Damage Related Functions
+    public void DamageBeast(float damage)
+    {
+        anim.SetTrigger("damageBeast");
+
+        // TODO: beast gets damaged sound
+
+        currentHealth -= damage;
+        Debug.Log("Beast has been damaged");
+        if (currentHealth < Mathf.Epsilon)
+        {
+            blackboard.SetValue("beastIsHalfDead", true);
+            TransitionToState(new BeastHalfDeadState());
+        }
+    }
+    #endregion
 
     public bool IsPlayerWithinInteractionDistance()
     {
         return Vector3.Distance(transform.position, playerTransform.position) < interactionThreshold;
+    }
+
+    // TODO: borrar esto
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, freeRoamRadius);
+        if (playerTransform == null) return;
+        float distance = Vector3.Distance(transform.position, playerTransform.position);
+        float printInterestInBrisa = baseInterestInBrisa * Mathf.Exp(growthFactorInterestInBrisa * distance);
+        UnityEditor.Handles.Label(playerTransform.position + Vector3.up * 4, $"Interest: {printInterestInBrisa}");
     }
 }
