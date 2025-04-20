@@ -8,6 +8,8 @@ public class BeastTrapped : MonoBehaviour
 {
     Beast beastScript;
 
+    public bool beasIsFree = false;
+
     private void Awake()
     {
         beastScript = GetComponent<Beast>();
@@ -17,5 +19,6 @@ public class BeastTrapped : MonoBehaviour
     public void SetBeastFreeFromCage()
     {
         beastScript.enabled = true;
+        beasIsFree = true;
     }
 }
