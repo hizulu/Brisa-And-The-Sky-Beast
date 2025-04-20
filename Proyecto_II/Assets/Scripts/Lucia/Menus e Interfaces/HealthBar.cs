@@ -3,43 +3,116 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    private Player player;
-    private PlayerStatsData statsData;
-    private Slider healthBarSlider;
-    public Gradient gradient;
-    private Image fill;
+    public enum EntityType { Player, Beast /*, Enemy*/ }
+
+    [Header("Configuración")]
+    [SerializeField] private EntityType entityType;
+    [SerializeField] private Gradient gradient;
+
+    [Header("Componentes")]
+    [SerializeField] private Slider healthBarSlider;
+    [SerializeField] private Image fill;
+
+    // Referencias a los componentes de salud
+    private PlayerStatsData playerStats;
+    private Beast beast;
+    // private Enemy enemy;
 
     void Start()
     {
-        player = FindObjectOfType<Player>();
-
-        if (player != null && player.Data != null)
+        // Obtener referencias según el tipo de entidad
+        switch (entityType)
         {
-            statsData = player.Data.StatsData;
+            case EntityType.Player:
+                Player player = FindObjectOfType<Player>();
+                if (player != null && player.Data != null)
+                {
+                    playerStats = player.Data.StatsData;
+                    InitializeHealthBar(playerStats.MaxHealth, playerStats.CurrentHealth);
+                }
+                break;
 
-            healthBarSlider = GetComponent<Slider>();
-            healthBarSlider.maxValue = statsData.MaxHealth;
-            healthBarSlider.value = statsData.CurrentHealth;
-            fill = healthBarSlider.fillRect.GetComponent<Image>();
-            fill.color = gradient.Evaluate(1f);
-        }
-        else
-        {
-            Debug.LogError("No se pudo encontrar al Player o su Data.");
+            case EntityType.Beast:
+                beast = FindObjectOfType<Beast>();
+                if (beast != null)
+                {
+                    InitializeHealthBar(beast.maxHealth, beast.currentHealth);
+                }
+                break;
+
+                /*case EntityType.Enemy:
+                    enemy = GetComponentInParent<Enemy>();
+                    if (enemy != null)
+                    {
+                        InitializeHealthBar(enemy.MaxHealth, enemy.CurrentHealth);
+                    }
+                    break;*/
         }
     }
 
     void Update()
     {
-        if (statsData != null)
+        // Actualizar valores según la entidad
+        switch (entityType)
         {
-            SetHealth(statsData.CurrentHealth);
-            fill.color = gradient.Evaluate(healthBarSlider.normalizedValue);
+            case EntityType.Player:
+                if (playerStats != null)
+                {
+                    UpdateHealth(playerStats.CurrentHealth);
+                }
+                break;
+
+            case EntityType.Beast:
+                if (beast != null)
+                {
+                    UpdateHealth(beast.currentHealth);
+                }
+                break;
+
+                /*case EntityType.Enemy:
+                    if (enemy != null)
+                    {
+                        UpdateHealth(enemy.CurrentHealth);
+                    }
+                    break;*/
         }
     }
 
-    void SetHealth(float health)
+    // Inicializa la barra de salud con valores máximos y actuales
+    private void InitializeHealthBar(float maxHP, float currentHP)
     {
-        healthBarSlider.value = health;
+        if (healthBarSlider != null)
+        {
+            healthBarSlider.maxValue = maxHP;
+            healthBarSlider.value = currentHP;
+
+            if (fill != null)
+            {
+                fill.color = gradient.Evaluate(1f);
+            }
+        }
+    }
+
+    // Actualiza la barra de salud con el valor actual
+    private void UpdateHealth(float currentHP)
+    {
+        if (healthBarSlider != null)
+        {
+            healthBarSlider.value = currentHP;
+
+            if (fill != null)
+            {
+                fill.color = gradient.Evaluate(healthBarSlider.normalizedValue);
+            }
+        }
+    }
+
+    // Método público para actualizar la salud manualmente
+    public void SetHealth(float health)
+    {
+        if (healthBarSlider != null)
+        {
+            healthBarSlider.value = health;
+        }
     }
 }
