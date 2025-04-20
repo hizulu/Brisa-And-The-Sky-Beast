@@ -10,10 +10,17 @@ public class MinimapChangeIcon : MonoBehaviour
     [SerializeField] private Beast beastScript;
     [SerializeField] private float transitionDuration = 0.5f;
 
+    private BeastTrapped beastTrapped;
+
     private SpriteRenderer brisaRenderer;
     private SpriteRenderer beastRenderer;
     private Coroutine transitionCoroutine;
     private bool isTogether = false;
+
+    private void Awake()
+    {
+        beastTrapped = FindAnyObjectByType<BeastTrapped>();
+    }
 
     private void Start()
     {
@@ -25,13 +32,16 @@ public class MinimapChangeIcon : MonoBehaviour
     {
         if (brisaIcon.activeSelf)
         {
-            bool shouldBeTogether = beastScript.IsPlayerWithinInteractionDistance();
-
-            if (shouldBeTogether != isTogether)
+            if (beastTrapped.beasIsFree)
             {
-                isTogether = shouldBeTogether;
-                if (transitionCoroutine != null) StopCoroutine(transitionCoroutine);
-                transitionCoroutine = StartCoroutine(TransitionIcons(isTogether));
+                bool shouldBeTogether = beastScript.IsPlayerWithinInteractionDistance();
+
+                if (shouldBeTogether != isTogether)
+                {
+                    isTogether = shouldBeTogether;
+                    if (transitionCoroutine != null) StopCoroutine(transitionCoroutine);
+                    transitionCoroutine = StartCoroutine(TransitionIcons(isTogether));
+                }
             }
         }
     }

@@ -202,6 +202,6 @@ public class Beast : MonoBehaviour
         if (playerTransform == null) return;
         float distance = Vector3.Distance(transform.position, playerTransform.position);
         float printInterestInBrisa = baseInterestInBrisa * Mathf.Exp(growthFactorInterestInBrisa * distance);
-        UnityEditor.Handles.Label(playerTransform.position + Vector3.up * 4, $"Interest: {printInterestInBrisa}");
+        // UnityEditor.Handles.Label(playerTransform.position + Vector3.up * 4, $"Interest: {printInterestInBrisa}");
     }
 }
