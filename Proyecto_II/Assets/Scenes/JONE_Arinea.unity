@@ -2142,6 +2142,7 @@ MonoBehaviour:
     attackParameterName: Attack
     airborneParameterName: Airborne
     deathParameterName: Death
+    interactionsParameterName: InteractionsBeast
     idleParameterName: isIdle
     walkParameterName: isWalking
     runParameterName: isRunning
@@ -2149,15 +2150,27 @@ MonoBehaviour:
     attack01ParameterName: isAttacking01
     attack02ParameterName: isAttacking02
     attack03ParameterName: isAttacking03
+    takeDamageParameterName: isTakingDamage
+    healParameterName: isHealing
     jumpParameterName: isJumping
     doubleJumpParameterName: isDoubleJumping
     fallParameterName: isFalling
     landParameterName: isLanding
     halfDeadParameterName: isHalfDeading
     finalDeadParameterName: isFinalDeading
+    callBeastParameterName: isCallingBeast
+    petBeastParameterName: isPettingBeast
+    rideBeastParameterName: isRidingBeast
+    pickUpParameterName: isPickUp
   PaloBrisa: {fileID: 1432328130}
   hitBox: {fileID: 873636943}
   attackDuration: 0.2
+  beastPanel: {fileID: 0}
+  mapPanel: {fileID: 0}
+  playerCam: {fileID: 0}
+  CamComponents: {fileID: 0}
+  AreaMoveBeast: {fileID: 0}
+  CursorMarker: {fileID: 0}
 --- !u!54 &141740097
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2484,6 +2497,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154016954}
   m_CullTransparentMesh: 1
+--- !u!1 &163491722
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 163491724}
+  - component: {fileID: 163491723}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &163491723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163491722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e31d41e39db35f46b9ded1fa61b89c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pausePanel: {fileID: 584455987}
+--- !u!4 &163491724
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163491722}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 506.90448, y: -28.068878, z: 364.15222}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &184034127
 GameObject:
   m_ObjectHideFlags: 0
@@ -8087,8 +8145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5d42b1f014fa74d86c92a0eb783f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pausePanel: {fileID: 584455987}
-  beastSelectionPanel: {fileID: 1973027207}
+  playerInput: {fileID: 141740095}
 --- !u!4 &1126499751
 Transform:
   m_ObjectHideFlags: 0
@@ -9216,6 +9273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beastSelectionPanel: {fileID: 1973027207}
+  beast: {fileID: 0}
 --- !u!1 &1380801690
 GameObject:
   m_ObjectHideFlags: 0
@@ -13456,6 +13514,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 2073503220}
   - {fileID: 1126499751}
+  - {fileID: 163491724}
   - {fileID: 958105793}
   - {fileID: 1995751769}
   - {fileID: 1096655523}

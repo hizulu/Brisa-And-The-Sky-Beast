@@ -27,7 +27,7 @@ public class Checkpoint : MonoBehaviour
 
         GetComponent<MeshRenderer>().material = magenta;
 
-        saveManager = SaveManager.instance;
+        saveManager = SaveManager.Instance;
     }
 
     private void OnTriggerEnter(Collider other)
