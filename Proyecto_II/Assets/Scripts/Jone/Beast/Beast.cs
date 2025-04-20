@@ -23,8 +23,9 @@ public class Beast : MonoBehaviour
 
     [Header("Stats")]
     [SerializeField] public float maxHealth = 500f;
+    [SerializeField] public float halfDeadDuration = 30f;
 
-    private float currentHealth;
+    public float currentHealth;
 
     float baseInterestInBrisa = 1f;
     float growthFactorInterestInBrisa = 0.05f;
@@ -53,6 +54,8 @@ public class Beast : MonoBehaviour
         EventsManager.CallNormalEvents("AtaqueBestia_Bestia", AttackBeastSelected);
         EventsManager.CallNormalEvents("MontarBestia_Bestia", MountBeastSelected);
         EventsManager.CallNormalEvents("AccionBestia_Bestia", ActionBeastSelected);
+
+        EventsManager.CallNormalEvents("BrisaHalfDead", BrisaIsHalfDead);
     }
 
     private void OnDestroy()
@@ -63,6 +66,8 @@ public class Beast : MonoBehaviour
         EventsManager.StopCallNormalEvents("AtaqueBestia_Bestia", AttackBeastSelected);
         EventsManager.StopCallNormalEvents("MontarBestia_Bestia", MountBeastSelected);
         EventsManager.StopCallNormalEvents("AccionBestia_Bestia", ActionBeastSelected);
+
+        EventsManager.StopCallNormalEvents("BrisaHalfDead", BrisaIsHalfDead);
     }
 
     private void Update()
@@ -95,7 +100,7 @@ public class Beast : MonoBehaviour
     }
 
     // Called from Brisa script
-    public void CallBeast()
+    private void CallBeast()
     {
         blackboard.SetValue("isConstrained", true);
         agent.ResetPath();
@@ -103,6 +108,12 @@ public class Beast : MonoBehaviour
         TransitionToState(new BeastConstrainedState());
 
         Debug.Log("Bestia llamada por el jugador");
+    }
+
+    private void BrisaIsHalfDead()
+    {
+        blackboard.SetValue("brisaIsHalfDead", true);
+        TransitionToState(new BeastBrisaHalfDeadState());
     }
 
     #region Beast Selection Menu
@@ -166,6 +177,14 @@ public class Beast : MonoBehaviour
         anim.SetTrigger("damageBeast");
 
         // TODO: beast gets damaged sound
+
+        currentHealth -= damage;
+        Debug.Log("Beast has been damaged");
+        if (currentHealth < Mathf.Epsilon)
+        {
+            blackboard.SetValue("beastIsHalfDead", true);
+            TransitionToState(new BeastHalfDeadState());
+        }
     }
     #endregion
 
