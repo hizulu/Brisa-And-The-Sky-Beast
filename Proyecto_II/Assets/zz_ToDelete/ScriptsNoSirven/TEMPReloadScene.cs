@@ -8,7 +8,7 @@ public class TEMPReloadScene : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.instance.ReloadScene();
+            GameManager.Instance.ReloadScene();
         }
     }
 }
