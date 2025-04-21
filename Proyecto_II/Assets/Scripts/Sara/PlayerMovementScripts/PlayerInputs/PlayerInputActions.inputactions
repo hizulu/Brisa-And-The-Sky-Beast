@@ -303,9 +303,18 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Map",
+                    "type": "Button",
+                    "id": "0599d1d1-af9c-4b39-9ba8-df7fba8f986b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Dialogue",
                     "type": "Button",
-                    "id": "71fa7f07-e1d4-45c3-804e-1fc5f44ecbc8",
+                    "id": "9fcdc5ab-f76f-42da-84ca-05f156b169f6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -314,16 +323,7 @@
                 {
                     "name": "DialogueContinue",
                     "type": "Button",
-                    "id": "89332e37-0eef-41b8-872e-47f5b4edbe2e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Map",
-                    "type": "Button",
-                    "id": "0599d1d1-af9c-4b39-9ba8-df7fba8f986b",
+                    "id": "10cf8fa6-05a1-42b3-80a3-027ee2941a0f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -377,17 +377,6 @@
                 },
                 {
                     "name": "",
-                    "id": "f5a5c50b-1da4-449f-af53-0bc9b1bb99ac",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Dialogue",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "96d34b8f-1f3d-47f1-a30d-8fd8a5f58afc",
                     "path": "<Keyboard>/m",
                     "interactions": "",
@@ -399,7 +388,29 @@
                 },
                 {
                     "name": "",
-                    "id": "f79f8a46-a792-4ec6-8172-b82a1ba26e0c",
+                    "id": "0683e2ee-bbc3-4441-b8e0-2526845406b0",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClosePanelGeneral",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8bda17c8-d800-49fa-9979-fca7d996f2ce",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dialogue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0954906e-d3ef-4bbb-a351-cf9cc7287e4b",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
@@ -410,23 +421,12 @@
                 },
                 {
                     "name": "",
-                    "id": "42181333-90bd-4d76-847b-190ff5a0b05f",
+                    "id": "03743c80-c9d1-4644-8aad-5b37f5acbc8a",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "DialogueContinue",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0683e2ee-bbc3-4441-b8e0-2526845406b0",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ClosePanelGeneral",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
