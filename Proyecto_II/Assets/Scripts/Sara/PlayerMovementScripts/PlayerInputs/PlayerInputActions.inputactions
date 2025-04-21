@@ -294,6 +294,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ClosePanelGeneral",
+                    "type": "Button",
+                    "id": "c0d61bf3-9bce-4cd6-bccb-97c4eb4aaf30",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Dialogue",
                     "type": "Button",
                     "id": "71fa7f07-e1d4-45c3-804e-1fc5f44ecbc8",
@@ -306,15 +315,6 @@
                     "name": "DialogueContinue",
                     "type": "Button",
                     "id": "89332e37-0eef-41b8-872e-47f5b4edbe2e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ClosePanelGeneral",
-                    "type": "Button",
-                    "id": "c0d61bf3-9bce-4cd6-bccb-97c4eb4aaf30",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -388,17 +388,6 @@
                 },
                 {
                     "name": "",
-                    "id": "0683e2ee-bbc3-4441-b8e0-2526845406b0",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ClosePanelGeneral",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "96d34b8f-1f3d-47f1-a30d-8fd8a5f58afc",
                     "path": "<Keyboard>/m",
                     "interactions": "",
@@ -427,6 +416,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "DialogueContinue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0683e2ee-bbc3-4441-b8e0-2526845406b0",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClosePanelGeneral",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
