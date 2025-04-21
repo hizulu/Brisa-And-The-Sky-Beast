@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 /*
  * NOMBRE CLASE: EnemyRetreat
  * AUTOR: Sara Yue Madruga Martín, Jone Sainz Egea

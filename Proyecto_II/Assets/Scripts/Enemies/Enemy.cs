@@ -29,16 +29,9 @@ public class Enemy : HittableElement
     private bool enemyHurt = false;
     #endregion
 
-
-    #region Variables temporales para visualizar las áreas: Gizmos
-    [Header("Variables Gizmos")]
-    [SerializeField] private float playerAttackRange = 1f;
-    [SerializeField] private float playerLostRange = 15f;
-    [SerializeField] private float playerDetectionRange = 15f;
-    #endregion
+    #region FSM Variables
     public EnemyStateMachine enemyStateMachine {  get; private set; }
 
-    #region States
     [SerializeField] private EnemyStateSOBase EnemyIdleBase;
     [SerializeField] private EnemyStateSOBase EnemyPatrolBase;
     [SerializeField] private EnemyStateSOBase EnemyChaseBase;
@@ -52,12 +45,27 @@ public class Enemy : HittableElement
     public EnemyStateSOBase EnemyRetreatBaseInstance { get; set; }
     #endregion
 
-    #region State change Checks
-    public bool doIdle = true;
-    public bool doPatrol = false;
-    public bool doChase = false;
-    public bool doAttack = false;
-    public bool doRetreat = false;
+    #region Variables temporales para visualizar las áreas: Gizmos
+    [Header("Variables Gizmos")]
+    [SerializeField] private float playerAttackRange = 1f;
+    [SerializeField] private float playerLostRange = 15f;
+    [SerializeField] private float playerDetectionRange = 15f;
+    #endregion
+
+    #region Suscripciones y desuspripciones a eventos
+    private void OnEnable()
+    {
+        EventsManager.CallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
+        EventsManager.CallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
+        EventsManager.CallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
+    }
+
+    private void OnDisable()
+    {
+        EventsManager.StopCallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
+        EventsManager.StopCallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
+        EventsManager.StopCallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
+    }
     #endregion
 
     private void Awake()
@@ -73,21 +81,7 @@ public class Enemy : HittableElement
 
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();     
-    }
-
-    private void OnEnable()
-    {
-        EventsManager.CallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
-        EventsManager.CallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
-        EventsManager.CallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
-    }
-
-    private void OnDisable()
-    {
-        EventsManager.StopCallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
-        EventsManager.StopCallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
-        EventsManager.StopCallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     private void Start()
@@ -114,11 +108,10 @@ public class Enemy : HittableElement
         enemyStateMachine.UpdatePhysics();
     }
 
-    public override void OnHit()
-    {
-        enemyHurt = true;
-    }
-
+    /*
+     * Método que se llama desde los estados del enemigo y se encarga de moverlo al destino indicado.
+     * @param1 destination - Recibe la posición objetivo a la que debe ir.
+     */
     public void MoveEnemy(Vector3 destination)
     {
         if (agent.enabled && agent.isOnNavMesh)
@@ -128,6 +121,11 @@ public class Enemy : HittableElement
     }
 
     #region DamageRelated Functions
+    public override void OnHit()
+    {
+        enemyHurt = true;
+    }
+
     // Function called from Player script
     public void DamageEnemy (float _damageAmount)
     {
@@ -160,6 +158,7 @@ public class Enemy : HittableElement
     }
     #endregion
 
+    // TEMP Gizmos
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

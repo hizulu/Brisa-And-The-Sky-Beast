@@ -1,11 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/*
+ * NOMBRE CLASE: EnemyRetreatRunAway
+ * AUTOR: Jone Sainz Egea
+ * FECHA: 24/03/2025
+ * DESCRIPCIÓN: Clase que define el comportamiento específico de Retreat en el que el enemigo huye en la dirección contraria del jugador.
+ *              Después de huir, cambia a estado de Chase si el jugador se encuentra lo suficientemente cerca para seguirlo.
+ *              Después de huir, si el jugador se encuentra lejos, vuelve a estado de Idle.
+ *              Hereda de EnemyStateSOBase, por lo que se crea desde el editor de Unity. Sobreescribe sus métodos y tiene acceso a sus variables.            
+ * VERSIÓN: 1.0. Script base con el comportamiento de huir del jugador.
+ */
 [CreateAssetMenu(fileName = "Retreat-Run Away", menuName = "Enemy Logic/Retreat Logic/Run Away")]
 public class EnemyRetreatRunAway : EnemyStateSOBase
 {
+    #region Variables
     [SerializeField] private float runAwaySpeed = 3.5f;
     [SerializeField] private float runAwayDistance = 10f;
     [SerializeField] private float playerChaseRange = 10f;
@@ -15,7 +24,9 @@ public class EnemyRetreatRunAway : EnemyStateSOBase
     private Vector3 positionToRetreatTo; // Posición inicial a la que tiene que huír
 
     private bool hasRetreated = false;
+    #endregion
 
+    #region Sobreescriturta de métodos de EnemyStateSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
@@ -30,8 +41,6 @@ public class EnemyRetreatRunAway : EnemyStateSOBase
         positionToRetreatTo = SetRetreatDestination();
 
         enemy.MoveEnemy(positionToRetreatTo);
-
-        Debug.Log("Entra en estado de huida");
     }
 
     public override void DoExitLogic()
@@ -48,39 +57,20 @@ public class EnemyRetreatRunAway : EnemyStateSOBase
 
         if (!hasRetreated)
         {
+            // Comprobación de que el enemigo haya huído con éxito
             if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance && !enemy.agent.pathPending)
-            {
                 hasRetreated = true;
-                Debug.Log("Ha huido con éxito");
-            }
         }
+        // Cuando el enemigo ya ha huído
         else
         {
+            // Si el jugador se encuentra en rango de persecución, vuelve al estado de Chase
             if (distanceToPlayerSQR < playerChaseRangeSQR)
-            {
-                Debug.Log("Volver a perseguir");
-                enemy.doChase = true;
-                enemy.doRetreat = false;
                 enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
-            }
+            // Si no, vuelve al estado de Idle
             else
-            {
-                Debug.Log("Volver a Idle");
-                enemy.doIdle = true;
-                enemy.doRetreat = false;
                 enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyIdleState);
-            }
         }
-    }
-
-    public override void DoPhysicsLogic()
-    {
-        base.DoPhysicsLogic();
-    }
-
-    public override void Initialize(GameObject gameObject, Enemy enemy)
-    {
-        base.Initialize(gameObject, enemy);
     }
 
     public override void ResetValues()
@@ -88,14 +78,22 @@ public class EnemyRetreatRunAway : EnemyStateSOBase
         base.ResetValues();
         hasRetreated = false;
     }
+    #endregion
 
+    #region Métodos Específicos de EnemyRetreatRunAway
+    /*
+     * Método que calcula la posición a la que debe huír el enemigo
+     * @return Vector3 de posición a la que debe huír
+     */
     private Vector3 SetRetreatDestination()
     {
+        // Cálculo de la posición a la que debe huír
         Vector3 directionAway = (enemy.transform.position - playerTransform.position).normalized;
         Vector3 targetPos = enemy.transform.position + directionAway * runAwayDistance; 
 
+        // Comprobación de que el enemigo pueda dirigirse a esa posición con el NavMesh
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(targetPos, out hit, 10f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(targetPos, out hit, 15f, NavMesh.AllAreas))
         {
             return hit.position;
         }
@@ -105,4 +103,5 @@ public class EnemyRetreatRunAway : EnemyStateSOBase
             return Vector3.zero;
         }
     }
+    #endregion
 }
