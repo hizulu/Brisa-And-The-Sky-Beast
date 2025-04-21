@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "Attack-Zig Zag Jump", menuName = "Enemy Logic/Attack Logic/Ziz Zag Jump")]
-public class EnemyAttackZigZagJump : EnemyAttackSOBase
+public class EnemyAttackZigZagJump : EnemyStateSOBase
 {
     [SerializeField] private float attackDamage = 20f;
     [SerializeField] private float distanceToStopAttackState = 8f;

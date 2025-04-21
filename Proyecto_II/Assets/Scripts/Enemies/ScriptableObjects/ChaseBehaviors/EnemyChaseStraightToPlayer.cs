@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Chase-Straight to Player", menuName = "Enemy Logic/Chase Logic/Straight to Player")]
-public class EnemyChaseStraightToPlayer : EnemyChaseSOBase
+public class EnemyChaseStraightToPlayer : EnemyStateSOBase
 {
     [SerializeField] private float chasingSpeed = 6f;
     [SerializeField] private float playerAttackRange = 7f;

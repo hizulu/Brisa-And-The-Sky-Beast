@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "Retreat-Run Away", menuName = "Enemy Logic/Retreat Logic/Run Away")]
-public class EnemyRetreatRunAway : EnemyRetreatSOBase
+public class EnemyRetreatRunAway : EnemyStateSOBase
 {
     [SerializeField] private float runAwaySpeed = 3.5f;
     [SerializeField] private float runAwayDistance = 10f;

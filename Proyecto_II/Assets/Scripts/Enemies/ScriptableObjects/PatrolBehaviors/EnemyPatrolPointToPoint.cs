@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Patrol-Point to Point", menuName = "Enemy Logic/Patrol Logic/Point to Point")]
-public class EnemyPatrolPointToPoint : EnemyPatrolSOBase
+public class EnemyPatrolPointToPoint : EnemyStateSOBase
 {
     #region Variables
     [SerializeField] private float PointToPointMovementSpeed = 1f;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Idle-Stand Still", menuName = "Enemy Logic/Idle Logic/Stand Still")]
-public class EnemyIdleStandStill : EnemyIdleSOBase
+public class EnemyIdleStandStill : EnemyStateSOBase
 {
     [SerializeField] float minStillTime = 1f;
     [SerializeField] float maxStillTime = 5f;

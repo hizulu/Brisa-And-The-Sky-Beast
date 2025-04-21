@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Attack-Melee", menuName = "Enemy Logic/Attack Logic/Melee")]
-public class EnemyAttackMelee : EnemyAttackSOBase
+public class EnemyAttackMelee : EnemyStateSOBase
 {
     [SerializeField] private float _timeBetweenHits = 2f;
     [SerializeField] private float _attackDamage = 20f;

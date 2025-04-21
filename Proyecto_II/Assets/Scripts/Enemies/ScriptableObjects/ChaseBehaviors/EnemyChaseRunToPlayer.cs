@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Chase-Run to Player", menuName = "Enemy Logic/Chase Logic/Run to Player")]
-public class EnemyChaseRunToPlayer : EnemyChaseSOBase
+public class EnemyChaseRunToPlayer : EnemyStateSOBase
 {
     [SerializeField] private float chasingSpeed = 4f; // Velocidad a la que persigue el enemigo.
     [SerializeField] private float playerAttackRange = 3f; // Área donde el enemigo pasa a atacar si el jugador entra dentro de él.
