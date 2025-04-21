@@ -9,8 +9,8 @@ public class Enemy : HittableElement
     public Animator anim { get; private set; }
     public NavMeshAgent agent;
 
-    [SerializeField] float maxHealth = 100f;
-    [field:SerializeField] private float currentHealth;
+    [SerializeField] public float maxHealth = 100f;
+    [field:SerializeField] public float currentHealth;
 
     private bool enemyHurt = false;
 

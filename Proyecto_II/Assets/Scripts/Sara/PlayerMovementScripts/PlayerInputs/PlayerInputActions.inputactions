@@ -294,15 +294,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dialogue",
-                    "type": "Button",
-                    "id": "71fa7f07-e1d4-45c3-804e-1fc5f44ecbc8",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "ClosePanelGeneral",
                     "type": "Button",
                     "id": "c0d61bf3-9bce-4cd6-bccb-97c4eb4aaf30",
@@ -315,6 +306,24 @@
                     "name": "Map",
                     "type": "Button",
                     "id": "0599d1d1-af9c-4b39-9ba8-df7fba8f986b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dialogue",
+                    "type": "Button",
+                    "id": "9fcdc5ab-f76f-42da-84ca-05f156b169f6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DialogueContinue",
+                    "type": "Button",
+                    "id": "10cf8fa6-05a1-42b3-80a3-027ee2941a0f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -368,12 +377,12 @@
                 },
                 {
                     "name": "",
-                    "id": "f5a5c50b-1da4-449f-af53-0bc9b1bb99ac",
-                    "path": "<Keyboard>/e",
+                    "id": "96d34b8f-1f3d-47f1-a30d-8fd8a5f58afc",
+                    "path": "<Keyboard>/m",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dialogue",
+                    "action": "Map",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -390,12 +399,34 @@
                 },
                 {
                     "name": "",
-                    "id": "96d34b8f-1f3d-47f1-a30d-8fd8a5f58afc",
-                    "path": "<Keyboard>/m",
+                    "id": "8bda17c8-d800-49fa-9979-fca7d996f2ce",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Map",
+                    "action": "Dialogue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0954906e-d3ef-4bbb-a351-cf9cc7287e4b",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DialogueContinue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "03743c80-c9d1-4644-8aad-5b37f5acbc8a",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DialogueContinue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
