@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.IO;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class DialogManager : MonoBehaviour
 {
@@ -16,10 +17,14 @@ public class DialogManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public Button[] optionButtons;
     public TextMeshProUGUI[] optionTexts;
+    public Image continueIndicator;
+
+    [Header("Input Settings")]
+    [SerializeField] private PlayerInput playerInput;
 
     private Dictionary<int, DialogEntry> dialogDict = new Dictionary<int, DialogEntry>();
-    private HashSet<int> unlockedDialogIDs = new HashSet<int>();
-    private HashSet<int> seenDialogIDs = new HashSet<int>();
+    private List<int> unlockedDialogIDs = new List<int>();
+    private List<int> seenDialogIDs = new List<int>();
 
     private int currentID, startID, endID;
     private DialogEntry currentEntry;
@@ -27,13 +32,44 @@ public class DialogManager : MonoBehaviour
 
     private bool isDialogActive = false;
     private bool isTyping = false;
+    private bool textCompleted = false;
     private Coroutine typingCoroutine;
+    private Coroutine indicatorCoroutine;
 
     void Awake()
     {
         LoadDialogFromCSV();
         dialogPanel.SetActive(false);
         HideAllOptions();
+        continueIndicator.gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        playerInput.UIPanelActions.DialogueContinue.performed += OnContinuePerformed;
+    }
+
+    private void OnDisable()
+    {
+        playerInput.UIPanelActions.DialogueContinue.performed -= OnContinuePerformed;
+    }
+
+    private void OnContinuePerformed(InputAction.CallbackContext context)
+    {
+        if (!isDialogActive) return;
+
+        // Determinar qué input se usó
+        bool isKeyboard = context.control.device is Keyboard;
+        bool isMouse = context.control.device is Mouse;
+
+        if (isTyping)
+        {
+            CompleteCurrentText();
+        }
+        else if (textCompleted && !AnyOptionActive()) // Solo avanzar si no hay opciones
+        {
+            AdvanceDialog();
+        }
     }
 
     void LoadDialogFromCSV()
@@ -85,7 +121,7 @@ public class DialogManager : MonoBehaviour
 
     public void AdvanceDialog()
     {
-        if (!isDialogActive || isTyping) return;
+        if (!isDialogActive || isTyping || AnyOptionActive()) return;
 
         if (currentEntry.NextLineID != -1)
         {
@@ -111,6 +147,7 @@ public class DialogManager : MonoBehaviour
         }
 
         currentID = id;
+        textCompleted = false;
 
         // Registrar que hemos visto este diálogo
         if (!seenDialogIDs.Contains(id))
@@ -127,12 +164,18 @@ public class DialogManager : MonoBehaviour
         }
 
         nameText.text = currentEntry.Name;
+        continueIndicator.gameObject.SetActive(false);
 
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
+        if (indicatorCoroutine != null)
+            StopCoroutine(indicatorCoroutine);
+
+        // Iniciar escritura de texto
         typingCoroutine = StartCoroutine(TypeText(currentEntry.Text, () =>
         {
+            textCompleted = true;
             if (currentEntry.HasOptions)
             {
                 //Debug.Log($"Mostrando opciones para diálogo ID: {id}");
@@ -143,6 +186,10 @@ public class DialogManager : MonoBehaviour
             {
                 //Debug.Log("No hay siguiente línea, volviendo a opciones anteriores");
                 ShowOptions(lastOptionsEntry);
+            }
+            else
+            {
+                indicatorCoroutine = StartCoroutine(AnimateContinueIndicator());
             }
         }));
     }
@@ -172,12 +219,58 @@ public class DialogManager : MonoBehaviour
         onComplete?.Invoke();
     }
 
+    IEnumerator AnimateContinueIndicator()
+    {
+        if (continueIndicator == null || currentEntry.HasOptions) yield break;
+
+        continueIndicator.gameObject.SetActive(true);
+        float pulseDuration = 0.5f;
+        float timer = 0f;
+        bool increasing = true;
+        float minAlpha = 0.3f;
+        float maxAlpha = 1f;
+
+        while (textCompleted && !isTyping && isDialogActive && !AnyOptionActive())
+        {
+            timer += Time.deltaTime * (increasing ? 1 : -1);
+            timer = Mathf.Clamp(timer, 0, pulseDuration);
+
+            if (timer == 0 || timer == pulseDuration)
+                increasing = !increasing;
+
+            continueIndicator.color = new Color(1, 1, 1, Mathf.Lerp(minAlpha, maxAlpha, timer / pulseDuration));
+            yield return null;
+        }
+
+        continueIndicator.gameObject.SetActive(false);
+    }
+
+    void CompleteCurrentText()
+    {
+        if (!isTyping || typingCoroutine == null) return;
+
+        StopCoroutine(typingCoroutine);
+        dialogueText.text = currentEntry.Text;
+        isTyping = false;
+        textCompleted = true;
+
+        if (currentEntry.HasOptions)
+        {
+            lastOptionsEntry = currentEntry;
+            ShowOptions(currentEntry);
+        }
+        else if (currentEntry.NextLineID == -1 && lastOptionsEntry != null)
+        {
+            ShowOptions(lastOptionsEntry);
+        }
+        else
+        {
+            indicatorCoroutine = StartCoroutine(AnimateContinueIndicator());
+        }
+    }
+
     void ShowOptions(DialogEntry entry)
     {
-        //Debug.Log($"Mostrando opciones para entrada ID: {entry.ID}");
-        //Debug.Log($"Diálogos vistos: {string.Join(",", seenDialogIDs)}");
-        //Debug.Log($"Diálogos desbloqueados: {string.Join(",", unlockedDialogIDs)}");
-
         HideAllOptions();
 
         int buttonIndex = 0;
@@ -187,34 +280,22 @@ public class DialogManager : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(entry.OptionTexts[i]) && entry.OptionNextIDs[i] != -1)
             {
-                //Debug.Log($"Mostrando opción normal {i}: {entry.OptionTexts[i]} -> ID: {entry.OptionNextIDs[i]}");
                 SetupOption(buttonIndex++, entry.OptionTexts[i], entry.OptionNextIDs[i]);
             }
         }
 
-        // Mostrar opción condicional si:
-        // 1. Tiene texto definido
-        // 2. Tiene un ID válido
-        // 3. El diálogo requerido ha sido visto (no solo desbloqueado)
+        // Mostrar opción condicional solo si el diálogo requerido ha sido visto
         if (buttonIndex < optionButtons.Length &&
             !string.IsNullOrEmpty(entry.OptionWithRequirementText) &&
-            entry.OptionWithRequirementID != -1)
+            entry.OptionWithRequirementID != -1 &&
+            seenDialogIDs.Contains(entry.RequiredID)) // <- condición correcta
         {
-            if (seenDialogIDs.Contains(entry.RequiredID))
-            {
-                //Debug.Log($"Mostrando opción condicional: {entry.OptionWithRequirementText} -> ID: {entry.OptionWithRequirementID} (Requiere ID: {entry.RequiredID})");
-                SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
-            }
-            else
-            {
-                //Debug.Log($"Opcion condicional requerida no vista aún: {entry.RequiredID}");
-            }
+            SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
         }
 
-        // Opción "Adiós" siempre disponible
-        if (buttonIndex < optionButtons.Length)
+        // Mostrar botón "Adiós" solo si hay al menos una opción mostrada
+        if (buttonIndex > 0 && buttonIndex < optionButtons.Length)
         {
-            //Debug.Log("Mostrando opción 'Adiós'");
             SetupOption(buttonIndex, "Adiós.", -1);
         }
     }
@@ -257,6 +338,13 @@ public class DialogManager : MonoBehaviour
         }
 
         ShowDialogue(nextID);
+        if (!nextEntry.HasOptions)
+        {
+            if (indicatorCoroutine != null)
+                StopCoroutine(indicatorCoroutine);
+
+            indicatorCoroutine = StartCoroutine(AnimateContinueIndicator());
+        }
     }
 
     void HideAllOptions()
@@ -269,6 +357,15 @@ public class DialogManager : MonoBehaviour
                 btn.onClick.RemoveAllListeners();
             }
         }
+    }
+
+    bool AnyOptionActive()
+    {
+        foreach (var btn in optionButtons)
+        {
+            if (btn.gameObject.activeSelf) return true;
+        }
+        return false;
     }
 
     void CloseDialog()

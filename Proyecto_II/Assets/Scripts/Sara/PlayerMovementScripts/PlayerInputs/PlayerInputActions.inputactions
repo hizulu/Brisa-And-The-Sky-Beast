@@ -303,6 +303,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "DialogueContinue",
+                    "type": "Button",
+                    "id": "89332e37-0eef-41b8-872e-47f5b4edbe2e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ClosePanelGeneral",
                     "type": "Button",
                     "id": "c0d61bf3-9bce-4cd6-bccb-97c4eb4aaf30",
@@ -396,6 +405,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f79f8a46-a792-4ec6-8172-b82a1ba26e0c",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DialogueContinue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "42181333-90bd-4d76-847b-190ff5a0b05f",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DialogueContinue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

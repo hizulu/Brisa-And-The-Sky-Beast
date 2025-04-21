@@ -325,6 +325,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""DialogueContinue"",
+                    ""type"": ""Button"",
+                    ""id"": ""89332e37-0eef-41b8-872e-47f5b4edbe2e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ClosePanelGeneral"",
                     ""type"": ""Button"",
                     ""id"": ""c0d61bf3-9bce-4cd6-bccb-97c4eb4aaf30"",
@@ -420,6 +429,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Map"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f79f8a46-a792-4ec6-8172-b82a1ba26e0c"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogueContinue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""42181333-90bd-4d76-847b-190ff5a0b05f"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogueContinue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -445,6 +476,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UIPanel_BeastPanel = m_UIPanel.FindAction("BeastPanel", throwIfNotFound: true);
         m_UIPanel_PauseGame = m_UIPanel.FindAction("PauseGame", throwIfNotFound: true);
         m_UIPanel_Dialogue = m_UIPanel.FindAction("Dialogue", throwIfNotFound: true);
+        m_UIPanel_DialogueContinue = m_UIPanel.FindAction("DialogueContinue", throwIfNotFound: true);
         m_UIPanel_ClosePanelGeneral = m_UIPanel.FindAction("ClosePanelGeneral", throwIfNotFound: true);
         m_UIPanel_Map = m_UIPanel.FindAction("Map", throwIfNotFound: true);
     }
@@ -631,6 +663,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UIPanel_BeastPanel;
     private readonly InputAction m_UIPanel_PauseGame;
     private readonly InputAction m_UIPanel_Dialogue;
+    private readonly InputAction m_UIPanel_DialogueContinue;
     private readonly InputAction m_UIPanel_ClosePanelGeneral;
     private readonly InputAction m_UIPanel_Map;
     public struct UIPanelActions
@@ -642,6 +675,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @BeastPanel => m_Wrapper.m_UIPanel_BeastPanel;
         public InputAction @PauseGame => m_Wrapper.m_UIPanel_PauseGame;
         public InputAction @Dialogue => m_Wrapper.m_UIPanel_Dialogue;
+        public InputAction @DialogueContinue => m_Wrapper.m_UIPanel_DialogueContinue;
         public InputAction @ClosePanelGeneral => m_Wrapper.m_UIPanel_ClosePanelGeneral;
         public InputAction @Map => m_Wrapper.m_UIPanel_Map;
         public InputActionMap Get() { return m_Wrapper.m_UIPanel; }
@@ -668,6 +702,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dialogue.started += instance.OnDialogue;
             @Dialogue.performed += instance.OnDialogue;
             @Dialogue.canceled += instance.OnDialogue;
+            @DialogueContinue.started += instance.OnDialogueContinue;
+            @DialogueContinue.performed += instance.OnDialogueContinue;
+            @DialogueContinue.canceled += instance.OnDialogueContinue;
             @ClosePanelGeneral.started += instance.OnClosePanelGeneral;
             @ClosePanelGeneral.performed += instance.OnClosePanelGeneral;
             @ClosePanelGeneral.canceled += instance.OnClosePanelGeneral;
@@ -693,6 +730,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dialogue.started -= instance.OnDialogue;
             @Dialogue.performed -= instance.OnDialogue;
             @Dialogue.canceled -= instance.OnDialogue;
+            @DialogueContinue.started -= instance.OnDialogueContinue;
+            @DialogueContinue.performed -= instance.OnDialogueContinue;
+            @DialogueContinue.canceled -= instance.OnDialogueContinue;
             @ClosePanelGeneral.started -= instance.OnClosePanelGeneral;
             @ClosePanelGeneral.performed -= instance.OnClosePanelGeneral;
             @ClosePanelGeneral.canceled -= instance.OnClosePanelGeneral;
@@ -736,6 +776,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnBeastPanel(InputAction.CallbackContext context);
         void OnPauseGame(InputAction.CallbackContext context);
         void OnDialogue(InputAction.CallbackContext context);
+        void OnDialogueContinue(InputAction.CallbackContext context);
         void OnClosePanelGeneral(InputAction.CallbackContext context);
         void OnMap(InputAction.CallbackContext context);
     }
