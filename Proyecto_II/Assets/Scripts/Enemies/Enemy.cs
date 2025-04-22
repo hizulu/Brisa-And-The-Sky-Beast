@@ -3,18 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/*
+ * NOMBRE CLASE: Enemy
+ * AUTOR: Sara Yue Madruga Martín, Jone Sainz Egea
+ * FECHA: 
+ * DESCRIPCIÓN: Script que gestiona toda la lógica del enemigo, así como sus estadísticas.
+ *              Instancia e inicializa los comportamientos de cada estado.
+ *              Funcionamiento modular de los diferentes estados.
+ *              Crea una EnemyStateMachine y efecuta sus funciones.
+ * VERSIÓN: 1.0. Script base para la gestión de la FSM con comportamientos en SO
+ *              1.1. Se añade lógica para dañar al enemigo
+ */
 public class Enemy : HittableElement
 {
+    #region Main Enemy Variables
     public Player player;
     public Animator anim { get; private set; }
     public NavMeshAgent agent;
 
-    [SerializeField] public float maxHealth = 100f;
+
+    [SerializeField] publid float maxHealth = 100f;
     [field:SerializeField] public float currentHealth;
+    [SerializeField] float enemySpeed = 1f; // TODO: speed affects movement speed
+    [SerializeField] float attackDamage = 10f; // TODO: attackDamage is taken into account
+
 
     private bool enemyHurt = false;
+    #endregion
 
+    #region FSM Variables
     public EnemyStateMachine enemyStateMachine {  get; private set; }
+
+    [SerializeField] private EnemyStateSOBase EnemyIdleBase;
+    [SerializeField] private EnemyStateSOBase EnemyPatrolBase;
+    [SerializeField] private EnemyStateSOBase EnemyChaseBase;
+    [SerializeField] private EnemyStateSOBase EnemyAttackBase;
+    [SerializeField] private EnemyStateSOBase EnemyRetreatBase;
+
+    public EnemyStateSOBase EnemyIdleBaseInstance { get; set; }
+    public EnemyStateSOBase EnemyPatrolBaseInstance { get; set; }
+    public EnemyStateSOBase EnemyChaseBaseInstance { get; set; }
+    public EnemyStateSOBase EnemyAttackBaseInstance { get; set; }
+    public EnemyStateSOBase EnemyRetreatBaseInstance { get; set; }
+    #endregion
 
     #region Variables temporales para visualizar las áreas: Gizmos
     [Header("Variables Gizmos")]
@@ -23,30 +54,25 @@ public class Enemy : HittableElement
     [SerializeField] private float playerDetectionRange = 15f;
     #endregion
 
-    #region States
-    [SerializeField] private EnemyIdleSOBase EnemyIdleBase;
-    [SerializeField] private EnemyPatrolSOBase EnemyPatrolBase;
-    [SerializeField] private EnemyChaseSOBase EnemyChaseBase;
-    [SerializeField] private EnemyAttackSOBase EnemyAttackBase;
-    [SerializeField] private EnemyRetreatSOBase EnemyRetreatBase;
+    #region Suscripciones y desuspripciones a eventos
+    private void OnEnable()
+    {
+        EventsManager.CallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
+        EventsManager.CallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
+        EventsManager.CallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
+    }
 
-    public EnemyIdleSOBase EnemyIdleBaseInstance { get; set; }
-    public EnemyPatrolSOBase EnemyPatrolBaseInstance { get; set; }
-    public EnemyChaseSOBase EnemyChaseBaseInstance { get; set; }
-    public EnemyAttackSOBase EnemyAttackBaseInstance { get; set; }
-    public EnemyRetreatSOBase EnemyRetreatBaseInstance { get; set; }
-    #endregion
-
-    #region State change Checks
-    public bool doIdle = true;
-    public bool doPatrol = false;
-    public bool doChase = false;
-    public bool doAttack = false;
-    public bool doRetreat = false;
+    private void OnDisable()
+    {
+        EventsManager.StopCallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
+        EventsManager.StopCallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
+        EventsManager.StopCallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
+    }
     #endregion
 
     private void Awake()
     {
+        // Instanciar el comportamiento específico asociado al enemigo
         EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
         EnemyPatrolBaseInstance = Instantiate(EnemyPatrolBase);
         EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
@@ -58,26 +84,11 @@ public class Enemy : HittableElement
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-
-        
-    }
-
-    private void OnEnable()
-    {
-        EventsManager.CallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
-        EventsManager.CallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
-        EventsManager.CallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
-    }
-
-    private void OnDestroy()
-    {
-        EventsManager.StopCallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
-        EventsManager.StopCallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
-        EventsManager.StopCallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
     }
 
     private void Start()
     {
+        // Inicializar los comportamientos específicos asociados al enemigo
         EnemyIdleBaseInstance.Initialize(gameObject, this);
         EnemyPatrolBaseInstance.Initialize(gameObject, this);
         EnemyChaseBaseInstance.Initialize(gameObject, this);
@@ -99,11 +110,10 @@ public class Enemy : HittableElement
         enemyStateMachine.UpdatePhysics();
     }
 
-    public override void OnHit()
-    {
-        enemyHurt = true;
-    }
-
+    /*
+     * Método que se llama desde los estados del enemigo y se encarga de moverlo al destino indicado.
+     * @param1 destination - Recibe la posición objetivo a la que debe ir.
+     */
     public void MoveEnemy(Vector3 destination)
     {
         if (agent.enabled && agent.isOnNavMesh)
@@ -113,6 +123,11 @@ public class Enemy : HittableElement
     }
 
     #region DamageRelated Functions
+    public override void OnHit()
+    {
+        enemyHurt = true;
+    }
+
     // Function called from Player script
     public void DamageEnemy (float _damageAmount)
     {
@@ -145,6 +160,7 @@ public class Enemy : HittableElement
     }
     #endregion
 
+    // TEMP Gizmos
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
