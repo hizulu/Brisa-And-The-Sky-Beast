@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -66,6 +67,12 @@ public class PlayerMovementState : IState
     public virtual void UpdateLogic()
     {
         //Debug.Log("Actualizando");
+        EnemyInRange();
+
+        if (!camLock)
+            UnLockCam();
+        else
+            LockCam();
     }
 
     /*
@@ -121,6 +128,7 @@ public class PlayerMovementState : IState
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled += OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed += CallBeast;
+        stateMachine.Player.PlayerInput.PlayerActions.LockTarget.performed += LockTarget;
     }
 
     /*
@@ -132,6 +140,7 @@ public class PlayerMovementState : IState
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled -= OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled -= OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed -= CallBeast;
+        stateMachine.Player.PlayerInput.PlayerActions.LockTarget.performed -= LockTarget;
     }
 
     /*
@@ -232,27 +241,13 @@ public class PlayerMovementState : IState
     /*
      * Método que cambia el estado del jugador a PickUpState.
      */
-    protected void PickUp()
+    private void PickUp()
     {
         stateMachine.ChangeState(stateMachine.PickUpState);
     }
+    #endregion
 
-    /*
-     * Método de recibir daño.
-     * Disminuye la salud del jugador en función del daño recibido y cambia al estado de Medio-Muerta si la salud llega a cero.
-     * @param _enemyDamage - Daño recibido por parte del enemigo.
-     */
-    private void TakeDamage(float _enemyDamage)
-    {
-        statsData.CurrentHealth -= _enemyDamage;
-        statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
-
-        if (statsData.CurrentHealth <= 0)
-            stateMachine.ChangeState(stateMachine.HalfDeadState);
-        else
-            stateMachine.ChangeState(stateMachine.TakeDamageState);
-    }
-
+    #region Métodos Interacción Bestia
     /*
      * Método que gestiona la llamada a la Bestia.
      * @param context - Información sobre la tecla / acción que se activa.
@@ -276,6 +271,114 @@ public class PlayerMovementState : IState
         StopAnimation(stateMachine.Player.PlayerAnimationData.CallBeastParameterHash);
         StartAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
         StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
+    }
+    #endregion
+
+    #region Métodos Enemigos
+    private List<GameObject> enemiesTarget = new List<GameObject>();
+    private int currentLockTarget = -1;
+    private float detectionRange = 20f;
+    private bool camLock = false;
+
+    private void LockTarget(InputAction.CallbackContext context)
+    {
+        if (enemiesTarget.Count == 0 || !IsListStillValid())
+        {
+            RefreshEnemyList();
+            currentLockTarget = -1;
+        }
+
+        if (enemiesTarget.Count == 0) return;
+
+        if (currentLockTarget == enemiesTarget.Count - 1)
+        {
+            stateMachine.Player.pointTarget.ClearTarget();
+            currentLockTarget = -1;
+            stateMachine.Player.playerCam.LookAt = stateMachine.Player.lookCamPlayer;
+            camLock = false;
+            return;
+        }
+
+        currentLockTarget = (currentLockTarget + 1) % enemiesTarget.Count;
+
+        GameObject selectedEnemy = enemiesTarget[currentLockTarget];
+        stateMachine.Player.pointTarget.SetTarget(selectedEnemy.transform);
+        stateMachine.Player.playerCam.LookAt = selectedEnemy.transform;
+        camLock = true;
+        Debug.Log("Enemigo fijado: " + selectedEnemy.name);
+    }
+
+    private bool IsListStillValid()
+    {
+        for (int i = enemiesTarget.Count - 1; i >= 0; i--)
+        {
+            GameObject enemy = enemiesTarget[i];
+            if (enemy == null || Vector3.Distance(stateMachine.Player.transform.position, enemy.transform.position) > detectionRange)
+                enemiesTarget.RemoveAt(i);
+        }
+        return enemiesTarget.Count > 0;
+    }
+
+    private void RefreshEnemyList()
+    {
+        enemiesTarget.Clear();
+        Collider[] enemiesColliders = Physics.OverlapSphere(stateMachine.Player.transform.position, detectionRange);
+
+        foreach (Collider collider in enemiesColliders)
+        {
+            if (collider.CompareTag("Enemy"))
+            {
+                Enemy enemy = collider.GetComponent<Enemy>();
+                if (enemy != null)
+                    enemiesTarget.Add(enemy.gameObject);
+            }
+        }
+    }
+
+    GameObject currentTarget;
+    private void EnemyInRange()
+    {
+        if (currentLockTarget >= 0 && currentLockTarget < enemiesTarget.Count)
+        {
+            currentTarget = enemiesTarget[currentLockTarget];
+
+            if (currentTarget == null || Vector3.Distance(stateMachine.Player.transform.position, currentTarget.transform.position) > detectionRange)
+            {
+                Debug.Log("El enemigo fijado se salió del rango.");
+                stateMachine.Player.pointTarget.ClearTarget();
+                currentLockTarget = -1;
+            }
+        }
+    }
+
+    /*
+     * Método de recibir daño.
+     * Disminuye la salud del jugador en función del daño recibido y cambia al estado de Medio-Muerta si la salud llega a cero.
+     * @param _enemyDamage - Daño recibido por parte del enemigo.
+     */
+    private void TakeDamage(float _enemyDamage)
+    {
+        statsData.CurrentHealth -= _enemyDamage;
+        statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
+
+        if (statsData.CurrentHealth <= 0)
+            stateMachine.ChangeState(stateMachine.HalfDeadState);
+        else
+            stateMachine.ChangeState(stateMachine.TakeDamageState);
+    }
+    #endregion
+
+    #region Métodos LockCamera
+    private void LockCam()
+    {
+        stateMachine.Player.CamComponents.m_HorizontalAxis.m_InputAxisName = "";
+        stateMachine.Player.CamComponents.m_VerticalAxis.m_InputAxisName = "";
+    }
+
+    private void UnLockCam()
+    {
+        stateMachine.Player.CamComponents.m_HorizontalAxis.m_InputAxisName = "Mouse X";
+        stateMachine.Player.CamComponents.m_VerticalAxis.m_InputAxisName = "Mouse Y";
     }
     #endregion
 

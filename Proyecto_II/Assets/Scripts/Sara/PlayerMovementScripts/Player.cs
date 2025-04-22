@@ -43,6 +43,9 @@ public class Player : MonoBehaviour
     [SerializeField] public GameObject AreaMoveBeast;
     [SerializeField] public GameObject CursorMarker;
 
+    [SerializeField] public Transform lookCamPlayer;
+    [SerializeField] public PointTarget pointTarget;
+
     private void Awake()
     {
         PlayerAnimationData.Initialize();
@@ -55,7 +58,7 @@ public class Player : MonoBehaviour
 
         PlayerInput = GetComponent<PlayerInput>();
 
-        //CamComponents = playerCam.GetCinemachineComponent<CinemachinePOV>();
+        CamComponents = playerCam.GetCinemachineComponent<CinemachinePOV>();
 
         playerStateMachine = new PlayerStateMachine(this);
 
@@ -146,4 +149,11 @@ public class Player : MonoBehaviour
         //Debug.Log("Se ha reseteado la vida" + Data.StatsData.CurrentHealth);
     }
     #endregion
+
+    [SerializeField] private float playerTargetEnemiesRange = 20f;
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, playerTargetEnemiesRange);
+    }
 }
