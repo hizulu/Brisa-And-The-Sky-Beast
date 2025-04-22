@@ -10,6 +10,8 @@ public class MinimapChangeIcon : MonoBehaviour
     [SerializeField] private Beast beastScript;
     [SerializeField] private float transitionDuration = 0.5f;
 
+    [SerializeField] private GameObject beastHealthBar;
+
     private BeastTrapped beastTrapped;
 
     private SpriteRenderer brisaRenderer;
@@ -26,6 +28,8 @@ public class MinimapChangeIcon : MonoBehaviour
     {
         brisaRenderer = brisaIcon.GetComponent<SpriteRenderer>();
         beastRenderer = beastIcon.GetComponent<SpriteRenderer>();
+        if(!beastTrapped.beasIsFree)
+            beastHealthBar.SetActive(false);
     }
 
     private void Update()
@@ -34,6 +38,7 @@ public class MinimapChangeIcon : MonoBehaviour
         {
             if (beastTrapped.beasIsFree)
             {
+                beastHealthBar.SetActive(true);
                 bool shouldBeTogether = beastScript.IsPlayerWithinInteractionDistance();
 
                 if (shouldBeTogether != isTogether)

@@ -118,6 +118,7 @@ public class InventoryManager : MonoBehaviour
                 if (quantity <= 0)
                 {
                     slot.gameObject.SetActive(false); // Desactiva el slot
+                    slot.DeselectItem(); // Desactiva la selección del slot
                 }
                 else
                 {

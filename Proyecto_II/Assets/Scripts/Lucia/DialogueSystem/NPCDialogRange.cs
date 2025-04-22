@@ -6,26 +6,30 @@ using TMPro;
 
 public class NPCDialogRange : MonoBehaviour
 {
+    [Header("Dialog Configuration")]
     public DialogManager dialogManager;
     public int startID;
     public int endID;
 
+    [Header("UI References")]
     [SerializeField] private string npcName;
     [SerializeField] private UINameNPC uiManager;
 
-    private bool playerInRange = false;
-    private bool dialogStarted = false;
-
+    [Header("Camera References")]
+    [SerializeField] private CinemachineVirtualCamera playerCam;
     [SerializeField] private PlayerInput playerInput;
 
-    [SerializeField] private CinemachineVirtualCamera playerCam;
-    private CinemachinePOV CamComponents;
+    private bool playerInRange = false;
+    private bool dialogStarted = false;
+    private CinemachinePOV camComponents;
 
     private void Awake()
     {
         EventsManager.CallNormalEvents("ResetCameraDialogue", ResumePlayerCamera);
-        playerInput.UIPanelActions.Dialogue.started += OnInteract;   
-        CamComponents = playerCam.GetCinemachineComponent<CinemachinePOV>();
+        camComponents = playerCam.GetCinemachineComponent<CinemachinePOV>();
+
+        // Configurar el input
+        playerInput.UIPanelActions.Dialogue.started += OnInteract;
     }
 
     private void OnDestroy()
@@ -34,12 +38,7 @@ public class NPCDialogRange : MonoBehaviour
         playerInput.UIPanelActions.Dialogue.started -= OnInteract;
     }
 
-    void Update()
-    {
-
-    }
-
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -49,7 +48,7 @@ public class NPCDialogRange : MonoBehaviour
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -58,34 +57,44 @@ public class NPCDialogRange : MonoBehaviour
 
             if (dialogStarted)
             {
-                dialogManager.ForceCloseDialog(); // Cierra el diálogo cuando el jugador sale del rango
+                dialogManager.ForceCloseDialog();
                 dialogStarted = false;
             }
         }
     }
 
-    public void OnInteract(InputAction.CallbackContext context)
+    private void OnInteract(InputAction.CallbackContext context)
     {
+        // Verificar si fue E (Keyboard) o Click Izquierdo (Mouse)
+        bool isKeyboard = context.control.device is Keyboard && context.control.name == "e";
+        bool isMouse = context.control.device is Mouse && context.control.name == "leftButton";
+
+        if (!isKeyboard && !isMouse) return;
+
         Debug.Log("Iniciando conversación");
         if (!playerInRange) return;
 
         if (!dialogStarted)
         {
-            uiManager.HideNPCPanelName();
-            dialogManager.StartDialog(startID, endID); // Inicia el diálogo desde el ID inicial
-            dialogStarted = true;
-            StartDialogCamera();
+            StartDialogue();
         }
-        else
-        {
-            dialogManager.AdvanceDialog();  // Avanza al siguiente paso del diálogo
-        }
+        //else
+        //{
+        //    dialogManager.AdvanceDialog();
+        //}
+    }
+
+    private void StartDialogue()
+    {
+        uiManager.HideNPCPanelName();
+        dialogManager.StartDialog(startID, endID);
+        dialogStarted = true;
+        StartDialogCamera();
     }
 
     private void StartDialogCamera()
     {
         playerInput.PlayerActions.Disable();
-
         playerCam.m_Lens.FieldOfView = 50f;
         StartCoroutine(TransitionCameraDialogue(-80f, 10f, 1f, true));
     }
@@ -94,34 +103,33 @@ public class NPCDialogRange : MonoBehaviour
     {
         playerCam.m_Lens.FieldOfView = 60f;
         StartCoroutine(TransitionCameraDialogue(0f, 0f, 1f, false));
-
         playerInput.PlayerActions.Enable();
     }
 
-    private IEnumerator TransitionCameraDialogue(float _horitontalAxis, float _verticalAxis, float _duration, bool _isDialogueActive)
+    private IEnumerator TransitionCameraDialogue(float horizontalAxis, float verticalAxis, float duration, bool isDialogueActive)
     {
-        float startPosX = CamComponents.m_HorizontalAxis.Value;
-        float startPosY = CamComponents.m_VerticalAxis.Value;
+        float startPosX = camComponents.m_HorizontalAxis.Value;
+        float startPosY = camComponents.m_VerticalAxis.Value;
 
         float elapsed = 0f;
 
         LockMovementCamera();
 
-        while (elapsed < _duration)
+        while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float transitionCam = Mathf.SmoothStep(0, 1, elapsed / _duration);
+            float transitionCam = Mathf.SmoothStep(0, 1, elapsed / duration);
 
-            CamComponents.m_HorizontalAxis.Value = Mathf.LerpAngle(startPosX, _horitontalAxis, transitionCam);
-            CamComponents.m_VerticalAxis.Value = Mathf.LerpAngle(startPosY, _verticalAxis, transitionCam);
+            camComponents.m_HorizontalAxis.Value = Mathf.LerpAngle(startPosX, horizontalAxis, transitionCam);
+            camComponents.m_VerticalAxis.Value = Mathf.LerpAngle(startPosY, verticalAxis, transitionCam);
 
             yield return null;
         }
 
-        CamComponents.m_HorizontalAxis.Value = _horitontalAxis;
-        CamComponents.m_VerticalAxis.Value = _verticalAxis;
+        camComponents.m_HorizontalAxis.Value = horizontalAxis;
+        camComponents.m_VerticalAxis.Value = verticalAxis;
 
-        if (_isDialogueActive)
+        if (isDialogueActive)
             LockMovementCamera();
         else
             UnLockMovementCamera();
@@ -129,13 +137,13 @@ public class NPCDialogRange : MonoBehaviour
 
     private void LockMovementCamera()
     {
-        CamComponents.m_HorizontalAxis.m_MaxSpeed = 0f;
-        CamComponents.m_VerticalAxis.m_MaxSpeed = 0f;
+        camComponents.m_HorizontalAxis.m_MaxSpeed = 0f;
+        camComponents.m_VerticalAxis.m_MaxSpeed = 0f;
     }
 
     private void UnLockMovementCamera()
     {
-        CamComponents.m_HorizontalAxis.m_MaxSpeed = 300f;
-        CamComponents.m_VerticalAxis.m_MaxSpeed = 300f;
+        camComponents.m_HorizontalAxis.m_MaxSpeed = 300f;
+        camComponents.m_VerticalAxis.m_MaxSpeed = 300f;
     }
 }

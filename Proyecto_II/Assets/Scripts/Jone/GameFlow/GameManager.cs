@@ -55,18 +55,44 @@ public class GameManager : MonoBehaviour
         LoadPlayerSettings();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            //if (InventoryManager.Instance.inventoryEnabled)
+            //{
+            //    InventoryManager.Instance.OpenCloseInventory(context);
+            //    return;
+            //}
+            Debug.Log("Detecta escape");
+            if (CurrentState == GameState.Paused)
+            {                
+                ResumeGame();
+                Debug.Log("Debería resumir juego");
+            }
+            else if (CurrentState == GameState.Playing)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                Debug.Log("Cursor activado desde game manager");
+                PauseGame();
+                Debug.Log("Debería pausar juego");
+            }
+        }
+    }
+
     private void OnEnable()
     {
-        Pause.OnPause += PauseGame;
-        Pause.OnResume += ResumeGame;
-        playerInput.UIPanelActions.PauseGame.performed += TogglePause;
+        //Pause.OnPause += PauseGame;
+        //Pause.OnResume += ResumeGame;
+        //playerInput.UIPanelActions.PauseGame.performed += TogglePause;
     }
 
     private void OnDisable()
     {
-        Pause.OnPause -= PauseGame;
-        Pause.OnResume -= ResumeGame;
-        playerInput.UIPanelActions.PauseGame.performed -= TogglePause;
+        //Pause.OnPause -= PauseGame;
+        //Pause.OnResume -= ResumeGame;
+        //playerInput.UIPanelActions.PauseGame.performed -= TogglePause;
     }
 
     public void ChangeGameState(GameState newState)
@@ -95,6 +121,9 @@ public class GameManager : MonoBehaviour
         }
         else if (CurrentState == GameState.Playing)
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Debug.Log("Cursor activado desde game manager");
             ChangeGameState(GameState.Paused);
             Pause.TriggerPause();
         }
@@ -102,6 +131,7 @@ public class GameManager : MonoBehaviour
 
     void PauseGame()
     {
+        ChangeGameState(GameState.Paused);
         EventsManager.TriggerNormalEvent("UIPanelOpened");
         Time.timeScale = 0f;
         uiManager.OpenPauseMenu();
@@ -109,6 +139,7 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGame()
     {
+        ChangeGameState(GameState.Playing);
         EventsManager.TriggerNormalEvent("UIPanelClosed");
         Time.timeScale = 1f;
         uiManager.ClosePauseMenu();

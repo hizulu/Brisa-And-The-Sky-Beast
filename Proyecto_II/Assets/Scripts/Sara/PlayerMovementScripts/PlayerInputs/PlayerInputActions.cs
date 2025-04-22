@@ -316,15 +316,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Dialogue"",
-                    ""type"": ""Button"",
-                    ""id"": ""71fa7f07-e1d4-45c3-804e-1fc5f44ecbc8"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""ClosePanelGeneral"",
                     ""type"": ""Button"",
                     ""id"": ""c0d61bf3-9bce-4cd6-bccb-97c4eb4aaf30"",
@@ -337,6 +328,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Map"",
                     ""type"": ""Button"",
                     ""id"": ""0599d1d1-af9c-4b39-9ba8-df7fba8f986b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dialogue"",
+                    ""type"": ""Button"",
+                    ""id"": ""9fcdc5ab-f76f-42da-84ca-05f156b169f6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DialogueContinue"",
+                    ""type"": ""Button"",
+                    ""id"": ""10cf8fa6-05a1-42b3-80a3-027ee2941a0f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -390,12 +399,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f5a5c50b-1da4-449f-af53-0bc9b1bb99ac"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""id"": ""96d34b8f-1f3d-47f1-a30d-8fd8a5f58afc"",
+                    ""path"": ""<Keyboard>/m"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Dialogue"",
+                    ""action"": ""Map"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -412,12 +421,34 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""96d34b8f-1f3d-47f1-a30d-8fd8a5f58afc"",
-                    ""path"": ""<Keyboard>/m"",
+                    ""id"": ""8bda17c8-d800-49fa-9979-fca7d996f2ce"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Map"",
+                    ""action"": ""Dialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0954906e-d3ef-4bbb-a351-cf9cc7287e4b"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogueContinue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03743c80-c9d1-4644-8aad-5b37f5acbc8a"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogueContinue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -444,9 +475,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UIPanel_PickUpItem = m_UIPanel.FindAction("PickUpItem", throwIfNotFound: true);
         m_UIPanel_BeastPanel = m_UIPanel.FindAction("BeastPanel", throwIfNotFound: true);
         m_UIPanel_PauseGame = m_UIPanel.FindAction("PauseGame", throwIfNotFound: true);
-        m_UIPanel_Dialogue = m_UIPanel.FindAction("Dialogue", throwIfNotFound: true);
         m_UIPanel_ClosePanelGeneral = m_UIPanel.FindAction("ClosePanelGeneral", throwIfNotFound: true);
         m_UIPanel_Map = m_UIPanel.FindAction("Map", throwIfNotFound: true);
+        m_UIPanel_Dialogue = m_UIPanel.FindAction("Dialogue", throwIfNotFound: true);
+        m_UIPanel_DialogueContinue = m_UIPanel.FindAction("DialogueContinue", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -630,9 +662,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UIPanel_PickUpItem;
     private readonly InputAction m_UIPanel_BeastPanel;
     private readonly InputAction m_UIPanel_PauseGame;
-    private readonly InputAction m_UIPanel_Dialogue;
     private readonly InputAction m_UIPanel_ClosePanelGeneral;
     private readonly InputAction m_UIPanel_Map;
+    private readonly InputAction m_UIPanel_Dialogue;
+    private readonly InputAction m_UIPanel_DialogueContinue;
     public struct UIPanelActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -641,9 +674,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @PickUpItem => m_Wrapper.m_UIPanel_PickUpItem;
         public InputAction @BeastPanel => m_Wrapper.m_UIPanel_BeastPanel;
         public InputAction @PauseGame => m_Wrapper.m_UIPanel_PauseGame;
-        public InputAction @Dialogue => m_Wrapper.m_UIPanel_Dialogue;
         public InputAction @ClosePanelGeneral => m_Wrapper.m_UIPanel_ClosePanelGeneral;
         public InputAction @Map => m_Wrapper.m_UIPanel_Map;
+        public InputAction @Dialogue => m_Wrapper.m_UIPanel_Dialogue;
+        public InputAction @DialogueContinue => m_Wrapper.m_UIPanel_DialogueContinue;
         public InputActionMap Get() { return m_Wrapper.m_UIPanel; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -665,15 +699,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @PauseGame.started += instance.OnPauseGame;
             @PauseGame.performed += instance.OnPauseGame;
             @PauseGame.canceled += instance.OnPauseGame;
-            @Dialogue.started += instance.OnDialogue;
-            @Dialogue.performed += instance.OnDialogue;
-            @Dialogue.canceled += instance.OnDialogue;
             @ClosePanelGeneral.started += instance.OnClosePanelGeneral;
             @ClosePanelGeneral.performed += instance.OnClosePanelGeneral;
             @ClosePanelGeneral.canceled += instance.OnClosePanelGeneral;
             @Map.started += instance.OnMap;
             @Map.performed += instance.OnMap;
             @Map.canceled += instance.OnMap;
+            @Dialogue.started += instance.OnDialogue;
+            @Dialogue.performed += instance.OnDialogue;
+            @Dialogue.canceled += instance.OnDialogue;
+            @DialogueContinue.started += instance.OnDialogueContinue;
+            @DialogueContinue.performed += instance.OnDialogueContinue;
+            @DialogueContinue.canceled += instance.OnDialogueContinue;
         }
 
         private void UnregisterCallbacks(IUIPanelActions instance)
@@ -690,15 +727,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @PauseGame.started -= instance.OnPauseGame;
             @PauseGame.performed -= instance.OnPauseGame;
             @PauseGame.canceled -= instance.OnPauseGame;
-            @Dialogue.started -= instance.OnDialogue;
-            @Dialogue.performed -= instance.OnDialogue;
-            @Dialogue.canceled -= instance.OnDialogue;
             @ClosePanelGeneral.started -= instance.OnClosePanelGeneral;
             @ClosePanelGeneral.performed -= instance.OnClosePanelGeneral;
             @ClosePanelGeneral.canceled -= instance.OnClosePanelGeneral;
             @Map.started -= instance.OnMap;
             @Map.performed -= instance.OnMap;
             @Map.canceled -= instance.OnMap;
+            @Dialogue.started -= instance.OnDialogue;
+            @Dialogue.performed -= instance.OnDialogue;
+            @Dialogue.canceled -= instance.OnDialogue;
+            @DialogueContinue.started -= instance.OnDialogueContinue;
+            @DialogueContinue.performed -= instance.OnDialogueContinue;
+            @DialogueContinue.canceled -= instance.OnDialogueContinue;
         }
 
         public void RemoveCallbacks(IUIPanelActions instance)
@@ -735,8 +775,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnPickUpItem(InputAction.CallbackContext context);
         void OnBeastPanel(InputAction.CallbackContext context);
         void OnPauseGame(InputAction.CallbackContext context);
-        void OnDialogue(InputAction.CallbackContext context);
         void OnClosePanelGeneral(InputAction.CallbackContext context);
         void OnMap(InputAction.CallbackContext context);
+        void OnDialogue(InputAction.CallbackContext context);
+        void OnDialogueContinue(InputAction.CallbackContext context);
     }
 }

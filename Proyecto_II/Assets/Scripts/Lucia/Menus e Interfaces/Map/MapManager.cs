@@ -1,47 +1,49 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MapPanel : MonoBehaviour
+public class MapManager : MonoBehaviour
 {
+    [Header("Map Configuration")]
     [SerializeField] private GameObject mapPanel;
     [SerializeField] private Camera mapCamera;
 
-    private PlayerInput playerInput;
-    private InputAction openMapAction;
+    [Header("Input Settings")]
+    [SerializeField] private PlayerInput playerInput;
+
     private bool mapEnabled = false;
 
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
-
-        // Asegurarse de que el PlayerInput está asignado
         if (playerInput == null)
         {
             Debug.LogError("PlayerInput component not found!");
             return;
         }
-
-        openMapAction = playerInput.UIPanelActions.Map;
-        openMapAction.performed += OpenCloseMapPanel;
+        if (playerInput != null)
+        {
+            playerInput.UIPanelActions.Map.performed += OpenCloseMapPanel;
+        }
     }
 
     private void OnDisable()
     {
-        if (openMapAction != null)
-            openMapAction.performed -= OpenCloseMapPanel;
+        if (playerInput != null)
+        {
+            playerInput.UIPanelActions.Map.performed -= OpenCloseMapPanel;
+        }
     }
 
     public void OpenCloseMapPanel(InputAction.CallbackContext context)
     {
-        if (!context.performed)
-            return;
+        if (!context.performed) return;
 
         if (mapEnabled)
             ClosePanel();
         else
             OpenPanel();
 
-        // Control de tiempo
         Time.timeScale = mapEnabled ? 0f : 1f;
     }
 
@@ -49,11 +51,11 @@ public class MapPanel : MonoBehaviour
     {
         if (mapPanel == null)
         {
-            Debug.LogError("mapPanel is null! Please assign it in the inspector.");
+            Debug.LogError("mapManager is null! Please assign it in the inspector.");
             return;
         }
 
-        if (!mapPanel.activeSelf)  // Solo lo activas si no está ya activo
+        if (!mapPanel.activeSelf)
         {
             mapPanel.SetActive(true);
             mapEnabled = true;
@@ -69,11 +71,11 @@ public class MapPanel : MonoBehaviour
     {
         if (mapPanel == null)
         {
-            Debug.LogError("mapPanel is null! Please assign it in the inspector.");
+            Debug.LogError("mapManager is null! Please assign it in the inspector.");
             return;
         }
 
-        if (mapPanel.activeSelf)  // Solo lo desactivas si está activo
+        if (mapPanel.activeSelf)
         {
             mapPanel.SetActive(false);
             mapEnabled = false;

@@ -21,10 +21,12 @@ public class Enemy : HittableElement
     public Animator anim { get; private set; }
     public NavMeshAgent agent;
 
-    [SerializeField] float maxHealth = 100f;
-    [field:SerializeField] private float currentHealth;
+
+    [SerializeField] publid float maxHealth = 100f;
+    [field:SerializeField] public float currentHealth;
     [SerializeField] float enemySpeed = 1f; // TODO: speed affects movement speed
     [SerializeField] float attackDamage = 10f; // TODO: attackDamage is taken into account
+
 
     private bool enemyHurt = false;
     #endregion
