@@ -51,6 +51,10 @@ public class PlayerAttack02 : PlayerAttackState
         }
     }
 
+    public override void UpdatePhysics()
+    {
+        base.UpdatePhysics();
+    }
     public override void Exit()
     {
         canContinueCombo = false;

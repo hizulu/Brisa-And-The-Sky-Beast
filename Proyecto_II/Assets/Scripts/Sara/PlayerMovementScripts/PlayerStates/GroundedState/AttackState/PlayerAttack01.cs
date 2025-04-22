@@ -19,12 +19,12 @@ public class PlayerAttack01 : PlayerAttackState
         attackFinish = false;
         attackDamageModifierMin = 1f;
         attackDamageModifierMax = 1.3f;
-        base.Enter();
-        stateMachine.Player.GolpearPrueba();
-        StartAnimation(stateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
         float attackDamageModifier = UnityEngine.Random.Range(attackDamageModifierMin, attackDamageModifierMax);
         float attackDamageCombo01 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
         EventsManager.TriggerSpecialEvent<float>("OnAttack01Enemy", attackDamageCombo01); // EVENTO: Crear evento de dañar al enemigo con daño del ComboAttack01.
+        base.Enter();
+        stateMachine.Player.GolpearPrueba();
+        StartAnimation(stateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
         //Debug.Log("Daño del ataque 1: " + " " + attackDamageCombo01);
     }
 
@@ -49,6 +49,11 @@ public class PlayerAttack01 : PlayerAttackState
     {
         FinishAnimation();
         attackTimeElapsed += Time.deltaTime;
+    }
+
+    public override void UpdatePhysics()
+    {
+        base.UpdatePhysics();
     }
 
     public override void Exit()
