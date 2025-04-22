@@ -22,7 +22,7 @@ public class Enemy : HittableElement
     public NavMeshAgent agent;
 
 
-    [SerializeField] publid float maxHealth = 100f;
+    [SerializeField] public float maxHealth = 100f;
     [field:SerializeField] public float currentHealth;
     [SerializeField] float enemySpeed = 1f; // TODO: speed affects movement speed
     [SerializeField] float attackDamage = 10f; // TODO: attackDamage is taken into account
