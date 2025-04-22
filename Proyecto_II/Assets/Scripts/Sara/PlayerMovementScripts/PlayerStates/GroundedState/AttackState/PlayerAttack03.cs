@@ -29,6 +29,11 @@ public class PlayerAttack03 : PlayerAttackState
         FinishAnimation();
     }
 
+    public override void UpdatePhysics()
+    {
+        base.UpdatePhysics();
+    }
+
     public override void Exit()
     {
         attackFinish = false;

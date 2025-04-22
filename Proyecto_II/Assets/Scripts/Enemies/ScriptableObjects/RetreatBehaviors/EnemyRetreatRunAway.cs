@@ -31,7 +31,7 @@ public class EnemyRetreatRunAway : EnemyRetreatSOBase
 
         enemy.MoveEnemy(positionToRetreatTo);
 
-        //Debug.Log("Entra en estado de huida");
+        Debug.Log("Entra en estado de huida");
     }
 
     public override void DoExitLogic()
@@ -51,21 +51,21 @@ public class EnemyRetreatRunAway : EnemyRetreatSOBase
             if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance && !enemy.agent.pathPending)
             {
                 hasRetreated = true;
-                //Debug.Log("Ha huido con éxito");
+                Debug.Log("Ha huido con éxito");
             }
         }
         else
         {
             if (distanceToPlayerSQR < playerChaseRangeSQR)
             {
-                //Debug.Log("Volver a perseguir");
+                Debug.Log("Volver a perseguir");
                 enemy.doChase = true;
                 enemy.doRetreat = false;
                 enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
             }
             else
             {
-                //Debug.Log("Volver a Idle");
+                Debug.Log("Volver a Idle");
                 enemy.doIdle = true;
                 enemy.doRetreat = false;
                 enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyIdleState);

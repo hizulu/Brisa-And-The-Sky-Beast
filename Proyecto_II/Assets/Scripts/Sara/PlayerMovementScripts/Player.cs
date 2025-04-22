@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     [SerializeField] public GameObject AreaMoveBeast;
     [SerializeField] public GameObject CursorMarker;
 
+    [SerializeField] public Transform lookCamPlayer;
     [SerializeField] public PointTarget pointTarget;
 
     private void Awake()
@@ -57,7 +58,7 @@ public class Player : MonoBehaviour
 
         PlayerInput = GetComponent<PlayerInput>();
 
-        //CamComponents = playerCam.GetCinemachineComponent<CinemachinePOV>();
+        CamComponents = playerCam.GetCinemachineComponent<CinemachinePOV>();
 
         playerStateMachine = new PlayerStateMachine(this);
 

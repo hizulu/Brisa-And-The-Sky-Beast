@@ -64,7 +64,7 @@ public class PickUpWeapons : MonoBehaviour
         {
             playerInRange = true;
             ChangeOutline(highlightColor, 0.1f);
-            //Debug.Log("Player in range");
+            Debug.Log("Player in range");
         }
     }
 

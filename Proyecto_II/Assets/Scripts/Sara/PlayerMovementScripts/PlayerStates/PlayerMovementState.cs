@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -69,6 +68,11 @@ public class PlayerMovementState : IState
     {
         //Debug.Log("Actualizando");
         EnemyInRange();
+
+        if (!camLock)
+            UnLockCam();
+        else
+            LockCam();
     }
 
     /*
@@ -270,24 +274,11 @@ public class PlayerMovementState : IState
     }
     #endregion
 
-    #region Métodos Cursor
-    public void LockCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    public void UnlockCursor()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-    #endregion
-
-    #region Métodos Enemigos - Player
+    #region Métodos Enemigos
     private List<GameObject> enemiesTarget = new List<GameObject>();
     private int currentLockTarget = -1;
     private float detectionRange = 20f;
+    private bool camLock = false;
 
     private void LockTarget(InputAction.CallbackContext context)
     {
@@ -303,6 +294,8 @@ public class PlayerMovementState : IState
         {
             stateMachine.Player.pointTarget.ClearTarget();
             currentLockTarget = -1;
+            stateMachine.Player.playerCam.LookAt = stateMachine.Player.lookCamPlayer;
+            camLock = false;
             return;
         }
 
@@ -310,6 +303,8 @@ public class PlayerMovementState : IState
 
         GameObject selectedEnemy = enemiesTarget[currentLockTarget];
         stateMachine.Player.pointTarget.SetTarget(selectedEnemy.transform);
+        stateMachine.Player.playerCam.LookAt = selectedEnemy.transform;
+        camLock = true;
         Debug.Log("Enemigo fijado: " + selectedEnemy.name);
     }
 
@@ -370,6 +365,34 @@ public class PlayerMovementState : IState
             stateMachine.ChangeState(stateMachine.HalfDeadState);
         else
             stateMachine.ChangeState(stateMachine.TakeDamageState);
+    }
+    #endregion
+
+    #region Métodos LockCamera
+    private void LockCam()
+    {
+        stateMachine.Player.CamComponents.m_HorizontalAxis.m_InputAxisName = "";
+        stateMachine.Player.CamComponents.m_VerticalAxis.m_InputAxisName = "";
+    }
+
+    private void UnLockCam()
+    {
+        stateMachine.Player.CamComponents.m_HorizontalAxis.m_InputAxisName = "Mouse X";
+        stateMachine.Player.CamComponents.m_VerticalAxis.m_InputAxisName = "Mouse Y";
+    }
+    #endregion
+
+    #region Métodos Cursor
+    public void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
     #endregion
 }

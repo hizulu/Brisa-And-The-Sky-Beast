@@ -1830,7 +1830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8659a15bbe6cd7041b77bfe79b5a30c0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8659a15bbe6cd7041b77bfe79b5a30c0, type: 3}
       propertyPath: m_TagString
@@ -3348,10 +3348,11 @@ MonoBehaviour:
   attackDuration: 0.2
   beastPanel: {fileID: 0}
   mapPanel: {fileID: 0}
-  playerCam: {fileID: 0}
+  playerCam: {fileID: 1653594968}
   CamComponents: {fileID: 0}
   AreaMoveBeast: {fileID: 0}
   CursorMarker: {fileID: 0}
+  lookCamPlayer: {fileID: 695668566}
   pointTarget: {fileID: 1646666712}
   playerTargetEnemiesRange: 20
 --- !u!54 &530512666
@@ -7140,7 +7141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8659a15bbe6cd7041b77bfe79b5a30c0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8659a15bbe6cd7041b77bfe79b5a30c0, type: 3}
       propertyPath: m_TagString
@@ -9768,8 +9769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c3db507169eef24e96060a926d0fa6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1646666716}
-  offset: {x: 0, y: 2, z: 0}
+  enemyTargetPos: {fileID: 1646666716}
 --- !u!135 &1646666713
 SphereCollider:
   m_ObjectHideFlags: 0
