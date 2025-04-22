@@ -46,7 +46,7 @@ public class EnemyChaseStraightToTarget : EnemyStateSOBase
     public override void DoExitLogic()
     {
         base.DoExitLogic();
-        enemy.anim.SetBool("isChasing,", false);
+        enemy.anim.SetBool("isChasing", false);
         enemy.agent.ResetPath();
     }    
 
