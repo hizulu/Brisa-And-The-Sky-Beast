@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 public class MapNavigation : MonoBehaviour, IDragHandler, IScrollHandler
 {
     [SerializeField] private Camera mapCamera;
-    [SerializeField] private float dragSpeed = 1f;
+    [SerializeField] public float dragSpeed = 1f;
     [SerializeField] private float zoomSpeed = 5f;
     [SerializeField] private float minZoom = 20f;
     [SerializeField] private float maxZoom = 100f;
