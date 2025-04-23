@@ -4,7 +4,7 @@ using System.Collections.Generic;
 /*
  * NOMBRE CLASE: EventsManager
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
+ * FECHA: 12/04/2025
  * DESCRIPCIÓN: Clase estática para gestionar eventos normales y especiales mediante delegados. Permite suscribir, desencadenar y desuscribir eventos.
  * VERSIÓN: 1.0
  */

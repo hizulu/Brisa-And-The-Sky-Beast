@@ -4,7 +4,7 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: PlayerStatsData
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
+ * FECHA: 03/04/2025
  * DESCRIPCIÓN: Clase serializable que contiene las stats de Player.
  * VERSIÓN: 1.0
  */

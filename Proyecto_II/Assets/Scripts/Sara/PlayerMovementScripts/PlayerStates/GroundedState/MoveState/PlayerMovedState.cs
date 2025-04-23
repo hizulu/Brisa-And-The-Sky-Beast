@@ -1,8 +1,10 @@
 /*
  * NOMBRE CLASE: PlayerMovedState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState
+ * FECHA: 09/03/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState.
+ *              Estado padre que contiene los subestados de movimiento de Player.
+ *              (Este estado es importante por la gestión del Animator).
  * VERSIÓN: 1.0. 
  */
 public class PlayerMovedState : PlayerGroundedState

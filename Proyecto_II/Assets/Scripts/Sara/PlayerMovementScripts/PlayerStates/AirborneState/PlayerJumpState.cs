@@ -3,8 +3,9 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: PlayerJumpState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerAirborneState
+ * FECHA: 10/03/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerAirborneState.
+ *              Subestado que gestiona la acción del salto normal.
  * VERSIÓN: 1.0. 
  */
 public class PlayerJumpState : PlayerAirborneState

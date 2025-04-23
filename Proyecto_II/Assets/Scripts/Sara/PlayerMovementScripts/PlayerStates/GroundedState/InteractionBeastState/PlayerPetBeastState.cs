@@ -1,8 +1,9 @@
 /*
  * NOMBRE CLASE: PlayerPetBeastState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerInteractionState
+ * FECHA: 14/04/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerInteractionState.
+ *              Subestado que gestiona la acción de acariciar a la Bestia.
  * VERSIÓN: 1.0. 
  */
 public class PlayerPetBeastState : PlayerInteractionState

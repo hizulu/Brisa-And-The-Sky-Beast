@@ -3,9 +3,11 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: PlayerInput
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: 
- * VERSIÓN: 1.0. 
+ * FECHA: 09/03/2025
+ * DESCRIPCIÓN: Clase que gestiona los diferentes mapas de acciones.
+ *              Activa y desactiva los controles de Player y la UI.
+ * VERSIÓN: 1.0. Mapa de acciones de Player.
+ * VERSIÓN: 2.0. Mapa de acciones de la UI (paneles).
  */
 public class PlayerInput : MonoBehaviour
 {

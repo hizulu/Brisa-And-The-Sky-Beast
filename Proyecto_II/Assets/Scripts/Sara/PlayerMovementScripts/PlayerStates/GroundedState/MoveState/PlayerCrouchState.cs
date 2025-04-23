@@ -4,8 +4,9 @@ using UnityEngine.InputSystem;
 /*
  * NOMBRE CLASE: PlayerCrouchState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerMovedState
+ * FECHA: 11/03/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerMovedState.
+ *              Subestado que gestiona la acción de andar en sigilo.
  * VERSIÓN: 1.0. 
  */
 public class PlayerCrouchState : PlayerMovedState
@@ -15,7 +16,7 @@ public class PlayerCrouchState : PlayerMovedState
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        stateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.CrouchSpeedModif;
+        stateMachine.MovementData.MovementSpeedModifier = groundedData.CrouchData.CrouchSpeedModif;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.CrouchParameterHash);
         EventsManager.TriggerSpecialEvent<bool>("CrouchState", true);

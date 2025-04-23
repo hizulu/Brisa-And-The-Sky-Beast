@@ -1,8 +1,8 @@
 /*
  * NOMBRE CLASE: PlayerTakeDamageState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerMovementState
+ * FECHA: 12/04/2025
+ * DESCRIPCIÓN: Estado de recibir daño.
  * VERSIÓN: 1.0. 
  */
 public class PlayerTakeDamageState : PlayerMovementState

@@ -3,8 +3,9 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: PlayerFallState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerAirborneState
+ * FECHA: 10/03/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerAirborneState.
+ *              Subestado que gestiona la acción de caer.
  * VERSIÓN: 1.0. 
  */
 public class PlayerFallState : PlayerAirborneState

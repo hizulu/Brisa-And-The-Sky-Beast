@@ -1,8 +1,9 @@
 /*
  * NOMBRE CLASE: PlayerDeathState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerMovementState
+ * FECHA: 03/04/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerMovementState.
+ *              Estado padre que contiene los subestados de muerte del Player.
  * VERSIÓN: 1.0. 
  */
 public class PlayerDeathState : PlayerMovementState

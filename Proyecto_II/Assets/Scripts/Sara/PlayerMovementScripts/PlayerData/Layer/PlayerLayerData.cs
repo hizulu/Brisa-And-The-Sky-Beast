@@ -4,7 +4,7 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: PlayerLayerData
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
+ * FECHA: 09/03/2025
  * DESCRIPCIÓN: Clase que gestiona la información de las capas (layers) relevantes para el Player.
  * VERSIÓN: 1.0
  */

@@ -1,8 +1,10 @@
 /*
  * NOMBRE CLASE: PlayerFinalDeadState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerDeathState
+ * FECHA: 03/04/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerDeathState.
+ *              Subestado de muerte final.
+ *              Finaliza el juego.
  * VERSIÓN: 1.0. 
  */
 public class PlayerFinalDeadState : PlayerDeathState

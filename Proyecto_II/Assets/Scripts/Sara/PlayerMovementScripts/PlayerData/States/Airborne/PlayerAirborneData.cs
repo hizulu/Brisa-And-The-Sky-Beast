@@ -4,7 +4,7 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: PlayerAirborneData
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
+ * FECHA: 10/03/2025
  * DESCRIPCIÓN: Clase que contiene los datos necesarios para gestionar el movimiento del jugador en el aire.
  */
 [Serializable]

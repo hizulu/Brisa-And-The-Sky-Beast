@@ -3,8 +3,9 @@ using UnityEngine.InputSystem;
 /*
  * NOMBRE CLASE: PlayerWalkState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerMovedState
+ * FECHA: 09/03/2015
+ * DESCRIPCIÓN: Clase que hereda de PlayerMovedState.
+ *              Subestado que gestiona la acción de caminar.
  * VERSIÓN: 1.0. 
  */
 public class PlayerWalkState : PlayerMovedState

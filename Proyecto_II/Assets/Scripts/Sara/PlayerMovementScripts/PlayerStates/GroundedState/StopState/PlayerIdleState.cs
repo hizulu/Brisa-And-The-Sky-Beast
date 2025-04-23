@@ -5,6 +5,7 @@ using UnityEngine;
  * AUTOR: Sara Yue Madruga Martín
  * FECHA: 09/03/2025
  * DESCRIPCIÓN: Clase que hereda de PlayerGroundeState
+ *              Subestado que gestiona la acción de estar parado.
  * VERSIÓN: 1.0. 
  */
 public class PlayerIdleState : PlayerGroundedState

@@ -1,8 +1,8 @@
 /*
  * NOMBRE CLASE: PlayerAttackState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState
+ * FECHA: 09/03/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState. Es un estado padre para gestionar el combo de ataque de Player.
  * VERSIÓN: 1.0. 
  */
 using UnityEngine;

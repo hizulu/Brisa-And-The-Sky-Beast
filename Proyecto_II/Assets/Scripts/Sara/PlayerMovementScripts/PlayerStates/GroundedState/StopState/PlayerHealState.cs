@@ -3,8 +3,9 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: PlayerHealState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState
+ * FECHA: 14/04/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState.
+ *              Subestado que gestiona la acción de curar a Player.
  * VERSIÓN: 1.0. 
  */
 public class PlayerHealState : PlayerGroundedState

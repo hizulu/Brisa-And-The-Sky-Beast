@@ -2,6 +2,14 @@ using System;
 using TMPro;
 using UnityEngine;
 
+/*
+ * NOMBRE CLASE: SunController
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 22/04/2025
+ * DESCRIPCIÓN: Gestiona la rotación de la luz direccional (sol) para simular sistema de día y noche.
+ * VERSIÓN: 1.0. 
+ */
+
 public class SunController : MonoBehaviour
 {
     [SerializeField] private Light sun;

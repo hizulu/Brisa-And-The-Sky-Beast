@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 /*
  * NOMBRE CLASE: PlayerPointedBeastState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState
+ * FECHA: 17/03/2015
+ * DESCRIPCIÓN: Estado en el que Player puede mandar a la Bestia moverse haciendo click dentro de un área determinada.
  * VERSIÓN: 1.0. 
  */
 public class PlayerPointedBeastState : PlayerGroundedState

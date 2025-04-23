@@ -4,8 +4,9 @@ using UnityEngine.InputSystem;
 /*
  * NOMBRE CLASE: PlayerRunState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerMovedState
+ * FECHA: 10/04/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerMovedState.
+ *              Subestado que gestiona la acción de correr.
  * VERSIÓN: 1.0. 
  */
 public class PlayerRunState : PlayerMovedState
@@ -15,7 +16,7 @@ public class PlayerRunState : PlayerMovedState
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        stateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.RunSpeedModif;
+        stateMachine.MovementData.MovementSpeedModifier = groundedData.RunData.RunSpeedModif;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.RunParameterHash);
         //Debug.Log("Has entrado en el estado de CORRER.");

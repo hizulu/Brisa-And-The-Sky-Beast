@@ -4,7 +4,7 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: PlayerAnimationData
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
+ * FECHA: 09/03/2025
  * DESCRIPCIÓN: Clase que gestiona los parámetros de animación del jugador. Almacena los nombres y hashes de los parámetros utilizados por el Animator.
  * VERSIÓN: 1.0
  */
