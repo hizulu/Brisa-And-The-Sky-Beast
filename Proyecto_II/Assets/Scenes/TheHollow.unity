@@ -2087,8 +2087,7 @@ MonoBehaviour:
   maxSensitivity: 5
   defaultSensitivity: 1
   mouseSensitivityText: {fileID: 210256497}
-  playerCamera: {fileID: 1577233737}
-  rotationSpeed: 1
+  cinemachineFreeLookCamera: {fileID: 0}
 --- !u!114 &63485728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7169,12 +7168,24 @@ MonoBehaviour:
   m_HandleRect: {fileID: 390636382}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 100
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 63485727}
+        m_TargetAssemblyTypeName: ControlSettings, Assembly-CSharp
+        m_MethodName: SetMouseSensitivity
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &317266797
 GameObject:
   m_ObjectHideFlags: 0
