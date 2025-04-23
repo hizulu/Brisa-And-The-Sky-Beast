@@ -47,6 +47,8 @@ public class PlayerMovementState : IState
      */
     public virtual void Enter()
     {
+        stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 200f;
+        stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 200f;
         AddInputActionsCallbacks();
         EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
         EventsManager.CallNormalEvents("PickUpItem", PickUp);
@@ -289,6 +291,8 @@ public class PlayerMovementState : IState
             stateMachine.Player.pointTarget.ClearTarget();
             currentLockTarget = -1;
             stateMachine.Player.playerCam.LookAt = stateMachine.Player.lookCamPlayer;
+            stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 200f;
+            stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 200f;
             return;
         }
 
@@ -297,6 +301,8 @@ public class PlayerMovementState : IState
         GameObject selectedEnemy = enemiesTarget[currentLockTarget];
         stateMachine.Player.pointTarget.SetTarget(selectedEnemy.transform);
         stateMachine.Player.playerCam.LookAt = selectedEnemy.transform;
+        stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 0f;
+        stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 0f;
         Debug.Log("Enemigo fijado: " + selectedEnemy.name);
     }
 

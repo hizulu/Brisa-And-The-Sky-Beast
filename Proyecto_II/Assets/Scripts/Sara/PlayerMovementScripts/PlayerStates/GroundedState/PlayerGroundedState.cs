@@ -66,6 +66,7 @@ public class PlayerGroundedState : PlayerMovementState
         stateMachine.Player.PlayerInput.PlayerActions.Run.performed -= RunStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.performed -= CrouchStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Attack.started -= AttackStart;
+        stateMachine.Player.PlayerInput.PlayerActions.Heal.started -= HealPlayer;
         stateMachine.Player.PlayerInput.PlayerActions.Sprint.started -= SprintStart;
         stateMachine.Player.PlayerInput.PlayerActions.Jump.started -= JumpStarted;
     }

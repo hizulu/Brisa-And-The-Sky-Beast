@@ -13,6 +13,7 @@ public class PlayerDeathState : PlayerMovementState
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
+        stateMachine.Player.PlayerInput.PlayerActions.Disable();
         base.Enter();
         //Debug.Log("Has entrado en el estado de MUERTE");
         StartAnimation(stateMachine.Player.PlayerAnimationData.DeathParameterHash);
