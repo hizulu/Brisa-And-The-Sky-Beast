@@ -21,6 +21,7 @@ public class PlayerAnimationData
     [SerializeField] private string idleParameterName = "isIdle";
     [SerializeField] private string walkParameterName = "isWalking";
     [SerializeField] private string runParameterName = "isRunning";
+    [SerializeField] private string sprintParameterName = "isSprinting";
     [SerializeField] private string crouchParameterName = "isCrouching";
     [SerializeField] private string attack01ParameterName = "isAttacking01";
     [SerializeField] private string attack02ParameterName = "isAttacking02";
@@ -50,6 +51,7 @@ public class PlayerAnimationData
     public int IdleParameterHash { get; private set; }
     public int WalkParameterHash { get; private set; }
     public int RunParameterHash { get; private set; }
+    public int SprintParameterHash { get; private set; }
     public int CrouchParameterHash { get; private set; }
     public int Attack01ParameterHash { get; private set; }
     public int Attack02ParameterHash { get; private set; }
@@ -81,6 +83,7 @@ public class PlayerAnimationData
         IdleParameterHash = Animator.StringToHash(idleParameterName);
         WalkParameterHash = Animator.StringToHash(walkParameterName);
         RunParameterHash = Animator.StringToHash(runParameterName);
+        SprintParameterHash = Animator.StringToHash(sprintParameterName);
         CrouchParameterHash = Animator.StringToHash(crouchParameterName);
 
         Attack01ParameterHash = Animator.StringToHash(attack01ParameterName);

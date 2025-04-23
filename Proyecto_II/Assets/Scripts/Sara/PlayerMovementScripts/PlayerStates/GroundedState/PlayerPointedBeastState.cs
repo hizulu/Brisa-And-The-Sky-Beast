@@ -48,8 +48,10 @@ public class PlayerPointedBeastState : PlayerGroundedState
     public override void Exit()
     {
         stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled -= OnPointedStateCanceled;
+        stateMachine.Player.PlayerInput.PlayerActions.MoveBeast.performed -= OnLeftClick;
         base.Exit();
         stateMachine.Player.PlayerInput.PlayerActions.Attack.Enable();
+        stateMachine.Player.AreaMoveBeast.SetActive(false);
         stateMachine.Player.CursorMarker.SetActive(false);
 
         //Debug.Log("Has salido del estado de APUNTANDO");

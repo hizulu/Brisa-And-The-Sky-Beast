@@ -50,8 +50,8 @@ public class PlayerAttackState : PlayerGroundedState
         base.UpdatePhysics();
         AlignPlayerToPointTarget();
 
-        if (!hasDashedToTarget)
-            DashToPointTarget();
+        //if (!hasDashedToTarget)
+        //    DashToPointTarget();
     }
 
     public override void Exit()

@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
  *              Subestado que gestiona la acción de correr.
  * VERSIÓN: 1.0. 
  */
+
 public class PlayerRunState : PlayerMovedState
 {
     public PlayerRunState(PlayerStateMachine stateMachine) : base(stateMachine) { }
