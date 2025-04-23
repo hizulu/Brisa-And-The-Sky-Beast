@@ -6,8 +6,9 @@ using TMPro;
 public class GraphicsSettings : MonoBehaviour
 {
     [Header("Brillo")]
-    [SerializeField] private Light directionalLight; // Asignar luz direccional
+    [SerializeField] private Light directionalLight;
     [SerializeField] private Slider brightnessSlider;
+    [SerializeField] private TMP_Text brightnessValueText;
     [SerializeField] private float minBrightness = 0.2f;
     [SerializeField] private float maxBrightness = 2f;
 
@@ -17,8 +18,7 @@ public class GraphicsSettings : MonoBehaviour
     [Header("Resolución")]
     [SerializeField] private TMP_Dropdown resolutionDropdown;
 
-    private Resolution[] availableResolutions;
-    private int defaultResolutionIndex;
+    private int defaultResolutionIndex = 2;
 
     private void Start()
     {
@@ -34,8 +34,15 @@ public class GraphicsSettings : MonoBehaviour
             brightnessSlider.minValue = minBrightness;
             brightnessSlider.maxValue = maxBrightness;
             brightnessSlider.value = directionalLight.intensity;
+            UpdateBrightnessText(brightnessSlider.value);
             brightnessSlider.onValueChanged.AddListener(SetBrightness);
         }
+    }
+
+    private void UpdateBrightnessText(float value)
+    {
+        if (brightnessValueText != null)
+            brightnessValueText.text = value.ToString("0.##");
     }
 
     private void SetupScreenModes()
@@ -49,7 +56,7 @@ public class GraphicsSettings : MonoBehaviour
             "Sin bordes"
         });
 
-        screenModeDropdown.value = 0; // Por defecto: pantalla completa
+        screenModeDropdown.value = 0;
         screenModeDropdown.onValueChanged.AddListener(SetScreenMode);
         SetScreenMode(0);
     }
@@ -58,25 +65,19 @@ public class GraphicsSettings : MonoBehaviour
     {
         if (resolutionDropdown == null) return;
 
-        availableResolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
 
-        var options = new System.Collections.Generic.List<string>();
-        defaultResolutionIndex = 0;
+        resolutionDropdown.AddOptions(new System.Collections.Generic.List<string> {
+            "3840 x 2160",
+            "2560 x 1440",
+            "1920 x 1080",
+            "1600 x 900",
+            "1366 x 768",
+            "1280 x 720"
+        });
 
-        for (int i = 0; i < availableResolutions.Length; i++)
-        {
-            Resolution res = availableResolutions[i];
-            string option = res.width + " x " + res.height;
-            options.Add(option);
-
-            if (res.width == 1920 && res.height == 1080)
-                defaultResolutionIndex = i;
-        }
-
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = defaultResolutionIndex;
         resolutionDropdown.onValueChanged.AddListener(SetResolution);
+        resolutionDropdown.value = defaultResolutionIndex;
         SetResolution(defaultResolutionIndex);
     }
 
@@ -84,6 +85,8 @@ public class GraphicsSettings : MonoBehaviour
     {
         if (directionalLight != null)
             directionalLight.intensity = value;
+
+        UpdateBrightnessText(value);
     }
 
     public void SetScreenMode(int index)
@@ -102,9 +105,14 @@ public class GraphicsSettings : MonoBehaviour
 
     public void SetResolution(int index)
     {
-        if (index < 0 || index >= availableResolutions.Length) return;
-
-        Resolution res = availableResolutions[index];
-        Screen.SetResolution(res.width, res.height, Screen.fullScreenMode);
+        switch (index)
+        {
+            case 0: Screen.SetResolution(3840, 2160, Screen.fullScreenMode); break;
+            case 1: Screen.SetResolution(2560, 1440, Screen.fullScreenMode); break;
+            case 2: Screen.SetResolution(1920, 1080, Screen.fullScreenMode); break;
+            case 3: Screen.SetResolution(1600, 900, Screen.fullScreenMode); break;
+            case 4: Screen.SetResolution(1366, 768, Screen.fullScreenMode); break;
+            case 5: Screen.SetResolution(1280, 720, Screen.fullScreenMode); break;
+        }
     }
 }
