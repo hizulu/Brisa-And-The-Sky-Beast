@@ -23,7 +23,7 @@ public class Beast : MonoBehaviour
 
     [Header("Stats")]
     [SerializeField] public float maxHealth = 500f;
-    [SerializeField] public float healingAmount = 50f;
+    [SerializeField] public float healingAmount = 50f; // Estoy gestionando la cura de la Bestia desde el script de Brisa.
     [SerializeField] public float halfDeadDuration = 30f;
 
     public float currentHealth;
@@ -150,6 +150,8 @@ public class Beast : MonoBehaviour
         ResetBeastSelection();
         blackboard.SetValue("isOptionHeal", true);
         Debug.Log("Ha seleccionado heal");
+
+        if (currentHealth == maxHealth) return;
     }
 
     public void AttackBeastSelected()

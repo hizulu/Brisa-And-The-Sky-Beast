@@ -359,7 +359,7 @@ public class PlayerMovementState : IState
         statsData.CurrentHealth -= _enemyDamage;
         statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
 
-        if (statsData.CurrentHealth <= 0)
+        if (statsData.CurrentHealth < Mathf.Epsilon)
             stateMachine.ChangeState(stateMachine.HalfDeadState);
         else
             stateMachine.ChangeState(stateMachine.TakeDamageState);

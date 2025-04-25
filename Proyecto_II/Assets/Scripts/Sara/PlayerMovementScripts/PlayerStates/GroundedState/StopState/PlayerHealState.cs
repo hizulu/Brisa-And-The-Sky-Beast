@@ -13,15 +13,20 @@ public class PlayerHealState : PlayerStopState
     public PlayerHealState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
     #region Variables
+    bool healFinishAnimation;
     bool healFinish;
-    private ItemData healIncreaseSpecificItem;
+    
+    private float healDelay = 0.5f;
+    private float currentTime = 0f;
     #endregion
 
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        HealPlayer();
+        healFinishAnimation = false;
         healFinish = false;
+        stateMachine.Player.Baya.SetActive(true);
+        
         base.Enter();
         Debug.Log("Has entrado en el estado de curarte");
         StartAnimation(stateMachine.Player.PlayerAnimationData.HealParameterHash);
@@ -30,11 +35,21 @@ public class PlayerHealState : PlayerStopState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+
+        if (currentTime < healDelay)
+            currentTime += Time.deltaTime;
+        else if(!healFinish)
+        {
+            HealPlayer();
+            stateMachine.Player.Baya.SetActive(false);
+        }
+
         FinishAnimation();
     }
 
     public override void Exit()
     {
+        currentTime = 0f;
         base.Exit();
         Debug.Log("Has salido del estado de curarte");
         StopAnimation(stateMachine.Player.PlayerAnimationData.HealParameterHash);
@@ -49,14 +64,14 @@ public class PlayerHealState : PlayerStopState
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("HealBrisa") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
-            healFinish = true;
+            healFinishAnimation = true;
             stateMachine.ChangeState(stateMachine.IdleState);
         }
     }
 
-    public void SetHealingItem(ItemData _item)
+    public void SetHealingBerry(ItemData _berry)
     {
-        healIncreaseSpecificItem = _item;
+        healIncreaseSpecificItem = _berry;
     }
 
     private void HealPlayer()
@@ -65,6 +80,7 @@ public class PlayerHealState : PlayerStopState
         statsData.CurrentHealth = Mathf.Min(statsData.CurrentHealth, statsData.MaxHealth);
 
         InventoryManager.Instance.RemoveItem(healIncreaseSpecificItem);
+        healFinish = true;
     }
     #endregion
 }

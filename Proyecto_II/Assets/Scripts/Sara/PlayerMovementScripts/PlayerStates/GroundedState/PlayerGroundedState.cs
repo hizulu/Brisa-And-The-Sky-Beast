@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /*
@@ -14,7 +14,9 @@ public class PlayerGroundedState : PlayerMovementState
 
     #region Variables
     protected bool isPointed = false;
-    private float timePressed = 0f;
+    private float rightButtontimePressed = 0f;
+
+    protected ItemData healIncreaseSpecificItem;
     #endregion
 
     #region Métodos Base de la Máquina de Estados
@@ -22,6 +24,7 @@ public class PlayerGroundedState : PlayerMovementState
     {
         base.Enter();
         EventsManager.CallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
+        EventsManager.CallNormalEvents("SanarBestia_Player", HealBeast);
         EventsManager.CallNormalEvents("MontarBestia_Player", RideBeast);
         StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
@@ -41,6 +44,7 @@ public class PlayerGroundedState : PlayerMovementState
     {
         base.Exit();
         EventsManager.StopCallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
+        EventsManager.StopCallNormalEvents("SanarBestia_Player", HealBeast);
         EventsManager.StopCallNormalEvents("MontarBestia_Player", RideBeast);
         StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
@@ -58,6 +62,8 @@ public class PlayerGroundedState : PlayerMovementState
         stateMachine.Player.PlayerInput.PlayerActions.Jump.started += JumpStarted;
         stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started += OnPointedStarted;
         stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled += OnPointedCanceled;
+        stateMachine.Player.PlayerInput.PlayerActions.ReviveBeast.started += OnReviveStarted;
+        stateMachine.Player.PlayerInput.PlayerActions.ReviveBeast.canceled += OnReviveCanceled;
     }
 
     protected override void RemoveInputActionsCallbacks()
@@ -141,15 +147,15 @@ public class PlayerGroundedState : PlayerMovementState
     {
         if (statsData.CurrentHealth >= statsData.MaxHealth) return; // Si la vida actual está al máximo, no hacemos nada.
 
-        string[] healingItemNames = { "Mango Luminoso", "Baya Voladora" }; // Guardamos en un array los items específicos que curan.
+        string[] healingItemNames = { "Baya Voladora" }; // Guardamos en un array los items específicos que curan.
 
         foreach (string itemName in healingItemNames)
         {
-            ItemData healingItem = InventoryManager.Instance.GetItemByName(itemName); // Los buscamos en el inventario por el nombre específico (puesto en el ItemDataSO).
+            ItemData healingBerry = InventoryManager.Instance.GetItemByName(itemName); // Los buscamos en el inventario por el nombre específico (puesto en el ItemDataSO).
 
-            if (healingItem != null && InventoryManager.Instance.CheckForItem(healingItem)) // Comprobamos que estén en el inventario.
+            if (healingBerry != null && InventoryManager.Instance.CheckForItem(healingBerry)) // Comprobamos que estén en el inventario.
             {
-                stateMachine.HealState.SetHealingItem(healingItem); // Pasamos el valor de curación del item específico que vayamos a comer.
+                stateMachine.HealState.SetHealingBerry(healingBerry); // Pasamos el valor de curación del item específico que vayamos a comer.
                 stateMachine.ChangeState(stateMachine.HealState);
             }
         }
@@ -215,18 +221,61 @@ public class PlayerGroundedState : PlayerMovementState
     private void AcariciarBestia()
     {
         // Lógica de acariciar a la Bestia.
-        stateMachine.ChangeState(stateMachine.PetBeastState);
         Debug.Log("Estás acariciando a la Bestia.");
+        stateMachine.ChangeState(stateMachine.PetBeastState);
     }
 
+    // Lógica de curar a la Bestia.
     private void HealBeast()
     {
+        if (stateMachine.Player.Beast.currentHealth == stateMachine.Player.Beast.maxHealth)
+        {
+            Debug.Log("La Bestia tiene la vida al máximo");
+            return;
+        }
+
         Debug.Log("Estás sanando a la Bestia");
+
+        string[] healingItemNames = { "Mango Luminoso" }; // Guardamos en un array los items específicos que curan.
+
+        foreach (string itemName in healingItemNames)
+        {
+            ItemData healingMango = InventoryManager.Instance.GetItemByName(itemName); // Los buscamos en el inventario por el nombre específico (puesto en el ItemDataSO).
+
+            if (healingMango != null && InventoryManager.Instance.CheckForItem(healingMango)) // Comprobamos que estén en el inventario.
+            {
+                Debug.Log("Curando");
+                stateMachine.HealBeastState.SetHealingMango(healingMango); // Pasamos el valor de curación del item específico que vayamos a comer.
+                stateMachine.ChangeState(stateMachine.HealBeastState);
+            }
+            else
+            {
+                Debug.Log("No tienes un mango en el inventario para curar a la Bestia.");
+            }
+        }
     }
 
+    // Lógica de montar en la Bestia.
     private void RideBeast()
     {
         stateMachine.ChangeState(stateMachine.RideBeastState);
+    }
+
+    protected bool isCentralButtonPressed;
+    protected virtual void OnReviveStarted(InputAction.CallbackContext context)
+    {
+        if (Vector3.Distance(stateMachine.Player.transform.position, stateMachine.Player.Beast.transform.position) < 3.5f)
+        {
+            isCentralButtonPressed = true;
+            stateMachine.ChangeState(stateMachine.ReviveBeastState);
+        }
+        else
+            Debug.Log("Estás muy lejos de Bestia como para poder revivirle");
+    }
+
+    protected virtual void OnReviveCanceled(InputAction.CallbackContext context)
+    {
+        isCentralButtonPressed = false;
     }
     #endregion
 
@@ -239,16 +288,16 @@ public class PlayerGroundedState : PlayerMovementState
     protected virtual void OnPointedCanceled(InputAction.CallbackContext context)
     {
         isPointed = false;
-        timePressed = 0f;
+        rightButtontimePressed = 0f;
     }
 
     private void ChangeToPointedState()
     {
         if (isPointed && stateMachine.CurrentState is PlayerIdleState)
         {
-            timePressed += Time.deltaTime;
+            rightButtontimePressed += Time.deltaTime;
 
-            if (timePressed >= 2f)
+            if (rightButtontimePressed >= 2f)
             {
                 isPointed = false;
                 stateMachine.ChangeState(stateMachine.PointedBeastState);

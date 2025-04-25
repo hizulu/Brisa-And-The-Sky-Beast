@@ -18,31 +18,32 @@ public class Player : MonoBehaviour
     [field: Header("Collisions")]
     [field: SerializeField] public PlayerLayerData LayerData { get; private set; }
 
-    [field: Header("Animaciones")]
+    [field: Header("Animations")]
     [field: SerializeField] public PlayerAnimationData PlayerAnimationData { get; private set; }
 
-    [SerializeField] public GameObject PaloBrisa;
-    [SerializeField] public GameObject hitBox;
-    [SerializeField] private float attackDuration = 0.2f;
-    public Rigidbody RbPlayer { get; private set; }
-    public BoxCollider GroundCheckCollider { get; private set; }
-    public Animator AnimPlayer { get; private set; }
-    //public CinemachineVirtualCamera CamPlayer { get; private set; }
-
-    private PlayerStateMachine playerStateMachine;
-
-    public PlayerInput PlayerInput { get; private set; }
-
-    [SerializeField] private BeastSelectionPanel beastPanel;
-    [SerializeField] private MapManager mapManager;
-
+    [field: Header("Objetcts")]
+    [SerializeField] public Beast Beast;
     [SerializeField] public CinemachineVirtualCamera playerCam;
     public CinemachinePOV CamComponents;
+    [SerializeField] public Transform lookCamPlayer;
+    [SerializeField] public GameObject PaloBrisa;
+    [SerializeField] public GameObject hitBox;
+    [SerializeField] private BeastSelectionPanel beastPanel;
+    [SerializeField] private MapManager mapManager;
     [SerializeField] public GameObject AreaMoveBeast;
     [SerializeField] public GameObject CursorMarker;
-
-    [SerializeField] public Transform lookCamPlayer;
     [SerializeField] public PointTarget pointTarget;
+    [SerializeField] public GameObject Mango;
+    [SerializeField] public GameObject Baya;
+    public BoxCollider GroundCheckCollider { get; private set; }
+    public PlayerInput PlayerInput { get; private set; }
+
+    [field: Header("Components")]
+    public Rigidbody RbPlayer { get; private set; }
+    public Animator AnimPlayer { get; private set; }
+
+    private float attackDuration = 0.2f;
+    private PlayerStateMachine playerStateMachine;
 
     private void Awake()
     {

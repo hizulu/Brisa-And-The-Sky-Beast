@@ -75,7 +75,7 @@ public class Sleep : Node, ICoroutineNode
         _blackboard.SetValue("lookForTarget", true);
         _blackboard.ClearKey("shouldSleep");
 
-        Debug.Log("Finished sleeping");
+        //Debug.Log("Finished sleeping");
 
         _hasFinished = true;     
     }
