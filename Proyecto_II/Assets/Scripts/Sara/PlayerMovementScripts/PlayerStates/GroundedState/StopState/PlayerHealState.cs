@@ -8,7 +8,7 @@ using UnityEngine;
  *              Subestado que gestiona la acción de curar a Player.
  * VERSIÓN: 1.0. 
  */
-public class PlayerHealState : PlayerGroundedState
+public class PlayerHealState : PlayerStopState
 {
     public PlayerHealState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
@@ -47,7 +47,7 @@ public class PlayerHealState : PlayerGroundedState
      */
     protected override void FinishAnimation()
     {
-        if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Heal") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("HealBrisa") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             healFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
