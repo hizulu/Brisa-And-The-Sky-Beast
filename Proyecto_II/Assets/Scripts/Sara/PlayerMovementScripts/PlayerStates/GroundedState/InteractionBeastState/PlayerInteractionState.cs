@@ -1,8 +1,8 @@
 /*
  * NOMBRE CLASE: PlayerInteractionState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState
+ * FECHA: 14/04/2025
+ * DESCRIPCIÓN: Estado padre del que heredan los subestados de las diferentes interacciones con la Bestia.
  * VERSIÓN: 1.0. 
  */
 public class PlayerInteractionState : PlayerGroundedState

@@ -1,11 +1,12 @@
 /*
  * NOMBRE CLASE: PlayerLandState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState
+ * FECHA: 10/03/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerStopState.
+ *              Subestado que gestiona la acción de aterrizar.
  * VERSIÓN: 1.0. 
  */
-public class PlayerLandState : PlayerGroundedState
+public class PlayerLandState : PlayerStopState
 {
     public PlayerLandState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
@@ -43,7 +44,7 @@ public class PlayerLandState : PlayerGroundedState
      */
     private void FinishLand()
     {
-        if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Aterrizaje") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Land") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             landFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);

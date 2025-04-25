@@ -1,7 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 
-/* NOMBRE CLASE: Cursor Zoom
+/* NOMBRE CLASE: CursorZoom
  * AUTOR: Sara Yue Madruga Martín
  * FECHA: 09/11/2024
  * DESCRIPCIÓN: Script que hace que haciendo scroll con el ratón, haga zoom in/out.

@@ -1,7 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+
+/*
+ * NOMBRE CLASE: UINameNPC
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 18/04/2025
+ * DESCRIPCIÓN: Muestra un panel con el nombre del NPC con el que puede interactuar Player.
+ * VERSIÓN: 1.0. 
+ */
 
 public class UINameNPC : MonoBehaviour
 {

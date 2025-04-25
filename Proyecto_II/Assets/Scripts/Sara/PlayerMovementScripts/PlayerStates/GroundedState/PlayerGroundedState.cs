@@ -29,17 +29,7 @@ public class PlayerGroundedState : PlayerMovementState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-
-        if (isPointed)
-        {
-            timePressed += Time.deltaTime;
-
-            if (timePressed >= 2f)
-            {
-                stateMachine.ChangeState(stateMachine.PointedBeastState);
-                isPointed = false;
-            }
-        }
+        ChangeToPointedState();
     }
 
     public override void UpdatePhysics()
@@ -61,10 +51,11 @@ public class PlayerGroundedState : PlayerMovementState
     {
         base.AddInputActionsCallbacks();
         stateMachine.Player.PlayerInput.PlayerActions.Run.performed += RunStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.Jump.started += JumpStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.performed += CrouchStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Attack.started += AttackStart;
         stateMachine.Player.PlayerInput.PlayerActions.Heal.started += HealPlayer;
+        stateMachine.Player.PlayerInput.PlayerActions.Sprint.started += SprintStart;
+        stateMachine.Player.PlayerInput.PlayerActions.Jump.started += JumpStarted;
         stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started += OnPointedStarted;
         stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled += OnPointedCanceled;
     }
@@ -72,9 +63,12 @@ public class PlayerGroundedState : PlayerMovementState
     protected override void RemoveInputActionsCallbacks()
     {
         base.RemoveInputActionsCallbacks();
-        stateMachine.Player.PlayerInput.PlayerActions.Jump.started -= JumpStarted;
+        stateMachine.Player.PlayerInput.PlayerActions.Run.performed -= RunStarted;
+        stateMachine.Player.PlayerInput.PlayerActions.Crouch.performed -= CrouchStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Attack.started -= AttackStart;
         stateMachine.Player.PlayerInput.PlayerActions.Heal.started -= HealPlayer;
+        stateMachine.Player.PlayerInput.PlayerActions.Sprint.started -= SprintStart;
+        stateMachine.Player.PlayerInput.PlayerActions.Jump.started -= JumpStarted;
     }
     #endregion
 
@@ -162,7 +156,8 @@ public class PlayerGroundedState : PlayerMovementState
     }
 
     /*
-     * Método que maneja la acción de saltar.
+     * Método que transiciona al estado de saltar.
+     * Pasa al estado de JumpState siempre y cuando que no esté en estado de doble salto o del estado de caer.
      * @param context - Información sobre la tecla / acción que se activa (Barra espaciadora / Jump).
      */
     protected virtual void JumpStarted(InputAction.CallbackContext context)
@@ -170,6 +165,19 @@ public class PlayerGroundedState : PlayerMovementState
         // Solo salta si el estado actual del jugador no es ni Doble Salto ni Caer.
         if (!(stateMachine.CurrentState is PlayerDoubleJumpState || stateMachine.CurrentState is PlayerFallState))
             stateMachine.ChangeState(stateMachine.JumpState);
+    }
+
+    /*
+     * Método que transiciona al estado de sprintar.
+     * Si es estado en el que está es IdleState, no puede sprintar.
+     * @param context - Información sobre la tecla / acción que se activa (Click derecho / Sprint).
+     */
+    protected virtual void SprintStart(InputAction.CallbackContext context)
+    {
+        //Debug.Log("Estás sprintando");
+        if (stateMachine.CurrentState is PlayerIdleState) return;
+
+        stateMachine.ChangeState(stateMachine.SprintState);
     }
     #endregion
 
@@ -232,6 +240,20 @@ public class PlayerGroundedState : PlayerMovementState
     {
         isPointed = false;
         timePressed = 0f;
+    }
+
+    private void ChangeToPointedState()
+    {
+        if (isPointed && stateMachine.CurrentState is PlayerIdleState)
+        {
+            timePressed += Time.deltaTime;
+
+            if (timePressed >= 2f)
+            {
+                isPointed = false;
+                stateMachine.ChangeState(stateMachine.PointedBeastState);
+            }
+        }
     }
 
     protected virtual void OnPointedStateCanceled(InputAction.CallbackContext context) { }

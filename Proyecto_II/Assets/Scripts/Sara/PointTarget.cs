@@ -3,7 +3,7 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: PointTarget
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 20/04/2025
+ * FECHA: 22/04/2025
  * DESCRIPCIÓN: Gestiona que el punto que señala al enemigo marcado se active y desactive.
  * VERSIÓN: 1.0. 
  */

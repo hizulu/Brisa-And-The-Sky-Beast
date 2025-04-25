@@ -1,8 +1,8 @@
 /*
  * NOMBRE CLASE: PlayerAttackState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState
+ * FECHA: 09/03/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState. Es un estado padre para gestionar el combo de ataque de Player.
  * VERSIÓN: 1.0. 
  */
 using UnityEngine;
@@ -28,8 +28,8 @@ public class PlayerAttackState : PlayerGroundedState
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        hasDashedToTarget = false;
-        dashTraveledDistance = 0f;
+        //hasDashedToTarget = false;
+        //dashTraveledDistance = 0f;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.AttackParameterHash);
         //Debug.Log("Has entrado en el estado de ATACAR");
@@ -48,10 +48,10 @@ public class PlayerAttackState : PlayerGroundedState
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
-        AlignPlayerToPointTarget();
+        AlignPlayerToNearestEnemy();
 
-        if (!hasDashedToTarget)
-            DashToPointTarget();
+        //if (!hasDashedToTarget)
+        //    DashToPointTarget();
     }
 
     public override void Exit()
@@ -66,57 +66,79 @@ public class PlayerAttackState : PlayerGroundedState
     /*
      * Método que orienta al Player en dirección del enemigo cuando ataca si este ha marcado al enemigo (facilitar un poco el combate).
      */
-    protected virtual void AlignPlayerToPointTarget()
+    protected float detectionRange = 20f;
+
+    protected virtual void AlignPlayerToNearestEnemy()
     {
-        if (stateMachine.Player.pointTarget == null || !stateMachine.Player.pointTarget.gameObject.activeInHierarchy) return;
+        Transform closestEnemy = null;
+        float closestDistance = Mathf.Infinity;
 
-        Vector3 direction = stateMachine.Player.pointTarget.transform.position - stateMachine.Player.transform.position;
-        direction.y = 0f;
+        Collider[] colliders = Physics.OverlapSphere(stateMachine.Player.transform.position, detectionRange);
 
-        if (direction.sqrMagnitude > 0.01f)
+        foreach (Collider col in colliders)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            stateMachine.Player.transform.rotation = Quaternion.Slerp(stateMachine.Player.transform.rotation, targetRotation, Time.deltaTime * 10f);
+            if (col.CompareTag("Enemy"))
+            {
+                float distance = Vector3.Distance(stateMachine.Player.transform.position, col.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy = col.transform;
+                }
+            }
+        }
+
+        if (closestEnemy != null)
+        {
+            Vector3 direction = closestEnemy.position - stateMachine.Player.transform.position;
+            direction.y = 0f;
+
+            if (direction.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                stateMachine.Player.transform.rotation = Quaternion.Slerp(stateMachine.Player.transform.rotation, targetRotation, Time.deltaTime * 10f);
+            }
         }
     }
+
 
     /*
      * Método que hace que el Player, si tiene marcado un enemigo, haga un mini-dash para acercarse a él y golpearle (facilitar un poco el combate).
      */
-    protected bool hasDashedToTarget = false;
-    protected float dashSpeed = 10f;
-    protected float dashDistance = 1.5f;
+    //protected bool hasDashedToTarget = false;
+    //protected float dashSpeed = 10f;
+    //protected float dashDistance = 1.5f;
 
-    private Vector3 dashDirection;
-    private float dashTraveledDistance = 0f;
+    //private Vector3 dashDirection;
+    //private float dashTraveledDistance = 0f;
 
-    protected virtual void DashToPointTarget()
-    {
-        if (hasDashedToTarget || !stateMachine.Player.pointTarget.gameObject.activeInHierarchy)
-            return;
+    //protected virtual void DashToPointTarget()
+    //{
+    //    if (hasDashedToTarget || !stateMachine.Player.pointTarget.gameObject.activeInHierarchy)
+    //        return;
 
-        if (dashTraveledDistance == 0f)
-        {
-            Vector3 toTarget = stateMachine.Player.pointTarget.transform.position - stateMachine.Player.transform.position;
-            toTarget.y = 0f;
-            float distanceToTarget = toTarget.magnitude;
+    //    if (dashTraveledDistance == 0f)
+    //    {
+    //        Vector3 toTarget = stateMachine.Player.pointTarget.transform.position - stateMachine.Player.transform.position;
+    //        toTarget.y = 0f;
+    //        float distanceToTarget = toTarget.magnitude;
 
-            if (distanceToTarget < 1f)
-            {
-                hasDashedToTarget = true;
-                return;
-            }
+    //        if (distanceToTarget < 1f)
+    //        {
+    //            hasDashedToTarget = true;
+    //            return;
+    //        }
 
-            dashDirection = toTarget.normalized;
-        }
+    //        dashDirection = toTarget.normalized;
+    //    }
 
-        float stepDistance = dashSpeed * Time.deltaTime;
-        stateMachine.Player.RbPlayer.MovePosition(stateMachine.Player.transform.position + dashDirection * stepDistance);
-        dashTraveledDistance += stepDistance;
+    //    float stepDistance = dashSpeed * Time.deltaTime;
+    //    stateMachine.Player.RbPlayer.MovePosition(stateMachine.Player.transform.position + dashDirection * stepDistance);
+    //    dashTraveledDistance += stepDistance;
 
-        if (dashTraveledDistance >= dashDistance)
-            hasDashedToTarget = true;
-    }
+    //    if (dashTraveledDistance >= dashDistance)
+    //        hasDashedToTarget = true;
+    //}
 
     #endregion
 }

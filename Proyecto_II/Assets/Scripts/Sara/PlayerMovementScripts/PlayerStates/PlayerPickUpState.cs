@@ -1,8 +1,8 @@
 /*
  * NOMBRE CLASE: PlayerPickUpState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerMovementState
+ * FECHA: 13/04/2025
+ * DESCRIPCIÓN: Gestiona el estado de recoger objetos.
  * VERSIÓN: 1.0. 
  */
 public class PlayerPickUpState : PlayerMovementState

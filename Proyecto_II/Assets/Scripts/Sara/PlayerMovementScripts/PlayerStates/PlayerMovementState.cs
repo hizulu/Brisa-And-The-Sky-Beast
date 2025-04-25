@@ -47,6 +47,8 @@ public class PlayerMovementState : IState
      */
     public virtual void Enter()
     {
+        stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 200f;
+        stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 200f;
         AddInputActionsCallbacks();
         EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
         EventsManager.CallNormalEvents("PickUpItem", PickUp);
@@ -68,11 +70,6 @@ public class PlayerMovementState : IState
     {
         //Debug.Log("Actualizando");
         EnemyInRange();
-
-        if (!camLock)
-            UnLockCam();
-        else
-            LockCam();
     }
 
     /*
@@ -278,7 +275,6 @@ public class PlayerMovementState : IState
     private List<GameObject> enemiesTarget = new List<GameObject>();
     private int currentLockTarget = -1;
     private float detectionRange = 20f;
-    private bool camLock = false;
 
     private void LockTarget(InputAction.CallbackContext context)
     {
@@ -295,7 +291,8 @@ public class PlayerMovementState : IState
             stateMachine.Player.pointTarget.ClearTarget();
             currentLockTarget = -1;
             stateMachine.Player.playerCam.LookAt = stateMachine.Player.lookCamPlayer;
-            camLock = false;
+            stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 200f;
+            stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 200f;
             return;
         }
 
@@ -304,7 +301,8 @@ public class PlayerMovementState : IState
         GameObject selectedEnemy = enemiesTarget[currentLockTarget];
         stateMachine.Player.pointTarget.SetTarget(selectedEnemy.transform);
         stateMachine.Player.playerCam.LookAt = selectedEnemy.transform;
-        camLock = true;
+        stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 0f;
+        stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 0f;
         Debug.Log("Enemigo fijado: " + selectedEnemy.name);
     }
 
@@ -365,20 +363,6 @@ public class PlayerMovementState : IState
             stateMachine.ChangeState(stateMachine.HalfDeadState);
         else
             stateMachine.ChangeState(stateMachine.TakeDamageState);
-    }
-    #endregion
-
-    #region Métodos LockCamera
-    private void LockCam()
-    {
-        stateMachine.Player.CamComponents.m_HorizontalAxis.m_InputAxisName = "";
-        stateMachine.Player.CamComponents.m_VerticalAxis.m_InputAxisName = "";
-    }
-
-    private void UnLockCam()
-    {
-        stateMachine.Player.CamComponents.m_HorizontalAxis.m_InputAxisName = "Mouse X";
-        stateMachine.Player.CamComponents.m_VerticalAxis.m_InputAxisName = "Mouse Y";
     }
     #endregion
 

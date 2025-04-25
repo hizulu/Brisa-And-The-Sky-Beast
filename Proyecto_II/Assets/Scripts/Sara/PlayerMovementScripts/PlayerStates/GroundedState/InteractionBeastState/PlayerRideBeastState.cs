@@ -3,8 +3,9 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: PlayerRideBeastState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerInteractionState
+ * FECHA: 18/04/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerInteractionState.
+ *              Subestado que gestiona la acción de montar a la Bestia.
  * VERSIÓN: 1.0. 
  */
 public class PlayerRideBeastState : PlayerInteractionState

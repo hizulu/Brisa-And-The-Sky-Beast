@@ -3,8 +3,11 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: PlayerHalfDeadState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerDeathState
+ * FECHA: 03/04/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerDeathState.
+ *              Subestado donde Player está en estado de "medio-muerta".
+ *              No puede realizar ninguna acción.
+ *              La Bestia tiene un tiempo limitado para revivir a Player, sino, pasa a muerte definitiva.
  * VERSIÓN: 1.0. 
  */
 public class PlayerHalfDeadState : PlayerDeathState
@@ -14,9 +17,10 @@ public class PlayerHalfDeadState : PlayerDeathState
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
+        EventsManager.TriggerNormalEvent("BrisaHalfDead");
         base.Enter();
         //Debug.Log("Has entrado en el estado de MEDIO-MUERTA");
-        statsData.CurrentTimeHalfDead = 60f;
+        //statsData.CurrentTimeHalfDead = 60f;
         statsData.CurrentTimeHalfDead = statsData.MaxTimeHalfDead;
         StartAnimation(stateMachine.Player.PlayerAnimationData.HalfDeadParameterHash);
     }
@@ -51,6 +55,18 @@ public class PlayerHalfDeadState : PlayerDeathState
 
         if (statsData.CurrentTimeHalfDead <= 0)
             stateMachine.ChangeState(stateMachine.FinalDeadState);
+        else
+            PlayerRevive();
+    }
+
+    /*
+     * Método que revive a Brisa si su vida ha alcanzado el 100.
+     * Si se consigue, cambia el estado a IdleState.
+     */
+    private void PlayerRevive()
+    {
+        if (statsData.CurrentHealth == statsData.MaxHealth)
+            stateMachine.ChangeState(stateMachine.IdleState);
     }
     #endregion
 }

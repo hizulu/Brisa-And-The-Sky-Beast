@@ -4,8 +4,9 @@ using UnityEngine.InputSystem;
 /*
  * NOMBRE CLASE: PlayerAirborneState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerMovementState
+ * FECHA: 10/03/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerMovementState.
+ *              Estado padre que contiene subestados específicos de Player cuando está en el aire.
  * VERSIÓN: 1.0. 
  */
 public class PlayerAirborneState : PlayerMovementState

@@ -3,8 +3,8 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: PlayerAttack01
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerAttackState
+ * FECHA: 04/04/2025
+ * DESCRIPCIÓN: Gestiona la lógica del primer ataque (combo) del Player.
  * VERSIÓN: 1.0. 
  */
 public class PlayerAttack01 : PlayerAttackState

@@ -3,8 +3,9 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: PlayerFallState
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
- * DESCRIPCIÓN: Clase que hereda de PlayerAirborneState
+ * FECHA: 10/03/2025
+ * DESCRIPCIÓN: Clase que hereda de PlayerAirborneState.
+ *              Subestado que gestiona la acción de caer.
  * VERSIÓN: 1.0. 
  */
 public class PlayerFallState : PlayerAirborneState
@@ -15,11 +16,15 @@ public class PlayerFallState : PlayerAirborneState
     private float fallSpeed = 0f;
     private float gravityAcceleration = 9.8f;
     private float maxSpeed = 20f;
+
+    private float timeInFall = 0f;
+    private float maxTime = 1f;
     #endregion
 
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
+        timeInFall = 0f;
         base.Enter();
         //Debug.Log("Desde entrada de caída: " + maxNumDoubleJump);
         StartAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
@@ -38,6 +43,7 @@ public class PlayerFallState : PlayerAirborneState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+        timeInFall += Time.deltaTime;
         LandInGround();
     }
 
@@ -68,7 +74,11 @@ public class PlayerFallState : PlayerAirborneState
         {
             //Debug.Log("Pasas a ATERRIZAR");
             ResetDoubleJump();
-            stateMachine.ChangeState(stateMachine.LandState);
+
+            if (timeInFall <  maxTime)
+                stateMachine.ChangeState(stateMachine.LandState);
+            else
+                stateMachine.ChangeState(stateMachine.HardLandState);
         }
     }
 
