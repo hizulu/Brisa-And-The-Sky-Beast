@@ -15,12 +15,15 @@ public class PlayerHealState : PlayerStopState
     #region Variables
     bool healFinish;
     private ItemData healIncreaseSpecificItem;
+    private float healDelay = 0.5f;
+    private float currentTime = 0f;
     #endregion
 
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        HealPlayer();
+        stateMachine.Player.Baya.SetActive(true);
+        
         healFinish = false;
         base.Enter();
         Debug.Log("Has entrado en el estado de curarte");
@@ -30,6 +33,12 @@ public class PlayerHealState : PlayerStopState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+
+        if (currentTime < healDelay)
+            currentTime += Time.deltaTime;
+        else
+            HealPlayer();
+
         FinishAnimation();
     }
 
@@ -49,6 +58,7 @@ public class PlayerHealState : PlayerStopState
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("HealBrisa") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
+            stateMachine.Player.Baya.SetActive(false);
             healFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
         }

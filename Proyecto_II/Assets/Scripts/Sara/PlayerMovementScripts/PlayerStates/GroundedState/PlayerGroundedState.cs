@@ -22,6 +22,7 @@ public class PlayerGroundedState : PlayerMovementState
     {
         base.Enter();
         EventsManager.CallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
+        EventsManager.CallNormalEvents("SanarBestia_Player", HealBeast);
         EventsManager.CallNormalEvents("MontarBestia_Player", RideBeast);
         StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
@@ -41,6 +42,7 @@ public class PlayerGroundedState : PlayerMovementState
     {
         base.Exit();
         EventsManager.StopCallNormalEvents("AcariciarBestia_Player", AcariciarBestia);
+        EventsManager.StopCallNormalEvents("SanarBestia_Player", HealBeast);
         EventsManager.StopCallNormalEvents("MontarBestia_Player", RideBeast);
         StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
@@ -141,7 +143,7 @@ public class PlayerGroundedState : PlayerMovementState
     {
         if (statsData.CurrentHealth >= statsData.MaxHealth) return; // Si la vida actual está al máximo, no hacemos nada.
 
-        string[] healingItemNames = { "Mango Luminoso", "Baya Voladora" }; // Guardamos en un array los items específicos que curan.
+        string[] healingItemNames = { "Baya Voladora" }; // Guardamos en un array los items específicos que curan.
 
         foreach (string itemName in healingItemNames)
         {
@@ -215,15 +217,18 @@ public class PlayerGroundedState : PlayerMovementState
     private void AcariciarBestia()
     {
         // Lógica de acariciar a la Bestia.
-        stateMachine.ChangeState(stateMachine.PetBeastState);
         Debug.Log("Estás acariciando a la Bestia.");
+        stateMachine.ChangeState(stateMachine.PetBeastState);
     }
 
+    // Lógica de curar a la Bestia.
     private void HealBeast()
     {
         Debug.Log("Estás sanando a la Bestia");
+        stateMachine.ChangeState(stateMachine.HealBeastState);
     }
 
+    // Lógica de montar en la Bestia.
     private void RideBeast()
     {
         stateMachine.ChangeState(stateMachine.RideBeastState);

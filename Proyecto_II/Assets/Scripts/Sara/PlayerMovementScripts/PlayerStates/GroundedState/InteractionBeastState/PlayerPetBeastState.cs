@@ -29,11 +29,6 @@ public class PlayerPetBeastState : PlayerInteractionState
         FinishAnimation();
     }
 
-    public override void UpdatePhysics()
-    {
-        base.UpdatePhysics();
-    }
-
     public override void Exit()
     {
         base.Exit();
@@ -48,7 +43,7 @@ public class PlayerPetBeastState : PlayerInteractionState
      */
     protected override void FinishAnimation()
     {
-        if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("AcariciarBestia_Brisa") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("PetBeast") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             petBeastFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
