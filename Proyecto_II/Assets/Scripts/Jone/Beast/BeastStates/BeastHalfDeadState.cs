@@ -10,6 +10,7 @@ public class BeastHalfDeadState : BeastState
     private bool _beastRevived = false;
     public override void OnEnter(Beast beast)
     {
+        EventsManager.TriggerNormalEvent("AskForHelpBrisa"); // Cuando Bestia entra en estado de medio - muerto, manda un evento para avisar a Brisa de que necesita que le reviva.
         beast.anim.SetBool("isWalking", false);
         beast.anim.SetBool("isHalfDead", true);
         beast.agent.ResetPath();

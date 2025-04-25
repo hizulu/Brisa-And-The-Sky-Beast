@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /*
@@ -14,7 +14,7 @@ public class PlayerGroundedState : PlayerMovementState
 
     #region Variables
     protected bool isPointed = false;
-    private float timePressed = 0f;
+    private float rightButtontimePressed = 0f;
 
     protected ItemData healIncreaseSpecificItem;
     #endregion
@@ -62,6 +62,8 @@ public class PlayerGroundedState : PlayerMovementState
         stateMachine.Player.PlayerInput.PlayerActions.Jump.started += JumpStarted;
         stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started += OnPointedStarted;
         stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled += OnPointedCanceled;
+        stateMachine.Player.PlayerInput.PlayerActions.ReviveBeast.started += OnReviveStarted;
+        stateMachine.Player.PlayerInput.PlayerActions.ReviveBeast.canceled += OnReviveCanceled;
     }
 
     protected override void RemoveInputActionsCallbacks()
@@ -258,6 +260,23 @@ public class PlayerGroundedState : PlayerMovementState
     {
         stateMachine.ChangeState(stateMachine.RideBeastState);
     }
+
+    protected bool isCentralButtonPressed;
+    protected virtual void OnReviveStarted(InputAction.CallbackContext context)
+    {
+        if (Vector3.Distance(stateMachine.Player.transform.position, stateMachine.Player.Beast.transform.position) < 3.5f)
+        {
+            isCentralButtonPressed = true;
+            stateMachine.ChangeState(stateMachine.ReviveBeastState);
+        }
+        else
+            Debug.Log("Estás muy lejos de Bestia como para poder revivirle");
+    }
+
+    protected virtual void OnReviveCanceled(InputAction.CallbackContext context)
+    {
+        isCentralButtonPressed = false;
+    }
     #endregion
 
     #region Métodos Pasar a PointedBeast
@@ -269,16 +288,16 @@ public class PlayerGroundedState : PlayerMovementState
     protected virtual void OnPointedCanceled(InputAction.CallbackContext context)
     {
         isPointed = false;
-        timePressed = 0f;
+        rightButtontimePressed = 0f;
     }
 
     private void ChangeToPointedState()
     {
         if (isPointed && stateMachine.CurrentState is PlayerIdleState)
         {
-            timePressed += Time.deltaTime;
+            rightButtontimePressed += Time.deltaTime;
 
-            if (timePressed >= 2f)
+            if (rightButtontimePressed >= 2f)
             {
                 isPointed = false;
                 stateMachine.ChangeState(stateMachine.PointedBeastState);

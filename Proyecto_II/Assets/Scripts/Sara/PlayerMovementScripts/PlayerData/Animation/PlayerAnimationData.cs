@@ -41,6 +41,7 @@ public class PlayerAnimationData
     [SerializeField] private string petBeastParameterName = "isPettingBeast";
     [SerializeField] private string rideBeastParameterName = "isRidingBeast";
     [SerializeField] private string healBeastParameterName = "isHealingBeast";
+    [SerializeField] private string reviveBeastParameterName = "isRevivingBeast";
 
     [SerializeField] private string pickUpParameterName = "isPickUp";
 
@@ -74,6 +75,7 @@ public class PlayerAnimationData
     public int PetBeastParameterHash { get; private set; }
     public int RideBeastParameterHash { get; private set; }
     public int HealBeastParameterHash { get; private set; }
+    public int ReviveBeastParameterHash { get; private set; }
 
     public int PickUpParameterHash { get; private set; }
 
@@ -112,6 +114,7 @@ public class PlayerAnimationData
         PetBeastParameterHash = Animator.StringToHash(petBeastParameterName);
         RideBeastParameterHash = Animator.StringToHash(rideBeastParameterName);
         HealBeastParameterHash = Animator.StringToHash(healBeastParameterName);
+        ReviveBeastParameterHash = Animator.StringToHash(reviveBeastParameterName);
 
         PickUpParameterHash = Animator.StringToHash(pickUpParameterName);
     }

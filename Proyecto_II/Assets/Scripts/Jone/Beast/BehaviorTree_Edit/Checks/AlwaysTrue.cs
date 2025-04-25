@@ -10,7 +10,7 @@ public class AlwaysTrue : Node
 {
     public override NodeState Evaluate()
     {
-        Debug.Log("Doing always true");
+        //Debug.Log("Doing always true");
 
         return NodeState.SUCCESS;
     }

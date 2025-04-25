@@ -16,7 +16,7 @@ public class PlayerPointedBeastState : PlayerGroundedState
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        stateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.WalkSpeedModif;
+        stateMachine.MovementData.MovementSpeedModifier = 0f; // En este estado Player no puede moverse.
         CamEnterSetting();
         stateMachine.Player.PlayerInput.PlayerActions.Attack.Disable();
         base.Enter();
@@ -29,20 +29,10 @@ public class PlayerPointedBeastState : PlayerGroundedState
         //Debug.Log("Has entrado en el estado de APUNTANDO");
     }
 
-    public override void HandleInput()
-    {
-        base.HandleInput();
-    }
-
     public override void UpdateLogic()
     {
         base.UpdateLogic();
         stateMachine.Player.CursorMarker.transform.position = CursorPosition();
-    }
-
-    public override void UpdatePhysics()
-    {
-        base.UpdatePhysics();
     }
 
     public override void Exit()
