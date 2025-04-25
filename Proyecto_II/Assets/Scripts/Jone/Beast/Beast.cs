@@ -38,6 +38,8 @@ public class Beast : MonoBehaviour
     private Coroutine activeCoroutine; // Para gestionar que solo haya una corrutina en marcha a la vez
     private ICoroutineNode coroutineOwner;
 
+    [SerializeField] public Player player;
+
     private void Awake()
     {
         if (agent == null) agent = GetComponent<NavMeshAgent>();

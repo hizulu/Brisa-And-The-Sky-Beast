@@ -31,6 +31,7 @@ public class PlayerDeathState : PlayerMovementState
 
     public override void Exit()
     {
+        stateMachine.Player.PlayerInput.PlayerActions.Enable();
         base.Exit();
         //Debug.Log("Has salido del estado de MUERTE");
         StopAnimation(stateMachine.Player.PlayerAnimationData.DeathParameterHash);
