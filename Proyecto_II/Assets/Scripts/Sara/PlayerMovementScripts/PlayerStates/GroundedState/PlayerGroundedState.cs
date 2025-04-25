@@ -15,6 +15,8 @@ public class PlayerGroundedState : PlayerMovementState
     #region Variables
     protected bool isPointed = false;
     private float timePressed = 0f;
+
+    protected ItemData healIncreaseSpecificItem;
     #endregion
 
     #region Métodos Base de la Máquina de Estados
@@ -147,11 +149,11 @@ public class PlayerGroundedState : PlayerMovementState
 
         foreach (string itemName in healingItemNames)
         {
-            ItemData healingItem = InventoryManager.Instance.GetItemByName(itemName); // Los buscamos en el inventario por el nombre específico (puesto en el ItemDataSO).
+            ItemData healingBerry = InventoryManager.Instance.GetItemByName(itemName); // Los buscamos en el inventario por el nombre específico (puesto en el ItemDataSO).
 
-            if (healingItem != null && InventoryManager.Instance.CheckForItem(healingItem)) // Comprobamos que estén en el inventario.
+            if (healingBerry != null && InventoryManager.Instance.CheckForItem(healingBerry)) // Comprobamos que estén en el inventario.
             {
-                stateMachine.HealState.SetHealingItem(healingItem); // Pasamos el valor de curación del item específico que vayamos a comer.
+                stateMachine.HealState.SetHealingBerry(healingBerry); // Pasamos el valor de curación del item específico que vayamos a comer.
                 stateMachine.ChangeState(stateMachine.HealState);
             }
         }
@@ -224,8 +226,31 @@ public class PlayerGroundedState : PlayerMovementState
     // Lógica de curar a la Bestia.
     private void HealBeast()
     {
+        if (stateMachine.Player.Beast.currentHealth == stateMachine.Player.Beast.maxHealth)
+        {
+            Debug.Log("La Bestia tiene la vida al máximo");
+            return;
+        }
+
         Debug.Log("Estás sanando a la Bestia");
-        stateMachine.ChangeState(stateMachine.HealBeastState);
+
+        string[] healingItemNames = { "Mango Luminoso" }; // Guardamos en un array los items específicos que curan.
+
+        foreach (string itemName in healingItemNames)
+        {
+            ItemData healingMango = InventoryManager.Instance.GetItemByName(itemName); // Los buscamos en el inventario por el nombre específico (puesto en el ItemDataSO).
+
+            if (healingMango != null && InventoryManager.Instance.CheckForItem(healingMango)) // Comprobamos que estén en el inventario.
+            {
+                Debug.Log("Curando");
+                stateMachine.HealBeastState.SetHealingMango(healingMango); // Pasamos el valor de curación del item específico que vayamos a comer.
+                stateMachine.ChangeState(stateMachine.HealBeastState);
+            }
+            else
+            {
+                Debug.Log("No tienes un mango en el inventario para curar a la Bestia.");
+            }
+        }
     }
 
     // Lógica de montar en la Bestia.

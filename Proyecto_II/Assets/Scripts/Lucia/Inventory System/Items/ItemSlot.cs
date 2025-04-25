@@ -118,7 +118,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public void DeselectItem()
     {
         itemSelected = false;
-        itemImageAndDescription.ClearDisplay(); // Limpiar la descripción
+        //itemImageAndDescription.ClearDisplay(); // Limpiar la descripción
     }
 
 

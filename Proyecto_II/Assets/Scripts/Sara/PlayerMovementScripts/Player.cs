@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [field: SerializeField] public PlayerAnimationData PlayerAnimationData { get; private set; }
 
     [field: Header("Objetcts")]
+    [SerializeField] public Beast Beast;
     [SerializeField] public CinemachineVirtualCamera playerCam;
     public CinemachinePOV CamComponents;
     [SerializeField] public Transform lookCamPlayer;
