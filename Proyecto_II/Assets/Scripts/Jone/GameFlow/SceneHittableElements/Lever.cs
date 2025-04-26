@@ -20,6 +20,7 @@ public class Lever : HittableElement
     private void Start()
     {
         animator = new LeverAnimator(this, leverStick, leverActiveXRotation, leverNotActiveXRotation, rotationSpeed);
+        isActivated = false;
     }
 
     public override void OnHit()

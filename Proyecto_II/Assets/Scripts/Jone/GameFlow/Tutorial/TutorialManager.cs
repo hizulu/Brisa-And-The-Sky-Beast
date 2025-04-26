@@ -14,7 +14,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private Transform canvasParent;
 
     public InputActionAsset inputActions;
-
+    private List<Tutorial> queuedTutorials = new List<Tutorial>();
     private List<TutorialMessage> activeMessages = new List<TutorialMessage>();
 
     private void Awake()
@@ -23,21 +23,36 @@ public class TutorialManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void ShowMessage(string actionName, string messageText)
+    public TutorialMessage ShowMessage(Tutorial tutorial)
     {
         GameObject obj = Instantiate(tutorialMessagePrefab, canvasParent);
         TutorialMessage msg = obj.GetComponent<TutorialMessage>();
-        InputAction action = inputActions.FindAction(actionName);
 
-        if (action == null)
+        msg.Initialize(tutorial);
+        StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 0f, 1f, 0.25f, 0.5f));
+        activeMessages.Add(msg);
+        return msg;
+    }
+
+    public void QueueMessage(int i, Tutorial tutorial)
+    {
+        queuedTutorials[i] = tutorial;
+    }
+
+    public void ShowQueuedMessage(int i)
+    {
+        GameObject obj = Instantiate(tutorialMessagePrefab, canvasParent);
+        TutorialMessage msg = obj.GetComponent<TutorialMessage>();
+        Tutorial tut = queuedTutorials[i];
+        if (tut == null)
         {
-            Debug.LogWarning($"TutorialManager: No se encontró la acción '{actionName}' en el InputActionAsset.");
+            Debug.LogWarning($"TutorialManager: No se encontró tutorial '{i}' en la lista.");
             Destroy(obj);
             return;
         }
 
-        msg.Initialize(action, messageText);
-        StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 0f, 1f, 0.25f));
+        msg.Initialize(queuedTutorials[i]);
+        StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 0f, 1f, 0.25f, 1f));
         activeMessages.Add(msg);
     }
 
@@ -50,14 +65,16 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    private IEnumerator FadeOutAndDestroy(TutorialMessage msg)
+    public IEnumerator FadeOutAndDestroy(TutorialMessage msg)
     {
-        yield return StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 1f, 0f, 0.4f));
+        yield return StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 1f, 0f, 0.4f, 0.2f));
         Destroy(msg.gameObject);
     }
 
-    private IEnumerator FadeCanvasGroup(CanvasGroup group, float from, float to, float duration)
+    public IEnumerator FadeCanvasGroup(CanvasGroup group, float from, float to, float duration, float waitTime)
     {
+        yield return new WaitForSeconds(waitTime);
+        
         float t = 0f;
         group.alpha = from;
 

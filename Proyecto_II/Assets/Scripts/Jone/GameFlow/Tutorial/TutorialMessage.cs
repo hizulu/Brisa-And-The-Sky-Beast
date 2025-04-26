@@ -6,36 +6,44 @@ using UnityEngine.InputSystem;
 
 // Jone Sainz Egea
 // 18/04/2025
+    //26/04/2025 added option to show queued messages
 public class TutorialMessage : MonoBehaviour
 {
-    [SerializeField] private TMP_Text messageTextUI;
+    [SerializeField] private TMPro.TMP_Text messageTextUI;
 
     private InputAction inputAction;
-    private bool actionCompleted = false;
+    private System.Action onActionPerformedCallback;
+    private bool waitForCompletion;
+
     public CanvasGroup CanvasGroup { get; private set; }
 
     private void Awake()
     {
         CanvasGroup = GetComponent<CanvasGroup>();
-        CanvasGroup.alpha = 0f; // Inicialmente invisible
+        CanvasGroup.alpha = 0f;
     }
 
-    public void Initialize(InputAction action, string text)
+    public void Initialize(Tutorial tutorial, System.Action callback = null)
     {
-        inputAction = action;
-        messageTextUI.text = text;
+        inputAction = TutorialManager.Instance.inputActions.FindAction(tutorial.inputActionName);
+        messageTextUI.text = tutorial.tutorialText;
+        waitForCompletion = tutorial.waitForCompletion;
+
+        onActionPerformedCallback = callback;
 
         inputAction.Enable();
     }
 
-    void Update()
+    private void Update()
     {
-        if (actionCompleted) return;
+        if (inputAction == null) return;
 
-        if (inputAction != null && inputAction.triggered)
+        if (!waitForCompletion)
         {
-            actionCompleted = true;
-            TutorialManager.Instance.RemoveMessage(this);
+            if (inputAction.triggered)
+            {
+                onActionPerformedCallback?.Invoke();
+            }
         }
     }
 }

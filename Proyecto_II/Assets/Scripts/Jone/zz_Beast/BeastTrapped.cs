@@ -20,5 +20,6 @@ public class BeastTrapped : MonoBehaviour
     {
         beastScript.enabled = true;
         beasIsFree = true;
+        EventsManager.TriggerNormalEvent("BeastFreed");
     }
 }
