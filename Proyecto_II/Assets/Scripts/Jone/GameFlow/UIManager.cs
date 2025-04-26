@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     [SerializeField] GameObject pausePanel;
+    [SerializeField] GameObject gameOverPanel;
 
     // Singleton
     private void Awake()
@@ -45,6 +46,21 @@ public class UIManager : MonoBehaviour
         pausePanel.SetActive(false);
     }
     #endregion
+
+    #region GameOver
+    public void OpenGameOverMenu()
+    {
+        ActivateCursor();
+        gameOverPanel.SetActive(true);
+    }
+
+    public void CloseGameOverMenu()
+    {
+        DeactivateCursor();
+        gameObject.SetActive(false);
+    }
+    #endregion
+
     public void ActivateCursor()
     {
         Cursor.lockState = CursorLockMode.None;

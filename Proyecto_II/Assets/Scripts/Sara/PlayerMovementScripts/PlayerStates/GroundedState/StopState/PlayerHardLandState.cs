@@ -34,6 +34,9 @@ public class PlayerHardLandState : PlayerStopState
     {
         base.UpdateLogic();
         FinishLand();
+
+        if (statsData.CurrentHealth < Mathf.Epsilon)
+            PlayerDead();
     }
 
     public override void Exit()

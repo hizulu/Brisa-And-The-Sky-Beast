@@ -71,8 +71,9 @@ public class PlayerMovementState : IState
      */
     public virtual void UpdateLogic()
     {
-        UpdateTimeWithShield();
-        //Debug.Log("Actualizando");
+        if(startActiveShield)
+            UpdateTimeWithShield();
+
         EnemyInRange();
     }
 
@@ -366,13 +367,9 @@ public class PlayerMovementState : IState
         if (isHalfDead) return;
 
         statsData.CurrentHealth -= _enemyDamage;
-        statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
 
         if (statsData.CurrentHealth < Mathf.Epsilon)
-        {
-            isHalfDead = true;
-            stateMachine.ChangeState(stateMachine.HalfDeadState);
-        }
+            PlayerDead();
         else
             stateMachine.ChangeState(stateMachine.TakeDamageState);
     }
@@ -381,10 +378,11 @@ public class PlayerMovementState : IState
     #region Métodos Defensa
     protected bool shieldButtonPressed = false;
     private float maxTimeWithShield = 5f;
-   
+    private bool startActiveShield = false;
     protected virtual void OnDefendedStarted(InputAction.CallbackContext context)
     {
         shieldButtonPressed = true;
+        startActiveShield = true;
         currentTimeWithShield = 0f;
         ActivateShield();
     }
@@ -392,6 +390,7 @@ public class PlayerMovementState : IState
     protected virtual void OnDefendedCanceled(InputAction.CallbackContext context)
     {
         shieldButtonPressed = false;
+        startActiveShield = false;
         DesactivateShield();
     }
 
@@ -418,9 +417,17 @@ public class PlayerMovementState : IState
 
     private void DesactivateShield()
     {
+        startActiveShield = false;
         stateMachine.Player.Shield.SetActive(false);
     }
     #endregion
+
+    protected virtual void PlayerDead()
+    {
+        statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
+        isHalfDead = true;
+        stateMachine.ChangeState(stateMachine.HalfDeadState);
+    }
 
     #region Métodos Cursor
     public void LockCursor()
