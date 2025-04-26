@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -391,19 +392,29 @@ public class PlayerMovementState : IState
 
     private void ActivateShield()
     {
-        currentTimeWithShield += Time.deltaTime;
+        //currentTimeWithShield += Time.deltaTime;
 
-        Debug.Log(currentTimeWithShield);
+        //Debug.Log(currentTimeWithShield);
 
-        if (shieldButtonPressed && currentTimeWithShield < maxTimeWithShield)
-        {
-            stateMachine.Player.Shield.SetActive(true);
-        }
-        else
-        {
-            stateMachine.Player.Shield.SetActive(false);
-            stateMachine.ChangeState(stateMachine.IdleState);
-        }
+        //if (shieldButtonPressed && currentTimeWithShield < maxTimeWithShield)
+        //{
+        //    stateMachine.Player.Shield.SetActive(true);
+        //}
+        //else
+        //{
+        //    stateMachine.Player.Shield.SetActive(false);
+        //    stateMachine.ChangeState(stateMachine.IdleState);
+        //}
+    }
+
+    private void DesactivateShield()
+    {
+        stateMachine.Player.Shield.SetActive(true);
+    }
+
+    private void UpdateTimeWithShield()
+    {
+        stateMachine.Player.Shield.SetActive(true);
     }
     #endregion
 
