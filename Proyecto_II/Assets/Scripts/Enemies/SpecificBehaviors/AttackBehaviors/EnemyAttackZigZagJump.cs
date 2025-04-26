@@ -6,24 +6,28 @@ using UnityEngine;
  * AUTOR: Jone Sainz Egea
  * FECHA: 24/03/2025
  * DESCRIPCIÓN: Clase que define el comportamiento específico de Ataque del Slime en el que ataca saltando en Zig-Zag.
- *              Simula la realización de tres saltos laterales acercándose al jugador, luego realiza un último salto de ataque.
- *              Vuelve al estado de Chase si el jugador se aleja demasiado. Cambia a estado de Retreat después de atacar.
+ *              Simula la realización de tres saltos laterales acercándose al objetivo, luego realiza un último salto de ataque.
+ *              Vuelve al estado de Chase si el objetivo se aleja demasiado. Cambia a estado de Retreat después de atacar.
  *              Hereda de EnemyStateSOBase, por lo que se crea desde el editor de Unity. Sobreescribe sus métodos y tiene acceso a sus variables.            
  * VERSIÓN: 1.0. Script base con el comportamiento de ataque en zig-zag.
  *              1.1. Desactivación del agente del NavMesh para simular saltos
+ *              1.2. Añadido función de hacer daño
+ *              1.3. Añadido ataque a Bestia (22/04/2025)
  */
 [CreateAssetMenu(fileName = "Attack-Zig Zag Jump", menuName = "Enemy Logic/Attack Logic/Ziz Zag Jump")]
 public class EnemyAttackZigZagJump : EnemyStateSOBase
 {
     #region Variables
-    [SerializeField] private float attackDamage = 20f; // Daño que realiza el enemigo al jugador con este ataque
-    [SerializeField] private float distanceToStopAttackState = 8f; // Distancia a la que se tiene que encontrar el jugador para salir del estado de ataque
+    [SerializeField] private float attackDamage = 20f; // Daño que realiza el enemigo al objetivo con este ataque
+    [SerializeField] private float distanceToStopAttackState = 8f; // Distancia a la que se tiene que encontrar el objetivo para salir del estado de ataque
 
     [SerializeField] private float jumpDuration = 0.6f; // Tiempo que debe durar cada salto
     [SerializeField] private float jumpHeight = 1.5f; // Desplazamiento vertical máximo en la simulación de salto
-    [SerializeField] private float lateralOffset = 2f; // Desplazamiento lateral máximo de forma perpendicular a la dirección del jugador
-    [SerializeField] private float stopDistance = 0.5f; // Distancia del jugador a la que debe parar el salto final
-    [SerializeField] private float distanceToHit = 2f; // Distancia a la que se tiene que encontrar el jugador para recibir el ataque
+    [SerializeField] private float lateralOffset = 2f; // Desplazamiento lateral máximo de forma perpendicular a la dirección del objetivo
+    [SerializeField] private float stopDistance = 0.5f; // Distancia del objetivo a la que debe parar el salto final
+    [SerializeField] private float distanceToHit = 2f; // Distancia a la que se tiene que encontrar el objetivo para recibir el ataque
+
+    private Transform targetTransform; // Variable auxiliar para definir el objetivo
 
     private bool isAttacking = false;
 
@@ -36,6 +40,8 @@ public class EnemyAttackZigZagJump : EnemyStateSOBase
         base.DoEnterLogic();
 
         distanceToStopAttackStateSQR = distanceToStopAttackState * distanceToStopAttackState;
+
+        SetTarget();
 
         if (!isAttacking)
         {
@@ -57,40 +63,55 @@ public class EnemyAttackZigZagJump : EnemyStateSOBase
     {
         base.DoFrameUpdateLogic();
 
-        float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
+        float distanceToTargetSQR = (enemy.transform.position - targetTransform.position).sqrMagnitude;
 
-        // Si el jugador se aleja demasiado, vuelve al estado de Chase
-        if (!isAttacking && distanceToPlayerSQR > distanceToStopAttackStateSQR)
+        // Si el objetivo se aleja demasiado, vuelve al estado de Chase
+        if (!isAttacking && distanceToTargetSQR > distanceToStopAttackStateSQR)
             enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
     }
     #endregion
 
     #region Métodos específicos de EnemyAttackZigZagJump
     /*
+     * Método que establece el objetivo del enemigo según la variable de enemy
+     * El objetivo se ha establecido anteriormente en el estado de Patrol
+     */
+    private void SetTarget()
+    {
+        if (enemy.targetIsPlayer)
+        {
+            targetTransform = playerTransform;
+        }
+        else
+        {
+            targetTransform = beastTransform;
+        }
+    }
+    /*
      * Corrutina que se encarga de hacer el Zig-Zag.
-     * Realiza tres saltos en arco, con cada salto se acerca más al jugador y cada salto tiene menos desplazamiento lateral.
-     * Calcula la posición del salto final, el de ataque, con tiempo suficiente de antelación para que el jugador lo evite
+     * Realiza tres saltos en arco, con cada salto se acerca más al objetivo y cada salto tiene menos desplazamiento lateral.
+     * Calcula la posición del salto final, el de ataque, con tiempo suficiente de antelación para que el jugador lo pueda evitar
      * Llama a la función de ataque tras realizar el salto final
      */
     private IEnumerator DoThreeZigZags()
     {
         Vector3 finalJumpTarget = Vector3.zero; // La posición del salto final se calcula antes de dar el tercer salto
 
-        float[] distances = { 0.75f, 0.5f, 0.25f }; // Cada salto que hace se acerca más al jugador
+        float[] distances = { 0.75f, 0.5f, 0.25f }; // Cada salto que hace se acerca más al objetivo, funciona como un porcentaje de la distancia total hacia el objetivo
         float[] lateralOffsets = { lateralOffset, lateralOffset * 0.66f, lateralOffset * 0.33f }; // Cada salto tiene menos desplazamiento lateral (zig-zag)
 
         for (int i = 0; i < 3; i++)
         {
-            Vector3 directionToTarget = (playerTransform.position - enemy.transform.position).normalized; // Vector normalizado de la dirección hacia el jugador
+            Vector3 directionToTarget = (targetTransform.position - enemy.transform.position).normalized; // Vector normalizado de la dirección hacia el objetivo
             Vector3 right = Vector3.Cross(Vector3.up, directionToTarget).normalized; // Vector perpendicular al de directionToTarget (para el desplazamiento lateral)
 
-            Vector3 jumpTarget = enemy.transform.position + directionToTarget * distances[i] * Vector3.Distance(enemy.transform.position, playerTransform.position); // Calculo de la distancia del jugador a la que debe saltar
-            jumpTarget += (i % 2 == 0 ? right : -right) * lateralOffsets[i]; // Alterna el desplazamiento lateral del zig-zag para que sea en direcciones opuestas en la perpendicular de la dirección del jugador
+            Vector3 jumpTarget = enemy.transform.position + directionToTarget * distances[i] * Vector3.Distance(enemy.transform.position, targetTransform.position); // Calculo de la distancia del objetivo a la que debe saltar
+            jumpTarget += (i % 2 == 0 ? right : -right) * lateralOffsets[i]; // Alterna el desplazamiento lateral del zig-zag para que sea en direcciones opuestas en la perpendicular de la dirección del objetivo
 
             // Justo antes del tercer salto, prepara el salto de ataque para que el jugador pueda evitarlo
             if (i == 2)
             {
-                finalJumpTarget = playerTransform.position - directionToTarget * stopDistance; // Salta delante del jugador
+                finalJumpTarget = targetTransform.position - directionToTarget * stopDistance; // Salta delante del objetivo
             }
             enemy.anim.SetTrigger("Jump");
             yield return MoveInArc(enemy.transform.position, jumpTarget, jumpHeight); // Simulación del salto
@@ -126,15 +147,16 @@ public class EnemyAttackZigZagJump : EnemyStateSOBase
     }
 
     /*
-     * Función de ataque al jugador
+     * Función de ataque al objetivo
      */
     private void Attack()
     {
-        float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
+        float distanceToTargetSQR = (enemy.transform.position - targetTransform.position).sqrMagnitude;
 
-        // Golpea al jugador
-        if (distanceToPlayerSQR < distanceToHit * distanceToHit)
+        // Golpea al objetivo
+        if (distanceToTargetSQR < distanceToHit * distanceToHit)
             EventsManager.TriggerSpecialEvent<float>("OnAttackPlayer", attackDamage);
+            // TODO: atacar player o bestia según a quién golpee
 
         isAttacking = false;
         enemy.agent.enabled = true; // Reactiva el agente

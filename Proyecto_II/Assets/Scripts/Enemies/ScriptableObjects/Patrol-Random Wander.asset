@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minRandomRadius: 7
   maxRandomRadius: 15
-  randomMovementSpeed: 4
+  randomWanderSpeed: 3
+  playerDetectionRange: 12
+  targetDetection: {fileID: 11400000, guid: 9b659633491fd9f4a9f7e9ac99e50513, type: 2}

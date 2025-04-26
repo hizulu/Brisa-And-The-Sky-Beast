@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b51ab4f7fc66eaf458ccf45d0fad1ffc, type: 3}
-  m_Name: Chase-Straight to Player_Soldier
+  m_Script: {fileID: 11500000, guid: f96e8a9107afb254f8c0566f016676f8, type: 3}
+  m_Name: Target-By Simple Range
   m_EditorClassIdentifier: 
-  chasingSpeed: 4
-  playerAttackRange: 3
-  playerLostRange: 15
+  targetTransform: {fileID: 0}
+  targetDetectionRange: 12

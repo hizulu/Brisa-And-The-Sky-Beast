@@ -9,6 +9,7 @@ using UnityEngine;
  *              Vuelve al estado de Idle cuando llega al destino. Cambia a estado de Chase si detecta al jugador.
  *              Hereda de EnemyStateSOBase, por lo que se crea desde el editor de Unity. Sobreescribe sus métodos y tiene acceso a sus variables.            
  * VERSIÓN: 1.0. Script base con el comportamiento de patrullar por puntos aleatorios.
+ *              1.1. Añadido detección de Bestia (22/04/2025)
  */
 [CreateAssetMenu(fileName = "Patrol-Random Wander", menuName = "Enemy Logic/Patrol Logic/Random Wander")]
 public class EnemyPatrolRandomWander : EnemyStateSOBase
@@ -19,7 +20,7 @@ public class EnemyPatrolRandomWander : EnemyStateSOBase
     [SerializeField] private float randomWanderSpeed = 3f;
     [SerializeField] private float playerDetectionRange = 12f;
 
-    private float playerDetectionRangeSQR = 0f; // Variable auxiliar para almacenar distancia evitando cálculo de raíz cuadrada cada frame.
+    [SerializeField] private EnemyTargetDetectionSOBase targetDetection; // Comportamiento serializado de detección de objetivos
 
     private Vector3 targetPos;
     #endregion
@@ -28,7 +29,8 @@ public class EnemyPatrolRandomWander : EnemyStateSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-        playerDetectionRangeSQR = playerDetectionRange * playerDetectionRange;
+
+        targetDetection.Initialize(enemy);
 
         targetPos = GetRandomPointInRingAroundEnemy();
 
@@ -47,12 +49,13 @@ public class EnemyPatrolRandomWander : EnemyStateSOBase
     {
         base.DoFrameUpdateLogic();
 
+        // Cambia de estado cuando detecta al jugador o a la bestia
+        if (targetDetection.LookForTarget())
+            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
+
         // Cambia de estado cuando llega al destino
         if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance && !enemy.agent.pathPending)
             enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyIdleState);
-
-        // Cambia de estado cuando detecta al jugador
-        PlayerDetection();
     }
     #endregion
 
@@ -73,16 +76,6 @@ public class EnemyPatrolRandomWander : EnemyStateSOBase
 
         // Devuelve la posición del punto al que debe ir
         return new Vector3(enemy.transform.position.x + offsetX, enemy.transform.position.y, enemy.transform.position.z + offsetZ);
-    }
-
-    /*
-     * Método que revisa la distancia a la que se encuentra el jugador, si este se encuentra cerca cambia al estado de persecución
-     */
-    private void PlayerDetection()
-    {
-        float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
-        if (distanceToPlayerSQR < playerDetectionRangeSQR)
-            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
     }
     #endregion
 }

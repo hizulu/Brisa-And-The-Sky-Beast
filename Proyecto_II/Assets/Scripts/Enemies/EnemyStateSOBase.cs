@@ -14,21 +14,21 @@ public abstract class EnemyStateSOBase : ScriptableObject
 {
     protected Enemy enemy;
     protected Transform transform;
-    protected GameObject gameObject;
     protected Transform playerTransform;
+    protected Transform beastTransform;
 
     /*
      * Método que se encarga de inicializar el estado, simula el constructor del estado
      * @param1 gameObject - Recibe una referencia al GameObject del enemigo para acceder a todos sus componentes.
      * @param2 enemy - Recibe una referencia al Enemy para poder acceder a sus variables y funcionalidades.
      */
-    public virtual void Initialize(GameObject gameObject, Enemy enemy)
+    public virtual void Initialize(Enemy enemy)
     {
-        this.gameObject = gameObject;
-        transform = gameObject.transform;
         this.enemy = enemy;
+        transform = enemy.transform;
 
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        beastTransform = GameObject.FindGameObjectWithTag("Beast").transform;
     }
     public virtual void DoEnterLogic() { }
     public virtual void DoExitLogic() { ResetValues(); }

@@ -48,7 +48,7 @@ public class Enemy : HittableElement
     [Header("Variables Gizmos")]
     [SerializeField] private float playerAttackRange = 1f;
     [SerializeField] private float playerLostRange = 15f;
-    [SerializeField] private float playerDetectionRange = 15f;
+    [SerializeField] private float playerDetectionRange = 12f;
     #endregion
 
     #region Suscripciones y desuspripciones a eventos
@@ -77,11 +77,11 @@ public class Enemy : HittableElement
     private void Start()
     {
         // Inicializar los comportamientos específicos asociados al enemigo
-        EnemyIdleBaseInstance.Initialize(gameObject, this);
-        EnemyPatrolBaseInstance.Initialize(gameObject, this);
-        EnemyChaseBaseInstance.Initialize(gameObject, this);
-        EnemyAttackBaseInstance.Initialize(gameObject, this);
-        EnemyRetreatBaseInstance.Initialize(gameObject, this);
+        EnemyIdleBaseInstance.Initialize(this);
+        EnemyPatrolBaseInstance.Initialize(this);
+        EnemyChaseBaseInstance.Initialize(this);
+        EnemyAttackBaseInstance.Initialize(this);
+        EnemyRetreatBaseInstance.Initialize(this);
 
         enemyStateMachine.ChangeState(enemyStateMachine.EnemyIdleState);
 
