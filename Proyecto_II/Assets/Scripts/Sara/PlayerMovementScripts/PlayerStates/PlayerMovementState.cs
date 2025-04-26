@@ -22,6 +22,8 @@ public class PlayerMovementState : IState
     protected readonly PlayerStatsData statsData;
 
     protected AudioManager audioManager;
+
+    private float currentTimeWithShield;
     #endregion
 
     /*
@@ -68,6 +70,7 @@ public class PlayerMovementState : IState
      */
     public virtual void UpdateLogic()
     {
+        ActivateShield();
         //Debug.Log("Actualizando");
         EnemyInRange();
     }
@@ -126,6 +129,8 @@ public class PlayerMovementState : IState
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled += OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed += CallBeast;
         stateMachine.Player.PlayerInput.PlayerActions.LockTarget.performed += LockTarget;
+        stateMachine.Player.PlayerInput.PlayerActions.Shield.started += OnDefendedStarted;
+        stateMachine.Player.PlayerInput.PlayerActions.Shield.canceled+= OnDefendedCanceled;
     }
 
     /*
@@ -271,7 +276,7 @@ public class PlayerMovementState : IState
     }
     #endregion
 
-    #region Métodos Enemigos
+    #region Métodos Interactions Enemies
     private List<GameObject> enemiesTarget = new List<GameObject>();
     private int currentLockTarget = -1;
     private float detectionRange = 20f;
@@ -363,6 +368,42 @@ public class PlayerMovementState : IState
             stateMachine.ChangeState(stateMachine.HalfDeadState);
         else
             stateMachine.ChangeState(stateMachine.TakeDamageState);
+    }
+    #endregion
+
+    #region Métodos Defensa
+    protected bool shieldButtonPressed = false;
+    private float maxTimeWithShield = 5f;
+   
+    protected virtual void OnDefendedStarted(InputAction.CallbackContext context)
+    {
+        shieldButtonPressed = true;
+        currentTimeWithShield = 0f;
+        ActivateShield();
+    }
+
+    protected virtual void OnDefendedCanceled(InputAction.CallbackContext context)
+    {
+        shieldButtonPressed = false;
+        stateMachine.Player.Shield.SetActive(false);
+        stateMachine.ChangeState(stateMachine.IdleState);
+    }
+
+    private void ActivateShield()
+    {
+        currentTimeWithShield += Time.deltaTime;
+
+        Debug.Log(currentTimeWithShield);
+
+        if (shieldButtonPressed && currentTimeWithShield < maxTimeWithShield)
+        {
+            stateMachine.Player.Shield.SetActive(true);
+        }
+        else
+        {
+            stateMachine.Player.Shield.SetActive(false);
+            stateMachine.ChangeState(stateMachine.IdleState);
+        }
     }
     #endregion
 
