@@ -28,7 +28,7 @@ public class Enemy : HittableElement
     [SerializeField] float attackDamage = 10f; // TODO: attackDamage is taken into account
 
     public bool targetIsPlayer = true;
-    private bool enemyHurt = false;
+
     #endregion
 
     #region FSM Variables
@@ -55,19 +55,6 @@ public class Enemy : HittableElement
     #endregion
 
     #region Suscripciones y desuspripciones a eventos
-    private void OnEnable()
-    {
-        EventsManager.CallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
-        EventsManager.CallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
-        EventsManager.CallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
-    }
-
-    private void OnDisable()
-    {
-        EventsManager.StopCallSpecialEvents<float>("OnAttack01Enemy", DamageEnemy);
-        EventsManager.StopCallSpecialEvents<float>("OnAttack02Enemy", DamageEnemy);
-        EventsManager.StopCallSpecialEvents<float>("OnAttack03Enemy", DamageEnemy);
-    }
     #endregion
 
     private void Awake()
@@ -84,6 +71,10 @@ public class Enemy : HittableElement
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+        EventsManager.CallSpecialEvents<float>("OnAttack01Enemy", SetDamageEnemy);
+        EventsManager.CallSpecialEvents<float>("OnAttack02Enemy", SetDamageEnemy);
+        EventsManager.CallSpecialEvents<float>("OnAttack03Enemy", SetDamageEnemy);
     }
 
     private void Start()
@@ -98,6 +89,13 @@ public class Enemy : HittableElement
         enemyStateMachine.ChangeState(enemyStateMachine.EnemyIdleState);
 
         currentHealth = maxHealth;
+    }
+
+    private void OnDestroy()
+    {
+        EventsManager.StopCallSpecialEvents<float>("OnAttack01Enemy", SetDamageEnemy);
+        EventsManager.StopCallSpecialEvents<float>("OnAttack02Enemy", SetDamageEnemy);
+        EventsManager.StopCallSpecialEvents<float>("OnAttack03Enemy", SetDamageEnemy);
     }
 
     private void Update()
@@ -123,29 +121,26 @@ public class Enemy : HittableElement
     }
 
     #region DamageRelated Functions
+    public static float damageAmount = 0f; // Debe ser estática para que todos los enemigos puedan acceder al cambio de parámetro de daño del evento.
     public override void OnHit()
     {
-        enemyHurt = true;
+        ApplyDamageToEnemy();
     }
 
     // Function called from Player script
-    public void DamageEnemy (float _damageAmount)
+    public void SetDamageEnemy (float _damageAmount)
     {
-        Debug.Log("Estás haciendo daño al enemigo.");
+        damageAmount = _damageAmount;        
+    }
 
-        if(enemyHurt)
+    public void ApplyDamageToEnemy()
+    {
+        currentHealth -= damageAmount;
+
+        if (currentHealth <= Mathf.Epsilon)
         {
-            Debug.Log("Brisa ha hecho daño al Enemigo");
             Debug.Log("Vida del enemigo: " + " " + currentHealth);
-            currentHealth -= _damageAmount;
-            // TODO: anim.SetTrigger("getDamaged");
-            // TODO: play enemy damage sound depending on enemy
-            enemyHurt = false;
-            if (currentHealth <= Mathf.Epsilon)
-            {
-                Debug.Log("Vida del enemigo: " + " " + currentHealth);
-                Die();
-            }
+            Die();
         }
     }
 

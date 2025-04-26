@@ -19,7 +19,7 @@ public class PlayerHalfDeadState : PlayerDeathState
     {
         EventsManager.TriggerNormalEvent("BrisaHalfDead");
         base.Enter();
-        //Debug.Log("Has entrado en el estado de MEDIO-MUERTA");
+        Debug.Log("Has entrado en el estado de MEDIO-MUERTA");
         //statsData.CurrentTimeHalfDead = 60f;
         statsData.CurrentTimeHalfDead = statsData.MaxTimeHalfDead;
         StartAnimation(stateMachine.Player.PlayerAnimationData.HalfDeadParameterHash);
@@ -38,8 +38,9 @@ public class PlayerHalfDeadState : PlayerDeathState
 
     public override void Exit()
     {
+        isHalfDead = false;
         base.Exit();
-        //Debug.Log("Has salido del estado de MEDIO-MUERTA");
+        Debug.Log("Has salido del estado de MEDIO-MUERTA");
         StopAnimation(stateMachine.Player.PlayerAnimationData.HalfDeadParameterHash);
     }
     #endregion
@@ -51,6 +52,7 @@ public class PlayerHalfDeadState : PlayerDeathState
      */
     private void TimeToRevivePlayer()
     {
+        Debug.Log("Estás medio - muerta");
         statsData.CurrentTimeHalfDead -= Time.deltaTime;
 
         if (statsData.CurrentTimeHalfDead <= 0)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,6 +23,8 @@ public class PlayerMovementState : IState
     protected readonly PlayerStatsData statsData;
 
     protected AudioManager audioManager;
+
+    private float currentTimeWithShield;
     #endregion
 
     /*
@@ -68,7 +71,9 @@ public class PlayerMovementState : IState
      */
     public virtual void UpdateLogic()
     {
-        //Debug.Log("Actualizando");
+        if(startActiveShield)
+            UpdateTimeWithShield();
+
         EnemyInRange();
     }
 
@@ -126,6 +131,8 @@ public class PlayerMovementState : IState
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled += OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed += CallBeast;
         stateMachine.Player.PlayerInput.PlayerActions.LockTarget.performed += LockTarget;
+        stateMachine.Player.PlayerInput.PlayerActions.Shield.started += OnDefendedStarted;
+        stateMachine.Player.PlayerInput.PlayerActions.Shield.canceled+= OnDefendedCanceled;
     }
 
     /*
@@ -271,7 +278,7 @@ public class PlayerMovementState : IState
     }
     #endregion
 
-    #region Métodos Enemigos
+    #region Métodos Interactions Enemies
     private List<GameObject> enemiesTarget = new List<GameObject>();
     private int currentLockTarget = -1;
     private float detectionRange = 20f;
@@ -354,17 +361,73 @@ public class PlayerMovementState : IState
      * Disminuye la salud del jugador en función del daño recibido y cambia al estado de Medio-Muerta si la salud llega a cero.
      * @param _enemyDamage - Daño recibido por parte del enemigo.
      */
+    protected bool isHalfDead = false;
     private void TakeDamage(float _enemyDamage)
     {
+        if (isHalfDead) return;
+
         statsData.CurrentHealth -= _enemyDamage;
-        statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
 
         if (statsData.CurrentHealth < Mathf.Epsilon)
-            stateMachine.ChangeState(stateMachine.HalfDeadState);
+            PlayerDead();
         else
             stateMachine.ChangeState(stateMachine.TakeDamageState);
     }
     #endregion
+
+    #region Métodos Defensa
+    protected bool shieldButtonPressed = false;
+    private float maxTimeWithShield = 5f;
+    private bool startActiveShield = false;
+    protected virtual void OnDefendedStarted(InputAction.CallbackContext context)
+    {
+        shieldButtonPressed = true;
+        startActiveShield = true;
+        currentTimeWithShield = 0f;
+        ActivateShield();
+    }
+
+    protected virtual void OnDefendedCanceled(InputAction.CallbackContext context)
+    {
+        shieldButtonPressed = false;
+        startActiveShield = false;
+        DesactivateShield();
+    }
+
+    private void UpdateTimeWithShield()
+    {
+        currentTimeWithShield += Time.deltaTime;
+
+        Debug.Log(currentTimeWithShield);
+
+        if (shieldButtonPressed && currentTimeWithShield < maxTimeWithShield)
+        {
+            ActivateShield();
+        }
+        else
+        {
+            DesactivateShield();
+        }
+    }
+
+    private void ActivateShield()
+    {
+        stateMachine.Player.Shield.SetActive(true);
+    }
+
+    private void DesactivateShield()
+    {
+        startActiveShield = false;
+        stateMachine.Player.Shield.SetActive(false);
+    }
+    #endregion
+
+    protected virtual void PlayerDead()
+    {
+        statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
+        isHalfDead = true;
+        stateMachine.ChangeState(stateMachine.HalfDeadState);
+    }
 
     #region Métodos Cursor
     public void LockCursor()

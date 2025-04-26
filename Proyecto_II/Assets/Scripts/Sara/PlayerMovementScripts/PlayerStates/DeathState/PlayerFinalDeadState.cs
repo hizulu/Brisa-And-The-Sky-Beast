@@ -17,16 +17,8 @@ public class PlayerFinalDeadState : PlayerDeathState
         base.Enter();
         //Debug.Log("Has entrado en el estado de MUERTE FINAL");
         StartAnimation(stateMachine.Player.PlayerAnimationData.FinalDeadParameterHash);
-    }
 
-    public override void UpdateLogic()
-    {
-        base.UpdateLogic();
-    }
-
-    public override void UpdatePhysics()
-    {
-        base.UpdatePhysics();
+        GameManager.Instance.GameOver();
     }
 
     public override void Exit()
