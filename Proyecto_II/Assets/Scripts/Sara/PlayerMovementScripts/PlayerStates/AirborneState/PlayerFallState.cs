@@ -50,7 +50,7 @@ public class PlayerFallState : PlayerAirborneState
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
-        IncreaseFallSpeed();
+        //IncreaseFallSpeed();
     }
 
     public override void Exit()

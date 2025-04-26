@@ -71,7 +71,7 @@ public class PlayerMovementState : IState
      */
     public virtual void UpdateLogic()
     {
-        ActivateShield();
+        UpdateTimeWithShield();
         //Debug.Log("Actualizando");
         EnemyInRange();
     }
@@ -360,13 +360,19 @@ public class PlayerMovementState : IState
      * Disminuye la salud del jugador en función del daño recibido y cambia al estado de Medio-Muerta si la salud llega a cero.
      * @param _enemyDamage - Daño recibido por parte del enemigo.
      */
+    protected bool isHalfDead = false;
     private void TakeDamage(float _enemyDamage)
     {
+        if (isHalfDead) return;
+
         statsData.CurrentHealth -= _enemyDamage;
         statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
 
         if (statsData.CurrentHealth < Mathf.Epsilon)
+        {
+            isHalfDead = true;
             stateMachine.ChangeState(stateMachine.HalfDeadState);
+        }
         else
             stateMachine.ChangeState(stateMachine.TakeDamageState);
     }
@@ -386,35 +392,33 @@ public class PlayerMovementState : IState
     protected virtual void OnDefendedCanceled(InputAction.CallbackContext context)
     {
         shieldButtonPressed = false;
-        stateMachine.Player.Shield.SetActive(false);
-        stateMachine.ChangeState(stateMachine.IdleState);
-    }
-
-    private void ActivateShield()
-    {
-        //currentTimeWithShield += Time.deltaTime;
-
-        //Debug.Log(currentTimeWithShield);
-
-        //if (shieldButtonPressed && currentTimeWithShield < maxTimeWithShield)
-        //{
-        //    stateMachine.Player.Shield.SetActive(true);
-        //}
-        //else
-        //{
-        //    stateMachine.Player.Shield.SetActive(false);
-        //    stateMachine.ChangeState(stateMachine.IdleState);
-        //}
-    }
-
-    private void DesactivateShield()
-    {
-        stateMachine.Player.Shield.SetActive(true);
+        DesactivateShield();
     }
 
     private void UpdateTimeWithShield()
     {
+        currentTimeWithShield += Time.deltaTime;
+
+        Debug.Log(currentTimeWithShield);
+
+        if (shieldButtonPressed && currentTimeWithShield < maxTimeWithShield)
+        {
+            ActivateShield();
+        }
+        else
+        {
+            DesactivateShield();
+        }
+    }
+
+    private void ActivateShield()
+    {
         stateMachine.Player.Shield.SetActive(true);
+    }
+
+    private void DesactivateShield()
+    {
+        stateMachine.Player.Shield.SetActive(false);
     }
     #endregion
 
