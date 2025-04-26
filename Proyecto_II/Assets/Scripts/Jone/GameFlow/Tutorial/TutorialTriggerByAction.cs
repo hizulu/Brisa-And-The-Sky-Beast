@@ -29,6 +29,6 @@ public class TutorialTriggerByAction : MonoBehaviour
         if (triggered) return;
 
         triggered = true;
-        TutorialManager.Instance.ShowMessage(inputActionName, tutorialText);
+        //TutorialManager.Instance.ShowMessage(inputActionName, tutorialText);
     }
 }
