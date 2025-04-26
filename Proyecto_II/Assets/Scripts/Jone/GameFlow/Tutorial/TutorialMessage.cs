@@ -23,12 +23,13 @@ public class TutorialMessage : MonoBehaviour
         CanvasGroup.alpha = 0f;
     }
 
-    public void Initialize(InputAction action, string text, System.Action callback = null, bool waitForCompletion = false)
+    public void Initialize(Tutorial tutorial, System.Action callback = null)
     {
-        inputAction = action;
-        messageTextUI.text = text;
+        inputAction = TutorialManager.Instance.inputActions.FindAction(tutorial.inputActionName);
+        messageTextUI.text = tutorial.tutorialText;
+        waitForCompletion = tutorial.waitForCompletion;
+
         onActionPerformedCallback = callback;
-        this.waitForCompletion = waitForCompletion;
 
         inputAction.Enable();
     }

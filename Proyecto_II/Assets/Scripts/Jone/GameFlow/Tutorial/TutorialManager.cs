@@ -14,7 +14,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private Transform canvasParent;
 
     public InputActionAsset inputActions;
-
+    private List<Tutorial> queuedTutorials = new List<Tutorial>();
     private List<TutorialMessage> activeMessages = new List<TutorialMessage>();
 
     private void Awake()
@@ -23,54 +23,47 @@ public class TutorialManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public TutorialMessage ShowMessage(InputAction action, string messageText)
+    public TutorialMessage ShowMessage(Tutorial tutorial)
     {
         GameObject obj = Instantiate(tutorialMessagePrefab, canvasParent);
         TutorialMessage msg = obj.GetComponent<TutorialMessage>();
 
-        msg.Initialize(action, messageText);
+        msg.Initialize(tutorial);
         StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 0f, 1f, 0.25f, 0.5f));
         activeMessages.Add(msg);
         return msg;
     }
 
-    //public void QueueMessage(int i, string actionName, string messageText, bool queueAnother = false)
-    //{
-    //    queuedInputAction[i] = inputActions.FindAction(actionName);
-    //    if (queuedInputAction == null)
-    //    {
-    //        Debug.LogWarning($"TutorialManager: No se encontró la acción '{actionName}' en el InputActionAsset.");
-    //        return;
-    //    }
-    //    queuedMessage[i] = messageText;
-    //    queueAnotherTutorial[i] = queueAnother;
-    //}
+    public void QueueMessage(int i, Tutorial tutorial)
+    {
+        queuedTutorials[i] = tutorial;
+    }
 
-    //public void ShowQueuedMessage(int i)
-    //{
-    //    GameObject obj = Instantiate(tutorialMessagePrefab, canvasParent);
-    //    TutorialMessage msg = obj.GetComponent<TutorialMessage>();
+    public void ShowQueuedMessage(int i)
+    {
+        GameObject obj = Instantiate(tutorialMessagePrefab, canvasParent);
+        TutorialMessage msg = obj.GetComponent<TutorialMessage>();
+        Tutorial tut = queuedTutorials[i];
+        if (tut == null)
+        {
+            Debug.LogWarning($"TutorialManager: No se encontró tutorial '{i}' en la lista.");
+            Destroy(obj);
+            return;
+        }
 
-    //    if (queuedInputAction == null)
-    //    {
-    //        Debug.LogWarning($"TutorialManager: No se encontró la acción '{queuedInputAction}' en el InputActionAsset.");
-    //        Destroy(obj);
-    //        return;
-    //    }
+        msg.Initialize(queuedTutorials[i]);
+        StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 0f, 1f, 0.25f, 1f));
+        activeMessages.Add(msg);
+    }
 
-    //    msg.Initialize(queuedInputAction[i], queuedMessage[i], queueAnotherTutorial[i], i);
-    //    StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 0f, 1f, 0.25f, 1f));
-    //    activeMessages.Add(msg);
-    //}
-
-    //public void RemoveMessage(TutorialMessage message)
-    //{
-    //    if (activeMessages.Contains(message))
-    //    {
-    //        activeMessages.Remove(message);
-    //        StartCoroutine(FadeOutAndDestroy(message));
-    //    }
-    //}
+    public void RemoveMessage(TutorialMessage message)
+    {
+        if (activeMessages.Contains(message))
+        {
+            activeMessages.Remove(message);
+            StartCoroutine(FadeOutAndDestroy(message));
+        }
+    }
 
     public IEnumerator FadeOutAndDestroy(TutorialMessage msg)
     {

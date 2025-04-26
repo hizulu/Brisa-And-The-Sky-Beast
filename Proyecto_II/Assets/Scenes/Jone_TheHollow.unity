@@ -2845,7 +2845,6 @@ Transform:
   - {fileID: 1192497964}
   - {fileID: 1459944950}
   - {fileID: 1195469054}
-  - {fileID: 1186085221}
   - {fileID: 1334365395}
   - {fileID: 1789548817}
   m_Father: {fileID: 0}
@@ -9868,6 +9867,7 @@ MonoBehaviour:
     attack01ParameterName: isAttacking01
     attack02ParameterName: isAttacking02
     attack03ParameterName: isAttacking03
+    defenseParameterName: isDefending
     takeDamageParameterName: isTakingDamage
     healParameterName: isHealing
     jumpParameterName: isJumping
@@ -9889,6 +9889,7 @@ MonoBehaviour:
   lookCamPlayer: {fileID: 0}
   PaloBrisa: {fileID: 2263008}
   hitBox: {fileID: 2144534697}
+  Shield: {fileID: 0}
   beastPanel: {fileID: 617278225}
   mapManager: {fileID: 124168866}
   AreaMoveBeast: {fileID: 837753718}
@@ -25782,73 +25783,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1 &1186085220
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1186085221}
-  - component: {fileID: 1186085223}
-  - component: {fileID: 1186085222}
-  m_Layer: 0
-  m_Name: PickUpItemTutorialTrigger (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1186085221
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186085220}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.1, y: 43.8, z: -10.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 105731933}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1186085222
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186085220}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.8049097, y: 1.4304494, z: 2.3907394}
-  m_Center: {x: 0.041446447, y: -0.09854525, z: 0.5507927}
---- !u!114 &1186085223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186085220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38f9f3ce96dbb9a4faf8ca1a3e62d0b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorials: []
 --- !u!1 &1192497961
 GameObject:
   m_ObjectHideFlags: 0
@@ -25902,7 +25836,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorials:
   - inputActionName: Player/Jump
-    tutorialText: SPACE
+    tutorialText: Press SPACE to jump
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
@@ -25930,8 +25864,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1195469054}
-  - component: {fileID: 1195469056}
   - component: {fileID: 1195469055}
+  - component: {fileID: 1195469056}
   m_Layer: 0
   m_Name: AttackTutorialTrigger
   m_TagString: Untagged
@@ -25987,7 +25921,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f9f3ce96dbb9a4faf8ca1a3e62d0b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorials: []
+  tutorials:
+  - inputActionName: Player/Attack
+    tutorialText: Press LeftClick to attack
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
 --- !u!4 &1206613483 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2502296561931133366, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
@@ -28370,6 +28309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 721099945}
+  gameOverPanel: {fileID: 0}
 --- !u!1 &1334365394
 GameObject:
   m_ObjectHideFlags: 0
@@ -28436,7 +28376,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f9f3ce96dbb9a4faf8ca1a3e62d0b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorials: []
+  tutorials:
+  - inputActionName: Player/Heal
+    tutorialText: Press H to heal
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
 --- !u!1 &1336314208
 GameObject:
   m_ObjectHideFlags: 0
@@ -30905,9 +30850,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1459944949}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 361b5fc60511b1c468bf47a5df2cb898, type: 3}
+  m_Script: {fileID: 11500000, guid: 38f9f3ce96dbb9a4faf8ca1a3e62d0b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorials:
+  - inputActionName: UIPanel/PickUpItem
+    tutorialText: Press E to pick up item
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
+  - inputActionName: UIPanel/Inventory
+    tutorialText: Press I to open inventory
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
 --- !u!1 &1461897831
 GameObject:
   m_ObjectHideFlags: 0

@@ -118,8 +118,8 @@ public class TutorialTrigger : MonoBehaviour
             return;
         }
 
-        currentMessage = TutorialManager.Instance.ShowMessage(action, tutorial.tutorialText);
-        currentMessage.Initialize(action, tutorial.tutorialText, tutorial.waitForCompletion ? (System.Action)null : ShowNextMessage, tutorial.waitForCompletion);
+        currentMessage = TutorialManager.Instance.ShowMessage(tutorial);
+        currentMessage.Initialize(tutorial, tutorial.waitForCompletion ? (System.Action)null : CompleteCurrentStep);
 
         currentIndex++;
     }
