@@ -19,7 +19,7 @@ public class TutorialTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             triggered = true;
-            Debug.Log("Debería aparecer mensaje de tutorial");
+
             TutorialManager.Instance.ShowMessage(inputActionName, tutorialText);
         }
     }
