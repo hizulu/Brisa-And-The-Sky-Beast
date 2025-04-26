@@ -18,7 +18,7 @@ public class SunController : MonoBehaviour
     [SerializeField] private float sunsetHour;
     [SerializeField] private float timeMultiplier;
     [SerializeField] private float startHour;
-    [SerializeField] private TextMeshProUGUI textTime;
+    //[SerializeField] private TextMeshProUGUI textTime;
     private DateTime currentTime;
     private TimeSpan sunriseTime;
     private TimeSpan sunsetTime;
@@ -49,7 +49,7 @@ public class SunController : MonoBehaviour
     {
         currentTime = currentTime.AddSeconds(Time.deltaTime * timeMultiplier);
 
-        textTime.text = currentTime.ToString("HH:mm");
+        //textTime.text = currentTime.ToString("HH:mm");
     }
 
     private void RotateSun()

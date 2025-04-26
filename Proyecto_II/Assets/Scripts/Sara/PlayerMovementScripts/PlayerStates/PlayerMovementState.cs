@@ -281,7 +281,7 @@ public class PlayerMovementState : IState
     #region Métodos Interactions Enemies
     private List<GameObject> enemiesTarget = new List<GameObject>();
     private int currentLockTarget = -1;
-    private float detectionRange = 20f;
+    private float detectionRange = 5f;
 
     private void LockTarget(InputAction.CallbackContext context)
     {

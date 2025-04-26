@@ -60,7 +60,7 @@ public class PlayerGroundedState : PlayerMovementState
         stateMachine.Player.PlayerInput.PlayerActions.Heal.started += HealPlayer;
         stateMachine.Player.PlayerInput.PlayerActions.Sprint.started += SprintStart;
         stateMachine.Player.PlayerInput.PlayerActions.Jump.started += JumpStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled += OnPointedCanceled;
+        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started += OnPointedStarted;
         stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled += OnPointedCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.ReviveBeast.started += OnReviveStarted;
         stateMachine.Player.PlayerInput.PlayerActions.ReviveBeast.canceled += OnReviveCanceled;

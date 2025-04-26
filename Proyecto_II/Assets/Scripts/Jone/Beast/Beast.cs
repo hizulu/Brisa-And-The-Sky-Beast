@@ -51,6 +51,8 @@ public class Beast : MonoBehaviour
         // Comenzamos en estado de libertad
         TransitionToState(new BeastFreeState());
 
+        EventsManager.CallSpecialEvents<float>("OnAttackBeast", DamageBeast);
+
         EventsManager.CallNormalEvents("CallBeast", CallBeast);
         EventsManager.CallNormalEvents("AcariciarBestia_Bestia", PetBeastSelected);
         EventsManager.CallNormalEvents("SanarBestia_Bestia", HealBeastSelected);
@@ -63,6 +65,8 @@ public class Beast : MonoBehaviour
 
     private void OnDestroy()
     {
+        EventsManager.StopCallSpecialEvents<float>("OnAttackBeast", DamageBeast);
+
         EventsManager.StopCallNormalEvents("CallBeast", CallBeast);
         EventsManager.StopCallNormalEvents("AcariciarBestia_Bestia", PetBeastSelected);
         EventsManager.StopCallNormalEvents("SanarBestia_Bestia", HealBeastSelected);

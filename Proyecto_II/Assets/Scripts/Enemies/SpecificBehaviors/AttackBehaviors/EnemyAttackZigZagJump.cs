@@ -155,8 +155,13 @@ public class EnemyAttackZigZagJump : EnemyStateSOBase
 
         // Golpea al objetivo
         if (distanceToTargetSQR < distanceToHit * distanceToHit)
-            EventsManager.TriggerSpecialEvent<float>("OnAttackPlayer", attackDamage);
-            // TODO: atacar player o bestia según a quién golpee
+        {
+            if (enemy.targetIsPlayer)
+                EventsManager.TriggerSpecialEvent<float>("OnAttackPlayer", attackDamage);
+            else
+                EventsManager.TriggerSpecialEvent<float>("OnAttackBeast", attackDamage);
+        }
+        // TODO: diferente daño según a quién golpee
 
         isAttacking = false;
         enemy.agent.enabled = true; // Reactiva el agente
