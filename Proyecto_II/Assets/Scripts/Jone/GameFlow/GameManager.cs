@@ -214,6 +214,9 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         ChangeGameState(GameState.GameOver);
+        EventsManager.TriggerNormalEvent("UIPanelOpened");
+        Time.timeScale = 0f;
+        uiManager.OpenGameOverMenu();
     }
 
     #endregion

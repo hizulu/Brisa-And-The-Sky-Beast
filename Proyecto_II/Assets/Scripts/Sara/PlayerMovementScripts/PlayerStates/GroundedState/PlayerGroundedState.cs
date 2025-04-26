@@ -60,7 +60,7 @@ public class PlayerGroundedState : PlayerMovementState
         stateMachine.Player.PlayerInput.PlayerActions.Heal.started += HealPlayer;
         stateMachine.Player.PlayerInput.PlayerActions.Sprint.started += SprintStart;
         stateMachine.Player.PlayerInput.PlayerActions.Jump.started += JumpStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started += OnPointedStarted;
+        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled += OnPointedCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled += OnPointedCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.ReviveBeast.started += OnReviveStarted;
         stateMachine.Player.PlayerInput.PlayerActions.ReviveBeast.canceled += OnReviveCanceled;
@@ -95,7 +95,7 @@ public class PlayerGroundedState : PlayerMovementState
     }
     #endregion
 
-    #region Métodos Suscripción de Acciones Input System
+    #region Métodos de Acciones Input System
     /*
      * Método que maneja la acción de correr.
      * @param context - Información sobre la tecla / acción que se activa (Left Shift / Run).

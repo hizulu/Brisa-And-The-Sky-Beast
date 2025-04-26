@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField] public Transform lookCamPlayer;
     [SerializeField] public GameObject PaloBrisa;
     [SerializeField] public GameObject hitBox;
+    [SerializeField] public GameObject Shield;
     [SerializeField] private BeastSelectionPanel beastPanel;
     [SerializeField] private MapManager mapManager;
     [SerializeField] public GameObject AreaMoveBeast;

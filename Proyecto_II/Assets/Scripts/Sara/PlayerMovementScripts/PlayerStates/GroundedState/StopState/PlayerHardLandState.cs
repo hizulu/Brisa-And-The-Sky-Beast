@@ -17,12 +17,14 @@ public class PlayerHardLandState : PlayerStopState
 
     #region Variables
     private bool hardLandFinish;
+    private float fallDamage = 15f;
     #endregion
 
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
         hardLandFinish = false;
+        statsData.CurrentHealth -= fallDamage;
         base.Enter();
         //Debug.Log("Has entrado en estado de ATERRIZAR");
         StartAnimation(stateMachine.Player.PlayerAnimationData.HardLandParameterHash);
@@ -32,6 +34,9 @@ public class PlayerHardLandState : PlayerStopState
     {
         base.UpdateLogic();
         FinishLand();
+
+        if (statsData.CurrentHealth < Mathf.Epsilon)
+            PlayerDead();
     }
 
     public override void Exit()

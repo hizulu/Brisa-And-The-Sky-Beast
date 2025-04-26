@@ -26,6 +26,7 @@ public class PlayerStateMachine : StateMachine
     public PlayerAttack01 Attack01State { get; }
     public PlayerAttack02 Attack02State { get; }
     public PlayerAttack03 Attack03State { get; }
+    public PlayerDefenseState DefenseState { get; }
     public PlayerTakeDamageState TakeDamageState { get; }
     public PlayerHealState HealState { get; }
     public PlayerJumpState JumpState { get; }
@@ -65,6 +66,7 @@ public class PlayerStateMachine : StateMachine
         Attack01State = new PlayerAttack01(this);
         Attack02State = new PlayerAttack02(this);
         Attack03State = new PlayerAttack03(this);
+        DefenseState = new PlayerDefenseState(this);
         TakeDamageState = new PlayerTakeDamageState(this);
         HealState = new PlayerHealState(this);
         JumpState = new PlayerJumpState(this);

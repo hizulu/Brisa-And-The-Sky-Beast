@@ -134,6 +134,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shield"",
+                    ""type"": ""Button"",
+                    ""id"": ""60cf742c-1e83-4659-93f7-28a99407d1ad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -310,6 +319,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ReviveBeast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76267520-c213-4ad5-96bd-d2203acbe844"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shield"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -511,6 +531,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_PointedMode = m_Player.FindAction("PointedMode", throwIfNotFound: true);
         m_Player_MoveBeast = m_Player.FindAction("MoveBeast", throwIfNotFound: true);
         m_Player_ReviveBeast = m_Player.FindAction("ReviveBeast", throwIfNotFound: true);
+        m_Player_Shield = m_Player.FindAction("Shield", throwIfNotFound: true);
         // UIPanel
         m_UIPanel = asset.FindActionMap("UIPanel", throwIfNotFound: true);
         m_UIPanel_Inventory = m_UIPanel.FindAction("Inventory", throwIfNotFound: true);
@@ -594,6 +615,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PointedMode;
     private readonly InputAction m_Player_MoveBeast;
     private readonly InputAction m_Player_ReviveBeast;
+    private readonly InputAction m_Player_Shield;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -610,6 +632,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @PointedMode => m_Wrapper.m_Player_PointedMode;
         public InputAction @MoveBeast => m_Wrapper.m_Player_MoveBeast;
         public InputAction @ReviveBeast => m_Wrapper.m_Player_ReviveBeast;
+        public InputAction @Shield => m_Wrapper.m_Player_Shield;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -655,6 +678,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ReviveBeast.started += instance.OnReviveBeast;
             @ReviveBeast.performed += instance.OnReviveBeast;
             @ReviveBeast.canceled += instance.OnReviveBeast;
+            @Shield.started += instance.OnShield;
+            @Shield.performed += instance.OnShield;
+            @Shield.canceled += instance.OnShield;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -695,6 +721,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ReviveBeast.started -= instance.OnReviveBeast;
             @ReviveBeast.performed -= instance.OnReviveBeast;
             @ReviveBeast.canceled -= instance.OnReviveBeast;
+            @Shield.started -= instance.OnShield;
+            @Shield.performed -= instance.OnShield;
+            @Shield.canceled -= instance.OnShield;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -828,6 +857,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnPointedMode(InputAction.CallbackContext context);
         void OnMoveBeast(InputAction.CallbackContext context);
         void OnReviveBeast(InputAction.CallbackContext context);
+        void OnShield(InputAction.CallbackContext context);
     }
     public interface IUIPanelActions
     {
