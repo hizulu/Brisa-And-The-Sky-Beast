@@ -7,9 +7,10 @@ using UnityEngine;
  * FECHA: 
  * DESCRIPCIÓN: Clase que define el comportamiento específico de Patrol en el que el enemigo se mueve de punto a punto.
  *              Los puntos  de patrulla se definen como hijos del objeto que contiene el script de Enemy.
- *              Vuelve al estado de Idle cuando llega al destino. Cambia a estado de Chase si detecta al jugador.
+ *              Vuelve al estado de Idle cuando llega al destino. Cambia a estado de Chase si detecta al objetivo.
  *              Hereda de EnemyStateSOBase, por lo que se crea desde el editor de Unity. Sobreescribe sus métodos y tiene acceso a sus variables.            
  * VERSIÓN: 1.0. Script base con el comportamiento de patrullar de punto a punto.
+ *              1.1. Añadido detección de Bestia (22/04/2025) - Jone
  */
 [CreateAssetMenu(fileName = "Patrol-Point to Point", menuName = "Enemy Logic/Patrol Logic/Point to Point")]
 public class EnemyPatrolPointToPoint : EnemyStateSOBase
@@ -24,15 +25,17 @@ public class EnemyPatrolPointToPoint : EnemyStateSOBase
     private int currentPoint = 0; // Guardar el punto en el que están.
     private int lastPointSaved = 0;
 
+    [SerializeField] private EnemyTargetDetectionSOBase targetDetection;
+
     private Vector3 _targetPos;
-    private float playerDetectionRangeSQR = 0f; // Variable auxiliar para almacenar distancia evitando cálculo de raíz cuadrada cada frame.
     #endregion
 
     #region Sobreescriturta de métodos de EnemyStateSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-        playerDetectionRangeSQR = playerDetectionRange * playerDetectionRange;
+
+        targetDetection.Initialize(enemy);
 
         AddPatrolPoints();
         ReturnFromIdle();
@@ -45,7 +48,10 @@ public class EnemyPatrolPointToPoint : EnemyStateSOBase
     {
         base.DoFrameUpdateLogic();
         ChangePoint();
-        PlayerDetected();
+
+        // Cambia de estado cuando detecta al jugador o a la bestia
+        if (targetDetection.LookForTarget())
+            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
     }
     #endregion
 
@@ -98,17 +104,6 @@ public class EnemyPatrolPointToPoint : EnemyStateSOBase
     {
         currentPoint = lastPointSaved; // Asignar el último punto guardado como el actual.
         _targetPos = patrolPoints[currentPoint].position;
-    }
-
-    /*
-     * Método que revisa la distancia a la que se encuentra el jugador, si este se encuentra cerca cambia al estado de persecución
-     */
-    private void PlayerDetected()
-    {
-        float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
-
-        if (distanceToPlayerSQR < playerDetectionRangeSQR)
-            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
     }
     #endregion
 }
