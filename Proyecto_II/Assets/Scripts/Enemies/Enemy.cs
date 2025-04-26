@@ -26,6 +26,9 @@ public class Enemy : HittableElement
     [field:SerializeField] public float currentHealth;
     [SerializeField] float enemySpeed = 1f; // TODO: speed affects movement speed
     [SerializeField] float attackDamage = 10f; // TODO: attackDamage is taken into account
+
+    public bool targetIsPlayer = true;
+
     #endregion
 
     #region FSM Variables
