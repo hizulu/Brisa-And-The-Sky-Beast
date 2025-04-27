@@ -52,6 +52,7 @@ public class Beast : MonoBehaviour
         TransitionToState(new BeastFreeState());
 
         EventsManager.CallSpecialEvents<float>("OnAttackBeast", DamageBeast);
+        EventsManager.CallSpecialEvents<Vector3>("BeastDirected", BeastIsDirected);
 
         EventsManager.CallNormalEvents("CallBeast", CallBeast);
         EventsManager.CallNormalEvents("AcariciarBestia_Bestia", PetBeastSelected);
@@ -66,6 +67,7 @@ public class Beast : MonoBehaviour
     private void OnDestroy()
     {
         EventsManager.StopCallSpecialEvents<float>("OnAttackBeast", DamageBeast);
+        EventsManager.StopCallSpecialEvents<Vector3>("BeastDirected", BeastIsDirected);
 
         EventsManager.StopCallNormalEvents("CallBeast", CallBeast);
         EventsManager.StopCallNormalEvents("AcariciarBestia_Bestia", PetBeastSelected);
@@ -106,7 +108,7 @@ public class Beast : MonoBehaviour
         blackboard.SetValue("isCoroutineActive", true);
     }
 
-    // Called from Brisa script
+    // Called from events
     private void CallBeast()
     {
         blackboard.SetValue("isConstrained", true);
@@ -121,6 +123,12 @@ public class Beast : MonoBehaviour
     {
         blackboard.SetValue("brisaIsHalfDead", true);
         TransitionToState(new BeastBrisaHalfDeadState());
+    }
+
+    private void BeastIsDirected(Vector3 targetDestination)
+    {
+        agent.ResetPath();
+        TransitionToState(new BeastToPointedState(targetDestination));
     }
 
     #region Beast Selection Menu

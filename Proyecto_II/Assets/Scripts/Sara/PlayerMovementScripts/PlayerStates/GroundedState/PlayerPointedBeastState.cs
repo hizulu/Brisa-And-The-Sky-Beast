@@ -99,7 +99,7 @@ public class PlayerPointedBeastState : PlayerGroundedState
         if (groundedData.ClickEffect != null)
         {
             GameObject.Instantiate(groundedData.ClickEffect, clickPosition + new Vector3(0, 0.1f, 0), groundedData.ClickEffect.transform.rotation);
-            EventsManager.TriggerSpecialEvent<Vector3>("MoveBeast", clickPosition); // EVENTO: Crear evento de mover a la Bestia.
+            EventsManager.TriggerSpecialEvent<Vector3>("BeastDirected", clickPosition); // EVENTO: Crear evento de mover a la Bestia.
             //Debug.Log("Has hecho click en la posición: " + " " + clickPosition);
         }
     }
