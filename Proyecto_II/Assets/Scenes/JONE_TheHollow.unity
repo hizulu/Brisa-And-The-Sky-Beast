@@ -2922,9 +2922,12 @@ Transform:
   m_Children:
   - {fileID: 1525920606}
   - {fileID: 1192497964}
+  - {fileID: 219376395}
+  - {fileID: 1480102366}
   - {fileID: 1459944950}
   - {fileID: 1195469054}
   - {fileID: 1334365395}
+  - {fileID: 1031634650}
   - {fileID: 1789548817}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5924,6 +5927,83 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 212037780}
   m_CullTransparentMesh: 1
+--- !u!1 &219376394
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 219376395}
+  - component: {fileID: 219376397}
+  - component: {fileID: 219376396}
+  m_Layer: 0
+  m_Name: DialogueTutorialTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &219376395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219376394}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.10348692, z: 0, w: 0.9946308}
+  m_LocalPosition: {x: 27.923395, y: 38.68957, z: -51.31128}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 105731933}
+  m_LocalEulerAnglesHint: {x: 0, y: 11.88, z: 0}
+--- !u!65 &219376396
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219376394}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 8.958245, y: 2.0699377, z: 27.536716}
+  m_Center: {x: 29.388515, y: 0.53496885, z: 8.55321}
+--- !u!114 &219376397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219376394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f9f3ce96dbb9a4faf8ca1a3e62d0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorials:
+  - inputActionName: UIPanel/Dialogue
+    tutorialText: Press E to chat
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
+  - inputActionName: UIPanel/DialogueContinue
+    tutorialText: Press E to continue
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
 --- !u!1 &223966855
 GameObject:
   m_ObjectHideFlags: 0
@@ -23488,6 +23568,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027681677}
   m_CullTransparentMesh: 1
+--- !u!1 &1031634649
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1031634650}
+  - component: {fileID: 1031634652}
+  - component: {fileID: 1031634651}
+  m_Layer: 0
+  m_Name: BreakingTutorialTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1031634650
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031634649}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.34, y: 51.05, z: 15.77}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 105731933}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1031634651
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031634649}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.464939, y: 3.7175698, z: 6.6979218}
+  m_Center: {x: 10.149303, y: -1.4431164, z: 2.7927246}
+--- !u!114 &1031634652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031634649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f9f3ce96dbb9a4faf8ca1a3e62d0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorials:
+  - inputActionName: Player/Attack
+    tutorialText: Use your weapon to break boxes
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
 --- !u!1 &1043015820
 GameObject:
   m_ObjectHideFlags: 0
@@ -26654,7 +26806,7 @@ GameObject:
   - component: {fileID: 1195469055}
   - component: {fileID: 1195469056}
   m_Layer: 0
-  m_Name: AttackTutorialTrigger
+  m_Name: CombatTutorialTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26711,6 +26863,16 @@ MonoBehaviour:
   tutorials:
   - inputActionName: Player/Attack
     tutorialText: Press LeftClick to attack
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
+  - inputActionName: Player/Shield
+    tutorialText: Press F to shield
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
+  - inputActionName: Player/LockTarget
+    tutorialText: Press MidClick to lock target
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
@@ -31556,7 +31718,7 @@ GameObject:
   - component: {fileID: 1459944951}
   - component: {fileID: 1459944952}
   m_Layer: 0
-  m_Name: PickUpItemTutorialTrigger
+  m_Name: ItemsTutorialTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32579,6 +32741,83 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3659527116439377511, guid: 677b75b04fe3be54babccc6d89d4dba7, type: 3}
   m_PrefabInstance: {fileID: 1474282855}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1480102365
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1480102366}
+  - component: {fileID: 1480102368}
+  - component: {fileID: 1480102367}
+  m_Layer: 0
+  m_Name: MenusTutorialTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1480102366
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480102365}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 27.923395, y: 38.68957, z: -51.31128}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 105731933}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1480102367
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480102365}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7.271393, y: 2.7953978, z: 16.0802}
+  m_Center: {x: 17.158867, y: 6.222504, z: 38.81105}
+--- !u!114 &1480102368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480102365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f9f3ce96dbb9a4faf8ca1a3e62d0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorials:
+  - inputActionName: UIPanel/PauseGame
+    tutorialText: Press ESC to pause game
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
+  - inputActionName: UIPanel/Map
+    tutorialText: Press M to open map
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
 --- !u!1 &1484617066
 GameObject:
   m_ObjectHideFlags: 0
@@ -33904,7 +34143,7 @@ GameObject:
   - component: {fileID: 1525920604}
   - component: {fileID: 1525920607}
   m_Layer: 0
-  m_Name: WalkTutorialTrigger
+  m_Name: MovementTutorialTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33965,17 +34204,17 @@ MonoBehaviour:
     activationEventName: 
     waitForCompletion: 0
   - inputActionName: Player/Run
-    tutorialText: LeftShift
+    tutorialText: Press LeftShift to run
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
-  - inputActionName: Player/CallBeast
-    tutorialText: Q to call beast
-    triggeredByAction: 1
-    activationEventName: BeastFreed
-    waitForCompletion: 0
   - inputActionName: Player/Sprint
-    tutorialText: RightClick
+    tutorialText: Press RightClick to sprint
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
+  - inputActionName: Player/Crouch
+    tutorialText: Press LeftControl to crouch
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
@@ -35594,14 +35833,14 @@ MonoBehaviour:
   anim: {fileID: 1555036602}
   playerTransform: {fileID: 353271123}
   mountPoint: {fileID: 1146879212}
-  arrivalThreshold: 5
+  arrivalThreshold: 4
   freeRoamRadius: 30
   interactionThreshold: 5
   maxHealth: 500
   healingAmount: 50
   halfDeadDuration: 30
   currentHealth: 0
-  player: {fileID: 0}
+  player: {fileID: 353271126}
 --- !u!1 &1569019059
 GameObject:
   m_ObjectHideFlags: 0
@@ -40027,7 +40266,7 @@ GameObject:
   - component: {fileID: 1789548817}
   - component: {fileID: 1789548818}
   m_Layer: 0
-  m_Name: CallBeastTutorial
+  m_Name: BeastTutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40057,12 +40296,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 1789548816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f88569b479743646b2dcfe607a008de, type: 3}
+  m_Script: {fileID: 11500000, guid: 38f9f3ce96dbb9a4faf8ca1a3e62d0b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputActionName: Player/CallBeast
-  tutorialText: Press Q to call Beast
-  actionName: BeastFreed
+  tutorials:
+  - inputActionName: Player/CallBeast
+    tutorialText: Press Q to call Beast
+    triggeredByAction: 1
+    activationEventName: BeastFreed
+    waitForCompletion: 0
+  - inputActionName: UIPanel/BeastPanel
+    tutorialText: Press TAB when Beast is near to open interaction menu
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
+  - inputActionName: Player/PointedMode
+    tutorialText: Hold RightClick for 3 seconds to direct Beast to a position
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
+  - inputActionName: Player/MoveBeast
+    tutorialText: Press LeftClick while holding RightClick to direct Beast to a position
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
+  - inputActionName: Player/ReviveBeast
+    tutorialText: Hold MidClick while close to Beast to revive him
+    triggeredByAction: 1
+    activationEventName: ReviveBeast
+    waitForCompletion: 0
 --- !u!1 &1801138919
 GameObject:
   m_ObjectHideFlags: 0
