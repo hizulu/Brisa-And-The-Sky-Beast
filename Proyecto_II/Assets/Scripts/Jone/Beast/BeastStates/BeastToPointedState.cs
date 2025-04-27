@@ -5,6 +5,8 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
+// Jone Sainz Egea
+// 27/04/2025
 public class BeastToPointedState : BeastState
 {
     private Vector3 _target;

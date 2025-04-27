@@ -110,7 +110,6 @@ public class TutorialTrigger : MonoBehaviour
 
         currentMessage = TutorialManager.Instance.ShowMessage(tutorial);
         currentMessage.Initialize(tutorial, tutorial.waitForCompletion ? (System.Action)null : CompleteCurrentStep);
-        Debug.Log($"Displaying message number {currentIndex}.");
     }
 
     // Método público para forzar el avance manual si es waitForCompletion

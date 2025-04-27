@@ -10,7 +10,7 @@ public class TheHollowEndingTrigger : MonoBehaviour
     private void Update()
     {
         if (brisaIsIn && beastIsIn)
-            Debug.Log("Fin de la escena");
+            GameManager.Instance.Victory();
     }
 
     private void OnTriggerEnter(Collider other)

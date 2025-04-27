@@ -13,7 +13,7 @@ public class BeastOpenTheHollowExit : BeastActionable
             Debug.Log("Beast is not in");
             return;
         }
-        Debug.Log("Beast is in, doing open the hollow exit action");
+        GameManager.Instance.Victory();
 
         // TODO: implement door open animation
 
