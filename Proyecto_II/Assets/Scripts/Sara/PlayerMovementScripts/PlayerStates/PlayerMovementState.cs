@@ -50,8 +50,8 @@ public class PlayerMovementState : IState
      */
     public virtual void Enter()
     {
-        stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 200f;
-        stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 200f;
+        //stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 200f;
+        //stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 200f;
         AddInputActionsCallbacks();
         EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
         EventsManager.CallNormalEvents("PickUpItem", PickUp);

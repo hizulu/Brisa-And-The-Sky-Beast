@@ -44,7 +44,7 @@ public class MapManager : MonoBehaviour
         else
             OpenPanel();
 
-        Time.timeScale = mapEnabled ? 0f : 1f;
+        //Time.timeScale = mapEnabled ? 0f : 1f;
     }
 
     public void OpenPanel()
