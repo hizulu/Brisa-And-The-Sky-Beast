@@ -16,6 +16,8 @@ public class TutorialTrigger : MonoBehaviour
     private TutorialMessage currentMessage;
     private bool triggered = false;
 
+    private bool canceled = false;
+
     private void OnEnable()
     {
         foreach (var tutorial in tutorials)
@@ -36,6 +38,9 @@ public class TutorialTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (canceled)
+            return;
+
         if (triggered) return;
 
         if (other.CompareTag("Player"))
@@ -54,6 +59,9 @@ public class TutorialTrigger : MonoBehaviour
 
     private void OnTriggeredByAction(Tutorial tutorial)
     {
+        if (canceled)
+            return;
+
         if (triggered) return;
 
         if (tutorials[currentIndex] == tutorial)
@@ -65,6 +73,9 @@ public class TutorialTrigger : MonoBehaviour
 
     private void ShowNextMessage()
     {
+        if (canceled)
+            return;
+
         Debug.Log($"Showing next message at number {currentIndex}");
         if (currentMessage != null)
         {
@@ -90,9 +101,12 @@ public class TutorialTrigger : MonoBehaviour
         DisplayTutorial(tutorial);
     }
 
-    private IEnumerator TransitionToNextMessage()
+    private void TransitionToNextMessage()
     {
-        yield return StartCoroutine(TutorialManager.Instance.FadeOutAndDestroy(currentMessage));
+        if (canceled)
+            return;
+
+        TutorialManager.Instance.RemoveMessage(currentMessage);
         currentMessage = null;    
 
         // Después de destruir el mensaje anterior, mostramos el siguiente
@@ -101,6 +115,9 @@ public class TutorialTrigger : MonoBehaviour
 
     private void DisplayTutorial(Tutorial tutorial)
     {
+        if (canceled)
+            return;
+
         InputAction action = TutorialManager.Instance.inputActions.FindAction(tutorial.inputActionName);
         if (action == null)
         {
@@ -115,7 +132,19 @@ public class TutorialTrigger : MonoBehaviour
     // Método público para forzar el avance manual si es waitForCompletion
     public void CompleteCurrentStep()
     {
+        if(canceled)
+            return;
+
         currentIndex++;
-        StartCoroutine(TransitionToNextMessage());
+        TransitionToNextMessage();
+    }
+
+    public void HasBeenCanceled()
+    {
+        if (currentMessage != null)
+        {
+            TutorialManager.Instance.RemoveMessage(currentMessage);
+        }
+        canceled = true;
     }
 }
