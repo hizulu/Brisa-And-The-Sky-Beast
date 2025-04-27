@@ -12,7 +12,7 @@ public class TutorialMessage : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text messageTextUI;
 
     private InputAction inputAction;
-    private System.Action onActionPerformedCallback;
+    private System.Action onTutorialCompleted;
     private bool waitForCompletion;
 
     public CanvasGroup CanvasGroup { get; private set; }
@@ -29,7 +29,7 @@ public class TutorialMessage : MonoBehaviour
         messageTextUI.text = tutorial.tutorialText;
         waitForCompletion = tutorial.waitForCompletion;
 
-        onActionPerformedCallback = callback;
+        onTutorialCompleted = callback;
 
         inputAction.Enable();
     }
@@ -42,7 +42,7 @@ public class TutorialMessage : MonoBehaviour
         {
             if (inputAction.triggered)
             {
-                onActionPerformedCallback?.Invoke();
+                onTutorialCompleted?.Invoke();
             }
         }
     }

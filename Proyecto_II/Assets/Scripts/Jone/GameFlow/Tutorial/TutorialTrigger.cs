@@ -40,7 +40,15 @@ public class TutorialTrigger : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            TryTriggerTutorial();
+            triggered = true;
+
+            if (tutorials.Count == 0)
+            {
+                Debug.LogWarning("TutorialTrigger: No hay tutoriales configurados.");
+                return;
+            }
+
+            ShowNextMessage();
         }
     }
 
@@ -52,38 +60,21 @@ public class TutorialTrigger : MonoBehaviour
         {
             triggered = true;
             DisplayTutorial(tutorial);
-            currentIndex++; // Avanzamos manualmente aquí después de mostrarlo
         }
-    }
-
-    private void TryTriggerTutorial()
-    {
-        triggered = true;
-        StartTutorialSequence();
-    }
-
-    private void StartTutorialSequence()
-    {
-        if (tutorials.Count == 0)
-        {
-            Debug.LogWarning("TutorialTrigger: No hay tutoriales configurados.");
-            return;
-        }
-
-        ShowNextMessage();
     }
 
     private void ShowNextMessage()
     {
+        Debug.Log($"Showing next message at number {currentIndex}");
         if (currentMessage != null)
         {
-            StartCoroutine(TransitionToNextMessage());
+            Debug.LogWarning("Ya hay un tutorial en marcha");
             return;
         }
 
         if (currentIndex >= tutorials.Count)
         {
-            // Todos los tutoriales completados
+            Debug.Log("Todos los tutoriales de esta lista han sido completados");
             return;
         }
 
@@ -102,8 +93,7 @@ public class TutorialTrigger : MonoBehaviour
     private IEnumerator TransitionToNextMessage()
     {
         yield return StartCoroutine(TutorialManager.Instance.FadeOutAndDestroy(currentMessage));
-        currentMessage = null;
-        currentIndex++;
+        currentMessage = null;    
 
         // Después de destruir el mensaje anterior, mostramos el siguiente
         ShowNextMessage();
@@ -120,13 +110,13 @@ public class TutorialTrigger : MonoBehaviour
 
         currentMessage = TutorialManager.Instance.ShowMessage(tutorial);
         currentMessage.Initialize(tutorial, tutorial.waitForCompletion ? (System.Action)null : CompleteCurrentStep);
-
-        currentIndex++;
+        Debug.Log($"Displaying message number {currentIndex}.");
     }
 
     // Método público para forzar el avance manual si es waitForCompletion
     public void CompleteCurrentStep()
     {
+        currentIndex++;
         StartCoroutine(TransitionToNextMessage());
     }
 }

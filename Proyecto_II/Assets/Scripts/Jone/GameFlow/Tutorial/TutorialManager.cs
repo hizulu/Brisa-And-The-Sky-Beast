@@ -34,28 +34,6 @@ public class TutorialManager : MonoBehaviour
         return msg;
     }
 
-    public void QueueMessage(int i, Tutorial tutorial)
-    {
-        queuedTutorials[i] = tutorial;
-    }
-
-    public void ShowQueuedMessage(int i)
-    {
-        GameObject obj = Instantiate(tutorialMessagePrefab, canvasParent);
-        TutorialMessage msg = obj.GetComponent<TutorialMessage>();
-        Tutorial tut = queuedTutorials[i];
-        if (tut == null)
-        {
-            Debug.LogWarning($"TutorialManager: No se encontró tutorial '{i}' en la lista.");
-            Destroy(obj);
-            return;
-        }
-
-        msg.Initialize(queuedTutorials[i]);
-        StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 0f, 1f, 0.25f, 1f));
-        activeMessages.Add(msg);
-    }
-
     public void RemoveMessage(TutorialMessage message)
     {
         if (activeMessages.Contains(message))
