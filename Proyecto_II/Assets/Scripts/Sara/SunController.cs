@@ -28,6 +28,7 @@ public class SunController : MonoBehaviour
     [SerializeField] private AnimationCurve lightCurve;
     [SerializeField] private float maxSunIntensity;
     [SerializeField] private float maxMoonIntensity;
+    private float lightIntensityMultiplier = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +57,7 @@ public class SunController : MonoBehaviour
     {
         float sunLightRot;
 
-        if(currentTime.TimeOfDay > sunriseTime && currentTime.TimeOfDay < sunsetTime)
+        if (currentTime.TimeOfDay > sunriseTime && currentTime.TimeOfDay < sunsetTime)
         {
             TimeSpan sunriseToSunsetDuration = CalculateTimeDifference(sunriseTime, sunsetTime);
             TimeSpan timeSinceSunrise = CalculateTimeDifference(sunriseTime, currentTime.TimeOfDay);
@@ -81,9 +82,19 @@ public class SunController : MonoBehaviour
     private void UpdateLightSettings()
     {
         float dotProduct = Vector3.Dot(sun.transform.forward, Vector3.down);
-        sun.intensity = Mathf.Lerp(0, maxSunIntensity, lightCurve.Evaluate(dotProduct));
-        //moon.intensity = Mathf.Lerp(maxMoonIntensity, 0, lightCurve.Evaluate(dotProduct));
-        RenderSettings.ambientLight = Color.Lerp(nightAmbientLight, dayAmbientLight, lightCurve.Evaluate(dotProduct));
+        float curveValue = lightCurve.Evaluate(dotProduct);
+
+        // Aplicar el multiplicador a la intensidad base
+        sun.intensity = Mathf.Lerp(0, maxSunIntensity, curveValue) * lightIntensityMultiplier;
+        //moon.intensity = Mathf.Lerp(0, maxMoonIntensity, curveValue) * lightIntensityMultiplier;
+
+        // También aplicar el multiplicador a la luz ambiental si es necesario
+        RenderSettings.ambientLight = Color.Lerp(nightAmbientLight, dayAmbientLight, curveValue) * lightIntensityMultiplier;
+    }
+
+    public void SetLightIntensityMultiplier(float multiplier)
+    {
+        lightIntensityMultiplier = multiplier;
     }
 
     private TimeSpan CalculateTimeDifference(TimeSpan fromTime, TimeSpan toTime)

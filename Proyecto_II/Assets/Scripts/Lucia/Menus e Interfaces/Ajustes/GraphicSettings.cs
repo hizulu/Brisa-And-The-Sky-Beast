@@ -6,6 +6,8 @@ using TMPro;
 public class GraphicsSettings : MonoBehaviour
 {
     [Header("Brillo")]
+    public float lightIntensityMultiplier;
+    [SerializeField] private SunController sunController;
     [SerializeField] private Light directionalLight;
     [SerializeField] private Slider brightnessSlider;
     [SerializeField] private TMP_Text brightnessValueText;
@@ -20,6 +22,22 @@ public class GraphicsSettings : MonoBehaviour
 
     private int defaultResolutionIndex = 2;
 
+    private void Awake()
+    {
+        // Asegurarse de que tenemos referencia al SunController
+        if (sunController == null)
+        {
+            // Intentar encontrar automáticamente el SunController en la escena
+            sunController = FindObjectOfType<SunController>();
+            
+            // Si aún es null, buscar en la luz direccional
+            if (sunController == null && directionalLight != null)
+            {
+                sunController = directionalLight.GetComponent<SunController>();
+            }
+        }
+    }
+
     private void Start()
     {
         SetupBrightnessSlider();
@@ -29,11 +47,11 @@ public class GraphicsSettings : MonoBehaviour
 
     private void SetupBrightnessSlider()
     {
-        if (brightnessSlider != null && directionalLight != null)
+        if (brightnessSlider != null)
         {
             brightnessSlider.minValue = minBrightness;
             brightnessSlider.maxValue = maxBrightness;
-            brightnessSlider.value = directionalLight.intensity;
+            brightnessSlider.value = 1f;
             UpdateBrightnessText(brightnessSlider.value);
             brightnessSlider.onValueChanged.AddListener(SetBrightness);
         }
@@ -83,8 +101,10 @@ public class GraphicsSettings : MonoBehaviour
 
     public void SetBrightness(float value)
     {
-        if (directionalLight != null)
-            directionalLight.intensity = value;
+        if (sunController != null)
+        {
+            sunController.SetLightIntensityMultiplier(value);
+        }
 
         UpdateBrightnessText(value);
     }

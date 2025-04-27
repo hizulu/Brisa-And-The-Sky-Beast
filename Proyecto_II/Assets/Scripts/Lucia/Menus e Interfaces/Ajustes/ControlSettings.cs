@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.InputSystem;
 using Cinemachine;
 
 public class ControlSettings : MonoBehaviour
@@ -13,43 +12,81 @@ public class ControlSettings : MonoBehaviour
     [SerializeField] private float defaultSensitivity = 1f;
     [SerializeField] private TextMeshProUGUI mouseSensitivityText;
 
-    private float currentSensitivity;
-
-    // Referencia a la Cinemachine FreeLook Camera
     [Header("Cinemachine Camera")]
-    [SerializeField] private CinemachineFreeLook cinemachineFreeLookCamera;
+    [SerializeField] private CinemachineVirtualCamera playerCam;
+    private CinemachinePOV cinemachinePOV;
+
+    [Header("Mapa")]
+    [SerializeField] private MapNavigation mapNavigation;
+
+    private float currentSensitivity;
+    private float baseDragSpeed; // Para almacenar el valor original
+
+    private void Awake()
+    {
+        // Validación de referencias
+        if (playerCam != null)
+        {
+            cinemachinePOV = playerCam.GetCinemachineComponent<CinemachinePOV>();
+            if (cinemachinePOV == null)
+            {
+                Debug.LogError("No se encontró componente CinemachinePOV en la cámara virtual", this);
+            }
+        }
+
+        if (mapNavigation != null)
+        {
+            baseDragSpeed = mapNavigation.dragSpeed;
+        }
+    }
 
     private void Start()
     {
-        SetupSlider();
+        InitializeSlider();
         currentSensitivity = defaultSensitivity;
+        ApplySensitivity(currentSensitivity);
     }
 
-    private void SetupSlider()
+    private void InitializeSlider()
     {
         if (mouseSensitivitySlider == null) return;
 
         mouseSensitivitySlider.minValue = minSensitivity;
         mouseSensitivitySlider.maxValue = maxSensitivity;
         mouseSensitivitySlider.value = defaultSensitivity;
-
         mouseSensitivitySlider.onValueChanged.AddListener(SetMouseSensitivity);
+
+        UpdateSensitivityText(defaultSensitivity);
     }
 
     public void SetMouseSensitivity(float sensitivity)
     {
         currentSensitivity = sensitivity;
+        ApplySensitivity(sensitivity);
+        UpdateSensitivityText(sensitivity);
+    }
 
-        // Mostrar el valor redondeado en el texto
-        if (mouseSensitivityText != null)
-            mouseSensitivityText.text = sensitivity.ToString("0.0");
-
-        // Ajustar m_MaxSpeed de Cinemachine para aplicar la sensibilidad
-        if (cinemachineFreeLookCamera != null)
+    private void ApplySensitivity(float sensitivity)
+    {
+        // Aplicar a Cinemachine
+        if (cinemachinePOV != null)
         {
-            // Asignar la sensibilidad a los valores de velocidad máxima
-            cinemachineFreeLookCamera.m_XAxis.m_MaxSpeed = 200f * sensitivity; // Velocidad en el eje horizontal
-            cinemachineFreeLookCamera.m_YAxis.m_MaxSpeed = 200f * sensitivity; // Velocidad en el eje vertical
+            cinemachinePOV.m_HorizontalAxis.m_MaxSpeed = 200f * sensitivity;
+            cinemachinePOV.m_VerticalAxis.m_MaxSpeed = 200f * sensitivity;
+        }
+
+        // Aplicar al mapa
+        if (mapNavigation != null)
+        {
+            mapNavigation.dragSpeed = baseDragSpeed * sensitivity;
+        }
+    }
+
+    private void UpdateSensitivityText(float sensitivity)
+    {
+        if (mouseSensitivityText != null)
+        {
+            mouseSensitivityText.text = sensitivity.ToString("0.0");
         }
     }
 }
