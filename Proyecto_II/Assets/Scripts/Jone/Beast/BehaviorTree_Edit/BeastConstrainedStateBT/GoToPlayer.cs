@@ -36,6 +36,7 @@ public class GoToPlayer : Node
                 // Cambiaría a wait for order
                 _blackboard.SetValue("reachedPlayer", true);
                 _blackboard.SetValue("goToPlayer", false);
+                _beast.agent.ResetPath();
 
                 Debug.Log("Reached player.");
                 _wasWalking = false;

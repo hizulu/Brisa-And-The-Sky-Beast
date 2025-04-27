@@ -209,6 +209,9 @@ public class GameManager : MonoBehaviour
     public void Victory()
     {
         ChangeGameState(GameState.Victory);
+        EventsManager.TriggerNormalEvent("UIPanelOpened");
+        Time.timeScale = 0f;
+        uiManager.OpenVictoryMenu();
     }
 
     public void GameOver()

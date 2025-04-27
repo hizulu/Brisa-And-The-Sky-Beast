@@ -72,6 +72,7 @@ public class GoToInterestPoint : Node
         }
         _blackboard.SetValue("reachedTarget", true);
         _blackboard.ClearKey("target");
+        _beast.agent.ResetPath();
 
         Debug.Log($"Reached {_target.name}, interest consumed.");
         state = NodeState.SUCCESS;

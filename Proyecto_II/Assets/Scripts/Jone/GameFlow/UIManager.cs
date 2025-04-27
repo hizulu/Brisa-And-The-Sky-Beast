@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] GameObject pausePanel;
     [SerializeField] GameObject gameOverPanel;
+    [SerializeField] GameObject victoryPanel;
 
     // Singleton
     private void Awake()
@@ -57,7 +58,21 @@ public class UIManager : MonoBehaviour
     public void CloseGameOverMenu()
     {
         DeactivateCursor();
-        gameObject.SetActive(false);
+        gameOverPanel.SetActive(false);
+    }
+    #endregion
+
+    #region Victory
+    public void OpenVictoryMenu()
+    {
+        ActivateCursor();
+        victoryPanel.SetActive(true);
+    }
+
+    public void CloseVictoryMenu()
+    {
+        DeactivateCursor();
+        victoryPanel.SetActive(false);
     }
     #endregion
 

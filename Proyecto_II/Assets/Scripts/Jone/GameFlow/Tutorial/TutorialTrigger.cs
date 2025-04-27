@@ -16,6 +16,8 @@ public class TutorialTrigger : MonoBehaviour
     private TutorialMessage currentMessage;
     private bool triggered = false;
 
+    private bool canceled = false;
+
     private void OnEnable()
     {
         foreach (var tutorial in tutorials)
@@ -36,54 +38,54 @@ public class TutorialTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (canceled)
+            return;
+
         if (triggered) return;
 
         if (other.CompareTag("Player"))
         {
-            TryTriggerTutorial();
+            triggered = true;
+
+            if (tutorials.Count == 0)
+            {
+                Debug.LogWarning("TutorialTrigger: No hay tutoriales configurados.");
+                return;
+            }
+
+            ShowNextMessage();
         }
     }
 
     private void OnTriggeredByAction(Tutorial tutorial)
     {
+        if (canceled)
+            return;
+
         if (triggered) return;
 
         if (tutorials[currentIndex] == tutorial)
         {
             triggered = true;
             DisplayTutorial(tutorial);
-            currentIndex++; // Avanzamos manualmente aquí después de mostrarlo
         }
-    }
-
-    private void TryTriggerTutorial()
-    {
-        triggered = true;
-        StartTutorialSequence();
-    }
-
-    private void StartTutorialSequence()
-    {
-        if (tutorials.Count == 0)
-        {
-            Debug.LogWarning("TutorialTrigger: No hay tutoriales configurados.");
-            return;
-        }
-
-        ShowNextMessage();
     }
 
     private void ShowNextMessage()
     {
+        if (canceled)
+            return;
+
+        Debug.Log($"Showing next message at number {currentIndex}");
         if (currentMessage != null)
         {
-            StartCoroutine(TransitionToNextMessage());
+            Debug.LogWarning("Ya hay un tutorial en marcha");
             return;
         }
 
         if (currentIndex >= tutorials.Count)
         {
-            // Todos los tutoriales completados
+            Debug.Log("Todos los tutoriales de esta lista han sido completados");
             return;
         }
 
@@ -99,11 +101,13 @@ public class TutorialTrigger : MonoBehaviour
         DisplayTutorial(tutorial);
     }
 
-    private IEnumerator TransitionToNextMessage()
+    private void TransitionToNextMessage()
     {
-        yield return StartCoroutine(TutorialManager.Instance.FadeOutAndDestroy(currentMessage));
-        currentMessage = null;
-        currentIndex++;
+        if (canceled)
+            return;
+
+        TutorialManager.Instance.RemoveMessage(currentMessage);
+        currentMessage = null;    
 
         // Después de destruir el mensaje anterior, mostramos el siguiente
         ShowNextMessage();
@@ -111,6 +115,9 @@ public class TutorialTrigger : MonoBehaviour
 
     private void DisplayTutorial(Tutorial tutorial)
     {
+        if (canceled)
+            return;
+
         InputAction action = TutorialManager.Instance.inputActions.FindAction(tutorial.inputActionName);
         if (action == null)
         {
@@ -120,13 +127,24 @@ public class TutorialTrigger : MonoBehaviour
 
         currentMessage = TutorialManager.Instance.ShowMessage(tutorial);
         currentMessage.Initialize(tutorial, tutorial.waitForCompletion ? (System.Action)null : CompleteCurrentStep);
-
-        currentIndex++;
     }
 
     // Método público para forzar el avance manual si es waitForCompletion
     public void CompleteCurrentStep()
     {
-        StartCoroutine(TransitionToNextMessage());
+        if(canceled)
+            return;
+
+        currentIndex++;
+        TransitionToNextMessage();
+    }
+
+    public void HasBeenCanceled()
+    {
+        if (currentMessage != null)
+        {
+            TutorialManager.Instance.RemoveMessage(currentMessage);
+        }
+        canceled = true;
     }
 }

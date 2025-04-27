@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 // Jone Sainz Egea
 // 18/04/2025
@@ -12,10 +13,11 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField] private GameObject tutorialMessagePrefab;
     [SerializeField] private Transform canvasParent;
+    [SerializeField] private GameObject tutorialsEmpty;
 
     public InputActionAsset inputActions;
-    private List<Tutorial> queuedTutorials = new List<Tutorial>();
     private List<TutorialMessage> activeMessages = new List<TutorialMessage>();
+    private List<TutorialTrigger> tutorialTriggers = new List<TutorialTrigger>();
 
     private void Awake()
     {
@@ -32,28 +34,6 @@ public class TutorialManager : MonoBehaviour
         StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 0f, 1f, 0.25f, 0.5f));
         activeMessages.Add(msg);
         return msg;
-    }
-
-    public void QueueMessage(int i, Tutorial tutorial)
-    {
-        queuedTutorials[i] = tutorial;
-    }
-
-    public void ShowQueuedMessage(int i)
-    {
-        GameObject obj = Instantiate(tutorialMessagePrefab, canvasParent);
-        TutorialMessage msg = obj.GetComponent<TutorialMessage>();
-        Tutorial tut = queuedTutorials[i];
-        if (tut == null)
-        {
-            Debug.LogWarning($"TutorialManager: No se encontró tutorial '{i}' en la lista.");
-            Destroy(obj);
-            return;
-        }
-
-        msg.Initialize(queuedTutorials[i]);
-        StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 0f, 1f, 0.25f, 1f));
-        activeMessages.Add(msg);
     }
 
     public void RemoveMessage(TutorialMessage message)
@@ -86,5 +66,35 @@ public class TutorialManager : MonoBehaviour
         }
 
         group.alpha = to;
+    }
+
+    public void DeactivateTutorials()
+    {
+        tutorialTriggers = new List<TutorialTrigger>(FindObjectsOfType<TutorialTrigger>());
+
+        foreach (var tutorialTrigger in tutorialTriggers)
+        {
+            tutorialTrigger.HasBeenCanceled();
+        }
+
+        foreach (TutorialMessage msg in activeMessages)
+        {
+            RemoveMessage(msg);
+        }
+
+        List<GameObject> tutorialMessages = new List<GameObject>();
+
+        foreach (Transform child in canvasParent)
+        {
+            tutorialMessages.Add(child.gameObject);
+        }
+
+        foreach (GameObject item in tutorialMessages)
+        {
+            item.SetActive(false);
+        }
+
+        tutorialsEmpty.SetActive(false);
+        this.gameObject.SetActive(false);
     }
 }
