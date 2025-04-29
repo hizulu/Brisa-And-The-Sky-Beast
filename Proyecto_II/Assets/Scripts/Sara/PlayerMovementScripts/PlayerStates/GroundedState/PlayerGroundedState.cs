@@ -131,6 +131,8 @@ public class PlayerGroundedState : PlayerMovementState
     {
         if (!stateMachine.Player.PaloBrisa.activeInHierarchy) // Player no puede atacar si no tiene el palo activo en la jerarquía (recoger en el juego).
             return;
+        else if (stateMachine.CurrentState is PlayerRideBeastState) // Si está en el estado de Montar a la Bestia no puede atacar.
+            return;
         else
         {
             // Solo cambiar a Attack01 si no estamos en medio de un combo o ataque.
@@ -168,6 +170,8 @@ public class PlayerGroundedState : PlayerMovementState
      */
     protected virtual void JumpStarted(InputAction.CallbackContext context)
     {
+        if (stateMachine.CurrentState is PlayerRideBeastState)
+            return;
         // Solo salta si el estado actual del jugador no es ni Doble Salto ni Caer.
         if (!(stateMachine.CurrentState is PlayerDoubleJumpState || stateMachine.CurrentState is PlayerFallState))
             stateMachine.ChangeState(stateMachine.JumpState);
@@ -204,16 +208,14 @@ public class PlayerGroundedState : PlayerMovementState
      */
     private bool IsGrounded()
     {
-        float radius = groundedData.GroundCheckDistance;
-        Vector3 groundCheckPosition = stateMachine.Player.GroundCheckCollider.transform.position;
-        Collider[] colliders = Physics.OverlapSphere(groundCheckPosition, radius);
+        Vector3 boxCenter = stateMachine.Player.GroundCheckCollider.transform.position;
+        Vector3 boxHalfExtents = new Vector3(0.25f, 0.05f, 0.25f); // Ancho, altura pequeñita, profundidad
+        Quaternion boxOrientation = Quaternion.identity; // No rotado, si quieres rotarlo puedes poner la rotación de tu jugador
+        LayerMask groundMask = LayerMask.GetMask("Enviroment");
 
-        foreach (Collider collider in colliders)
-        {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
-                return true;
-        }
-        return false;
+        bool isGrounded = Physics.CheckBox(boxCenter, boxHalfExtents, boxOrientation, groundMask, QueryTriggerInteraction.Ignore);
+
+        return isGrounded;
     }
     #endregion
 

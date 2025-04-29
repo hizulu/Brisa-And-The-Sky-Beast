@@ -15,7 +15,7 @@ public class PlayerRideBeastState : PlayerInteractionState
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        stateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.WalkSpeedModif;
+        stateMachine.MovementData.MovementSpeedModifier = groundedData.RunData.RunSpeedModif;
         base.Enter();
         Debug.Log("Has entrado en el estado de MONTAR A LA BESTIA");
         StartAnimation(stateMachine.Player.PlayerAnimationData.RideBeastParameterHash);
@@ -24,6 +24,12 @@ public class PlayerRideBeastState : PlayerInteractionState
     public override void HandleInput()
     {
         base.HandleInput();
+    }
+
+    public override void UpdateLogic()
+    {
+        //Debug.Log("Estás en el estado de MONTAR A LA BESTIA");
+        base.UpdateLogic();
     }
 
     public override void UpdatePhysics()
