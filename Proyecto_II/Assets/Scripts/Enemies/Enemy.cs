@@ -18,6 +18,7 @@ public class Enemy : HittableElement
 {
     #region Main Enemy Variables
     public Player player;
+    public Beast beast;
     public Animator anim { get; private set; }
     public NavMeshAgent agent;
 
@@ -96,6 +97,8 @@ public class Enemy : HittableElement
         EventsManager.StopCallSpecialEvents<float>("OnAttack01Enemy", SetDamageEnemy);
         EventsManager.StopCallSpecialEvents<float>("OnAttack02Enemy", SetDamageEnemy);
         EventsManager.StopCallSpecialEvents<float>("OnAttack03Enemy", SetDamageEnemy);
+
+        beast?.OnEnemyExit(this.gameObject);
     }
 
     private void Update()

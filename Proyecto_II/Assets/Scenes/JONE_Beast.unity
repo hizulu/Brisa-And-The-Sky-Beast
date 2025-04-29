@@ -10024,7 +10024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 38434f3be3722984896fad40779e81cb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 38.24
+      value: 30.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 38434f3be3722984896fad40779e81cb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -15618,6 +15618,7 @@ GameObject:
   m_Component:
   - component: {fileID: 808461379}
   - component: {fileID: 808461380}
+  - component: {fileID: 808461381}
   m_Layer: 8
   m_Name: EnemyDetectionTrigger
   m_TagString: Untagged
@@ -15661,6 +15662,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &808461381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808461378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58209bf99378704e99a1c6d57a2fc70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &810527500
 GameObject:
   m_ObjectHideFlags: 0
@@ -16839,6 +16852,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1184349725020497000, guid: bae67286130bfff4b86918843e6c3099, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 502187564}
+    - target: {fileID: 1184349725020497000, guid: bae67286130bfff4b86918843e6c3099, type: 3}
+      propertyPath: EnemyChaseBase
+      value: 
+      objectReference: {fileID: 11400000, guid: 80ec48ea685e57646b798ad9de1135eb, type: 2}
     - target: {fileID: 3014682453806497518, guid: bae67286130bfff4b86918843e6c3099, type: 3}
       propertyPath: m_Layer
       value: 8

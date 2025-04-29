@@ -40,7 +40,7 @@ public class Beast : MonoBehaviour
 
     [SerializeField] public Player player;
 
-    private HashSet<GameObject> enemiesInRange = new HashSet<GameObject>();
+    public HashSet<GameObject> enemiesInRange = new HashSet<GameObject>();
     private bool isInCombat = false;
     private SphereCollider detectionCollider;
 
@@ -152,7 +152,6 @@ public class Beast : MonoBehaviour
     private void EnterCombatState()
     {
         isInCombat = true;
-        Debug.Log("Entering Combat State");
 
         if (currentState is not BeastCombatState)
             TransitionToState(new BeastCombatState());
@@ -161,7 +160,6 @@ public class Beast : MonoBehaviour
     private void ExitCombatState()
     {
         isInCombat = false;
-        Debug.Log("Exiting Combat State");
         ChangeEnemyDetectionRange(); // Reseteo del rango de combate
 
         TransitionToState(new BeastFreeState());

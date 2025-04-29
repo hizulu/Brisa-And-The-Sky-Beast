@@ -16,12 +16,8 @@ public class BeastCombatState : BeastState
 
         blackboard = beast.blackboard;
 
-        // Activamos las flag en el Blackboard
-        blackboard.SetValue("isConstrained", false);
-        blackboard.SetValue("lookForTarget", true);
-        blackboard.SetValue("isCoroutineActive", false);
+        blackboard.ClearKey("targetForCombat");
 
-        // Creamos el árbol de comportamiento libre
         behaviorTree = SetupCombatBehaviorTree(beast);
     }
     public override void OnUpdate(Beast beast)
@@ -38,8 +34,8 @@ public class BeastCombatState : BeastState
     {
         return new Sequence(new List<Node>
         {
-            // new GetCombatTarget()
-            // new GoToCombatTarget()
+            new GetCombatTarget(blackboard, beast),
+            new GoToCombatTarget(blackboard, beast, beast.arrivalThreshold)
             // new AttackCombatTarget()
             // new CooldownForCombat()
 
