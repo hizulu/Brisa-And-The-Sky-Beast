@@ -7,8 +7,10 @@ using UnityEngine;
 public class LeverActionsCage : LeverActionBase
 {
     private GameObject cage;
+    private GameObject chain;
     private float movementSpeed = 2f;
     private Vector3 targetPosition;
+    private Vector3 targetScale;
     private BeastTrapped beast;
 
     private bool cageIsUp = false;
@@ -18,6 +20,10 @@ public class LeverActionsCage : LeverActionBase
         if (cage == null)
         {
             cage = GameObject.FindGameObjectWithTag("Cage");
+        }
+        if (chain == null)
+        {
+            chain = GameObject.FindGameObjectWithTag("CageChain");
         }
     }
     private void EnsureBeastIsAssigned()
@@ -34,6 +40,7 @@ public class LeverActionsCage : LeverActionBase
         {
             EnsureCageIsAssigned();
             if (cage == null) return;
+            if (chain == null) return;
 
             // Para no recalcular objetivo si se está moviendo
             if (cage.TryGetComponent(out CageMover mover) && mover.IsMoving())
@@ -44,6 +51,7 @@ public class LeverActionsCage : LeverActionBase
 
             Debug.Log("La jaula sube.");
             targetPosition = new Vector3(cage.transform.position.x, cage.transform.position.y + 5f, cage.transform.position.z);
+            targetScale = new Vector3(chain.transform.localScale.x, chain.transform.localScale.y, chain.transform.localScale.z - 1f);
             MoveCage();
         }
     }
@@ -54,6 +62,7 @@ public class LeverActionsCage : LeverActionBase
         {
             EnsureCageIsAssigned();
             if (cage == null) return;
+            if (chain == null) return;
 
             // Para no recalcular objetivo si se está moviendo
             if (cage.TryGetComponent(out CageMover mover) && mover.IsMoving())
@@ -64,6 +73,7 @@ public class LeverActionsCage : LeverActionBase
 
             Debug.Log("La jaula baja.");
             targetPosition = new Vector3(cage.transform.position.x, cage.transform.position.y - 5f, cage.transform.position.z);
+            targetScale = new Vector3(chain.transform.localScale.x, chain.transform.localScale.y, chain.transform.localScale.z + 1f);
             MoveCage();
         }
     }
@@ -79,6 +89,14 @@ public class LeverActionsCage : LeverActionBase
         else
         {
             Debug.LogWarning("El objeto jaula no tiene el script CageMover.");
+        }
+        if (chain.TryGetComponent(out CageChainMover moverChain))
+        {
+            moverChain.StartMoving(targetScale, movementSpeed/2);
+        }
+        else
+        {
+            Debug.LogWarning("El objeto chain no tiene el script CageChainMover.");
         }
         cageIsUp = !cageIsUp;
     }
