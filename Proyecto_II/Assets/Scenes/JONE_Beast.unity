@@ -11112,7 +11112,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 12583039
+    m_Bits: 12583295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -16853,6 +16853,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1184349725020497000, guid: bae67286130bfff4b86918843e6c3099, type: 3}
+      propertyPath: beast
+      value: 
+      objectReference: {fileID: 1101218362}
+    - target: {fileID: 1184349725020497000, guid: bae67286130bfff4b86918843e6c3099, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 502187564}
@@ -16890,7 +16894,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5762728150276613178, guid: bae67286130bfff4b86918843e6c3099, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.16416
+      value: 46.4
       objectReference: {fileID: 0}
     - target: {fileID: 5762728150276613178, guid: bae67286130bfff4b86918843e6c3099, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16898,7 +16902,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5762728150276613178, guid: bae67286130bfff4b86918843e6c3099, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.2
+      value: -12.3
       objectReference: {fileID: 0}
     - target: {fileID: 5762728150276613178, guid: bae67286130bfff4b86918843e6c3099, type: 3}
       propertyPath: m_LocalRotation.w
@@ -16950,9 +16954,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1184349725020497000, guid: bae67286130bfff4b86918843e6c3099, type: 3}
+      propertyPath: beast
+      value: 
+      objectReference: {fileID: 1101218362}
+    - target: {fileID: 1184349725020497000, guid: bae67286130bfff4b86918843e6c3099, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 502187564}
     - target: {fileID: 1184349725020497000, guid: bae67286130bfff4b86918843e6c3099, type: 3}
       propertyPath: EnemyChaseBase
       value: 

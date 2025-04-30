@@ -17,6 +17,8 @@ public class BeastCombatState : BeastState
         blackboard = beast.blackboard;
 
         blackboard.ClearKey("targetForCombat");
+        blackboard.SetValue("reachedCombatTarget", false);
+        blackboard.SetValue("attacked", false);
 
         behaviorTree = SetupCombatBehaviorTree(beast);
     }
@@ -35,9 +37,11 @@ public class BeastCombatState : BeastState
         return new Sequence(new List<Node>
         {
             new GetCombatTarget(blackboard, beast),
-            new GoToCombatTarget(blackboard, beast, beast.arrivalThreshold)
-            // new AttackCombatTarget()
-            // new CooldownForCombat()
+            new GoToCombatTarget(blackboard, beast, beast.arrivalThreshold),
+            new CheckFlag(blackboard, "reachedCombatTarget",
+                new AttackCombatTarget(blackboard, beast)),
+            new CheckFlag(blackboard, "attacked",
+                new CooldownForCombat(blackboard, beast, 3f))
 
             //new CheckFlag(blackboard, "goToPlayer",
             //    new GoToPlayer(blackboard, beast, playerTransform, beast.arrivalThreshold)),

@@ -46,11 +46,12 @@ public class GoToCombatTarget : Node
             if (_wasWalking)
             {
                 _beast.anim.SetBool("isWalking", false);
-                _blackboard.SetValue("reachedTarget", true);
+                _blackboard.SetValue("reachedCombatTarget", true);
                 _beast.agent.ResetPath();
 
                 _wasWalking = false;
             }
+            Debug.Log("Reached combat target");
             state = NodeState.SUCCESS;
             return state;
         }
