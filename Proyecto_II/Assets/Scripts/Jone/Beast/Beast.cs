@@ -25,6 +25,8 @@ public class Beast : MonoBehaviour
     [SerializeField] public float maxHealth = 500f;
     [SerializeField] public float healingAmount = 50f; // Estoy gestionando la cura de la Bestia desde el script de Brisa.
     [SerializeField] public float halfDeadDuration = 30f;
+    [SerializeField] public float swipeAttackDamage = 15f;
+    [SerializeField] public float biteAttackDamage = 25f;
 
     public float currentHealth;
 
@@ -40,6 +42,10 @@ public class Beast : MonoBehaviour
 
     [SerializeField] public Player player;
 
+    public HashSet<GameObject> enemiesInRange = new HashSet<GameObject>();
+    private bool isInCombat = false;
+    private SphereCollider detectionCollider;
+
     private void Awake()
     {
         if (agent == null) agent = GetComponent<NavMeshAgent>();
@@ -48,9 +54,17 @@ public class Beast : MonoBehaviour
 
         currentHealth = maxHealth;
 
+        detectionCollider = GetComponentInChildren<SphereCollider>();
+
+        if (detectionCollider == null)
+        {
+            Debug.LogError("DetectionTrigger (SphereCollider) not found in beast children!");
+        }
+
         // Comenzamos en estado de libertad
         TransitionToState(new BeastFreeState());
 
+        #region Events
         EventsManager.CallSpecialEvents<float>("OnAttackBeast", DamageBeast);
         EventsManager.CallSpecialEvents<Vector3>("BeastDirected", BeastIsDirected);
 
@@ -77,8 +91,8 @@ public class Beast : MonoBehaviour
         EventsManager.StopCallNormalEvents("AccionBestia_Bestia", ActionBeastSelected);
 
         EventsManager.StopCallNormalEvents("BrisaHalfDead", BrisaIsHalfDead);
+        #endregion
     }
-
     private void Update()
     {
         currentState?.OnUpdate(this);
@@ -108,7 +122,58 @@ public class Beast : MonoBehaviour
         blackboard.SetValue("isCoroutineActive", true);
     }
 
-    // Called from events
+    #region Enemy detection logic
+    public void OnEnemyEnter(GameObject enemy)
+    {
+        enemiesInRange.Add(enemy);
+        Debug.Log($"Enemy {enemy.name} entered detection range.");
+
+        CheckCombatState();
+    }
+
+    public void OnEnemyExit(GameObject enemy)
+    {
+        enemiesInRange.Remove(enemy);
+        Debug.Log($"Enemy {enemy.name} exited detection range.");
+
+        CheckCombatState();
+    }
+
+    private void CheckCombatState()
+    {
+        if (enemiesInRange.Count > 0 && !isInCombat)
+        {
+            EnterCombatState();
+        }
+        else if (enemiesInRange.Count == 0 && isInCombat)
+        {
+            ExitCombatState();
+        }
+    }
+
+    private void EnterCombatState()
+    {
+        isInCombat = true;
+
+        if (currentState is not BeastCombatState)
+            TransitionToState(new BeastCombatState());
+    }
+
+    private void ExitCombatState()
+    {
+        isInCombat = false;
+        ChangeEnemyDetectionRange(); // Reseteo del rango de combate
+
+        TransitionToState(new BeastFreeState());
+    }
+
+    private void ChangeEnemyDetectionRange(float expectedRange = 20f)
+    {
+        detectionCollider.radius = expectedRange;
+    }
+    #endregion
+
+    #region Event triggered functions
     private void CallBeast()
     {
         blackboard.SetValue("isConstrained", true);
@@ -130,6 +195,7 @@ public class Beast : MonoBehaviour
         agent.ResetPath();
         TransitionToState(new BeastToPointedState(targetDestination));
     }
+    #endregion
 
     #region Beast Selection Menu
     public void OpenBeastMenu()
@@ -154,14 +220,12 @@ public class Beast : MonoBehaviour
     {
         ResetBeastSelection();
         blackboard.SetValue("isOptionPet", true);
-        Debug.Log("Ha seleccionado pet");
     }
 
     public void HealBeastSelected()
     {
         ResetBeastSelection();
         blackboard.SetValue("isOptionHeal", true);
-        Debug.Log("Ha seleccionado heal");
 
         if (currentHealth == maxHealth) return;
     }
@@ -170,27 +234,28 @@ public class Beast : MonoBehaviour
     {
         ResetBeastSelection();
         blackboard.SetValue("isOptionAttack", true);
-        Debug.Log("Ha seleccionado heal");
+        ChangeEnemyDetectionRange(30f); // Si el jugador le manda atacar, aumenta su rango de detección de enemigos
     }
 
     public void MountBeastSelected()
     {
         ResetBeastSelection();
         blackboard.SetValue("isOptionMount", true);
-        Debug.Log("Ha seleccionado heal");
     }
 
     public void ActionBeastSelected()
     {
         ResetBeastSelection();
         blackboard.SetValue("isOptionAction", true);
-        Debug.Log("Ha seleccionado heal");
     }
     #endregion
 
     #region Damage Related Functions
     public void DamageBeast(float damage)
     {
+        if (currentState is not BeastCombatState)
+            TransitionToState(new BeastCombatState());
+
         anim.SetTrigger("damageBeast");
 
         // TODO: beast gets damaged sound

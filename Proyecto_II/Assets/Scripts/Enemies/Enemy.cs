@@ -18,6 +18,7 @@ public class Enemy : HittableElement
 {
     #region Main Enemy Variables
     public Player player;
+    public Beast beast;
     public Animator anim { get; private set; }
     public NavMeshAgent agent;
 
@@ -75,6 +76,7 @@ public class Enemy : HittableElement
         EventsManager.CallSpecialEvents<float>("OnAttack01Enemy", SetDamageEnemy);
         EventsManager.CallSpecialEvents<float>("OnAttack02Enemy", SetDamageEnemy);
         EventsManager.CallSpecialEvents<float>("OnAttack03Enemy", SetDamageEnemy);
+        EventsManager.CallSpecialEvents<float>("OnBeastAttackEnemy", SetDamageEnemy);
     }
 
     private void Start()
@@ -96,6 +98,7 @@ public class Enemy : HittableElement
         EventsManager.StopCallSpecialEvents<float>("OnAttack01Enemy", SetDamageEnemy);
         EventsManager.StopCallSpecialEvents<float>("OnAttack02Enemy", SetDamageEnemy);
         EventsManager.StopCallSpecialEvents<float>("OnAttack03Enemy", SetDamageEnemy);
+        EventsManager.StopCallSpecialEvents<float>("OnBeastAttackEnemy", SetDamageEnemy);
     }
 
     private void Update()
@@ -124,10 +127,11 @@ public class Enemy : HittableElement
     public static float damageAmount = 0f; // Debe ser estática para que todos los enemigos puedan acceder al cambio de parámetro de daño del evento.
     public override void OnHit()
     {
+        anim.SetTrigger("Damage");
         ApplyDamageToEnemy();
     }
 
-    // Function called from Player script
+    // Function called from events
     public void SetDamageEnemy (float _damageAmount)
     {
         damageAmount = _damageAmount;        
@@ -147,11 +151,13 @@ public class Enemy : HittableElement
     public void Die()
     {
         Debug.Log("Enemigo muerto");
-        MoveEnemy(Vector3.zero);
+        if(agent.enabled)
+            agent.ResetPath();
         // TODO: anim.SetBool("isDead", true);
         // TODO: play enemy death sound depending on enemy
         // TODO: character deactivation (collider, script...)
-        Destroy(this.gameObject, 1f); // TEMP
+        beast?.OnEnemyExit(gameObject);
+        Destroy(gameObject, 0.5f); // TEMP
     }
     #endregion
 

@@ -46,13 +46,9 @@ public class EnemyTargetDetectionFuzzyLogic : EnemyTargetDetectionSOBase
     {
         float distPlayer = Mathf.Sqrt(distanceToPlayerSQR);
         float distBeast = Mathf.Sqrt(distanceToBeastSQR);
-        Debug.Log($"Beast health percentage is: {beastHealthPercentage}");
-        Debug.Log($"Deistance to beast is: {distBeast}");
 
         float priorityPlayer = fuzzy.EvaluatePriority(distPlayer, playerHealthPercentage);
         float priorityBeast = fuzzy.EvaluatePriority(distBeast, beastHealthPercentage);
-
-        Debug.Log($"Prioridad Player: {priorityPlayer}, Prioridad Bestia: {priorityBeast}");
 
         return priorityPlayer >= priorityBeast;// True if target is player, false if target is Beast
     }

@@ -48,7 +48,6 @@ public class FuzzyEvaluator
             weightedSum += weight * priority;
             totalWeight += weight;
         }
-        Debug.Log($"Total weight is: {totalWeight}");
         return (totalWeight == 0f) ? 0f : weightedSum / totalWeight;
     }
 
