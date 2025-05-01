@@ -12,8 +12,9 @@ public class AttackCombatTarget : Node, ICoroutineNode
     private bool _isRunning = false;
     private bool _hasFinished = false;
 
+    private bool _isAttackNormal = true;
     private float _distanceToHit = 5f;
-    private float _attackDamage = 15f;
+    private float _attackDamage = 0f;
 
     public AttackCombatTarget(Blackboard blackboard, Beast beast)
     {
@@ -31,10 +32,9 @@ public class AttackCombatTarget : Node, ICoroutineNode
             _beast.agent.ResetPath(); // TODO: si hay que reposicionar a la bestia se haría aquí
 
             _beast.anim.SetBool("isWalking", false);
-            _beast.anim.SetBool("isAttackingSwipe", true);
 
-            Debug.Log("Starting to attack");
             Attack();
+
             _beast.StartNewCoroutine(Attacking(1f), this);
         }
 
@@ -91,6 +91,8 @@ public class AttackCombatTarget : Node, ICoroutineNode
         if (!_blackboard.TryGetValue("targetForCombat", out GameObject enemy))
             return;
 
+        SetAttackRandom();
+
         Transform targetTransform = enemy.transform;
         float distanceToTargetSQR = (_beast.transform.position - targetTransform.position).sqrMagnitude;
 
@@ -101,9 +103,20 @@ public class AttackCombatTarget : Node, ICoroutineNode
             EventsManager.TriggerSpecialEvent<float>("OnBeastAttackEnemy", _attackDamage);
             enemy.GetComponent<Enemy>().OnHit();
         }
+    }
+
+    private void SetAttackRandom()
+    {
+        _isAttackNormal = Random.Range(0, 5) > 0; // 20% de probabilidad de realizar ataque especial
+        if (_isAttackNormal)
+        {
+            _beast.anim.SetBool("isAttackingSwipe", true);
+            _attackDamage = _beast.swipeAttackDamage;
+        }
         else
         {
-            Debug.Log("Enemy too far away");
+            _beast.anim.SetBool("isAttackingBite", true);
+            _attackDamage = _beast.biteAttackDamage;
         }
     }
 
@@ -112,6 +125,7 @@ public class AttackCombatTarget : Node, ICoroutineNode
         if (_hasFinished) return;
 
         _beast.anim.SetBool("isAttackingSwipe", false);
+        _beast.anim.SetBool("isAttackingBite", false);
 
         _blackboard.SetValue("reachedCombatTarget", false);
         _blackboard.SetValue("isCoroutineActive", false);

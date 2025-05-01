@@ -151,12 +151,13 @@ public class Enemy : HittableElement
     public void Die()
     {
         Debug.Log("Enemigo muerto");
-        MoveEnemy(Vector3.zero);
+        if(agent.enabled)
+            agent.ResetPath();
         // TODO: anim.SetBool("isDead", true);
         // TODO: play enemy death sound depending on enemy
         // TODO: character deactivation (collider, script...)
         beast?.OnEnemyExit(gameObject);
-        Destroy(gameObject, 1f); // TEMP
+        Destroy(gameObject, 0.5f); // TEMP
     }
     #endregion
 
