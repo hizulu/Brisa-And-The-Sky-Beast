@@ -29,6 +29,12 @@ public class BeastCombatState : BeastState
     }
     public override void OnExit(Beast beast)
     {
+        beast.anim.SetBool("isAttackingSwipe", false);
+
+        blackboard.ClearKey("targetForCombat");
+        blackboard.SetValue("reachedCombatTarget", false);
+        blackboard.SetValue("attacked", false);
+
         Debug.Log("Beast has leaved combat state");
     }
 

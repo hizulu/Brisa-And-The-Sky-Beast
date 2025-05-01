@@ -9,9 +9,11 @@ public class AttackCombatTarget : Node, ICoroutineNode
 {
     private Blackboard _blackboard;
     private Beast _beast;
-
     private bool _isRunning = false;
     private bool _hasFinished = false;
+
+    private float _distanceToHit = 3f;
+    private float _attackDamage = 15f;
 
     public AttackCombatTarget(Blackboard blackboard, Beast beast)
     {
@@ -32,6 +34,7 @@ public class AttackCombatTarget : Node, ICoroutineNode
             _beast.anim.SetBool("isAttackingSwipe", true);
 
             Debug.Log("Starting to attack");
+            Attack();
             _beast.StartNewCoroutine(Attacking(1f), this);
         }
 
@@ -51,14 +54,56 @@ public class AttackCombatTarget : Node, ICoroutineNode
 
     private IEnumerator Attacking(float duration)
     {
+        if (!_blackboard.TryGetValue("targetForCombat", out GameObject enemy))
+        {
+            Debug.LogWarning("No targetForCombat en blackboard");
+            yield break;
+        }
+
+        Transform targetTransform = enemy.transform;
         float elapsed = 0f;
+
         while (elapsed < duration)
         {
+            // Dirección sin componente vertical
+            Vector3 directionToTarget = targetTransform.position - _beast.transform.position;
+            directionToTarget.y = 0f;
+
+            if (directionToTarget.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+                _beast.transform.rotation = Quaternion.Slerp(
+                    _beast.transform.rotation,
+                    targetRotation,
+                    Time.deltaTime * 10f
+                );
+            }
+
             elapsed += Time.deltaTime;
             yield return null;
         }
 
         OnCoroutineEnd();
+    }
+
+    private void Attack()
+    {
+        if (!_blackboard.TryGetValue("targetForCombat", out GameObject enemy))
+            return;
+
+        Transform targetTransform = enemy.transform;
+        float distanceToTargetSQR = (_beast.transform.position - targetTransform.position).sqrMagnitude;
+
+        // Golpea al objetivo
+        if (distanceToTargetSQR < _distanceToHit * _distanceToHit)
+        {
+            Debug.Log("Hits enemy");
+            EventsManager.TriggerSpecialEvent<float>("OnBeastAttackEnemy", _attackDamage);
+        }
+        else
+        {
+            Debug.Log("Enemy too far away");
+        }
     }
 
     public void OnCoroutineEnd()

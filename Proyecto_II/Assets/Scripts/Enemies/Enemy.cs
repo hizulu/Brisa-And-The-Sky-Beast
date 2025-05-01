@@ -97,8 +97,6 @@ public class Enemy : HittableElement
         EventsManager.StopCallSpecialEvents<float>("OnAttack01Enemy", SetDamageEnemy);
         EventsManager.StopCallSpecialEvents<float>("OnAttack02Enemy", SetDamageEnemy);
         EventsManager.StopCallSpecialEvents<float>("OnAttack03Enemy", SetDamageEnemy);
-
-        beast?.OnEnemyExit(this.gameObject);
     }
 
     private void Update()
@@ -127,6 +125,7 @@ public class Enemy : HittableElement
     public static float damageAmount = 0f; // Debe ser estática para que todos los enemigos puedan acceder al cambio de parámetro de daño del evento.
     public override void OnHit()
     {
+        anim.SetTrigger("Damage");
         ApplyDamageToEnemy();
     }
 
@@ -154,7 +153,8 @@ public class Enemy : HittableElement
         // TODO: anim.SetBool("isDead", true);
         // TODO: play enemy death sound depending on enemy
         // TODO: character deactivation (collider, script...)
-        Destroy(this.gameObject, 1f); // TEMP
+        beast?.OnEnemyExit(gameObject);
+        Destroy(gameObject, 1f); // TEMP
     }
     #endregion
 
