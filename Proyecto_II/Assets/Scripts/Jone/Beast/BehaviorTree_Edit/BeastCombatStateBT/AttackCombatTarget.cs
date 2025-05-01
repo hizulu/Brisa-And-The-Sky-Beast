@@ -12,7 +12,7 @@ public class AttackCombatTarget : Node, ICoroutineNode
     private bool _isRunning = false;
     private bool _hasFinished = false;
 
-    private float _distanceToHit = 3f;
+    private float _distanceToHit = 5f;
     private float _attackDamage = 15f;
 
     public AttackCombatTarget(Blackboard blackboard, Beast beast)
@@ -99,6 +99,7 @@ public class AttackCombatTarget : Node, ICoroutineNode
         {
             Debug.Log("Hits enemy");
             EventsManager.TriggerSpecialEvent<float>("OnBeastAttackEnemy", _attackDamage);
+            enemy.GetComponent<Enemy>().OnHit();
         }
         else
         {

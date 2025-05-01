@@ -530,7 +530,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.8490566
+        value: 0.8
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -538,8 +538,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.5
-        value: 0.3301887
+        time: 0.41666666
+        value: 0.1792453
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -548,7 +548,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.7083333
-        value: 0.8490566
+        value: 0.8
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -558,10 +558,10 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: material._BaseColor.r
+    attribute: animatedColor.r
     path: SlimeModel
-    classID: 137
-    script: {fileID: 0}
+    classID: 114
+    script: {fileID: 11500000, guid: e52a55e10944b324f9d45d0410bf786b, type: 3}
     flags: 0
   - serializedVersion: 2
     curve:
@@ -577,8 +577,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.5
-        value: 0.21960664
+        time: 0.41666666
+        value: 0.15641688
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -597,10 +597,10 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: material._BaseColor.g
+    attribute: animatedColor.g
     path: SlimeModel
-    classID: 137
-    script: {fileID: 0}
+    classID: 114
+    script: {fileID: 11500000, guid: e52a55e10944b324f9d45d0410bf786b, type: 3}
     flags: 0
   - serializedVersion: 2
     curve:
@@ -608,7 +608,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.37874573
+        value: 0.35686275
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -616,8 +616,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.5
-        value: 0.26903734
+        time: 0.41666666
+        value: 0.16679345
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -626,7 +626,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.7083333
-        value: 0.38039216
+        value: 0.35686275
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -636,10 +636,10 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: material._BaseColor.b
+    attribute: animatedColor.b
     path: SlimeModel
-    classID: 137
-    script: {fileID: 0}
+    classID: 114
+    script: {fileID: 11500000, guid: e52a55e10944b324f9d45d0410bf786b, type: 3}
     flags: 0
   - serializedVersion: 2
     curve:
@@ -647,15 +647,6 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
@@ -675,10 +666,10 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: material._BaseColor.a
+    attribute: animatedColor.a
     path: SlimeModel
-    classID: 137
-    script: {fileID: 0}
+    classID: 114
+    script: {fileID: 11500000, guid: e52a55e10944b324f9d45d0410bf786b, type: 3}
     flags: 0
   m_PPtrCurves: []
   m_SampleRate: 24
@@ -726,28 +717,28 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
       path: 2792654097
-      attribute: 1136458424
-      script: {fileID: 0}
-      typeID: 137
-      customType: 22
+      attribute: 702150357
+      script: {fileID: 11500000, guid: e52a55e10944b324f9d45d0410bf786b, type: 3}
+      typeID: 114
+      customType: 0
       isPPtrCurve: 0
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
       path: 2792654097
-      attribute: 1404893880
-      script: {fileID: 0}
-      typeID: 137
-      customType: 22
+      attribute: 1141117502
+      script: {fileID: 11500000, guid: e52a55e10944b324f9d45d0410bf786b, type: 3}
+      typeID: 114
+      customType: 0
       isPPtrCurve: 0
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
       path: 2792654097
-      attribute: 1673329336
-      script: {fileID: 0}
-      typeID: 137
-      customType: 22
+      attribute: 879683249
+      script: {fileID: 11500000, guid: e52a55e10944b324f9d45d0410bf786b, type: 3}
+      typeID: 114
+      customType: 0
       isPPtrCurve: 0
       isIntCurve: 0
       isSerializeReferenceCurve: 0
@@ -825,10 +816,10 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
       path: 2792654097
-      attribute: 1941764792
-      script: {fileID: 0}
-      typeID: 137
-      customType: 22
+      attribute: 2909255435
+      script: {fileID: 11500000, guid: e52a55e10944b324f9d45d0410bf786b, type: 3}
+      typeID: 114
+      customType: 0
       isPPtrCurve: 0
       isIntCurve: 0
       isSerializeReferenceCurve: 0
@@ -2780,7 +2771,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.8490566
+        value: 0.8
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2788,8 +2779,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.5
-        value: 0.3301887
+        time: 0.41666666
+        value: 0.1792453
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2798,7 +2789,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.7083333
-        value: 0.8490566
+        value: 0.8
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2808,10 +2799,10 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: material._BaseColor.r
+    attribute: animatedColor.r
     path: SlimeModel
-    classID: 137
-    script: {fileID: 0}
+    classID: 114
+    script: {fileID: 11500000, guid: e52a55e10944b324f9d45d0410bf786b, type: 3}
     flags: 0
   - serializedVersion: 2
     curve:
@@ -2827,8 +2818,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.5
-        value: 0.21960664
+        time: 0.41666666
+        value: 0.15641688
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2847,10 +2838,10 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: material._BaseColor.g
+    attribute: animatedColor.g
     path: SlimeModel
-    classID: 137
-    script: {fileID: 0}
+    classID: 114
+    script: {fileID: 11500000, guid: e52a55e10944b324f9d45d0410bf786b, type: 3}
     flags: 0
   - serializedVersion: 2
     curve:
@@ -2858,7 +2849,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.37874573
+        value: 0.35686275
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2866,8 +2857,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.5
-        value: 0.26903734
+        time: 0.41666666
+        value: 0.16679345
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2876,7 +2867,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.7083333
-        value: 0.38039216
+        value: 0.35686275
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2886,10 +2877,10 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: material._BaseColor.b
+    attribute: animatedColor.b
     path: SlimeModel
-    classID: 137
-    script: {fileID: 0}
+    classID: 114
+    script: {fileID: 11500000, guid: e52a55e10944b324f9d45d0410bf786b, type: 3}
     flags: 0
   - serializedVersion: 2
     curve:
@@ -2897,15 +2888,6 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2925,10 +2907,10 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: material._BaseColor.a
+    attribute: animatedColor.a
     path: SlimeModel
-    classID: 137
-    script: {fileID: 0}
+    classID: 114
+    script: {fileID: 11500000, guid: e52a55e10944b324f9d45d0410bf786b, type: 3}
     flags: 0
   m_EulerEditorCurves:
   - serializedVersion: 2

@@ -48,31 +48,6 @@ public class BeastCombatState : BeastState
                 new AttackCombatTarget(blackboard, beast)),
             new CheckFlag(blackboard, "attacked",
                 new CooldownForCombat(blackboard, beast, 3f))
-
-            //new CheckFlag(blackboard, "goToPlayer",
-            //    new GoToPlayer(blackboard, beast, playerTransform, beast.arrivalThreshold)),
-            //new CheckFlag(blackboard, "reachedPlayer",
-            //    new WaitForOrder(blackboard, beast, playerTransform, beast.interactionThreshold, 8f)),
-            //new CheckFlag(blackboard, "menuOpened",
-            //    new Selector (new List<Node>
-            //    {
-            //        new CheckFlag(blackboard, "isOptionPet",
-            //            new PetBeast(blackboard, beast)),
-            //        new CheckFlag(blackboard, "isOptionHeal",
-            //            new HealBeast(blackboard, beast, beast.healingAmount)),
-            //        new CheckFlag(blackboard, "isOptionAttack",
-            //            new TransitionToBeastState(beast, new BeastCombatState())),
-            //        new CheckFlag(blackboard, "isOptionMount",
-            //            new TransitionToBeastState(beast, new BeastMountedState())),
-            //        new CheckFlag(blackboard, "isOptionAction",
-            //            new SpecificActions(blackboard, beast)),
-            //        new AlwaysTrue()
-            //    })),
-            //new Sequence(new List<Node>
-            //{
-            //    new IdleBehavior(blackboard, beast, 40f, 20f),
-            //    new TransitionToBeastState(beast, new BeastFreeState())
-            //})
         });
     }
 }

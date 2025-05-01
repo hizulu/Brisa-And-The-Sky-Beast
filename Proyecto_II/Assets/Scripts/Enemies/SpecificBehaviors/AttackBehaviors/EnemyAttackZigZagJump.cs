@@ -21,12 +21,12 @@ public class EnemyAttackZigZagJump : EnemyStateSOBase
     [SerializeField] private float attackDamage = 20f; // Daño que realiza el enemigo al objetivo con este ataque
     [SerializeField] private float distanceToStopAttackState = 8f; // Distancia a la que se tiene que encontrar el objetivo para salir del estado de ataque
 
-    [SerializeField] private float jumpDuration = 0.6f; // Tiempo que debe durar cada salto
-    [SerializeField] private float jumpHeight = 1.5f; // Desplazamiento vertical máximo en la simulación de salto
-    [SerializeField] private float lateralOffset = 2f; // Desplazamiento lateral máximo de forma perpendicular a la dirección del objetivo
-    [SerializeField] private float stopDistance = 0.5f; // Distancia del objetivo a la que debe parar el salto final
+    [SerializeField] private float jumpDuration = 0.8f; // Tiempo que debe durar cada salto
+    [SerializeField] private float jumpHeight = 1f; // Desplazamiento vertical máximo en la simulación de salto
+    [SerializeField] private float lateralOffset = 1.5f; // Desplazamiento lateral máximo de forma perpendicular a la dirección del objetivo
     [SerializeField] private float distanceToHit = 2f; // Distancia a la que se tiene que encontrar el objetivo para recibir el ataque
 
+    private float stopDistance = 0.5f;
     private Transform targetTransform; // Variable auxiliar para definir el objetivo
 
     private bool isAttacking = false;
@@ -81,10 +81,12 @@ public class EnemyAttackZigZagJump : EnemyStateSOBase
         if (enemy.targetIsPlayer)
         {
             targetTransform = playerTransform;
+            stopDistance = 0.5f;
         }
         else
         {
             targetTransform = beastTransform;
+            stopDistance = 1.5f;
         }
     }
     /*
@@ -137,13 +139,32 @@ public class EnemyAttackZigZagJump : EnemyStateSOBase
         while (elapsedTime < jumpDuration)
         {
             float t = elapsedTime / jumpDuration;
-            Vector3 position = Vector3.Lerp(start, end, t); // Movimiento interpolado linealmente entre ambos puntos
-            position.y += Mathf.Sin(t * Mathf.PI) * height; // Simulación del cambio de altura en arco
-            enemy.transform.position = position; // Mueve al enemigo
+            Vector3 position = Vector3.Lerp(start, end, t);
+            position.y += Mathf.Sin(t * Mathf.PI) * height;
+
+            // Apunta al target durante el salto (horizontalmente)
+            Vector3 lookDirection = (targetTransform.position - enemy.transform.position);
+            lookDirection.y = 0f; // Elimina componente vertical
+            if (lookDirection.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, Time.deltaTime * 10f);
+            }
+
+            enemy.transform.position = position;
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        enemy.transform.position = end; // Asegurar la posición final del enemigo
+
+        // Asegura orientación final tras el salto
+        Vector3 finalDirection = (targetTransform.position - end);
+        finalDirection.y = 0f;
+        if (finalDirection.sqrMagnitude > 0.01f)
+        {
+            enemy.transform.rotation = Quaternion.LookRotation(finalDirection);
+        }
+
+        enemy.transform.position = end;
     }
 
     /*

@@ -76,6 +76,7 @@ public class Enemy : HittableElement
         EventsManager.CallSpecialEvents<float>("OnAttack01Enemy", SetDamageEnemy);
         EventsManager.CallSpecialEvents<float>("OnAttack02Enemy", SetDamageEnemy);
         EventsManager.CallSpecialEvents<float>("OnAttack03Enemy", SetDamageEnemy);
+        EventsManager.CallSpecialEvents<float>("OnBeastAttackEnemy", SetDamageEnemy);
     }
 
     private void Start()
@@ -97,6 +98,7 @@ public class Enemy : HittableElement
         EventsManager.StopCallSpecialEvents<float>("OnAttack01Enemy", SetDamageEnemy);
         EventsManager.StopCallSpecialEvents<float>("OnAttack02Enemy", SetDamageEnemy);
         EventsManager.StopCallSpecialEvents<float>("OnAttack03Enemy", SetDamageEnemy);
+        EventsManager.StopCallSpecialEvents<float>("OnBeastAttackEnemy", SetDamageEnemy);
     }
 
     private void Update()
@@ -129,7 +131,7 @@ public class Enemy : HittableElement
         ApplyDamageToEnemy();
     }
 
-    // Function called from Player script
+    // Function called from events
     public void SetDamageEnemy (float _damageAmount)
     {
         damageAmount = _damageAmount;        
