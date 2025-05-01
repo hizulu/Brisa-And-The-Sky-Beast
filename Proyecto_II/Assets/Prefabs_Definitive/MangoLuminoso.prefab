@@ -1,5 +1,74 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &990949628117316003
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3819261590196578901}
+  - component: {fileID: 6541386870779015073}
+  - component: {fileID: 3742139602580091726}
+  m_Layer: 0
+  m_Name: ColliderOutline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3819261590196578901
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990949628117316003}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -9.3132246e-10, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.0500002, y: 2.0500002, z: 2.0500002}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2498268502582333856}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &6541386870779015073
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990949628117316003}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 10
+  m_Center: {x: 2.249722, y: 0, z: -0.1436885}
+--- !u!114 &3742139602580091726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990949628117316003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2958bf9ca163f040ab336fb9187d60e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 8358382844407218241}
+  farColor: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
+  farSize: 0.1
 --- !u!1 &5053284680726284276
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,6 +104,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7184890901762898734}
+  - {fileID: 3819261590196578901}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4173355561530142379
@@ -64,7 +134,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4675697791901275679
 MonoBehaviour:
@@ -78,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8427acc216e49e4d87d63245c7931df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlineDetector: {fileID: 3742139602580091726}
 --- !u!114 &7125647562030145256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,5 +262,10 @@ PrefabInstance:
 --- !u!4 &7184890901762898734 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 653a9b51d32d8214f900c2f8f5eb7b16, type: 3}
+  m_PrefabInstance: {fileID: 7223603688365759685}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8358382844407218241 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 653a9b51d32d8214f900c2f8f5eb7b16, type: 3}
   m_PrefabInstance: {fileID: 7223603688365759685}
   m_PrefabAsset: {fileID: 0}
