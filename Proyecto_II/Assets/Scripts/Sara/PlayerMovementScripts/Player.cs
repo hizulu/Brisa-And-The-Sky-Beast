@@ -116,17 +116,12 @@ public class Player : MonoBehaviour
 
     public void OpenCloseMapPanel(InputAction.CallbackContext context)
     {
-        if (mapManager == null)
-        {
-            Debug.LogError("mapManager is null! Please assign it in the inspector.");
-            return;
-        }
         mapManager.OpenCloseMapPanel(context);
     }
 
-        #region Métodos temporales (No se sabe si se quedarán en el script de Player o se moverán).
+    #region Métodos temporales (No se sabe si se quedarán en el script de Player o se moverán).
 
-        public void GolpearPrueba()
+    public void GolpearPrueba()
     {
         StartCoroutine(EnableHitBox());
     }
