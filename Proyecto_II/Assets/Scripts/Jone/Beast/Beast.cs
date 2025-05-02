@@ -264,7 +264,7 @@ public class Beast : MonoBehaviour
         Debug.Log("Beast has been damaged");
         if (currentHealth < Mathf.Epsilon)
         {
-            blackboard.SetValue("beastIsHalfDead", true);
+            blackboard.SetValue("isHalfDead", true);
             TransitionToState(new BeastHalfDeadState());
         }
     }
