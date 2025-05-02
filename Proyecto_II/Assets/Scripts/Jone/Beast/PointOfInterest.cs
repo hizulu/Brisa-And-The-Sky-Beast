@@ -52,6 +52,11 @@ public class PointOfInterest : MonoBehaviour
         return currentInterest;
     }
 
+    public InterestType GetInterestType()
+    {
+        return interestType;
+    }
+
     public void ConsumeInterest()
     {
         currentInterest = 0;
