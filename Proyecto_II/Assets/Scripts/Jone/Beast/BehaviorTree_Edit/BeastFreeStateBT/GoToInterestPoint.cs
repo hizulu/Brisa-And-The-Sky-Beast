@@ -44,7 +44,7 @@ public class GoToInterestPoint : Node
 
         float distance = Vector3.Distance(_transform.position, _target.transform.position);
 
-        if (distance < _arrivalThreshold)
+        if (distance < _arrivalThreshold + 2)
             return ArriveAtTarget();
 
         UpdateDestinationIfNeeded(_target);
@@ -68,6 +68,7 @@ public class GoToInterestPoint : Node
         }
         else
         {
+            Debug.Log("Consume interés en objeto");
             _pointOfInterest.ConsumeInterest();
         }
         _blackboard.SetValue("reachedTarget", true);

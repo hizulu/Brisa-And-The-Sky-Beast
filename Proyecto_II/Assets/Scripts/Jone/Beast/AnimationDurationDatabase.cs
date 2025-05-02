@@ -5,7 +5,7 @@ using UnityEngine;
 // Jone Sainz Egea
 // 02/05/2025
 // Singleton que guarda la duración de animaciones por nombre a partir de un AnimatorController
-public class AnimationDurationDatabase : MonoBehaviour
+public class AnimationDurationDatabase
 {
     private static AnimationDurationDatabase _instance;
     public static AnimationDurationDatabase Instance => _instance ??= new AnimationDurationDatabase();

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Jone Sainz Egea
+// 02/05/2025
 public class Stretch : Node, ICoroutineNode
 {
     private Blackboard _blackboard;
@@ -12,11 +14,10 @@ public class Stretch : Node, ICoroutineNode
     private bool _isRunning = false;
     private bool _hasFinished = false;
 
-    public Stretch(Blackboard blackboard, Beast beast, float duration)
+    public Stretch(Blackboard blackboard, Beast beast)
     {
         _blackboard = blackboard;
         _beast = beast;
-        _duration = duration;
     }
 
     public override NodeState Evaluate()
@@ -30,6 +31,9 @@ public class Stretch : Node, ICoroutineNode
 
             _beast.anim.SetBool("isWalking", false);
             _beast.anim.SetTrigger("stretch");
+            Debug.Log("stretch triggered");
+
+            _duration = AnimationDurationDatabase.Instance.GetClipDuration("Beast_Stretch");
 
             _beast.StartNewCoroutine(Stretching(_duration), this);
         }
@@ -63,8 +67,6 @@ public class Stretch : Node, ICoroutineNode
         if (_hasFinished) return;
 
         _blackboard.SetValue("isCoroutineActive", false);
-
-        Debug.Log("Doing Idle");
 
         _hasFinished = true;
     }

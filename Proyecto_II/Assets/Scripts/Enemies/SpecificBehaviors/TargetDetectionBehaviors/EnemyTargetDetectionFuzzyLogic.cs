@@ -38,7 +38,6 @@ public class EnemyTargetDetectionFuzzyLogic : EnemyTargetDetectionSOBase
         }
 
         // No target detected within detection range
-        Debug.Log("No target detected within detection range");
         return false;
     }
 

@@ -54,6 +54,8 @@ public class Beast : MonoBehaviour
 
         currentHealth = maxHealth;
 
+        AnimationDurationDatabase.Instance.RegisterAnimatorClips(anim.runtimeAnimatorController);
+
         detectionCollider = GetComponentInChildren<SphereCollider>();
 
         if (detectionCollider == null)
