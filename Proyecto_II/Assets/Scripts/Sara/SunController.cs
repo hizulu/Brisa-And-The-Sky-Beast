@@ -65,7 +65,7 @@ public class SunController : MonoBehaviour
 
             double percentage = timeSinceSunrise.TotalMinutes / sunriseToSunsetDuration.TotalMinutes;
 
-            sunLightRot = Mathf.Lerp(90, -90, (float)percentage);
+            sunLightRot = Mathf.Lerp(0, 180, (float)percentage);
         }
         else
         {
@@ -74,10 +74,10 @@ public class SunController : MonoBehaviour
 
             double percentage = timeSinceSunset.TotalMinutes / sunsetToSunriseDuration.TotalMinutes;
 
-            sunLightRot = Mathf.Lerp(-90, -270, (float)percentage);
+            sunLightRot = Mathf.Lerp(180, 360, (float)percentage);
         }
 
-        sun.transform.rotation = Quaternion.Euler(0, 90, 0) * Quaternion.AngleAxis(sunLightRot, Vector3.left);
+        sun.transform.rotation = Quaternion.AngleAxis(sunLightRot, Vector3.right);
     }
 
     private void UpdateLightSettings()
