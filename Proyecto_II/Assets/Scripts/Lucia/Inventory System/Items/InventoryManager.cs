@@ -227,27 +227,4 @@ public class InventoryManager : MonoBehaviour
             slot.DeselectItem(); // Desactiva la selección de cada slot
         }
     }
-
-    #region MÉTODOS ANTIGUOS MODIFICADOS
-
-    //public void OpenCloseInventory()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.F))
-    //    {
-    //        inventoryEnabled = !inventoryEnabled;
-    //        inventoryMenu.SetActive(inventoryEnabled);
-    //        Time.timeScale = inventoryEnabled ? 0 : 1;
-    //    }        
-    //}
-    //public void CloseInventory()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Escape) && inventoryEnabled)
-    //    {
-    //        inventoryEnabled = false;
-    //        inventoryMenu.SetActive(false);
-    //        Time.timeScale = 1;
-    //    }
-    //}
-
-    #endregion
 }

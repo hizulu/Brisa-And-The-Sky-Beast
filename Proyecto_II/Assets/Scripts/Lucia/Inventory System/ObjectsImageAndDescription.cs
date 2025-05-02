@@ -18,6 +18,22 @@ public class ObjectsImageAndDescription : MonoBehaviour
     [SerializeField] private TMP_Text objectDescriptionText;
     [SerializeField] private TMP_Text objectNameText;
 
+    #region Singleton
+    public static ObjectsImageAndDescription Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    #endregion
+
     private void Start()
     {
         ClearDisplay();
