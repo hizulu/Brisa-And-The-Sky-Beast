@@ -185,7 +185,7 @@ public class PlayerGroundedState : PlayerMovementState
     protected virtual void SprintStart(InputAction.CallbackContext context)
     {
         //Debug.Log("Estás sprintando");
-        if (stateMachine.CurrentState is PlayerIdleState) return;
+        if (stateMachine.CurrentState is PlayerIdleState || stateMachine.CurrentState is PlayerRideBeastState) return;
 
         stateMachine.ChangeState(stateMachine.SprintState);
     }
