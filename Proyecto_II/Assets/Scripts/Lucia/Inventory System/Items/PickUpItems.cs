@@ -15,44 +15,20 @@ using UnityEngine.InputSystem;
 public class PickUpItems : MonoBehaviour
 {
     #region Variables
+    [Header("Configuración")]
+    [SerializeField] private OutlineDetector outlineDetector;
+
     private bool playerInRange = false;
     private Item itemScript;
     private ItemData itemData;
-    private Renderer outline;
-    private Material outlineMaterial;
     private Player player;
-    private Color outlineOriginalColor;
-    private Color highlightColor=Color.white;
     #endregion
 
     void Start()
     {
         player = FindObjectOfType<Player>();
-        outline = GetComponentInChildren<Renderer>();
         itemScript = GetComponent<Item>();
 
-        // Se instancia un material nuevo para evitar cambios en materiales compartidos.
-        if (outline != null && outline.materials.Length > 0)
-        {
-            outlineMaterial = outline.materials[outline.materials.Length - 1];
-
-            outlineMaterial = new Material(outlineMaterial);
-
-            Material[] materials = outline.materials;
-            materials[materials.Length - 1] = outlineMaterial;
-            outline.materials = materials;
-
-            outlineOriginalColor = outlineMaterial.color;
-
-            if (outlineMaterial.HasProperty("_Size"))
-            {
-                outlineMaterial.SetFloat("_Size", 0.01f);
-            }
-        }
-        else
-        {
-            Debug.LogError("No se encontró Renderer o materiales en el objeto o sus hijos");
-        }
 
         player.PlayerInput.UIPanelActions.PickUpItem.performed += PickUpItem; // Suscribirse a la acción de recoger objetos.
     }
@@ -67,7 +43,7 @@ public class PickUpItems : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-            ChangeOutline(highlightColor, 0.1f); // Cambiar el color y el tamaño del outline.
+            outlineDetector.HighlightForPickup(true);
             Debug.Log("Player in range");
         }
     }
@@ -77,7 +53,7 @@ public class PickUpItems : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            ChangeOutline(outlineOriginalColor, 0.01f);
+            outlineDetector.HighlightForPickup(false);
             Debug.Log("Player out of range");
         }
     }
@@ -87,40 +63,7 @@ public class PickUpItems : MonoBehaviour
         if (playerInRange && itemScript != null)
         {
             itemScript.CollectItem();
-            ChangeOutline(outlineOriginalColor, 0.01f);
             EventsManager.TriggerNormalEvent("PickUpItem");
-        }
-    }
-
-    private void ChangeOutline(Color newColor, float outlineSize)
-    {
-        if (outlineMaterial != null)
-        {
-            Debug.Log($"Cambiando outline - Color: {newColor}, Tamaño: {outlineSize}");
-
-            // Cambiar el color
-            if (outlineMaterial.HasProperty("_Color"))
-            {
-                outlineMaterial.color = newColor;
-            }
-            else
-            {
-                Debug.LogWarning("El material no tiene una propiedad '_Color'");
-            }
-
-            // Cambiar el tamaño del outline
-            if (outlineMaterial.HasProperty("_Size"))
-            {
-                outlineMaterial.SetFloat("_Size", outlineSize);
-            }
-            else
-            {
-                Debug.LogWarning("El material no tiene una propiedad '_Size'");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("No se encontró el material del outline");
         }
     }
 }

@@ -13,42 +13,19 @@ using UnityEngine;
 public class PickUpWeapons : MonoBehaviour
 {
     #region Variables
-    private bool playerInRange = false;
-    private Weapon weaponScript;
-    private Renderer outline;
-    private Material outlineMaterial;
-    private Player player;
-    private Color outlineOriginalColor;
-    private Color highlightColor = Color.white;
-
+    [Header("Configuración")]
+    [SerializeField] private OutlineDetector outlineDetector;
     [SerializeField] private WeaponSlot weaponSlot;
+
+    private bool playerInRange = false;
+    private Player player;
+    private Weapon weaponScript;
     #endregion
 
     void Start()
     {
         player = FindObjectOfType<Player>();
-        outline = GetComponentInChildren<Renderer>();
         weaponScript = GetComponent<Weapon>();
-
-        if (outline != null && outline.materials.Length > 0)
-        {
-            outlineMaterial = outline.materials[outline.materials.Length - 1];
-            outlineMaterial = new Material(outlineMaterial);
-            Material[] materials = outline.materials;
-            materials[materials.Length - 1] = outlineMaterial;
-            outline.materials = materials;
-
-            outlineOriginalColor = outlineMaterial.color;
-
-            if (outlineMaterial.HasProperty("_Size"))
-            {
-                outlineMaterial.SetFloat("_Size", 0.01f);
-            }
-        }
-        else
-        {
-            Debug.LogError("No se encontró Renderer o materiales en el objeto o sus hijos");
-        }
 
         player.PlayerInput.UIPanelActions.PickUpItem.performed += PickUpWeapon;
     }
@@ -63,8 +40,7 @@ public class PickUpWeapons : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-            ChangeOutline(highlightColor, 0.1f);
-            Debug.Log("Player in range");
+            outlineDetector.HighlightForPickup(true); // Destacar fuerte
         }
     }
 
@@ -73,8 +49,7 @@ public class PickUpWeapons : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            ChangeOutline(outlineOriginalColor, 0.01f);
-            //Debug.Log("Player out of range");
+            outlineDetector.HighlightForPickup(false); // Volver a tenue
         }
     }
 
@@ -84,7 +59,6 @@ public class PickUpWeapons : MonoBehaviour
         {
             // Recoger el arma
             weaponScript.CollectWeapon();
-            ChangeOutline(outlineOriginalColor, 0.01f);
 
             // Si el jugador ya tiene un arma equipada, reemplázala
             if (weaponSlot.HasWeapon())
@@ -102,23 +76,6 @@ public class PickUpWeapons : MonoBehaviour
                 player.PaloRecogido();
 
             Debug.Log("Palo collected");
-        }
-    }
-
-    private void ChangeOutline(Color newColor, float outlineSize)
-    {
-        if (outlineMaterial != null)
-        {
-            outlineMaterial.color = newColor;
-
-            if (outlineMaterial.HasProperty("_Size"))
-            {
-                outlineMaterial.SetFloat("_Size", outlineSize);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("No se encontró el material del outline");
         }
     }
 }

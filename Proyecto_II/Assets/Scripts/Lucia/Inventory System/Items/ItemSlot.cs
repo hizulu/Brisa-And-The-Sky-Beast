@@ -25,13 +25,10 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private int itemQuantity;
 
     public bool itemSelected = false;
-    private ObjectsImageAndDescription itemImageAndDescription;
     #endregion
 
     private void Start()
     {
-        itemImageAndDescription = FindObjectOfType<ObjectsImageAndDescription>();
-
         if (IsEmpty())
         {
             gameObject.SetActive(false);
@@ -104,13 +101,13 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     {
         itemSelected = !itemSelected;
 
-        if (itemSelected && itemImageAndDescription != null)
+        if (itemSelected && itemData != null)
         {
-            itemImageAndDescription.ItemSetImageAndDescription(itemData);
+            ObjectsImageAndDescription.Instance?.ItemSetImageAndDescription(itemData);
         }
         else
         {
-            itemImageAndDescription.ClearDisplay(); //Si se deselecciona, ocultar la descripción
+            ObjectsImageAndDescription.Instance?.ClearDisplay(); //?. sirve para evitar el error de referencia nula
         }
     }
 
@@ -118,7 +115,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public void DeselectItem()
     {
         itemSelected = false;
-        //itemImageAndDescription.ClearDisplay(); // Limpiar la descripción
+        ObjectsImageAndDescription.Instance?.ClearDisplay(); // Limpiar la descripción
     }
 
 

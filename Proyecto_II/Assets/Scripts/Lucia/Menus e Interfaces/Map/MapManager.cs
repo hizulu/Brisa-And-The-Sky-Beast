@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,78 +10,50 @@ public class MapManager : MonoBehaviour
     [Header("Input Settings")]
     [SerializeField] private PlayerInput playerInput;
 
-    private bool mapEnabled = false;
-
     private void Awake()
     {
-        if (playerInput == null)
+        // Verificación más robusta del panel
+        if (mapPanel == null)
         {
-            Debug.LogError("PlayerInput component not found!");
+            Debug.LogError("mapPanel no asignado en el Inspector!");
             return;
         }
-        if (playerInput != null)
-        {
-            playerInput.UIPanelActions.Map.performed += OpenCloseMapPanel;
-        }
-    }
+        mapPanel.SetActive(false);
 
-    private void OnDisable()
-    {
-        if (playerInput != null)
-        {
-            playerInput.UIPanelActions.Map.performed -= OpenCloseMapPanel;
-        }
     }
 
     public void OpenCloseMapPanel(InputAction.CallbackContext context)
     {
-        if (!context.performed) return;
+        if (!context.performed || mapPanel == null) return;
 
-        if (mapEnabled)
-            ClosePanel();
-        else
-            OpenPanel();
-
-        //Time.timeScale = mapEnabled ? 0f : 1f;
-    }
-
-    public void OpenPanel()
-    {
-        if (mapPanel == null)
+        if (context.control.name == "m")
         {
-            Debug.LogError("mapManager is null! Please assign it in the inspector.");
-            return;
-        }
-
-        if (!mapPanel.activeSelf)
-        {
-            mapPanel.SetActive(true);
-            mapEnabled = true;
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-
-            EventsManager.TriggerNormalEvent("UIPanelOpened");
+            if (mapPanel.activeSelf)
+            {
+                ClosePanel();
+            }
+            else
+            {
+                OpenPanel();
+            }
         }
     }
 
-    public void ClosePanel()
+    private void ClosePanel()
     {
-        if (mapPanel == null)
-        {
-            Debug.LogError("mapManager is null! Please assign it in the inspector.");
-            return;
-        }
+        mapPanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        EventsManager.TriggerNormalEvent("UIPanelClosed");
+        Debug.Log("Map closed");
+    }
 
-        if (mapPanel.activeSelf)
-        {
-            mapPanel.SetActive(false);
-            mapEnabled = false;
-
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-
-            EventsManager.TriggerNormalEvent("UIPanelClosed");
-        }
+    private void OpenPanel()
+    {
+        mapPanel.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        EventsManager.TriggerNormalEvent("UIPanelOpened");
+        Debug.Log("Map opened");
     }
 }
