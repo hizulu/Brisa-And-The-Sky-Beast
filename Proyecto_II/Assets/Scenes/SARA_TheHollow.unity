@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731224, g: 0.38074207, b: 0.35872674, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2496,6 +2496,7 @@ MonoBehaviour:
   <PlayerAnimationData>k__BackingField:
     groundedParameterName: Grounded
     movedParameterName: Moved
+    stopParameterName: Stop
     attackParameterName: Attack
     airborneParameterName: Airborne
     deathParameterName: Death
@@ -2503,33 +2504,41 @@ MonoBehaviour:
     idleParameterName: isIdle
     walkParameterName: isWalking
     runParameterName: isRunning
+    sprintParameterName: isSprinting
     crouchParameterName: isCrouching
     attack01ParameterName: isAttacking01
     attack02ParameterName: isAttacking02
     attack03ParameterName: isAttacking03
+    defenseParameterName: isDefending
     takeDamageParameterName: isTakingDamage
     healParameterName: isHealing
     jumpParameterName: isJumping
     doubleJumpParameterName: isDoubleJumping
     fallParameterName: isFalling
     landParameterName: isLanding
+    hardLandParameterName: isHardLanding
     halfDeadParameterName: isHalfDeading
     finalDeadParameterName: isFinalDeading
     callBeastParameterName: isCallingBeast
     petBeastParameterName: isPettingBeast
     rideBeastParameterName: isRidingBeast
+    healBeastParameterName: isHealingBeast
+    reviveBeastParameterName: isRevivingBeast
     pickUpParameterName: isPickUp
-  PaloBrisa: {fileID: 1432328130}
-  hitBox: {fileID: 873636943}
-  attackDuration: 0.2
-  beastPanel: {fileID: 504655145}
-  mapPanel: {fileID: 0}
+  Beast: {fileID: 0}
   playerCam: {fileID: 1577233736}
   CamComponents: {fileID: 0}
+  lookCamPlayer: {fileID: 0}
+  PaloBrisa: {fileID: 1432328130}
+  hitBox: {fileID: 873636943}
+  Shield: {fileID: 0}
+  beastPanel: {fileID: 504655145}
+  mapManager: {fileID: 0}
   AreaMoveBeast: {fileID: 1884289494}
   CursorMarker: {fileID: 859713139}
-  lookCamPlayer: {fileID: 0}
   pointTarget: {fileID: 1043149154}
+  Mango: {fileID: 0}
+  Baya: {fileID: 0}
   playerTargetEnemiesRange: 20
 --- !u!54 &141740097
 Rigidbody:
@@ -6470,8 +6479,8 @@ MonoBehaviour:
   endID: 18
   npcName: Nilo
   uiManager: {fileID: 578654656}
-  playerInput: {fileID: 141740095}
   playerCam: {fileID: 1577233736}
+  playerInput: {fileID: 141740095}
 --- !u!136 &545821046
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7265,6 +7274,8 @@ MonoBehaviour:
   - {fileID: 1059084602}
   - {fileID: 902422256}
   - {fileID: 2012109586}
+  continueIndicator: {fileID: 0}
+  playerInput: {fileID: 0}
 --- !u!4 &577354586
 Transform:
   m_ObjectHideFlags: 0
@@ -7748,8 +7759,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0fc8c270b5e3ce41970066e27ef5c3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneActiveLever: {fileID: 1299163436}
-  twoActiveLever: {fileID: 769191194}
+  oneActiveLeverDrawbridge: {fileID: 0}
+  twoActiveLeverDrawbridge: {fileID: 0}
+  chainTransform1: {fileID: 0}
+  oneActiveLeverChain1: {fileID: 0}
+  twoActiveLeverChain1: {fileID: 0}
+  chainTransform2: {fileID: 0}
+  oneActiveLeverChain2: {fileID: 0}
+  twoActiveLeverChain2: {fileID: 0}
   movementDuration: 3
   beastNavMeshSurface: {fileID: 0}
 --- !u!224 &619250877 stripped
@@ -12939,7 +12956,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 141740095}
-  pausePanel: {fileID: 584455987}
 --- !u!4 &1126499751
 Transform:
   m_ObjectHideFlags: 0
@@ -14541,13 +14557,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249522387}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &1249522390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16642,8 +16658,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0fc8c270b5e3ce41970066e27ef5c3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneActiveLever: {fileID: 924586595}
-  twoActiveLever: {fileID: 1754318957}
+  oneActiveLeverDrawbridge: {fileID: 0}
+  twoActiveLeverDrawbridge: {fileID: 0}
+  chainTransform1: {fileID: 0}
+  oneActiveLeverChain1: {fileID: 0}
+  twoActiveLeverChain1: {fileID: 0}
+  chainTransform2: {fileID: 0}
+  oneActiveLeverChain2: {fileID: 0}
+  twoActiveLeverChain2: {fileID: 0}
   movementDuration: 3
   beastNavMeshSurface: {fileID: 0}
 --- !u!4 &1469340867
@@ -17223,8 +17245,8 @@ MonoBehaviour:
   endID: 6
   npcName: Siroco
   uiManager: {fileID: 578654656}
-  playerInput: {fileID: 141740095}
   playerCam: {fileID: 1577233736}
+  playerInput: {fileID: 141740095}
 --- !u!136 &1520365812
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -18205,8 +18227,8 @@ MonoBehaviour:
   endID: 13
   npcName: Elevane
   uiManager: {fileID: 578654656}
-  playerInput: {fileID: 141740095}
   playerCam: {fileID: 1577233736}
+  playerInput: {fileID: 141740095}
 --- !u!136 &1612629099
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -21843,9 +21865,8 @@ MonoBehaviour:
   sun: {fileID: 1249522388}
   sunriseHour: 7
   sunsetHour: 20.5
-  timeMultiplier: 2000
-  startHour: 12
-  textTime: {fileID: 139535182}
+  timeMultiplier: 5000
+  startHour: 4
   dayAmbientLight: {r: 0.6039216, g: 0.6039216, b: 0.68235296, a: 0}
   nightAmbientLight: {r: 0.15686275, g: 0.3137255, b: 0.39215687, a: 0}
   lightCurve:

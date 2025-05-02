@@ -139,17 +139,14 @@ public class PlayerAirborneState : PlayerMovementState
      */
     protected virtual bool IsGrounded()
     {
-        float radius = groundedData.GroundCheckDistance;
-        Vector3 groundCheckPosition = stateMachine.Player.GroundCheckCollider.transform.position;
+        Vector3 boxCenter = stateMachine.Player.GroundCheckCollider.transform.position;
+        Vector3 boxHalfExtents = new Vector3(0.25f, 0.05f, 0.25f); // Ancho, altura pequeñita, profundidad
+        Quaternion boxOrientation = Quaternion.identity; // No rotado, si quieres rotarlo puedes poner la rotación de tu jugador
+        LayerMask groundMask = LayerMask.GetMask("Enviroment");
 
-        Collider[] colliders = Physics.OverlapSphere(groundCheckPosition, radius);
+        bool isGrounded = Physics.CheckBox(boxCenter, boxHalfExtents, boxOrientation, groundMask, QueryTriggerInteraction.Ignore);
 
-        foreach (Collider collider in colliders)
-        {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Enviroment") && !collider.isTrigger)
-                return true;
-        }
-        return false;
+        return isGrounded;
     }
     #endregion
 
