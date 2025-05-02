@@ -33,6 +33,7 @@ public class SunController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(sun.transform.rotation.eulerAngles);
         currentTime = DateTime.Now.Date + TimeSpan.FromHours(startHour);
         sunriseTime = TimeSpan.FromHours(sunriseHour);
         sunsetTime = TimeSpan.FromHours(sunsetHour);
@@ -64,7 +65,7 @@ public class SunController : MonoBehaviour
 
             double percentage = timeSinceSunrise.TotalMinutes / sunriseToSunsetDuration.TotalMinutes;
 
-            sunLightRot = Mathf.Lerp(0, 180, (float)percentage);
+            sunLightRot = Mathf.Lerp(90, -90, (float)percentage);
         }
         else
         {
@@ -73,10 +74,10 @@ public class SunController : MonoBehaviour
 
             double percentage = timeSinceSunset.TotalMinutes / sunsetToSunriseDuration.TotalMinutes;
 
-            sunLightRot = Mathf.Lerp(180, 360, (float)percentage);
+            sunLightRot = Mathf.Lerp(-90, -270, (float)percentage);
         }
 
-        sun.transform.rotation = Quaternion.AngleAxis(sunLightRot, Vector3.right);
+        sun.transform.rotation = Quaternion.Euler(0, 90, 0) * Quaternion.AngleAxis(sunLightRot, Vector3.left);
     }
 
     private void UpdateLightSettings()
