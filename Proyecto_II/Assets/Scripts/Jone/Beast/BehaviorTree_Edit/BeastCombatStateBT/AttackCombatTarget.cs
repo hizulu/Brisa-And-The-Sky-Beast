@@ -107,15 +107,15 @@ public class AttackCombatTarget : Node, ICoroutineNode
 
     private void SetAttackRandom()
     {
-        _isAttackNormal = Random.Range(0, 5) > 0; // 20% de probabilidad de realizar ataque especial
+        _isAttackNormal = Random.Range(0, 5) > 1; // 40% de probabilidad de realizar ataque especial
         if (_isAttackNormal)
         {
-            _beast.anim.SetBool("isAttackingSwipe", true);
+            _beast.anim.SetBool("attackSwipe", true);
             _attackDamage = _beast.swipeAttackDamage;
         }
         else
         {
-            _beast.anim.SetBool("isAttackingBite", true);
+            _beast.anim.SetBool("attackBite", true);
             _attackDamage = _beast.biteAttackDamage;
         }
     }
@@ -123,9 +123,6 @@ public class AttackCombatTarget : Node, ICoroutineNode
     public void OnCoroutineEnd()
     {
         if (_hasFinished) return;
-
-        _beast.anim.SetBool("isAttackingSwipe", false);
-        _beast.anim.SetBool("isAttackingBite", false);
 
         _blackboard.SetValue("reachedCombatTarget", false);
         _blackboard.SetValue("isCoroutineActive", false);

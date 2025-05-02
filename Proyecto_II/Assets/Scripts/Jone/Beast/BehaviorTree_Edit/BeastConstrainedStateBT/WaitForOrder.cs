@@ -41,15 +41,6 @@ public class WaitForOrder : Node, ICoroutineNode
             return state;
         }
 
-        // Si el menú se ha cerrado sin seleccionar
-        //if (BeastBehaviorTree.beastMenuClosed)
-        //{
-        //    BeastBehaviorTree.beastMenuClosed = false;
-        //    OnCoroutineEnd();
-        //    state = NodeState.SUCCESS;
-        //    return state;
-        //}
-
         // Iniciar estado de espera al llegar
         if (!_isRunning)
         {

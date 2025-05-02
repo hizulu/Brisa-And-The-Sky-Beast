@@ -50,9 +50,9 @@ public class BeastHalfDeadState : BeastState
         }
 
         Debug.Log("Tiempo de espera completado sin que player reviva a Beast. Llamando a condición de fin de juego");
-        beast.anim.SetBool("isFullyDead", true);
+        beast.anim.SetBool("isDead", true);
+        // TODO: wait for animation before game end
         GameManager.Instance.GameOver();
-        // TODO: trigger game end
     }
 
     private void ReviveBeast()

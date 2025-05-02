@@ -28,7 +28,7 @@ public class CooldownForCombat : Node, ICoroutineNode
             _isRunning = true;
             _hasFinished = false;
 
-            _beast.agent.ResetPath(); // TODO: si hay que reposicionar a la bestia se haría aquí
+            _beast.agent.ResetPath();
 
             _beast.anim.SetBool("isWalking", false);
             _beast.anim.SetTrigger("attackSwipe");

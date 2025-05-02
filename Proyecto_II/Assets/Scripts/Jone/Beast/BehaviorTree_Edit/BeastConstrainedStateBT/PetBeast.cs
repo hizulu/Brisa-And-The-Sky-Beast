@@ -29,7 +29,7 @@ public class PetBeast : Node, ICoroutineNode
             _beast.agent.ResetPath(); // TODO: si hay que reposicionar a la bestia se haría aquí
             
             _beast.anim.SetBool("isWalking", false);
-            _beast.anim.SetBool("isPetting", true);
+            _beast.anim.SetTrigger("petBeast");
 
             Debug.Log("Starting to pet");
             _beast.StartNewCoroutine(Petting(2f), this);
@@ -65,7 +65,6 @@ public class PetBeast : Node, ICoroutineNode
     {
         if (_hasFinished) return;
 
-        _beast.anim.SetBool("isPetting", false);
         _blackboard.SetValue("isCoroutineActive", false);
         _blackboard.SetValue("menuOpened", false);
         _blackboard.SetValue("isOptionPet", false);
