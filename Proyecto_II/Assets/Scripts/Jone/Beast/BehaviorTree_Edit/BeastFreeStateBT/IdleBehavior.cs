@@ -9,15 +9,11 @@ public class IdleBehavior : Node
 {
     private Blackboard _blackboard;
     private Beast _beast;
-    private float _probabilityToSit;
-    private float _probabilityToSleep;
 
-    public IdleBehavior(Blackboard blackboard, Beast beast, float probabilityToSit, float probabilityToSleep)
+    public IdleBehavior(Blackboard blackboard, Beast beast)
     {
         _blackboard = blackboard;
         _beast = beast;
-        _probabilityToSit = probabilityToSit;
-        _probabilityToSleep = probabilityToSleep;
     }
 
     public override NodeState Evaluate()
@@ -66,20 +62,22 @@ public class IdleBehavior : Node
                 new DoIdle(_blackboard, _beast, 3f, 5f),
                 new Selector(new List<Node>
                 {
-                    new Sequence(new List<Node>
-                    {
-                        new OncePerCycle(new SetRandomFlag(_blackboard, "shouldStretch", 10f)),
-                        new CheckFlag(_blackboard, "shouldStretch",
-                            new CheckFlag(_blackboard, "isCoroutineActive",
-                                new Stretch(_blackboard, _beast)), false),
-                    }),
-                    new Sequence(new List<Node>
-                    {
-                        new OncePerCycle(new SetRandomFlag(_blackboard, "shouldHowl", 10f)),
-                        new CheckFlag(_blackboard, "shouldHowl",
-                            new CheckFlag(_blackboard, "isCoroutineActive",
-                                new Howl(_blackboard, _beast)), false),
-                    }),
+                    new OncePerCycle(
+                        new Sequence(new List<Node>
+                        {
+                            new SetRandomFlag(_blackboard, "shouldStretch", 10f),
+                            new CheckFlag(_blackboard, "shouldStretch",
+                                new CheckFlag(_blackboard, "isCoroutineActive",
+                                    new Stretch(_blackboard, _beast)), false),
+                        })),
+                    new OncePerCycle(
+                        new Sequence(new List<Node>
+                        {
+                            new SetRandomFlag(_blackboard, "shouldHowl", 10f),
+                            new CheckFlag(_blackboard, "shouldHowl",
+                                new CheckFlag(_blackboard, "isCoroutineActive",
+                                    new Howl(_blackboard, _beast)), false),
+                        })),
                     new AlwaysTrue()
                 })
             })

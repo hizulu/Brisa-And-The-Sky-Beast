@@ -63,7 +63,7 @@ public class BeastConstrainedState : BeastState
                 })),
             new Sequence(new List<Node>
             {
-                new IdleBehavior(blackboard, beast, 40f, 20f),
+                new IdleBehavior(blackboard, beast),
                 new TransitionToBeastState(beast, new BeastFreeState())
             })
         });

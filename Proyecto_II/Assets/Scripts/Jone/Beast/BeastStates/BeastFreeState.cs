@@ -56,9 +56,9 @@ public class BeastFreeState : BeastState
                 {
                     new CheckFlag(blackboard, "isCoroutineActive",
                         new Smell(blackboard, beast, 1f, 6f), false),
-                    new IdleBehavior(blackboard, beast, 40f, 20f)
+                    new IdleBehavior(blackboard, beast)
                 })),
-            new IdleBehavior(blackboard, beast, 60f, 40f), // Cuando no encuentra ningún objetivo
+            new IdleBehavior(blackboard, beast), // Cuando no encuentra ningún objetivo
             new AlwaysTrue()
         });
 
