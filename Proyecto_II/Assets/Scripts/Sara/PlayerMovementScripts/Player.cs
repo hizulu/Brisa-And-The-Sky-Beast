@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     [SerializeField] public PointTarget pointTarget;
     [SerializeField] public GameObject Mango;
     [SerializeField] public GameObject Baya;
+    [SerializeField] public BeastTrapped beastTrapped;
     public BoxCollider GroundCheckCollider { get; private set; }
     public PlayerInput PlayerInput { get; private set; }
 
