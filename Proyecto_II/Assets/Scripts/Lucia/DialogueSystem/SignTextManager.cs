@@ -41,7 +41,7 @@ public class SignTextManager : MonoBehaviour
     {
         if (playerInput != null)
         {
-            playerInput.UIPanelActions.DialogueContinue.performed += OnContinueSignPerformed;
+            playerInput.UIPanelActions.Dialogue.performed += OnContinueSignPerformed; //Solo se abre y se cierra con la E
         }
         else
         {
@@ -53,7 +53,7 @@ public class SignTextManager : MonoBehaviour
     {
         if (playerInput != null)
         {
-            playerInput.UIPanelActions.DialogueContinue.performed -= OnContinueSignPerformed;
+            playerInput.UIPanelActions.Dialogue.performed -= OnContinueSignPerformed;
         }
         else
         {
