@@ -19,6 +19,9 @@ public class AppearanceChangeData : ScriptableObject
     public string appearanceDescription;
     public Material appearanceMainMaterial;
     public Texture2D eyebrowsBaseMap;
+    public Texture2D eyesBaseMap;
     public string objectsNeeded;
+    public int toUnlockQuantity;
+    public GameObject objectsNeededPrefab;
     public bool isUnlocked;
 }
