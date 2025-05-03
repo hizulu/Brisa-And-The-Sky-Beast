@@ -34,6 +34,10 @@ public class EnemyTargetDetectionFuzzyLogic : EnemyTargetDetectionSOBase
         if (distanceToPlayerSQR < targetDetectionRangeSQR || distanceToBeastSQR < targetDetectionRangeSQR)
         {
             enemy.targetIsPlayer = GetTargetByFuzzyLogic(distanceToPlayerSQR, distanceToBeastSQR);
+            if (enemy.targetIsPlayer && playerHealthPercentage <= 0f)
+                return false; // Player is dead
+            if (!enemy.targetIsPlayer && beastHealthPercentage <= 0f)
+                return false; // Beast is dead
             return true;
         }
 

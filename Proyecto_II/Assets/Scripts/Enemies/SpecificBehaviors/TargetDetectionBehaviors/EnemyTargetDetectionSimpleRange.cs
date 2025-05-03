@@ -16,11 +16,17 @@ public class EnemyTargetDetectionSimpleRange : EnemyTargetDetectionSOBase
 
     private float targetDetectionRangeSQR = 0f;
 
+    private float playerHealthPercentage;
+    private float beastHealthPercentage;
+
     public override void Initialize(Enemy enemy)
     {
         base.Initialize(enemy);
 
         targetDetectionRangeSQR = targetDetectionRange * targetDetectionRange;
+
+        playerHealthPercentage = player.Data.StatsData.CurrentHealth / player.Data.StatsData.MaxHealth * 100;
+        beastHealthPercentage = beast.currentHealth / beast.maxHealth * 100;
     }
 
     /*
@@ -36,6 +42,8 @@ public class EnemyTargetDetectionSimpleRange : EnemyTargetDetectionSOBase
         if (distanceToPlayerSQR < targetDetectionRangeSQR)
         {
             Debug.Log("Player is within detection range");
+            if (playerHealthPercentage <= 0f)
+                return false; // Player is dead
             enemy.targetIsPlayer = true;
             return true;
         }
@@ -45,6 +53,8 @@ public class EnemyTargetDetectionSimpleRange : EnemyTargetDetectionSOBase
         if (distanceToBeastSQR < targetDetectionRangeSQR)
         {
             Debug.Log("Beast is within detection range");
+            if (beastHealthPercentage <= 0f)
+                return false; // Beast is dead
             enemy.targetIsPlayer = false;
             return true;
         }
