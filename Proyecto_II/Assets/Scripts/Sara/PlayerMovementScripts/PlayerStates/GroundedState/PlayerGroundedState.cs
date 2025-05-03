@@ -199,18 +199,17 @@ public class PlayerGroundedState : PlayerMovementState
      */
     protected override void NoContactWithGround(Collider collider)
     {
-        if (!IsGrounded())
-            stateMachine.ChangeState(stateMachine.FallState);
+        stateMachine.ChangeState(stateMachine.FallState);
     }
 
     /*
      * Método que devuelve True/False para comprobar si Player ha tocado suelo o no.
      */
-    private bool IsGrounded()
+    protected virtual bool IsGrounded()
     {
         Vector3 boxCenter = stateMachine.Player.GroundCheckCollider.transform.position;
-        Vector3 boxHalfExtents = new Vector3(0.25f, 0.05f, 0.25f); // Ancho, altura pequeñita, profundidad
-        Quaternion boxOrientation = Quaternion.identity; // No rotado, si quieres rotarlo puedes poner la rotación de tu jugador
+        Vector3 boxHalfExtents = new Vector3(0.25f, 0.05f, 0.25f);
+        Quaternion boxOrientation = Quaternion.identity;
         LayerMask groundMask = LayerMask.GetMask("Enviroment");
 
         bool isGrounded = Physics.CheckBox(boxCenter, boxHalfExtents, boxOrientation, groundMask, QueryTriggerInteraction.Ignore);
