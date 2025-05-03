@@ -364,7 +364,7 @@ public class PlayerMovementState : IState
     protected bool isHalfDead = false;
     private void TakeDamage(float _enemyDamage)
     {
-        if (isHalfDead) return;
+        if (isHalfDead || stateMachine.Player.Shield.activeSelf) return;
 
         statsData.CurrentHealth -= _enemyDamage;
 
