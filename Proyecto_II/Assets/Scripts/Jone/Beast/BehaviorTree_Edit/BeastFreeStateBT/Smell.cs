@@ -33,7 +33,7 @@ public class Smell : Node, ICoroutineNode
             _hasFinished = false;
 
             _beast.anim.SetBool("isWalking", false);
-            _beast.anim.SetBool("isSmelling", true);
+            _beast.anim.SetTrigger("smellDown");
 
             _beast.agent.ResetPath();
 
@@ -72,8 +72,6 @@ public class Smell : Node, ICoroutineNode
         if (_hasFinished) return;
 
         _blackboard.SetValue("isCoroutineActive", false);
-
-        _beast.anim.SetBool("isSmelling", false);
 
         Debug.Log("Finished smelling");
 

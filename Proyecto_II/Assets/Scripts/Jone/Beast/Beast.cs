@@ -54,6 +54,8 @@ public class Beast : MonoBehaviour
 
         currentHealth = maxHealth;
 
+        AnimationDurationDatabase.Instance.RegisterAnimatorClips(anim.runtimeAnimatorController);
+
         detectionCollider = GetComponentInChildren<SphereCollider>();
 
         if (detectionCollider == null)
@@ -264,7 +266,7 @@ public class Beast : MonoBehaviour
         Debug.Log("Beast has been damaged");
         if (currentHealth < Mathf.Epsilon)
         {
-            blackboard.SetValue("beastIsHalfDead", true);
+            blackboard.SetValue("isHalfDead", true);
             TransitionToState(new BeastHalfDeadState());
         }
     }
