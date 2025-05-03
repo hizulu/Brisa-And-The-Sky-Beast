@@ -298,7 +298,7 @@ public class PlayerGroundedState : PlayerMovementState
         {
             rightButtontimePressed += Time.deltaTime;
 
-            if (rightButtontimePressed >= 2f)
+            if (rightButtontimePressed >= 0.5f)
             {
                 isPointed = false;
                 stateMachine.ChangeState(stateMachine.PointedBeastState);
