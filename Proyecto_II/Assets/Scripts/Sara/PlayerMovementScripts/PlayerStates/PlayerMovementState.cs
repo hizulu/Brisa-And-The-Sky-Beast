@@ -24,6 +24,8 @@ public class PlayerMovementState : IState
 
     protected AudioManager audioManager;
 
+    protected Dictionary<int, Material> materialFacePlayer;
+
     private float currentTimeWithShield;
     #endregion
 
@@ -40,6 +42,8 @@ public class PlayerMovementState : IState
         statsData = stateMachine.Player.Data.StatsData;
 
         audioManager = GameObject.FindObjectOfType<AudioManager>();
+
+        CreateFaceMaterialPlayerDictionary();
     }
 
     #region Métodos Base de la Máquina de Estados
@@ -445,9 +449,32 @@ public class PlayerMovementState : IState
 
     protected SkinnedMeshRenderer meshRendererPlayer;
     protected Material[] materials;
-    protected virtual void ChangeFacePlayer()
+    private void CreateFaceMaterialPlayerDictionary()
     {
         meshRendererPlayer = stateMachine.Player.RenderPlayer;
         materials = meshRendererPlayer.materials;
+
+        materialFacePlayer = new Dictionary<int, Material>();
+        for (int i = 0; i < materials.Length; i++)
+            materialFacePlayer[i] = materials[i];
+    }    
+    
+    protected virtual void ChangeFacePlayer()
+    {
+        if (materialFacePlayer == null)
+            CreateFaceMaterialPlayerDictionary();        
+    }
+
+    protected void SetFaceProperty(int materialIndex, Vector2 offset)
+    {
+        const string propertyName = "_Offset";
+
+        if (materialFacePlayer.ContainsKey(materialIndex))
+        {
+            Material specificMaterial = materialFacePlayer[materialIndex];
+
+            if (specificMaterial.HasProperty(propertyName))
+                specificMaterial.SetVector(propertyName, offset);
+        }
     }
 }

@@ -70,8 +70,9 @@ public class PlayerHardLandState : PlayerStopState
     {
         base.ChangeFacePlayer();
 
-        if (materials[2].HasProperty("_EyesOffset"))
-            materials[2].SetVector("_EyesOffset", new Vector2(11.5f, 0f));
+        SetFaceProperty(1, new Vector2(1.22f, 0f));
+        SetFaceProperty(2, new Vector2(0.37f, 0f));
+        SetFaceProperty(3, new Vector2(2.66f, 0f));
     }
     #endregion
 }
