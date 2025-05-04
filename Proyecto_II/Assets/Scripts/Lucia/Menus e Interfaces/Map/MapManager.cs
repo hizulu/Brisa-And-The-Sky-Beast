@@ -39,7 +39,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    private void ClosePanel()
+    public void ClosePanel()
     {
         mapPanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;

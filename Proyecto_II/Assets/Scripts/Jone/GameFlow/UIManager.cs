@@ -17,6 +17,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] GameObject victoryPanel;
 
+    [field: Header("Panels for closing")]
+    [SerializeField] GameObject beastSelectionPanel;
+    [SerializeField] GameObject settingsPanel;
+    [SerializeField] GameObject mapPanel;
+    [SerializeField] GameObject dialoguePanel;
+
+    [SerializeField] DialogManager diaManager;
+
     // Singleton
     private void Awake()
     {
@@ -31,7 +39,33 @@ public class UIManager : MonoBehaviour
 
     public bool CheckForOpenedMenus()
     {
-        return true;
+        if (InventoryManager.Instance.inventoryEnabled)
+        {
+            Debug.Log("Inventario abierto, no debería pausar");
+            InventoryManager.Instance.CloseInventory();
+            return true;
+        }
+
+        if (mapPanel.activeInHierarchy)
+        {
+            MapManager mapManager = mapPanel.GetComponent<MapManager>();
+            mapManager.ClosePanel();
+            return true;
+        }
+
+        if (settingsPanel.activeInHierarchy)
+        {
+            settingsPanel.SetActive(false);
+            return false;
+        }
+
+        if (dialoguePanel.activeInHierarchy)
+        {
+            diaManager.CloseDialog();
+            return true;
+        }
+
+        return false; // No había ningún panel abierto
     }
 
     #region Pause & Resume

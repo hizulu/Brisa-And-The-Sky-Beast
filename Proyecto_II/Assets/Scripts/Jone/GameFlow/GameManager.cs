@@ -59,40 +59,26 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //if (InventoryManager.Instance.inventoryEnabled)
-            //{
-            //    InventoryManager.Instance.OpenCloseInventory(context);
-            //    return;
-            //}
-            Debug.Log("Detecta escape");
-            if (CurrentState == GameState.Paused)
-            {                
-                ResumeGame();
-                Debug.Log("Debería resumir juego");
-            }
-            else if (CurrentState == GameState.Playing)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                Debug.Log("Cursor activado desde game manager");
-                PauseGame();
-                Debug.Log("Debería pausar juego");
-            }
+            OnEscape();
         }
     }
 
-    private void OnEnable()
+    private void OnEscape()
     {
-        //Pause.OnPause += PauseGame;
-        //Pause.OnResume += ResumeGame;
-        //playerInput.UIPanelActions.PauseGame.performed += TogglePause;
-    }
+        if (UIManager.Instance.CheckForOpenedMenus())
+            return;
 
-    private void OnDisable()
-    {
-        //Pause.OnPause -= PauseGame;
-        //Pause.OnResume -= ResumeGame;
-        //playerInput.UIPanelActions.PauseGame.performed -= TogglePause;
+        Debug.Log("Detecta escape");
+        if (CurrentState == GameState.Paused)
+        {
+            ResumeGame();
+            Debug.Log("Debería resumir juego");
+        }
+        else if (CurrentState == GameState.Playing)
+        {
+            PauseGame();
+            Debug.Log("Debería pausar juego");
+        }
     }
 
     public void ChangeGameState(GameState newState)
