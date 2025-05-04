@@ -288,7 +288,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 980d8d473c4a9b44c8683d23798d45d5, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 41c685f778e3d8d40a0c5f2d277d148e, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &10281516
 Transform:
@@ -10357,9 +10357,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 353271124}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 353271130}
   m_SourcePrefab: {fileID: 100100000, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
 --- !u!1 &353271120 stripped
 GameObject:
@@ -10541,18 +10538,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &353271130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 353271120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28074c9e8238fca4e92410065ea605f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &356589122
 GameObject:
   m_ObjectHideFlags: 0
@@ -14131,6 +14116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d1006ee79cffe4b885fdd4f5e036f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlineDetector: {fileID: 0}
   weaponSlot: {fileID: 1464668282}
 --- !u!114 &494385272
 MonoBehaviour:
@@ -15612,7 +15598,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 12583039
+    m_Bits: 12584063
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -23706,6 +23692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d1006ee79cffe4b885fdd4f5e036f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlineDetector: {fileID: 0}
   weaponSlot: {fileID: 1464668282}
 --- !u!114 &1052630961
 MonoBehaviour:
@@ -31045,9 +31032,10 @@ GameObject:
   - component: {fileID: 1383396452}
   - component: {fileID: 1383396455}
   - component: {fileID: 1383396454}
-  m_Layer: 3
+  - component: {fileID: 1383396456}
+  m_Layer: 10
   m_Name: Shield
-  m_TagString: Untagged
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31117,6 +31105,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1383396451}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &1383396456
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383396451}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.50000006
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1387399310
 GameObject:
   m_ObjectHideFlags: 0
@@ -36565,6 +36574,8 @@ MonoBehaviour:
   maxHealth: 500
   healingAmount: 0
   halfDeadDuration: 30
+  swipeAttackDamage: 15
+  biteAttackDamage: 25
   currentHealth: 0
   player: {fileID: 353271126}
 --- !u!1 &1569019059

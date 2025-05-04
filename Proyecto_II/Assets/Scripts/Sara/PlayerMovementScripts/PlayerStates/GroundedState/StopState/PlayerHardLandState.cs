@@ -23,6 +23,7 @@ public class PlayerHardLandState : PlayerStopState
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
+        stateMachine.Player.PlayerInput.PlayerActions.Disable();
         hardLandFinish = false;
         statsData.CurrentHealth -= fallDamage;
         base.Enter();
@@ -41,6 +42,7 @@ public class PlayerHardLandState : PlayerStopState
 
     public override void Exit()
     {
+        stateMachine.Player.PlayerInput.PlayerActions.Enable();
         hardLandFinish = false;
         base.Exit();
         //Debug.Log("Has salido del estado de ATERRIZAR");

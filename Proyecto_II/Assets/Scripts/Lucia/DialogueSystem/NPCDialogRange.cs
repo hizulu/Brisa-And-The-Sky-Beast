@@ -27,8 +27,10 @@ public class NPCDialogRange : MonoBehaviour
     {
         EventsManager.CallNormalEvents("ResetCameraDialogue", ResumePlayerCamera);
         camComponents = playerCam.GetCinemachineComponent<CinemachinePOV>();
+    }
 
-        // Configurar el input
+    private void OnEnable()
+    {
         playerInput.UIPanelActions.Dialogue.started += OnInteract;
     }
 
@@ -65,23 +67,18 @@ public class NPCDialogRange : MonoBehaviour
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        // Verificar si fue E (Keyboard) o Click Izquierdo (Mouse)
+        // Verificar si fue E (Keyboard)
         bool isKeyboard = context.control.device is Keyboard && context.control.name == "e";
-        bool isMouse = context.control.device is Mouse && context.control.name == "leftButton";
 
-        if (!isKeyboard && !isMouse) return;
+        if (!isKeyboard) return;
 
-        Debug.Log("Iniciando conversación");
+        //Debug.Log("Iniciando conversación");
         if (!playerInRange) return;
 
         if (!dialogStarted)
         {
             StartDialogue();
         }
-        //else
-        //{
-        //    dialogManager.AdvanceDialog();
-        //}
     }
 
     private void StartDialogue()

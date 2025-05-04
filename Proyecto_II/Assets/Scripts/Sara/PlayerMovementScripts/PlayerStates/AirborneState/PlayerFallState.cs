@@ -17,18 +17,20 @@ public class PlayerFallState : PlayerAirborneState
     private float gravityAcceleration = 9.8f;
     private float maxSpeed = 20f;
 
-    private float timeInFall = 0f;
-    private float maxTime = 1f;
+    private float maxVelocity = 0f;
+    private float maxVelocityHardLand = 10f;
+    //private float timeInFall = 0f;
+    //private float maxTime = 1f;
     #endregion
 
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        timeInFall = 0f;
+        //timeInFall = 0f;
         base.Enter();
         //Debug.Log("Desde entrada de caída: " + maxNumDoubleJump);
         StartAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
-        //Debug.Log("Has entrado en el estado de CAYENDO");
+        Debug.Log("Has entrado en el estado de CAYENDO");
     }
 
     public override void HandleInput()
@@ -43,8 +45,10 @@ public class PlayerFallState : PlayerAirborneState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        timeInFall += Time.deltaTime;
-        LandInGround();
+        GetFallVelocity();
+
+        if(IsGrounded())
+            LandInGround();
     }
 
     public override void UpdatePhysics()
@@ -57,6 +61,7 @@ public class PlayerFallState : PlayerAirborneState
     {
         base.Exit();
         fallSpeed = 0f;
+        maxVelocity = 0f;
         //Debug.Log("Desde salida de caída: " + maxNumDoubleJump);
         StopAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
         //Debug.Log("Has salido del estado de CAYENDO");
@@ -65,21 +70,28 @@ public class PlayerFallState : PlayerAirborneState
 
     #region Métodos Propios LandState
     /*
+     * Método para obtener la velocidad de caída.
+     */
+    private void GetFallVelocity()
+    {
+        float currentFallVelocity = Mathf.Abs(stateMachine.Player.RbPlayer.velocity.y); // Obtener el valor absoluto de la velocidad en Y.
+
+        if (currentFallVelocity > maxVelocityHardLand)
+            maxVelocity = currentFallVelocity;
+    }
+
+    /*
      * Método para comprobar si ha tocado el suelo después de estar en el aire para aterrizar.
      * Resetea la posibilidad de hacer un doble salto.
      */
     private void LandInGround()
     {
-        if (IsGrounded())
-        {
-            //Debug.Log("Pasas a ATERRIZAR");
-            ResetDoubleJump();
+        ResetDoubleJump();
 
-            if (timeInFall <  maxTime)
-                stateMachine.ChangeState(stateMachine.LandState);
-            else
-                stateMachine.ChangeState(stateMachine.HardLandState);
-        }
+        if (maxVelocity < maxVelocityHardLand)
+            stateMachine.ChangeState(stateMachine.LandState);
+        else
+            stateMachine.ChangeState(stateMachine.HardLandState);
     }
 
     /*

@@ -392,4 +392,9 @@ public class DialogManager : MonoBehaviour
     {
         CloseDialog();
     }
+
+    public bool DialogIDRead(int id)
+    {
+        return seenDialogIDs.Contains(id);
+    }
 }
