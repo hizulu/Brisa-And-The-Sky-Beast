@@ -102,5 +102,14 @@ public class PlayerFallState : PlayerAirborneState
         fallSpeed = Mathf.Min(fallSpeed + gravityAcceleration * Time.deltaTime, maxSpeed);
         stateMachine.Player.RbPlayer.velocity = new Vector3(stateMachine.Player.RbPlayer.velocity.x, -fallSpeed, stateMachine.Player.RbPlayer.velocity.z);
     }
+
+    protected override void ChangeFacePlayer()
+    {
+        base.ChangeFacePlayer();
+
+        SetFaceProperty(1, new Vector2(0.11f, 0f));
+        SetFaceProperty(2, new Vector2(0.875f, 0f));
+        SetFaceProperty(3, new Vector2(0.33f, 0f));
+    }
     #endregion
 }

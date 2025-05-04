@@ -1,3 +1,5 @@
+using UnityEngine;
+
 /*
  * NOMBRE CLASE: PlayerAttackState
  * AUTOR: Sara Yue Madruga Martín
@@ -5,7 +7,6 @@
  * DESCRIPCIÓN: Clase que hereda de PlayerGroundedState. Es un estado padre para gestionar el combo de ataque de Player.
  * VERSIÓN: 1.0. 
  */
-using UnityEngine;
 
 public class PlayerAttackState : PlayerGroundedState
 {
@@ -100,7 +101,6 @@ public class PlayerAttackState : PlayerGroundedState
             }
         }
     }
-
 
     /*
      * Método que hace que el Player, si tiene marcado un enemigo, haga un mini-dash para acercarse a él y golpearle (facilitar un poco el combate).

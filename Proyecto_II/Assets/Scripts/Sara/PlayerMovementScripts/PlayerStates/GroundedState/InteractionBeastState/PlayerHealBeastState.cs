@@ -75,5 +75,14 @@ public class PlayerHealBeastState : PlayerInteractionState
         InventoryManager.Instance.RemoveItem(healIncreaseSpecificItem);
         healBeastFinish = true;
     }
+
+    protected override void ChangeFacePlayer()
+    {
+        base.ChangeFacePlayer();
+
+        SetFaceProperty(1, new Vector2(0.555f, 0f));
+        SetFaceProperty(2, new Vector2(0.125f, 0f));
+        SetFaceProperty(3, new Vector2(0.33f, 0f));
+    }
     #endregion
 }

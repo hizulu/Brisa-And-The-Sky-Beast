@@ -82,5 +82,14 @@ public class PlayerHealState : PlayerStopState
         InventoryManager.Instance.RemoveItem(healIncreaseSpecificItem);
         healFinish = true;
     }
+
+    protected override void ChangeFacePlayer()
+    {
+        base.ChangeFacePlayer();
+
+        SetFaceProperty(1, new Vector2(0.11f, 0f));
+        SetFaceProperty(2, new Vector2(0f, 0f));
+        SetFaceProperty(3, new Vector2(0f, 0f));
+    }
     #endregion
 }

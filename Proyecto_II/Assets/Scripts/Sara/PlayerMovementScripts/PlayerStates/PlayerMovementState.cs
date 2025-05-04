@@ -24,6 +24,8 @@ public class PlayerMovementState : IState
 
     protected AudioManager audioManager;
 
+    protected Dictionary<int, Material> materialFacePlayer;
+
     private float currentTimeWithShield;
     #endregion
 
@@ -40,8 +42,9 @@ public class PlayerMovementState : IState
         statsData = stateMachine.Player.Data.StatsData;
 
         audioManager = GameObject.FindObjectOfType<AudioManager>();
-    }
 
+        CreateFaceMaterialPlayerDictionary();
+    }
 
     #region Métodos Base de la Máquina de Estados
     /*
@@ -53,6 +56,7 @@ public class PlayerMovementState : IState
         //stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 200f;
         //stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 200f;
         AddInputActionsCallbacks();
+        ChangeFacePlayer();
         EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
         EventsManager.CallNormalEvents("PickUpItem", PickUp);
     }
@@ -258,23 +262,7 @@ public class PlayerMovementState : IState
      */
     private void CallBeast(InputAction.CallbackContext context)
     {
-        //Debug.Log("Has llamado a la Bestia");
-        stateMachine.Player.StartCoroutine(StopCallBeast());
-        EventsManager.TriggerNormalEvent("CallBeast");
-    }
-
-    /*
-     * Corrutina que gestiona que la animación de llamar a la Bestia se realice correctamente.
-     */
-    IEnumerator StopCallBeast()
-    {
-        StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
-        StopAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
-        StartAnimation(stateMachine.Player.PlayerAnimationData.CallBeastParameterHash);
-        yield return new WaitForSecondsRealtime(1f);
-        StopAnimation(stateMachine.Player.PlayerAnimationData.CallBeastParameterHash);
-        StartAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
-        StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
+        stateMachine.ChangeState(stateMachine.CallBeastState);
     }
     #endregion
 
@@ -422,12 +410,38 @@ public class PlayerMovementState : IState
     }
     #endregion
 
-    protected virtual void PlayerDead()
+    #region Métodos Cambiar Expresiones Player
+    protected SkinnedMeshRenderer meshRendererPlayer;
+    protected Material[] materials;
+    private void CreateFaceMaterialPlayerDictionary()
     {
-        statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
-        isHalfDead = true;
-        stateMachine.ChangeState(stateMachine.HalfDeadState);
+        meshRendererPlayer = stateMachine.Player.RenderPlayer;
+        materials = meshRendererPlayer.materials;
+
+        materialFacePlayer = new Dictionary<int, Material>();
+        for (int i = 0; i < materials.Length; i++)
+            materialFacePlayer[i] = materials[i];
+    }    
+    
+    protected virtual void ChangeFacePlayer()
+    {
+        if (materialFacePlayer == null)
+            CreateFaceMaterialPlayerDictionary();        
     }
+
+    protected void SetFaceProperty(int materialIndex, Vector2 offset)
+    {
+        const string propertyName = "_Offset";
+
+        if (materialFacePlayer.ContainsKey(materialIndex))
+        {
+            Material specificMaterial = materialFacePlayer[materialIndex];
+
+            if (specificMaterial.HasProperty(propertyName))
+                specificMaterial.SetVector(propertyName, offset);
+        }
+    }
+    #endregion
 
     #region Métodos Cursor
     public void LockCursor()
@@ -442,4 +456,11 @@ public class PlayerMovementState : IState
         Cursor.visible = true;
     }
     #endregion
+
+    protected virtual void PlayerDead()
+    {
+        statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
+        isHalfDead = true;
+        stateMachine.ChangeState(stateMachine.HalfDeadState);
+    }
 }

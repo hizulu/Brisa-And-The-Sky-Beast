@@ -50,7 +50,7 @@ public class PlayerHardLandState : PlayerStopState
     }
     #endregion
 
-    #region Método Propio HardLandState
+    #region Métodos Propios HardLandState
     /*
      * Método para comprobar que la animación de aterrizar se ha terminado para pasar al siguiente estado requerido.
      */
@@ -61,6 +61,18 @@ public class PlayerHardLandState : PlayerStopState
             hardLandFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
         }
+    }
+
+    /*
+     * Método para cambiar la expresión de Brisa al aterrizar desde muy alto.
+     */
+    protected override void ChangeFacePlayer()
+    {
+        base.ChangeFacePlayer();
+
+        SetFaceProperty(1, new Vector2(1.22f, 0f));
+        SetFaceProperty(2, new Vector2(0.375f, 0f));
+        SetFaceProperty(3, new Vector2(0.655f, 0f));
     }
     #endregion
 }

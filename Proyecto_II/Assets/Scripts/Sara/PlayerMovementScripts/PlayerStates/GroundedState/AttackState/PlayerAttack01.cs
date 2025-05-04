@@ -80,5 +80,14 @@ public class PlayerAttack01 : PlayerAttackState
     {
         if (!attackFinish) return;
     }
+
+    protected override void ChangeFacePlayer()
+    {
+        base.ChangeFacePlayer();
+
+        SetFaceProperty(1, new Vector2(0.66f, 0f));
+        SetFaceProperty(2, new Vector2(0f, 0f));
+        SetFaceProperty(3, new Vector2(0.66f, 0f));
+    }
     #endregion
 }

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 /*
  * NOMBRE CLASE: PlayerPetBeastState
  * AUTOR: Sara Yue Madruga Martín
@@ -19,6 +21,7 @@ public class PlayerPetBeastState : PlayerInteractionState
     {
         petBeastFinish = false;
         base.Enter();
+        AlignPlayerToBeast();
         //Debug.Log("Has entrado en estado de Acariciar a la Bestia.");
         StartAnimation(stateMachine.Player.PlayerAnimationData.PetBeastParameterHash);
     }
@@ -48,6 +51,33 @@ public class PlayerPetBeastState : PlayerInteractionState
             petBeastFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
         }
+    }
+
+    /*
+     * Método para orientar a Player hacia donde esté la Bestia para acariciarle.
+     */
+    private void AlignPlayerToBeast()
+    {
+        Transform beastPosition = stateMachine.Player.Beast.transform;
+        Transform playerPosition = stateMachine.Player.transform;
+
+        Vector3 orientationToBeast = (beastPosition.position - playerPosition.position);
+        orientationToBeast.y = 0f;
+
+        if (orientationToBeast != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(orientationToBeast);
+            playerPosition.rotation = targetRotation;
+        }
+    }
+
+    protected override void ChangeFacePlayer()
+    {
+        base.ChangeFacePlayer();
+
+        SetFaceProperty(1, new Vector2(0.885f, 0f));
+        SetFaceProperty(2, new Vector2(0f, 0f));
+        SetFaceProperty(3, new Vector2(0f, 0f));
     }
     #endregion
 }
