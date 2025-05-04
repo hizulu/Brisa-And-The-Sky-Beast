@@ -101,6 +101,8 @@ public class NPCDialogRange : MonoBehaviour
 
     private void ResumePlayerCamera()
     {
+        if (this == null) return;
+
         playerCam.m_Lens.FieldOfView = 60f;
         StartCoroutine(TransitionCameraDialogue(0f, 0f, 1f, false));
         playerInput.PlayerActions.Enable();

@@ -194,7 +194,14 @@ public class Beast : MonoBehaviour
 
     private void BeastIsDirected(Vector3 targetDestination)
     {
+        if (agent == null)
+        {
+            Debug.LogError("Beast NavMeshAgent was null when trying to direct beast");
+            return;
+        }
+
         agent.ResetPath();
+
         TransitionToState(new BeastToPointedState(targetDestination));
     }
     #endregion
@@ -258,7 +265,10 @@ public class Beast : MonoBehaviour
         if (currentState is not BeastCombatState)
             TransitionToState(new BeastCombatState());
 
-        anim.SetTrigger("damageBeast");
+        if (anim != null)
+            anim.SetTrigger("damageBeast");
+        else
+            Debug.LogWarning("Animator is null when trying to play damageBeast animation");
 
         // TODO: beast gets damaged sound
 

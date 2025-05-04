@@ -179,12 +179,12 @@ public class GameManager : MonoBehaviour
     public void ReloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        SceneManager.sceneLoaded += LoadSavedSceneChanges; // Registered when scene is loaded
+        SceneManager.sceneLoaded += LoadSavedSceneChanges; 
     }
 
     private void LoadSavedSceneChanges(Scene scene, LoadSceneMode mode)
     {
-        SceneManager.sceneLoaded -= LoadSavedSceneChanges; // Removes the method so that it isn't called multiple times
+        SceneManager.sceneLoaded -= LoadSavedSceneChanges;
         saveManager.LoadSceneState();
         Checkpoint.GetActiveCheckPointPosition();
     }

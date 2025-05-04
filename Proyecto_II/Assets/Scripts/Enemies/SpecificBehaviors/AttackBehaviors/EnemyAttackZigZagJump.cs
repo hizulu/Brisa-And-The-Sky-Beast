@@ -178,7 +178,10 @@ public class EnemyAttackZigZagJump : EnemyStateSOBase
         if (distanceToTargetSQR < distanceToHit * distanceToHit)
         {
             if (enemy.targetIsPlayer)
+            {
+                Debug.Log("triggerea evento de hacer daño a player");
                 EventsManager.TriggerSpecialEvent<float>("OnAttackPlayer", attackDamage);
+            }
             else
                 EventsManager.TriggerSpecialEvent<float>("OnAttackBeast", attackDamage);
         }
