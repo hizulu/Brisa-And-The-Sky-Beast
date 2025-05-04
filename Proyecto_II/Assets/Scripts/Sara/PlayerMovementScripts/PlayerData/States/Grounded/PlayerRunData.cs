@@ -12,5 +12,5 @@ using UnityEngine;
 [Serializable]
 public class PlayerRunData
 {
-    [field: SerializeField][field: Range(0f, 1f)] public float RunSpeedModif { get; private set; } = 2f;
+    [field: SerializeField][field: Range(0f, 2f)] public float RunSpeedModif { get; private set; } = 2f;
 }

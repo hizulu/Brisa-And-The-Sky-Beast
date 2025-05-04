@@ -1,3 +1,5 @@
+using UnityEngine;
+
 /*
  * NOMBRE CLASE: PlayerTakeDamageState
  * AUTOR: Sara Yue Madruga Martín
@@ -42,6 +44,15 @@ public class PlayerTakeDamageState : PlayerMovementState
             takeDamageFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
         }
+    }
+
+    protected override void ChangeFacePlayer()
+    {
+        base.ChangeFacePlayer();
+
+        SetFaceProperty(1, new Vector2(0.22f, 0f));
+        SetFaceProperty(2, new Vector2(0.375f, 0f));
+        SetFaceProperty(3, new Vector2(0.33f, 0f));
     }
     #endregion
 }

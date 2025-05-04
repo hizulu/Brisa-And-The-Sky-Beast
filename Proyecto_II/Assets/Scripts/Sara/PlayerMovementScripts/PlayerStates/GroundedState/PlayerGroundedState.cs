@@ -199,6 +199,8 @@ public class PlayerGroundedState : PlayerMovementState
      */
     protected override void NoContactWithGround(Collider collider)
     {
+        if (stateMachine.CurrentState is PlayerRideBeastState) return;
+
         stateMachine.ChangeState(stateMachine.FallState);
     }
 

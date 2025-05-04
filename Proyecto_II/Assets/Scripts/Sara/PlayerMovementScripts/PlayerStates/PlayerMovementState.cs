@@ -262,23 +262,7 @@ public class PlayerMovementState : IState
      */
     private void CallBeast(InputAction.CallbackContext context)
     {
-        //Debug.Log("Has llamado a la Bestia");
-        stateMachine.Player.StartCoroutine(StopCallBeast());
-        EventsManager.TriggerNormalEvent("CallBeast");
-    }
-
-    /*
-     * Corrutina que gestiona que la animación de llamar a la Bestia se realice correctamente.
-     */
-    IEnumerator StopCallBeast()
-    {
-        StopAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
-        StopAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
-        StartAnimation(stateMachine.Player.PlayerAnimationData.CallBeastParameterHash);
-        yield return new WaitForSecondsRealtime(1f);
-        StopAnimation(stateMachine.Player.PlayerAnimationData.CallBeastParameterHash);
-        StartAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
-        StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
+        stateMachine.ChangeState(stateMachine.CallBeastState);
     }
     #endregion
 
@@ -426,27 +410,7 @@ public class PlayerMovementState : IState
     }
     #endregion
 
-    protected virtual void PlayerDead()
-    {
-        statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
-        isHalfDead = true;
-        stateMachine.ChangeState(stateMachine.HalfDeadState);
-    }
-
-    #region Métodos Cursor
-    public void LockCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    public void UnlockCursor()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-    #endregion
-
+    #region Métodos Cambiar Expresiones Player
     protected SkinnedMeshRenderer meshRendererPlayer;
     protected Material[] materials;
     private void CreateFaceMaterialPlayerDictionary()
@@ -476,5 +440,27 @@ public class PlayerMovementState : IState
             if (specificMaterial.HasProperty(propertyName))
                 specificMaterial.SetVector(propertyName, offset);
         }
+    }
+    #endregion
+
+    #region Métodos Cursor
+    public void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+    #endregion
+
+    protected virtual void PlayerDead()
+    {
+        statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
+        isHalfDead = true;
+        stateMachine.ChangeState(stateMachine.HalfDeadState);
     }
 }

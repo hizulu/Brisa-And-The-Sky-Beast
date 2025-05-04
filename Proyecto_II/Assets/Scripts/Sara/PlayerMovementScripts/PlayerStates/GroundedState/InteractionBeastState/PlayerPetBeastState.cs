@@ -1,3 +1,5 @@
+using UnityEngine;
+
 /*
  * NOMBRE CLASE: PlayerPetBeastState
  * AUTOR: Sara Yue Madruga Martín
@@ -48,6 +50,15 @@ public class PlayerPetBeastState : PlayerInteractionState
             petBeastFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
         }
+    }
+
+    protected override void ChangeFacePlayer()
+    {
+        base.ChangeFacePlayer();
+
+        SetFaceProperty(1, new Vector2(0.885f, 0f));
+        SetFaceProperty(2, new Vector2(0f, 0f));
+        SetFaceProperty(3, new Vector2(0f, 0f));
     }
     #endregion
 }

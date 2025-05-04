@@ -1,3 +1,5 @@
+using UnityEngine;
+
 /*
  * NOMBRE CLASE: PlayerLandState
  * AUTOR: Sara Yue Madruga Martín
@@ -49,6 +51,15 @@ public class PlayerLandState : PlayerStopState
             landFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
         }
+    }
+
+    protected override void ChangeFacePlayer()
+    {
+        base.ChangeFacePlayer();
+
+        SetFaceProperty(1, new Vector2(0.78f, 0f));
+        SetFaceProperty(2, new Vector2(0.375f, 0f));
+        SetFaceProperty(3, new Vector2(0.66f, 0f));
     }
     #endregion
 }

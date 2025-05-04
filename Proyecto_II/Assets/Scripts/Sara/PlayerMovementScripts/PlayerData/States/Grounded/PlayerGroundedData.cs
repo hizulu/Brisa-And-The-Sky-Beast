@@ -15,6 +15,7 @@ public class PlayerGroundedData
     [field: SerializeField] public PlayerWalkData WalkData { get; private set; }
     [field: SerializeField] public PlayerRunData RunData { get; private set; }
     [field: SerializeField] public PlayerCrouchData CrouchData { get; private set; }
+    [field: SerializeField] public PlayerRideBeastData RideBeastData { get; private set; }
     [field: SerializeField] public LayerMask ClickableLayers { get; private set; }
     [field: SerializeField] public ParticleSystem ClickEffect { get; private set; }
     //[field: SerializeField] public SpriteRenderer AreaMoveBeast { get; private set; }

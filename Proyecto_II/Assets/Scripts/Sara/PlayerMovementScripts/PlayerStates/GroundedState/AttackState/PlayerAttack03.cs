@@ -1,3 +1,5 @@
+using UnityEngine;
+
 /*
  * NOMBRE CLASE: PlayerAttack03
  * AUTOR: Sara Yue Madruga Martín
@@ -58,6 +60,15 @@ public class PlayerAttack03 : PlayerAttackState
     protected override void Move()
     {
         if (!attackFinish) return;
+    }
+
+    protected override void ChangeFacePlayer()
+    {
+        base.ChangeFacePlayer();
+
+        SetFaceProperty(1, new Vector2(0.22f, 0f));
+        SetFaceProperty(2, new Vector2(0.375f, 0f));
+        SetFaceProperty(3, new Vector2(0.66f, 0f));
     }
     #endregion
 }

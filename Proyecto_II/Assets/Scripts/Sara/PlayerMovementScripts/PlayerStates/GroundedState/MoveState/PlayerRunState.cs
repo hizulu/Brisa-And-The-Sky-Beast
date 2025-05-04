@@ -50,4 +50,13 @@ public class PlayerRunState : PlayerMovedState
         base.OnMovementCanceled(context);
     }
     #endregion
+
+    protected override void ChangeFacePlayer()
+    {
+        base.ChangeFacePlayer();
+
+        SetFaceProperty(1, new Vector2(0.78f, 0f));
+        SetFaceProperty(2, new Vector2(0f, 0f));
+        SetFaceProperty(3, new Vector2(0f, 0f));
+    }
 }

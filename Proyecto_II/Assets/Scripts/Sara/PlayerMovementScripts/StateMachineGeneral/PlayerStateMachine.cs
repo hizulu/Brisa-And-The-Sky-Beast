@@ -36,6 +36,7 @@ public class PlayerStateMachine : StateMachine
     public PlayerHardLandState HardLandState { get; }
     public PlayerHalfDeadState HalfDeadState { get; }
     public PlayerFinalDeadState FinalDeadState { get; }
+    public PlayerCallBeastState CallBeastState { get; }
     public PlayerPetBeastState PetBeastState { get; }
     public PlayerPointedBeastState PointedBeastState { get; }
     public PlayerRideBeastState RideBeastState { get; }
@@ -76,6 +77,7 @@ public class PlayerStateMachine : StateMachine
         HardLandState = new PlayerHardLandState(this);
         HalfDeadState = new PlayerHalfDeadState(this);
         FinalDeadState = new PlayerFinalDeadState(this);
+        CallBeastState = new PlayerCallBeastState(this);
         PetBeastState = new PlayerPetBeastState(this);
         PointedBeastState = new PlayerPointedBeastState(this);
         RideBeastState = new PlayerRideBeastState(this);

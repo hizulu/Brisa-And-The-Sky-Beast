@@ -71,8 +71,8 @@ public class PlayerHardLandState : PlayerStopState
         base.ChangeFacePlayer();
 
         SetFaceProperty(1, new Vector2(1.22f, 0f));
-        SetFaceProperty(2, new Vector2(0.37f, 0f));
-        SetFaceProperty(3, new Vector2(2.66f, 0f));
+        SetFaceProperty(2, new Vector2(0.375f, 0f));
+        SetFaceProperty(3, new Vector2(0.655f, 0f));
     }
     #endregion
 }
