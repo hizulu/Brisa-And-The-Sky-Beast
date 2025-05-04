@@ -35223,6 +35223,7 @@ MonoBehaviour:
   blockedNameText: {fileID: 631720611}
   blockedDescriptionText: {fileID: 631720610}
   objectsNeededText: {fileID: 631720608}
+  objectsObtainedQuantityText: {fileID: 1860659942}
   appearances:
   - {fileID: 11400000, guid: 7c6ec63dcb217b148a2778841812538e, type: 2}
   - {fileID: 11400000, guid: 09df38b04ff8b894a9d59897984019c0, type: 2}
@@ -43931,6 +43932,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &1860659942 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5228220455652340351, guid: b677c4ad998fd414ba8cbeea19c3caf3, type: 3}
+  m_PrefabInstance: {fileID: 631720607}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1862985365 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2498268502582333856, guid: d5fed1c01e1354743803c5a7da4b02e2, type: 3}

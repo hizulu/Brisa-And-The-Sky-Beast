@@ -76,18 +76,33 @@ public class InventoryManager : MonoBehaviour
     {
         if (inventory.ContainsKey(itemData))
         {
-            inventory[itemData] += quantity; // Sumar al diccionario
-            UpdateItemSlotVisibility(itemData); // Actualizar visibilidad del slot
-            foreach (var appearance in appearanceData)
-            {
-                AppearanceUnlock.Instance.TryUnlockAppearance(appearance); // Desbloquear apariencia
-            }
+            inventory[itemData] += quantity;
         }
         else
         {
-            inventory[itemData] = quantity; // Si no existe, se añade
-            AssignOrCreateItemSlot(itemData, quantity); // Se Crea un nuevo slot
+            inventory.Add(itemData, quantity);
         }
+
+        // Actualizar UI del slot
+        UpdateItemSlotVisibility(itemData);
+
+        // Verificar desbloqueos de apariencia y forzar actualización UI
+        foreach (var appearance in appearanceData)
+        {
+            if (appearance.objectsNeededPrefab == itemData)
+            {
+                bool wasUnlocked = appearance.isUnlocked;
+                bool unlockedNow = AppearanceUnlock.Instance.TryUnlockAppearance(appearance);
+
+                // Forzar actualización UI si el ítem es relevante para alguna apariencia
+                if (!wasUnlocked || unlockedNow)
+                {
+                    AppearanceUIManager.Instance.UpdateAppearanceUI(appearance);
+                }
+            }
+        }
+
+        EventsManager.TriggerSpecialEvent("InventoryUpdated", itemData);
     }
 
     //Método para eliminar un ítem del inventario

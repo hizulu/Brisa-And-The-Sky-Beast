@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using static Cinemachine.CinemachinePathBase;
 #endregion
 
 /* NOMBRE CLASE: Appearance UI Manager
@@ -29,6 +30,7 @@ public class AppearanceUIManager : MonoBehaviour
     public TMP_Text blockedNameText;
     public TMP_Text blockedDescriptionText;
     public TMP_Text objectsNeededText;
+    [SerializeField] TMP_Text objectsObtainedQuantityText;
 
     [Header("Appearance Data")]
     public List<AppearanceChangeData> appearances = new List<AppearanceChangeData>();
@@ -135,6 +137,7 @@ public class AppearanceUIManager : MonoBehaviour
             if (blockedNameText != null) blockedNameText.text = newAppearance.appearanceName;
             if (blockedDescriptionText != null) blockedDescriptionText.text = newAppearance.appearanceDescription;
             if (objectsNeededText != null) objectsNeededText.text = $"Objetos necesarios: {newAppearance.objectsNeeded}";
+            objectsObtainedQuantityText.text = InventoryManager.Instance.GetItemQuantity(newAppearance.objectsNeededPrefab).ToString();
         }
     }
 

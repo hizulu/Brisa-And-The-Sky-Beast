@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class AppearanceUnlock : MonoBehaviour
@@ -31,7 +32,7 @@ public class AppearanceUnlock : MonoBehaviour
             if (debugLogs) Debug.Log($"[Appearance] {appearanceData.appearanceName} ya estaba desbloqueado");
             return false;
         }
-
+        
         // Verificar requisitos
         bool canUnlock = CheckUnlockRequirements(appearanceData);
         
@@ -40,12 +41,11 @@ public class AppearanceUnlock : MonoBehaviour
             appearanceData.isUnlocked = true;
             if (debugLogs) Debug.Log($"[Appearance] Desbloqueado: {appearanceData.appearanceName}");
             AppearanceUIManager.Instance.UpdateAppearanceUI(appearanceData); // Actualizar UI de apariencia
-
             // Notificar otros sistemas
             EventsManager.TriggerSpecialEvent("OnAppearanceUnlocked", appearanceData);
             return true;
         }
-
+        AppearanceUIManager.Instance.UpdateAppearanceUI(appearanceData); // Actualizar UI de apariencia
         return false;
     }
 
