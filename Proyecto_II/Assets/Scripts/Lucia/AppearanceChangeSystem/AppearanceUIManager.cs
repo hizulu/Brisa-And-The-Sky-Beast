@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using static Cinemachine.CinemachinePathBase;
 #endregion
 
 /* NOMBRE CLASE: Appearance UI Manager
@@ -29,12 +30,29 @@ public class AppearanceUIManager : MonoBehaviour
     public TMP_Text blockedNameText;
     public TMP_Text blockedDescriptionText;
     public TMP_Text objectsNeededText;
+    [SerializeField] TMP_Text objectsObtainedQuantityText;
 
     [Header("Appearance Data")]
     public List<AppearanceChangeData> appearances = new List<AppearanceChangeData>();
     private int currentAppearanceIndex = 0;
 
     public CharacterAppearanceManager characterAppearanceManager;
+    #endregion
+
+    #region Singleton
+    public static AppearanceUIManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     #endregion
 
     private void Start()
@@ -79,7 +97,7 @@ public class AppearanceUIManager : MonoBehaviour
     }
 
     //Método para cambiar la apariencia al hacer clic en el botón
-    private void UpdateAppearanceUI(AppearanceChangeData newAppearance)
+    public void UpdateAppearanceUI(AppearanceChangeData newAppearance)
     {
         if (newAppearance == null)
         {
@@ -119,6 +137,7 @@ public class AppearanceUIManager : MonoBehaviour
             if (blockedNameText != null) blockedNameText.text = newAppearance.appearanceName;
             if (blockedDescriptionText != null) blockedDescriptionText.text = newAppearance.appearanceDescription;
             if (objectsNeededText != null) objectsNeededText.text = $"Objetos necesarios: {newAppearance.objectsNeeded}";
+            objectsObtainedQuantityText.text = InventoryManager.Instance.GetItemQuantity(newAppearance.objectsNeededPrefab).ToString();
         }
     }
 

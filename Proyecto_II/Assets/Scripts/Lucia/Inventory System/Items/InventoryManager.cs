@@ -36,6 +36,9 @@ public class InventoryManager : MonoBehaviour
     public Dictionary<ItemData, int> inventory = new Dictionary<ItemData, int>();
     public GameObject itemSlotPrefab;
     public Transform inventoryPanel;
+
+    [Header("Apariencia")]
+    public List<AppearanceChangeData> appearanceData; // Referencia a la apariencia que se va a desbloquear
     #endregion
 
     #region Instancia Singleton
@@ -73,14 +76,33 @@ public class InventoryManager : MonoBehaviour
     {
         if (inventory.ContainsKey(itemData))
         {
-            inventory[itemData] += quantity; // Sumar al diccionario
-            UpdateItemSlotVisibility(itemData); // Actualizar visibilidad del slot
+            inventory[itemData] += quantity;
         }
         else
         {
-            inventory[itemData] = quantity; // Si no existe, se añade
-            AssignOrCreateItemSlot(itemData, quantity); // Se Crea un nuevo slot
+            inventory.Add(itemData, quantity);
         }
+
+        // Actualizar UI del slot
+        UpdateItemSlotVisibility(itemData);
+
+        // Verificar desbloqueos de apariencia y forzar actualización UI
+        foreach (var appearance in appearanceData)
+        {
+            if (appearance.objectsNeededPrefab == itemData)
+            {
+                bool wasUnlocked = appearance.isUnlocked;
+                bool unlockedNow = AppearanceUnlock.Instance.TryUnlockAppearance(appearance);
+
+                // Forzar actualización UI si el ítem es relevante para alguna apariencia
+                if (!wasUnlocked || unlockedNow)
+                {
+                    AppearanceUIManager.Instance.UpdateAppearanceUI(appearance);
+                }
+            }
+        }
+
+        EventsManager.TriggerSpecialEvent("InventoryUpdated", itemData);
     }
 
     //Método para eliminar un ítem del inventario
@@ -172,6 +194,15 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public int GetItemQuantity(ItemData itemData)
+    {
+        if (inventory.TryGetValue(itemData, out int quantity)) // Verifica si el ítem existe en el inventario
+        {
+            return quantity; // Devuelve la cantidad del ítem
+        }
+        return 0; // Si no existe, devuelve 0
+    }
+
     // Método para comprobar por el nombre de un item.
     public ItemData GetItemByName(string itemName)
     {
@@ -207,8 +238,7 @@ public class InventoryManager : MonoBehaviour
             firstTime = true;
 
             EventsManager.TriggerNormalEvent("UIPanelClosed");
-            DeselectAllItems();
-        }
+            DeselectAllItems();        }
 
         inventoryMenu.SetActive(inventoryEnabled);
         AppearanceChangeMenu.SetActive(appearanceChangeEnabled);

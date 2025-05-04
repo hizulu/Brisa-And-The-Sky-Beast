@@ -17,11 +17,11 @@ public class AppearanceChangeData : ScriptableObject
     public string appearanceName;
     public Sprite appearanceIcon;
     public string appearanceDescription;
-    public Material appearanceMainMaterial;
+    public Texture2D bodyBaseMap;
     public Texture2D eyebrowsBaseMap;
     public Texture2D eyesBaseMap;
     public string objectsNeeded;
     public int toUnlockQuantity;
-    public GameObject objectsNeededPrefab;
+    public ItemData objectsNeededPrefab;
     public bool isUnlocked;
 }
