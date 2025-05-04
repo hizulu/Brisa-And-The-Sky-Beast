@@ -9171,15 +9171,15 @@ PrefabInstance:
     - target: {fileID: -3893282528146514212, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 2bfaf20a755cc6c43bee3b74ecdcf00c, type: 2}
+      objectReference: {fileID: 2100000, guid: 9bea40c05847c5641bbacdadfc3cc6ac, type: 2}
     - target: {fileID: -3893282528146514212, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: a63f5784fac27d44db9e2977a11b11e3, type: 2}
+      objectReference: {fileID: 2100000, guid: 17e4544c1f31c6d419dc6bb6ce3505a3, type: 2}
     - target: {fileID: -3893282528146514212, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_Materials.Array.data[3]
       value: 
-      objectReference: {fileID: 2100000, guid: 6473a2c7231b82440ba694c7b43eebe1, type: 2}
+      objectReference: {fileID: 2100000, guid: eda87836e50b0db459dbe59a0ca6a160, type: 2}
     - target: {fileID: -3893282528146514212, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_Materials.Array.data[4]
       value: 
@@ -10498,6 +10498,7 @@ MonoBehaviour:
   pointTarget: {fileID: 1098129779}
   Mango: {fileID: 1948720400}
   Baya: {fileID: 1782272205}
+  beastTrapped: {fileID: 0}
   playerTargetEnemiesRange: 20
 --- !u!54 &353271127
 Rigidbody:
@@ -21125,6 +21126,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 810796887}
   m_CullTransparentMesh: 1
+--- !u!114 &816663718 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5228220455652340351, guid: b677c4ad998fd414ba8cbeea19c3caf3, type: 3}
+  m_PrefabInstance: {fileID: 631720607}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &817016663
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23810,6 +23822,7 @@ Transform:
   - {fileID: 398048373}
   - {fileID: 981334284}
   - {fileID: 1315685957}
+  - {fileID: 1651880830}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &964526660
@@ -34968,9 +34981,11 @@ MonoBehaviour:
   blockedNameText: {fileID: 631720611}
   blockedDescriptionText: {fileID: 631720610}
   objectsNeededText: {fileID: 631720608}
+  objectsObtainedQuantityText: {fileID: 816663718}
   appearances:
   - {fileID: 11400000, guid: 7c6ec63dcb217b148a2778841812538e, type: 2}
   - {fileID: 11400000, guid: 09df38b04ff8b894a9d59897984019c0, type: 2}
+  - {fileID: 11400000, guid: c6e12c3f7a0cda546901cd4af39afd6e, type: 2}
   characterAppearanceManager: {fileID: 353271124}
 --- !u!114 &1493820063
 MonoBehaviour:
@@ -39133,6 +39148,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1646296157}
   m_CullTransparentMesh: 1
+--- !u!1 &1651880829
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1651880830}
+  - component: {fileID: 1651880831}
+  m_Layer: 0
+  m_Name: AppearanceUnlockManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1651880830
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651880829}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 963925348}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1651880831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651880829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3ac3c89088bed647b530b4644891141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugLogs: 1
 --- !u!1 &1656831457
 GameObject:
   m_ObjectHideFlags: 0
@@ -41274,6 +41334,8 @@ MonoBehaviour:
   - {fileID: 397516672}
   itemSlotPrefab: {fileID: 397516671}
   inventoryPanel: {fileID: 194252064}
+  appearanceData:
+  - {fileID: 11400000, guid: c6e12c3f7a0cda546901cd4af39afd6e, type: 2}
 --- !u!114 &1756723067
 MonoBehaviour:
   m_ObjectHideFlags: 0
