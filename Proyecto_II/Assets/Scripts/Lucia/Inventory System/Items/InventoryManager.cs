@@ -229,7 +229,7 @@ public class InventoryManager : MonoBehaviour
             firstTime = false;
             EventsManager.TriggerNormalEvent("UIPanelOpened");
         }
-        else if ((keyPressed == "i" || keyPressed == "escape") && !firstTime)
+        else if ((keyPressed == "i") && !firstTime)
         {
             inventoryEnabled = false;
             appearanceChangeEnabled = false;
@@ -239,6 +239,26 @@ public class InventoryManager : MonoBehaviour
 
             EventsManager.TriggerNormalEvent("UIPanelClosed");
             DeselectAllItems();        }
+
+        inventoryMenu.SetActive(inventoryEnabled);
+        AppearanceChangeMenu.SetActive(appearanceChangeEnabled);
+        mapMenu.SetActive(mapEnabled);
+        powersMenu.SetActive(powersEnabled);
+        Time.timeScale = inventoryEnabled ? 0 : 1;
+        Cursor.visible = inventoryEnabled;
+        Cursor.lockState = inventoryEnabled ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    public void CloseInventory()
+    {
+        inventoryEnabled = false;
+        appearanceChangeEnabled = false;
+        mapEnabled = false;
+        powersEnabled = false;
+        firstTime = true;
+
+        EventsManager.TriggerNormalEvent("UIPanelClosed");
+        DeselectAllItems();
 
         inventoryMenu.SetActive(inventoryEnabled);
         AppearanceChangeMenu.SetActive(appearanceChangeEnabled);

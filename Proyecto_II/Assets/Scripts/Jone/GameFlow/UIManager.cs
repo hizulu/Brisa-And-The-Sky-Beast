@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
         if (settingsPanel.activeInHierarchy)
         {
             settingsPanel.SetActive(false);
-            return false;
+            return false; // Se gestiona desde pause
         }
 
         if (dialoguePanel.activeInHierarchy)
