@@ -7,6 +7,7 @@ using System.Collections.Generic;
  * FECHA: 12/04/2025
  * DESCRIPCIÓN: Clase estática para gestionar eventos normales y especiales mediante delegados. Permite suscribir, desencadenar y desuscribir eventos.
  * VERSIÓN: 1.0
+ *              1.1. 04/05/2025 - Jone Sainz Egea - Modificaciones para persistencia, asegurando limpieza de diccionarios
  */
 public static class EventsManager
 {
@@ -16,12 +17,9 @@ public static class EventsManager
     public static void CallNormalEvents(string nameEvent, Action _action)
     {
         if (normalEvents.TryGetValue(nameEvent, out Action action))
-            action += _action;
+            normalEvents[nameEvent] = action + _action;
         else
-        {
-            action = _action;
-            normalEvents.Add(nameEvent, action);
-        }
+            normalEvents.Add(nameEvent, _action);
     }
 
     public static void CallSpecialEvents<T>(string nameEvent, Action<T> _action)
@@ -44,13 +42,26 @@ public static class EventsManager
     public static void TriggerSpecialEvent<T>(string eventName, T eventData)
     {
         if (specialEvents.TryGetValue(eventName, out Delegate action))
-            ((Action<T>)action)?.Invoke(eventData);
+        {
+            foreach (Delegate d in action.GetInvocationList())
+            {
+                if (d.Target == null) continue; 
+                ((Action<T>)d)?.Invoke(eventData);
+            }
+        }
     }
 
     public static void StopCallNormalEvents(string eventName, Action _action)
     {
         if (normalEvents.TryGetValue(eventName, out Action action))
+        {
             action -= _action;
+
+            if (action == null)
+                normalEvents.Remove(eventName);
+            else
+                normalEvents[eventName] = action;
+        }
     }
 
     public static void StopCallSpecialEvents<T>(string eventName, Action<T> _action)
@@ -58,7 +69,14 @@ public static class EventsManager
         if (specialEvents.TryGetValue(eventName, out Delegate action))
         {
             if (action is Action<T> typedAction)
+            {
                 typedAction -= _action;
+
+                if (typedAction == null)
+                    specialEvents.Remove(eventName);
+                else
+                    specialEvents[eventName] = typedAction;
+            }
         }
     }
 }

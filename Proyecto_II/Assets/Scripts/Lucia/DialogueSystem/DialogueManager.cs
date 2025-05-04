@@ -368,7 +368,7 @@ public class DialogManager : MonoBehaviour
         return false;
     }
 
-    void CloseDialog()
+    public void CloseDialog()
     {
         if (!isDialogActive) return;
 
