@@ -42,7 +42,6 @@ public class PlayerMovementState : IState
         audioManager = GameObject.FindObjectOfType<AudioManager>();
     }
 
-
     #region Métodos Base de la Máquina de Estados
     /*
      * Método de entrada.
@@ -53,6 +52,7 @@ public class PlayerMovementState : IState
         //stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 200f;
         //stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 200f;
         AddInputActionsCallbacks();
+        ChangeFacePlayer();
         EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
         EventsManager.CallNormalEvents("PickUpItem", PickUp);
     }
@@ -442,4 +442,12 @@ public class PlayerMovementState : IState
         Cursor.visible = true;
     }
     #endregion
+
+    protected SkinnedMeshRenderer meshRendererPlayer;
+    protected Material[] materials;
+    protected virtual void ChangeFacePlayer()
+    {
+        meshRendererPlayer = stateMachine.Player.RenderPlayer;
+        materials = meshRendererPlayer.materials;
+    }
 }

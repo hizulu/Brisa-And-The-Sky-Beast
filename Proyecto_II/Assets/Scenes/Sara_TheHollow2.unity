@@ -9135,7 +9135,7 @@ PrefabInstance:
     - target: {fileID: -3893282528146514212, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 2ea47ea010e2a4448aa2b7adba17093a, type: 2}
+      objectReference: {fileID: 2100000, guid: 11096265928e3a747b50965cb79f3a30, type: 2}
     - target: {fileID: -3893282528146514212, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
@@ -9143,7 +9143,7 @@ PrefabInstance:
     - target: {fileID: -3893282528146514212, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: a63f5784fac27d44db9e2977a11b11e3, type: 2}
+      objectReference: {fileID: 2100000, guid: 17e4544c1f31c6d419dc6bb6ce3505a3, type: 2}
     - target: {fileID: -3893282528146514212, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       propertyPath: m_Materials.Array.data[3]
       value: 
@@ -10466,6 +10466,8 @@ MonoBehaviour:
   pointTarget: {fileID: 1144294955}
   Mango: {fileID: 1974395462}
   Baya: {fileID: 1774277023}
+  beastTrapped: {fileID: 0}
+  RenderPlayer: {fileID: 353271121}
   playerTargetEnemiesRange: 20
 --- !u!54 &353271127
 Rigidbody:

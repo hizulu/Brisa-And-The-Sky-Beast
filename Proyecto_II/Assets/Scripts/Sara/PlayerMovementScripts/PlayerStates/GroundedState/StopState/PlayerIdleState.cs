@@ -42,4 +42,17 @@ public class PlayerIdleState : PlayerGroundedState
         //Debug.Log("Has salido del estado de IDLE.");
     }
     #endregion
+
+    #region Métodos Propios IdleState
+    /*
+     * Método para cambiar la expresión de Brisa al aterrizar desde muy alto.
+     */
+    protected override void ChangeFacePlayer()
+    {
+        base.ChangeFacePlayer();
+
+        if (materials[2].HasProperty("_EyesOffset"))
+            materials[2].SetVector("_EyesOffset", new Vector2(0f, 0f));
+    }
+    #endregion
 }

@@ -37,6 +37,8 @@ public class Player : MonoBehaviour
     [SerializeField] public GameObject Mango;
     [SerializeField] public GameObject Baya;
     [SerializeField] public BeastTrapped beastTrapped;
+    [SerializeField] public SkinnedMeshRenderer RenderPlayer;
+
     public BoxCollider GroundCheckCollider { get; private set; }
     public PlayerInput PlayerInput { get; private set; }
 
