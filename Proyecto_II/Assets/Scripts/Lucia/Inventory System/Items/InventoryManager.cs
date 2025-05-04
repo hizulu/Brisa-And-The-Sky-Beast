@@ -36,6 +36,9 @@ public class InventoryManager : MonoBehaviour
     public Dictionary<ItemData, int> inventory = new Dictionary<ItemData, int>();
     public GameObject itemSlotPrefab;
     public Transform inventoryPanel;
+
+    [Header("Apariencia")]
+    public List<AppearanceChangeData> appearanceData; // Referencia a la apariencia que se va a desbloquear
     #endregion
 
     #region Instancia Singleton
@@ -75,6 +78,10 @@ public class InventoryManager : MonoBehaviour
         {
             inventory[itemData] += quantity; // Sumar al diccionario
             UpdateItemSlotVisibility(itemData); // Actualizar visibilidad del slot
+            foreach (var appearance in appearanceData)
+            {
+                AppearanceUnlock.Instance.TryUnlockAppearance(appearance); // Desbloquear apariencia
+            }
         }
         else
         {
@@ -172,6 +179,15 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public int GetItemQuantity(ItemData itemData)
+    {
+        if (inventory.TryGetValue(itemData, out int quantity)) // Verifica si el ítem existe en el inventario
+        {
+            return quantity; // Devuelve la cantidad del ítem
+        }
+        return 0; // Si no existe, devuelve 0
+    }
+
     // Método para comprobar por el nombre de un item.
     public ItemData GetItemByName(string itemName)
     {
@@ -207,8 +223,7 @@ public class InventoryManager : MonoBehaviour
             firstTime = true;
 
             EventsManager.TriggerNormalEvent("UIPanelClosed");
-            DeselectAllItems();
-        }
+            DeselectAllItems();        }
 
         inventoryMenu.SetActive(inventoryEnabled);
         AppearanceChangeMenu.SetActive(appearanceChangeEnabled);

@@ -22,6 +22,6 @@ public class AppearanceChangeData : ScriptableObject
     public Texture2D eyesBaseMap;
     public string objectsNeeded;
     public int toUnlockQuantity;
-    public GameObject objectsNeededPrefab;
+    public ItemData objectsNeededPrefab;
     public bool isUnlocked;
 }

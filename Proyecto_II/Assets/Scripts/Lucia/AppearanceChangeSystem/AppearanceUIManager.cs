@@ -37,6 +37,22 @@ public class AppearanceUIManager : MonoBehaviour
     public CharacterAppearanceManager characterAppearanceManager;
     #endregion
 
+    #region Singleton
+    public static AppearanceUIManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    #endregion
+
     private void Start()
     {
         if (appearances.Count > 0)
@@ -79,7 +95,7 @@ public class AppearanceUIManager : MonoBehaviour
     }
 
     //Método para cambiar la apariencia al hacer clic en el botón
-    private void UpdateAppearanceUI(AppearanceChangeData newAppearance)
+    public void UpdateAppearanceUI(AppearanceChangeData newAppearance)
     {
         if (newAppearance == null)
         {
