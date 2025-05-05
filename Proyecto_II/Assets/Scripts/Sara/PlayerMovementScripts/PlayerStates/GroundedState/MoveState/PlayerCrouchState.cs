@@ -47,4 +47,13 @@ public class PlayerCrouchState : PlayerMovedState
         base.OnMovementCanceled(context);
     }
     #endregion
+
+    protected override void ChangeFacePlayer()
+    {
+        base.ChangeFacePlayer();
+
+        SetFaceProperty(1, new Vector2(0.44f, 0f));
+        SetFaceProperty(2, new Vector2(0.875f, 0f));
+        SetFaceProperty(3, new Vector2(0.33f, 0f));
+    }
 }
