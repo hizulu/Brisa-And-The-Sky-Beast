@@ -140,11 +140,14 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator LoadSceneAsync(string sceneName)
     {
+        EventsManager.CleanAllEvents();
+
         yield return SceneManager.LoadSceneAsync(sceneName);
     }
 
     public void LoadNextScene()
     {
+        EventsManager.CleanAllEvents();
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(nextSceneIndex);
     }
@@ -164,6 +167,8 @@ public class GameManager : MonoBehaviour
 
     public void ReloadScene()
     {
+        EventsManager.CleanAllEvents();
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         SceneManager.sceneLoaded += LoadSavedSceneChanges; 
     }

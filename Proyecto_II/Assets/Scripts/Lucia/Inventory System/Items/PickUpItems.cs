@@ -63,7 +63,7 @@ public class PickUpItems : MonoBehaviour
         if (playerInRange && itemScript != null)
         {
             itemScript.CollectItem();
-            //EventsManager.TriggerNormalEvent("PickUpItem");
+            EventsManager.TriggerNormalEvent("PickUpItem");
         }
     }
 }
