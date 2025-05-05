@@ -15,7 +15,11 @@ public class TempleDoorMover : MonoBehaviour, IMovableElement
     private NavMeshModifierVolume navMeshModifier;
     private NavMeshData navMeshData;
 
+    [SerializeField] private int requiredID;
+    public DialogManager dialogManager;
+
     private bool isLeverUnlocked = false;
+    [SerializeField] LeverActionsTempleDoor leverReference;
 
     private bool isMoving = false;
 
@@ -24,31 +28,33 @@ public class TempleDoorMover : MonoBehaviour, IMovableElement
         navMeshModifier = GetComponent<NavMeshModifierVolume>();
         if (navMeshModifier == null)
         {
-            Debug.LogWarning("The drawbridge doesn't have a NavMeshModifierVolume assigned.");
+            Debug.LogWarning("The temple door doesn't have a NavMeshModifierVolume assigned.");
         }
 
         UpdateNavMesh();
     }
 
-    private IEnumerator MoveDrawbridge(Transform target, float duration)
+    private IEnumerator MoveTempleDoor(Transform target, float duration)
     {
+        leverReference.isDoorOpen = true;
+        
         isMoving = true;
-        Quaternion startRotationDrawbridge = transform.rotation;
-        Quaternion targetRotationDrawbridge = target.rotation;
+        Quaternion startRotationTempleDoor = transform.rotation;
+        Quaternion targetRotationTempleDoor = target.rotation;
 
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
         {
             float t = elapsedTime / duration; // Normaliza el tiempo para interpolación correcta
-            transform.rotation = Quaternion.Slerp(startRotationDrawbridge, targetRotationDrawbridge, t);
+            transform.rotation = Quaternion.Slerp(startRotationTempleDoor, targetRotationTempleDoor, t);
 
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        transform.rotation = targetRotationDrawbridge;
+        transform.rotation = targetRotationTempleDoor;
 
         isMoving = false;
 
@@ -57,10 +63,16 @@ public class TempleDoorMover : MonoBehaviour, IMovableElement
 
     public void StartMoving(Vector3 target, float speed)
     {
-        if (isLeverUnlocked)
-            StartCoroutine(MoveDrawbridge(newTransform, speed));
+        if (dialogManager.DialogIDRead(requiredID))
+        {
+            if (!isLeverUnlocked)
+            {
+                isLeverUnlocked = true;
+                StartCoroutine(MoveTempleDoor(newTransform, speed));
+            }
+        }
         else
-            Debug.Log("Aún no puedes darle a la palanca, tienes que hablar con un NPC");
+            return; // TODO: implement visible message for player
     } 
     public bool IsMoving() => isMoving;
 
@@ -107,10 +119,5 @@ public class TempleDoorMover : MonoBehaviour, IMovableElement
         {
             kvp.Key.enabled = kvp.Value;
         }
-    }
-
-    public void OnUnlockLever()
-    {
-        isLeverUnlocked = true;
     }
 }
