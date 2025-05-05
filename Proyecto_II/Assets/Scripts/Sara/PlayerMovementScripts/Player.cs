@@ -71,6 +71,12 @@ public class Player : MonoBehaviour
         PlayerInput.UIPanelActions.Map.performed += OpenCloseMapPanel;
     }
 
+    void OnDisable()
+    {
+        if (!enabled)
+            enabled = true;
+    }
+
     private void OnDestroy()
     {
         PlayerInput.UIPanelActions.Inventory.performed -= OpenCloseInventory;
