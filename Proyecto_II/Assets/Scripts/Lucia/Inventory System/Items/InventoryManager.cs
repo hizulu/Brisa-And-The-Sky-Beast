@@ -74,19 +74,20 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(ItemData itemData, int quantity)
     {
+        // 1. Actualizar inventario
         if (inventory.ContainsKey(itemData))
         {
             inventory[itemData] += quantity;
+            UpdateItemSlotVisibility(itemData);
         }
         else
         {
             inventory.Add(itemData, quantity);
+            AssignOrCreateItemSlot(itemData, quantity);
         }
 
-        // Actualizar UI del slot
-        UpdateItemSlotVisibility(itemData);
-
-        // Verificar desbloqueos de apariencia y forzar actualización UI
+        // 2. Verificar desbloqueos
+        bool anyAppearanceUnlocked = false;
         foreach (var appearance in appearanceData)
         {
             if (appearance.objectsNeededPrefab == itemData)
@@ -94,14 +95,22 @@ public class InventoryManager : MonoBehaviour
                 bool wasUnlocked = appearance.isUnlocked;
                 bool unlockedNow = AppearanceUnlock.Instance.TryUnlockAppearance(appearance);
 
-                // Forzar actualización UI si el ítem es relevante para alguna apariencia
-                if (!wasUnlocked || unlockedNow)
+                if (unlockedNow)
                 {
-                    AppearanceUIManager.Instance.UpdateAppearanceUI(appearance);
+                    Debug.Log($"¡Apariencia {appearance.appearanceName} desbloqueada!");
+                    anyAppearanceUnlocked = true;
                 }
+
+                // Actualizar UI siempre que sea el ítem requerido
+                AppearanceUIManager.Instance.UpdateAppearanceUI(appearance);
             }
         }
 
+        // 3. Notificaciones
+        if (anyAppearanceUnlocked)
+        {
+            EventsManager.TriggerNormalEvent("NewAppearanceUnlocked");
+        }
         EventsManager.TriggerSpecialEvent("InventoryUpdated", itemData);
     }
 
