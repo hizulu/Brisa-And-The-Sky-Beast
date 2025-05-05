@@ -4075,7 +4075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &155113283
 Transform:
   m_ObjectHideFlags: 0
@@ -33445,7 +33445,7 @@ MonoBehaviour:
   blockedNameText: {fileID: 631720611}
   blockedDescriptionText: {fileID: 631720610}
   objectsNeededText: {fileID: 631720608}
-  objectsObtainedQuantityText: {fileID: 0}
+  objectsObtainedQuantityText: {fileID: 1581268310}
   appearances:
   - {fileID: 11400000, guid: 7c6ec63dcb217b148a2778841812538e, type: 2}
   - {fileID: 11400000, guid: 09df38b04ff8b894a9d59897984019c0, type: 2}
@@ -35476,6 +35476,17 @@ Transform:
   - {fileID: 632606385}
   m_Father: {fileID: 804807494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1581268310 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5228220455652340351, guid: b677c4ad998fd414ba8cbeea19c3caf3, type: 3}
+  m_PrefabInstance: {fileID: 631720607}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1583925425
 GameObject:
   m_ObjectHideFlags: 0
