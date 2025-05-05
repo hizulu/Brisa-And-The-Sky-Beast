@@ -12,9 +12,10 @@ public class TempleDoorMover : MonoBehaviour, IMovableElement
     [SerializeField] private Transform newTransform;
 
     [SerializeField] NavMeshSurface beastNavMeshSurface;
-
     private NavMeshModifierVolume navMeshModifier;
     private NavMeshData navMeshData;
+
+    private bool isLeverUnlocked = false;
 
     private bool isMoving = false;
 
@@ -56,7 +57,10 @@ public class TempleDoorMover : MonoBehaviour, IMovableElement
 
     public void StartMoving(Vector3 target, float speed)
     {
-        StartCoroutine(MoveDrawbridge(newTransform, speed));
+        if (isLeverUnlocked)
+            StartCoroutine(MoveDrawbridge(newTransform, speed));
+        else
+            Debug.Log("Aún no puedes darle a la palanca, tienes que hablar con un NPC");
     } 
     public bool IsMoving() => isMoving;
 
@@ -103,6 +107,10 @@ public class TempleDoorMover : MonoBehaviour, IMovableElement
         {
             kvp.Key.enabled = kvp.Value;
         }
+    }
 
+    public void OnUnlockLever()
+    {
+        isLeverUnlocked = true;
     }
 }

@@ -11,7 +11,7 @@ public class BeastPositionIndicator : MonoBehaviour
     [Header("Referencias")]
     [SerializeField] private RectTransform indicatorRect;
     [SerializeField] private Image indicatorImage;
-    [SerializeField] private Beast beastScript;
+    [SerializeField] private GameObject beast;
 
     private Transform player;
     private BeastTrapped beastTrapped;
@@ -20,7 +20,7 @@ public class BeastPositionIndicator : MonoBehaviour
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        beastTrapped = FindAnyObjectByType<BeastTrapped>();
+        beastTrapped = beast.GetComponent<BeastTrapped>();
 
         // Configuración inicial
         indicatorImage.color = new Color(1, 1, 1, 0);
@@ -31,7 +31,7 @@ public class BeastPositionIndicator : MonoBehaviour
     {
         // Control de visibilidad
         bool shouldShow = beastTrapped.beasIsFree &&
-                         Vector3.Distance(beastScript.transform.position, player.position) > minimapRadius;
+                         Vector3.Distance(beast.transform.position, player.position) > minimapRadius;
 
         targetAlpha = shouldShow ? 1f : 0f;
 
@@ -43,7 +43,7 @@ public class BeastPositionIndicator : MonoBehaviour
         // Actualizar posición si es visible
         if (newAlpha > 0.01f)
         {
-            Vector3 direction = beastScript.transform.position - player.position;
+            Vector3 direction = beast.transform.position - player.position;
             direction.y = 0;
             UpdatePosition(direction.normalized);
         }

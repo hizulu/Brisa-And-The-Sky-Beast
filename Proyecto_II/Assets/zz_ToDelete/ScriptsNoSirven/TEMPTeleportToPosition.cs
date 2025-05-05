@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Jone Sainz Egea
 public class TEMPTeleportToPosition : MonoBehaviour
 {
     [SerializeField] Transform teleportHere;

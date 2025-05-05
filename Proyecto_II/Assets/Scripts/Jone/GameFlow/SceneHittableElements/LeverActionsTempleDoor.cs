@@ -8,7 +8,6 @@ using UnityEngine;
 public class LeverActionsTempleDoor : LeverActionBase
 {
     [SerializeField] private float movementDuration = 3f;
-    private bool canActivate = false;
     private TempleDoorMover templeDoorMover;
 
     public override void DoLeverAction()
@@ -23,9 +22,6 @@ public class LeverActionsTempleDoor : LeverActionBase
             }
         }
 
-        if (canActivate)
-        {
-            templeDoorMover.StartMoving(Vector3.zero, movementDuration);
-        }
+        templeDoorMover.StartMoving(Vector3.zero, movementDuration);
     }
 }

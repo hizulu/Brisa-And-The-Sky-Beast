@@ -138,6 +138,7 @@ public class Player : MonoBehaviour
 
     public void PaloRecogido()
     {
+        Debug.Log("Palo recogido");
         PaloBrisa.SetActive(true);
     }
 
