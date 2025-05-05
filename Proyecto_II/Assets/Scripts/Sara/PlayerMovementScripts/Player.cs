@@ -71,6 +71,12 @@ public class Player : MonoBehaviour
         PlayerInput.UIPanelActions.Map.performed += OpenCloseMapPanel;
     }
 
+    void OnDisable()
+    {
+        if (!enabled)
+            enabled = true;
+    }
+
     private void OnDestroy()
     {
         PlayerInput.UIPanelActions.Inventory.performed -= OpenCloseInventory;
@@ -82,7 +88,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerStateMachine.ChangeState(playerStateMachine.IdleState);
-        PaloBrisa.SetActive(false);
+        //PaloBrisa.SetActive(false);
         hitBox.SetActive(false);
         ResetHealth();
     }

@@ -79,4 +79,10 @@ public static class EventsManager
             }
         }
     }
+
+    public static void CleanAllEvents()
+    {
+        specialEvents.Clear();
+        normalEvents.Clear();
+    }
 }
