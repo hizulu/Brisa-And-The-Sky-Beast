@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class DamagesBrisa : MonoBehaviour
 {
-    Player player;
-
-    private void Start()
-    {
-        player = FindObjectOfType<Player>();
-    }
+    private Player player;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            //player.SetHealth(50);
+            player = other.GetComponent<Player>();
+            player.Data.StatsData.CurrentHealth = 10f;
         }
     }
 }

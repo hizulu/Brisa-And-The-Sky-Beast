@@ -42,6 +42,8 @@ public class Beast : MonoBehaviour
 
     [SerializeField] public Player player;
 
+    private bool brisaIsHalfDead = false;
+
     public HashSet<GameObject> enemiesInRange = new HashSet<GameObject>();
     private bool isInCombat = false;
     private SphereCollider detectionCollider;
@@ -166,6 +168,9 @@ public class Beast : MonoBehaviour
         isInCombat = false;
         ChangeEnemyDetectionRange(); // Reseteo del rango de combate
 
+        if (GetBrisaHalfDead())
+            TransitionToState(new BeastBrisaHalfDeadState());
+
         TransitionToState(new BeastFreeState());
     }
 
@@ -188,8 +193,20 @@ public class Beast : MonoBehaviour
 
     private void BrisaIsHalfDead()
     {
+        SetBrisaHalfDead(true);
         blackboard.SetValue("brisaIsHalfDead", true);
         TransitionToState(new BeastBrisaHalfDeadState());
+    }
+
+    public bool GetBrisaHalfDead()
+    {
+        return brisaIsHalfDead;
+    }
+
+    public void SetBrisaHalfDead(bool isBrisaHalfDead)
+    {
+        blackboard.SetValue("brisaIsHalfDead", isBrisaHalfDead);
+        brisaIsHalfDead = isBrisaHalfDead;
     }
 
     private void BeastIsDirected(Vector3 targetDestination)
