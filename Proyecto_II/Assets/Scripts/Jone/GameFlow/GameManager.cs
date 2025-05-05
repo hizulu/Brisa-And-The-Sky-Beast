@@ -147,6 +147,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadNextScene()
     {
+        EventsManager.CleanAllEvents();
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(nextSceneIndex);
     }
