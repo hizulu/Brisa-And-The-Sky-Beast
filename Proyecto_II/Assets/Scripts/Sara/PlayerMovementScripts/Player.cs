@@ -88,7 +88,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerStateMachine.ChangeState(playerStateMachine.IdleState);
-        PaloBrisa.SetActive(false);
+        //PaloBrisa.SetActive(false);
         hitBox.SetActive(false);
         ResetHealth();
     }
