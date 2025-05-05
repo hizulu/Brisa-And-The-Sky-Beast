@@ -6,6 +6,14 @@ using UnityEngine;
 // 18/04/2025
 public class BeastOpenTheHollowExit : BeastActionable
 {
+    [SerializeField] GameObject camGO;
+    private CameraFade cam;
+
+    private void Start()
+    {
+        cam = camGO.GetComponent<CameraFade>();
+    }
+
     public override void OnBeast()
     {
         if (!beastIsIn)
@@ -13,10 +21,14 @@ public class BeastOpenTheHollowExit : BeastActionable
             Debug.Log("Beast is not in");
             return;
         }
-        GameManager.Instance.Victory();
+        StartCoroutine(FadeToNextScene());
+    }
 
-        // TODO: implement door open animation
-
-        beast.anim.SetTrigger("openDoor");
+    IEnumerator FadeToNextScene()
+    {
+        // TODO: some animation
+        cam.DoFadeInOut();
+        yield return new WaitForSeconds(1f);
+        GameManager.Instance.LoadNextScene();
     }
 }
