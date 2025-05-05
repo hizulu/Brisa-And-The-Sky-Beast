@@ -74,20 +74,18 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(ItemData itemData, int quantity)
     {
-        // 1. Actualizar inventario
         if (inventory.ContainsKey(itemData))
         {
-            inventory[itemData] += quantity;
-            UpdateItemSlotVisibility(itemData);
+            inventory[itemData] += quantity; // Sumar al diccionario
+            UpdateItemSlotVisibility(itemData); // Actualizar visibilidad del slot
         }
         else
         {
-            inventory.Add(itemData, quantity);
-            AssignOrCreateItemSlot(itemData, quantity);
+            inventory[itemData] = quantity; // Si no existe, se añade
+            AssignOrCreateItemSlot(itemData, quantity); // Se Crea un nuevo slot
         }
 
-        // 2. Verificar desbloqueos
-        bool anyAppearanceUnlocked = false;
+        // Verificar desbloqueos de apariencia y forzar actualización UI
         foreach (var appearance in appearanceData)
         {
             if (appearance.objectsNeededPrefab == itemData)
@@ -95,22 +93,14 @@ public class InventoryManager : MonoBehaviour
                 bool wasUnlocked = appearance.isUnlocked;
                 bool unlockedNow = AppearanceUnlock.Instance.TryUnlockAppearance(appearance);
 
-                if (unlockedNow)
+                // Forzar actualización UI si el ítem es relevante para alguna apariencia
+                if (!wasUnlocked || unlockedNow)
                 {
-                    Debug.Log($"¡Apariencia {appearance.appearanceName} desbloqueada!");
-                    anyAppearanceUnlocked = true;
+                    AppearanceUIManager.Instance.UpdateAppearanceUI(appearance);
                 }
-
-                // Actualizar UI siempre que sea el ítem requerido
-                AppearanceUIManager.Instance.UpdateAppearanceUI(appearance);
             }
         }
 
-        // 3. Notificaciones
-        if (anyAppearanceUnlocked)
-        {
-            EventsManager.TriggerNormalEvent("NewAppearanceUnlocked");
-        }
         EventsManager.TriggerSpecialEvent("InventoryUpdated", itemData);
     }
 
