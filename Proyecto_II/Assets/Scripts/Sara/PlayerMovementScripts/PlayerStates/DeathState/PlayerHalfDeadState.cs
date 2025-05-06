@@ -58,7 +58,7 @@ public class PlayerHalfDeadState : PlayerDeathState
      */
     private void TimeToRevivePlayer()
     {
-        Debug.Log("Estás medio - muerta");
+        // Debug.Log("Estás medio - muerta");
         statsData.CurrentTimeHalfDead -= Time.deltaTime;
 
         if (statsData.CurrentTimeHalfDead <= 0 || !beastTrapped.beasIsFree)

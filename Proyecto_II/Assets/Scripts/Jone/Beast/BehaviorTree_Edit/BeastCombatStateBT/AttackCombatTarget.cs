@@ -65,6 +65,13 @@ public class AttackCombatTarget : Node, ICoroutineNode
 
         while (elapsed < duration)
         {
+            if (targetTransform == null)
+            {
+                Debug.LogWarning("Ha muerto slime mientrás le atacaba");
+                _blackboard.ClearKey("targetForCombat");
+                yield break;
+            }
+
             // Dirección sin componente vertical
             Vector3 directionToTarget = targetTransform.position - _beast.transform.position;
             directionToTarget.y = 0f;

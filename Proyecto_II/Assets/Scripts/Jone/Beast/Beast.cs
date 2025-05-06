@@ -170,8 +170,8 @@ public class Beast : MonoBehaviour
 
         if (GetBrisaHalfDead())
             TransitionToState(new BeastBrisaHalfDeadState());
-
-        TransitionToState(new BeastFreeState());
+        else
+            TransitionToState(new BeastFreeState());
     }
 
     private void ChangeEnemyDetectionRange(float expectedRange = 20f)
