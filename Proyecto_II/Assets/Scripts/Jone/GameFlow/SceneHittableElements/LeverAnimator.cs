@@ -34,7 +34,7 @@ public class LeverAnimator
 
 
     private IEnumerator RotateLever(float targetXRotation)
-    {
+    {       
         Quaternion startRotation = leverStick.rotation;
         Quaternion targetRotation = Quaternion.Euler(targetXRotation, 0f, 0f);
 

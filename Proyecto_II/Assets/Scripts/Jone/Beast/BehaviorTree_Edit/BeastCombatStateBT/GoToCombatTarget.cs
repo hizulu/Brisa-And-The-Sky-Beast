@@ -37,6 +37,7 @@ public class GoToCombatTarget : Node
             Debug.LogWarning("Ha muerto slime mientrás iba a por él");
             _blackboard.ClearKey("targetForCombat");
             state = NodeState.FAILURE;
+            return state;
         }
 
         float distance = Vector3.Distance(_beast.transform.position, _target.transform.position);

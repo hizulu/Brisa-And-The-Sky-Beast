@@ -6,40 +6,63 @@ using UnityEngine;
 // 20/04/2025
 public class BeastBrisaHalfDeadState : BeastState
 {
+    private Coroutine reviveCoroutine;
+    private bool isRevivingBrisa = false;
+
     public override void OnEnter(Beast beast)
     {
-        Debug.Log("Has entrado en el estado de REVIVIR A BRISA");
+        Debug.Log("Entra en el estado de revivir a Brisa");
         beast.agent.SetDestination(beast.playerTransform.position);
+        beast.anim.SetBool("isWalking", true);
+        isRevivingBrisa = false;
     }
     public override void OnUpdate(Beast beast)
     {
-        // Si golpean a la bestia, sale del estado, pero como la bandera de "brisaIsHalfDead" sigue activa volverá a este estado (después de golpear al enemigo)
-
-        if(Vector3.Distance(beast.agent.transform.position, beast.playerTransform.position) < 1.5f) // La Bestia empieza a curar a Brisa solo cuando llega a su lado.
-            ReviveBrisa(beast);
+        if (!isRevivingBrisa && Vector3.Distance(beast.agent.transform.position, beast.playerTransform.position) < 2.5f)
+        {
+            reviveCoroutine = beast.StartCoroutine(ReviveBrisa(beast));
+        }
     }
     public override void OnExit(Beast beast)
     {
-        // Vuelve a estado de libertad
+        beast.agent.ResetPath();
+        if (isRevivingBrisa)
+        {
+            beast.StopCoroutine(reviveCoroutine);
+            reviveCoroutine = null;
+            isRevivingBrisa = false;
+            if (beast.player.Data.StatsData.CurrentHealth != beast.player.Data.StatsData.MaxHealth)
+                beast.player.Data.StatsData.CurrentHealth = 0f; // No ha terminado de revivirla
+            Debug.Log("Revivir cancelado al salir del estado.");
+        }
+        Debug.Log("Sale del estado de revivir a Brisa");
     }
 
-    float maxTimeToRevive = 3f;
-    float currentTime = 0f;
-    public void ReviveBrisa(Beast beast)
+    private IEnumerator ReviveBrisa(Beast beast)
     {
-        PlayerStatsData playerStatsData = beast.player.Data.StatsData;
+        isRevivingBrisa = true;
+        beast.anim.SetBool("isWalking", false);
+        beast.anim.SetTrigger("reviveBrisa");
 
-        Debug.Log("La Bestia está reviviendo a Brisa");
-        float healPerSecond = playerStatsData.MaxHealth / maxTimeToRevive;
-        playerStatsData.CurrentHealth += healPerSecond * Time.deltaTime;
+        PlayerStatsData stats = beast.player.Data.StatsData;
 
-        if(playerStatsData.CurrentHealth > playerStatsData.MaxHealth)
+        float duration = 3f;
+        float elapsed = 0f;
+        float startHealth = stats.CurrentHealth;
+        float endHealth = stats.MaxHealth;
+
+        Debug.Log("La Bestia empieza a revivir a Brisa");
+
+        while (elapsed < duration)
         {
-            playerStatsData.CurrentHealth = playerStatsData.MaxHealth;
-            Debug.Log("Brisa ha sido revivida.");
-            beast.TransitionToState(new BeastFreeState()); // TODO: Provisional, de momento he puesto esto para que deje de curar a Brisa.
+            elapsed += Time.deltaTime;
+            stats.CurrentHealth = Mathf.Lerp(startHealth, endHealth, elapsed / duration);
+            yield return null;
         }
 
-        currentTime += Time.deltaTime;
+        stats.CurrentHealth = endHealth;
+        Debug.Log("Brisa ha sido revivida.");
+        isRevivingBrisa = false;
+        beast.TransitionToState(new BeastFreeState());
     }
 }

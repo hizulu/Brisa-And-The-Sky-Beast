@@ -14,6 +14,7 @@ public class PlayerHalfDeadState : PlayerDeathState
 {
     public PlayerHalfDeadState(PlayerStateMachine _stateMachine) : base(_stateMachine) { }
 
+    private Beast beast;
     private BeastTrapped beastTrapped;
 
     #region Métodos Base de la Máquina de Estados
@@ -26,6 +27,7 @@ public class PlayerHalfDeadState : PlayerDeathState
         statsData.CurrentTimeHalfDead = statsData.MaxTimeHalfDead;
         StartAnimation(stateMachine.Player.PlayerAnimationData.HalfDeadParameterHash);
 
+        beast = stateMachine.Player.Beast;
         beastTrapped = stateMachine.Player.beastTrapped;
     }
 
@@ -56,7 +58,7 @@ public class PlayerHalfDeadState : PlayerDeathState
      */
     private void TimeToRevivePlayer()
     {
-        Debug.Log("Estás medio - muerta");
+        // Debug.Log("Estás medio - muerta");
         statsData.CurrentTimeHalfDead -= Time.deltaTime;
 
         if (statsData.CurrentTimeHalfDead <= 0 || !beastTrapped.beasIsFree)
@@ -72,7 +74,10 @@ public class PlayerHalfDeadState : PlayerDeathState
     private void PlayerRevive()
     {
         if (statsData.CurrentHealth == statsData.MaxHealth)
+        {
+            beast.SetBrisaHalfDead(false);
             stateMachine.ChangeState(stateMachine.IdleState);
+        }
     }
 
     protected override void ChangeFacePlayer()
