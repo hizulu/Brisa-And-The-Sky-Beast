@@ -30,6 +30,8 @@ public class Enemy : HittableElement
 
     public bool targetIsPlayer = true;
 
+    bool isDead = false;
+
     #endregion
 
     #region FSM Variables
@@ -103,7 +105,8 @@ public class Enemy : HittableElement
 
     private void Update()
     {
-        enemyStateMachine.UpdateLogic();
+        if(!isDead)
+            enemyStateMachine.UpdateLogic();
     }
 
     private void FixedUpdate()
@@ -153,11 +156,23 @@ public class Enemy : HittableElement
         Debug.Log("Enemigo muerto");
         if(agent.enabled)
             agent.ResetPath();
-        // TODO: anim.SetBool("isDead", true);
+
+        anim.SetTrigger("Death");
+        StartCoroutine(WaitForDeathAnimation());
         // TODO: play enemy death sound depending on enemy
         // TODO: character deactivation (collider, script...)
+        // TEMP
+    }
+
+    private IEnumerator WaitForDeathAnimation()
+    {
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Death"));
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+        yield return new WaitForSeconds(2f);
+        isDead = true;
+        anim.enabled = false;
         beast?.OnEnemyExit(gameObject);
-        Destroy(gameObject, 0.5f); // TEMP
+        Destroy(gameObject);
     }
     #endregion
 

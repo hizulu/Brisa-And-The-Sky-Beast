@@ -17,7 +17,7 @@ public class EnemyChaseStraightToTarget : EnemyStateSOBase
     #region Variables
     [SerializeField] private float chasingSpeed = 6f;
     [SerializeField] private float playerAttackRange = 7f; // Distancia a la que se tiene que encontrar el jugador para que el enemigo pase a atacar
-    [SerializeField] private float playerLostRange = 20f; // Distancia a la que se tiene que encontrar el jugador para que el enemigo deje de perseguirlo
+    [SerializeField] private float playerLostRange = 10f; // Distancia a la que se tiene que encontrar el jugador para que el enemigo deje de perseguirlo
     [SerializeField] private float beastAttackRange = 10f; // Distancia a la que se tiene que encontrar la bestia para que el enemigo pase a atacarla
     [SerializeField] private float beastLostRange = 15f; // Distancia a la que se tiene que encontrar la bestia para que el enemigo deje de perseguirla
 
@@ -63,7 +63,7 @@ public class EnemyChaseStraightToTarget : EnemyStateSOBase
             enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyAttackState);
         // Si el objetivo se ha alejado mucho vuelve a estado de idle
         else if (distanceToTargetSQR > targetLostRangeSQR)
-            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyIdleState);
+            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyPatrolState);
     }
     #endregion
 

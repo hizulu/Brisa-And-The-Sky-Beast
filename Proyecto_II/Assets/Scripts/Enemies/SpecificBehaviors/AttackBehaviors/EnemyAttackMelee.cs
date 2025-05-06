@@ -15,11 +15,8 @@ public class EnemyAttackMelee : EnemyStateSOBase
 {
     #region Variables
     [SerializeField] private float _timeBetweenHits = 2f;
-    [SerializeField] private float _attackDamage = 20f;
-
+    [SerializeField] private float _attackDamage = 10f;
     private float _timer;
-
-    [SerializeField] private float attackDamage = 20f;
     [SerializeField] private float distanceToStopAttackState = 5f;
     private float distanceToStopAttackStateSQR = 0f; // Variable auxiliar para almacenar distancia evitando cálculo de raíz cuadrada cada frame.
     #endregion
@@ -28,7 +25,8 @@ public class EnemyAttackMelee : EnemyStateSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-        enemy.anim.SetBool("isAttacking", true);
+        _timer = _timeBetweenHits;
+        
         distanceToStopAttackStateSQR = distanceToStopAttackState * distanceToStopAttackState;
         Debug.Log("Has entrado en el estado de Attack Melee");
         enemy.agent.ResetPath();
@@ -37,7 +35,6 @@ public class EnemyAttackMelee : EnemyStateSOBase
     public override void DoExitLogic()
     {
         base.DoExitLogic();
-        enemy.anim.SetBool("isAttacking", false);
         Debug.Log("Has salido del estado de Attack Melee");
     }
 
@@ -45,20 +42,22 @@ public class EnemyAttackMelee : EnemyStateSOBase
     {
         base.DoFrameUpdateLogic();
 
-        // Gestión del tiempo entre ataques
-        if (_timer > _timeBetweenHits)
-        {
-            _timer = 0f;
-            // TODO: lógica de ataque
-        }
-
-        _timer += Time.deltaTime;
-
         float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
 
         // Si el jugador se aleja demasiado, vuelve al estado de Chase
         if (distanceToPlayerSQR > distanceToStopAttackStateSQR)
             enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
+
+        // Gestión del tiempo entre ataques
+        _timer += Time.deltaTime;
+
+        if (_timer > _timeBetweenHits)
+        {
+            _timer = 0f;
+            enemy.anim.SetTrigger("Attack");
+            EventsManager.TriggerSpecialEvent<float>("OnAttackPlayer", _attackDamage);
+            // TODO: lógica de ataque
+        }
     }
     #endregion
 }
