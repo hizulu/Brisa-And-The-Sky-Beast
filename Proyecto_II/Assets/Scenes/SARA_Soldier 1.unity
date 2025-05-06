@@ -4631,6 +4631,7 @@ MonoBehaviour:
     hardLandParameterName: isHardLanding
     halfDeadParameterName: isHalfDeading
     finalDeadParameterName: isFinalDeading
+    revivePlayerParameterName: isRevivingPlayer
     callBeastParameterName: isCallingBeast
     petBeastParameterName: isPettingBeast
     rideBeastParameterName: isRidingBeast
@@ -17611,6 +17612,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -180
       objectReference: {fileID: 0}
+    - target: {fileID: 8069329420060841336, guid: 832e83f72daca3d46a9861b94020c85c, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -1228624855085305925, guid: d0b65739396bb334f9e86c7e7c521463, type: 3}
     - target: {fileID: 8069329420060841336, guid: 832e83f72daca3d46a9861b94020c85c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
