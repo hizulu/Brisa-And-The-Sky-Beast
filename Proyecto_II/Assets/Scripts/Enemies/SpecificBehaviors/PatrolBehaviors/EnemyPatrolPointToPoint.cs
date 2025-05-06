@@ -35,6 +35,8 @@ public class EnemyPatrolPointToPoint : EnemyStateSOBase
     {
         base.DoEnterLogic();
 
+        enemy.anim.SetBool("isPatrol", true);
+
         targetDetection.Initialize(enemy);
 
         AddPatrolPoints();
@@ -52,6 +54,12 @@ public class EnemyPatrolPointToPoint : EnemyStateSOBase
         // Cambia de estado cuando detecta al jugador o a la bestia
         if (targetDetection.LookForTarget())
             enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
+    }
+
+    public override void DoExitLogic()
+    {
+        base.DoExitLogic();
+        enemy.anim.SetBool("isPatrol", false);
     }
     #endregion
 

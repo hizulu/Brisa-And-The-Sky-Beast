@@ -24,7 +24,7 @@ public class EnemyIdleStandStill : EnemyStateSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-
+        enemy.anim.SetBool("isIdle", true);
         stillTime = Random.Range(minStillTime, maxStillTime);
     }
 
@@ -37,6 +37,12 @@ public class EnemyIdleStandStill : EnemyStateSOBase
         // Cuando completa el tiempo de espera vuelve al estado de patrulla
         if (stillTime <= 0)
             enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyPatrolState);
+    }
+
+    public override void DoExitLogic()
+    {
+        base.DoExitLogic();
+        enemy.anim.SetBool("isIdle", false);
     }
     #endregion
 }

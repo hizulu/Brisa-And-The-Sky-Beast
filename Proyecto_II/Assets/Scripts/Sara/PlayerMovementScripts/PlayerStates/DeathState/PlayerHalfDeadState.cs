@@ -21,6 +21,7 @@ public class PlayerHalfDeadState : PlayerDeathState
     public override void Enter()
     {
         EventsManager.TriggerNormalEvent("BrisaHalfDead");
+        EventsManager.CallNormalEvents("BrisaRevive", PlayerRevive);
         base.Enter();
         Debug.Log("Has entrado en el estado de MEDIO-MUERTA");
         //statsData.CurrentTimeHalfDead = 60f;
@@ -37,13 +38,9 @@ public class PlayerHalfDeadState : PlayerDeathState
         TimeToRevivePlayer();
     }
 
-    public override void UpdatePhysics()
-    {
-        base.UpdatePhysics();
-    }
-
     public override void Exit()
     {
+        EventsManager.StopCallNormalEvents("BrisaRevive", PlayerRevive);
         isHalfDead = false;
         base.Exit();
         Debug.Log("Has salido del estado de MEDIO-MUERTA");
@@ -63,8 +60,6 @@ public class PlayerHalfDeadState : PlayerDeathState
 
         if (statsData.CurrentTimeHalfDead <= 0 || !beastTrapped.beasIsFree)
             stateMachine.ChangeState(stateMachine.FinalDeadState);
-        else
-            PlayerRevive();
     }
 
     /*
@@ -73,11 +68,8 @@ public class PlayerHalfDeadState : PlayerDeathState
      */
     private void PlayerRevive()
     {
-        if (statsData.CurrentHealth == statsData.MaxHealth)
-        {
-            beast.SetBrisaHalfDead(false);
-            stateMachine.ChangeState(stateMachine.IdleState);
-        }
+        beast.SetBrisaHalfDead(false);
+        stateMachine.ChangeState(stateMachine.RevivePlayerState);
     }
 
     protected override void ChangeFacePlayer()

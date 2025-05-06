@@ -31,8 +31,6 @@ public class BeastBrisaHalfDeadState : BeastState
             beast.StopCoroutine(reviveCoroutine);
             reviveCoroutine = null;
             isRevivingBrisa = false;
-            if (beast.player.Data.StatsData.CurrentHealth != beast.player.Data.StatsData.MaxHealth)
-                beast.player.Data.StatsData.CurrentHealth = 0f; // No ha terminado de revivirla
             Debug.Log("Revivir cancelado al salir del estado.");
         }
         Debug.Log("Sale del estado de revivir a Brisa");
@@ -44,23 +42,18 @@ public class BeastBrisaHalfDeadState : BeastState
         beast.anim.SetBool("isWalking", false);
         beast.anim.SetTrigger("reviveBrisa");
 
-        PlayerStatsData stats = beast.player.Data.StatsData;
-
         float duration = 3f;
         float elapsed = 0f;
-        float startHealth = stats.CurrentHealth;
-        float endHealth = stats.MaxHealth;
 
         Debug.Log("La Bestia empieza a revivir a Brisa");
 
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            stats.CurrentHealth = Mathf.Lerp(startHealth, endHealth, elapsed / duration);
             yield return null;
         }
 
-        stats.CurrentHealth = endHealth;
+        EventsManager.TriggerNormalEvent("BrisaRevive");
         Debug.Log("Brisa ha sido revivida.");
         isRevivingBrisa = false;
         beast.TransitionToState(new BeastFreeState());
