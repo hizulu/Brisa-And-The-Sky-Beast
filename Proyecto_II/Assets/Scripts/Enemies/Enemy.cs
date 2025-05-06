@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -158,6 +157,7 @@ public class Enemy : HittableElement
             agent.ResetPath();
 
         anim.SetTrigger("Death");
+        isDead = true;
         StartCoroutine(WaitForDeathAnimation());
         // TODO: play enemy death sound depending on enemy
         // TODO: character deactivation (collider, script...)
@@ -168,11 +168,11 @@ public class Enemy : HittableElement
     {
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Death"));
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
-        yield return new WaitForSeconds(2f);
-        isDead = true;
+        yield return new WaitForSeconds(1f);        
         anim.enabled = false;
         beast?.OnEnemyExit(gameObject);
         Destroy(gameObject);
+        GetComponent<LootBox>()?.DropLoot();
     }
     #endregion
 
