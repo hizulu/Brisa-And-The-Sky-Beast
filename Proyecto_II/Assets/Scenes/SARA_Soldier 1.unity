@@ -17192,6 +17192,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AirDemon_Animations
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 832e83f72daca3d46a9861b94020c85c, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 960396745392910379, guid: 832e83f72daca3d46a9861b94020c85c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -25.433105
@@ -17793,7 +17797,7 @@ MonoBehaviour:
   EnemyIdleBase: {fileID: 11400000, guid: 1437c5e976403cc4d9cdd3cf95008ee1, type: 2}
   EnemyPatrolBase: {fileID: 11400000, guid: 134b982aa64ebec4a837cdbbe039b9d8, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: d89c45a6b6fabe34ea24f65f61fe0029, type: 2}
-  EnemyAttackBase: {fileID: 11400000, guid: 2ca1387201d44d74890456e83dd96210, type: 2}
+  EnemyAttackBase: {fileID: 11400000, guid: f7d6f373555915541b5c8cbbb55869d5, type: 2}
   EnemyRetreatBase: {fileID: 11400000, guid: 3f4d915fcd62bfc48bd2b2dd2993b489, type: 2}
   playerAttackRange: 1
   playerLostRange: 15
