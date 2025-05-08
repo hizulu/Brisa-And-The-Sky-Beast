@@ -4781,7 +4781,7 @@ MonoBehaviour:
   lookCamPlayer: {fileID: 695668566}
   PaloBrisa: {fileID: 558796933}
   hitBox: {fileID: 1960113720}
-  Shield: {fileID: 0}
+  Shield: {fileID: 590217885}
   beastPanel: {fileID: 0}
   mapManager: {fileID: 0}
   AreaMoveBeast: {fileID: 0}
@@ -5331,6 +5331,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 559380565}
   m_CullTransparentMesh: 1
+--- !u!1 &590217885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 590217886}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &590217886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590217885}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 530512669}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &599233225
 GameObject:
   m_ObjectHideFlags: 0
@@ -16416,6 +16447,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1960113723}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 590217886}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5af9aca1f2d7b7c4ea4a96d5a3e1a8c3, type: 3}
       insertIndex: -1
@@ -18154,7 +18188,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &2073938381
 CapsuleCollider:
@@ -18203,7 +18237,7 @@ MonoBehaviour:
   EnemyPatrolBase: {fileID: 11400000, guid: 134b982aa64ebec4a837cdbbe039b9d8, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: d89c45a6b6fabe34ea24f65f61fe0029, type: 2}
   EnemyAttackBase: {fileID: 11400000, guid: f7d6f373555915541b5c8cbbb55869d5, type: 2}
-  EnemyRetreatBase: {fileID: 11400000, guid: 3f4d915fcd62bfc48bd2b2dd2993b489, type: 2}
+  EnemyRetreatBase: {fileID: 11400000, guid: 8ed7ee419c2347348b551b27f6987070, type: 2}
   playerAttackRange: 1
   playerLostRange: 15
   playerDetectionRange: 12

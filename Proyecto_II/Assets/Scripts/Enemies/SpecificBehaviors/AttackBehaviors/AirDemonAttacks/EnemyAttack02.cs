@@ -2,9 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * NOMBRE CLASE: EnemyAttack02
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 07/05/2025
+ * DESCRIPCIÓN: Clase que define el comportamiento específico de Retreat       
+ * VERSIÓN: 1.0.
+ */
+
 [CreateAssetMenu(fileName = "Combo - Attack02", menuName = "Enemy Logic/Attack Logic/Attack02")]
 public class EnemyAttack02 : EnemyComboAttacksSOBase
 {
+    [SerializeField] private float attackDamageModifierMin = 20f;
+    [SerializeField] private float attackDamageModifierMax = 30f;
     bool attack02 = false;
 
     public override void Initialize(Enemy _enemy)
@@ -12,6 +22,8 @@ public class EnemyAttack02 : EnemyComboAttacksSOBase
         base.Initialize(_enemy);
         attack02 = false;
         enemy.anim.SetBool("isAttacking02", true);
+        float randomAttackDamage02 = UnityEngine.Random.Range(attackDamageModifierMin, attackDamageModifierMax);
+        EventsManager.TriggerSpecialEvent<float>("OnAttackPlayer", randomAttackDamage02);
     }
 
     public override void Exit()
@@ -25,11 +37,6 @@ public class EnemyAttack02 : EnemyComboAttacksSOBase
     {
         base.FrameLogic();
         FinishAnimation();
-    }
-
-    public override void EnemyAttack()
-    {
-        Debug.Log("El enemigo ha hecho el segundo ataque del combo.");
     }
 
     public override void FinishAnimation()

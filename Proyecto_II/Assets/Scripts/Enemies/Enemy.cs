@@ -19,6 +19,7 @@ public class Enemy : HittableElement
     public Player player;
     public Beast beast;
     public Animator anim { get; private set; }
+    public Rigidbody enemyRb { get; private set; }
     public NavMeshAgent agent;
 
 
@@ -71,6 +72,7 @@ public class Enemy : HittableElement
         enemyStateMachine = new EnemyStateMachine(this);
 
         anim = GetComponent<Animator>();
+        enemyRb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
