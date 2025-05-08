@@ -16,14 +16,6 @@ public class SignTextRange : MonoBehaviour
     [SerializeField] private RectTransform panelRectTransform;
     [SerializeField] private string signPromptText = "Presiona E para leer";
 
-    [Header("Camera Settings")]
-    [SerializeField] private CinemachineVirtualCamera playerCam;
-    private CinemachinePOV camComponents;
-
-    [Header("Input Settings")]
-    [SerializeField] private PlayerInput playerInput;
-    [SerializeField] private InputActionReference interactAction;
-
     private bool playerInRange = false;
     private bool signActive = false;
     private Camera mainCamera;
@@ -31,36 +23,7 @@ public class SignTextRange : MonoBehaviour
     private void Awake()
     {
         mainCamera = Camera.main;
-
-        if (playerCam != null) camComponents = playerCam.GetCinemachineComponent<CinemachinePOV>();
-
         if (interactionPanel != null) interactionPanel.SetActive(false);
-    }
-
-    private void OnEnable()
-    {
-        if (interactAction != null)
-        {
-            interactAction.action.performed += OnSignInteract;
-            interactAction.action.Enable();
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (interactAction != null)
-        {
-            interactAction.action.performed -= OnSignInteract;
-            interactAction.action.Disable();
-        }
-    }
-
-    private void Update()
-    {
-        if (playerInRange && interactionPanel.activeSelf)
-        {
-            UpdatePanelPosition();
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -78,21 +41,21 @@ public class SignTextRange : MonoBehaviour
         {
             playerInRange = false;
             HideInteractionPanel();
-
-            if (signActive)
-            {
-                CloseSign();
-            }
+            if (signActive) CloseSign();
         }
     }
 
-    private void OnSignInteract(InputAction.CallbackContext context)
+    private void Update()
     {
-        if (!playerInRange || signTextManager == null) return;
-
-        if (context.control.device is Keyboard && context.control.name == "e")
+        if (playerInRange && interactionPanel.activeSelf)
         {
-            ToggleSign();
+            UpdatePanelPosition();
+
+            // Manejo de input directo en Update para mayor confiabilidad
+            if (Keyboard.current.eKey.wasPressedThisFrame)
+            {
+                ToggleSign();
+            }
         }
     }
 
@@ -118,17 +81,12 @@ public class SignTextRange : MonoBehaviour
     {
         if (mainCamera != null && panelRectTransform != null)
         {
-            // Calcular posición exacta encima del cartel
             Vector3 worldPosition = transform.position + panelOffset;
-
-            // Ajustar para objetos con renderer
             if (TryGetComponent(out Renderer renderer))
             {
                 worldPosition.y = renderer.bounds.max.y + 0.3f;
             }
-
-            Vector2 screenPosition = mainCamera.WorldToScreenPoint(worldPosition);
-            panelRectTransform.position = screenPosition;
+            panelRectTransform.position = mainCamera.WorldToScreenPoint(worldPosition);
         }
     }
 
@@ -146,49 +104,21 @@ public class SignTextRange : MonoBehaviour
 
     private void OpenSign()
     {
-        signTextManager.ShowSignTextById(signId);
-        signActive = true;
-        HideInteractionPanel();
-
-        if (playerCam != null)
+        if (signTextManager != null)
         {
-            playerCam.m_Lens.FieldOfView = 50f;
-            LockCameraMovement();
+            signTextManager.ShowSignTextById(signId);
+            signActive = true;
+            HideInteractionPanel();
         }
     }
 
     private void CloseSign()
     {
-        signTextManager.CloseSignPanel();
-        signActive = false;
-
-        if (playerInRange)
+        if (signTextManager != null)
         {
-            ShowInteractionPanel();
-        }
-
-        if (playerCam != null)
-        {
-            playerCam.m_Lens.FieldOfView = 60f;
-            UnlockCameraMovement();
-        }
-    }
-
-    private void LockCameraMovement()
-    {
-        if (camComponents != null)
-        {
-            camComponents.m_HorizontalAxis.m_MaxSpeed = 0f;
-            camComponents.m_VerticalAxis.m_MaxSpeed = 0f;
-        }
-    }
-
-    private void UnlockCameraMovement()
-    {
-        if (camComponents != null)
-        {
-            camComponents.m_HorizontalAxis.m_MaxSpeed = 300f;
-            camComponents.m_VerticalAxis.m_MaxSpeed = 300f;
+            signTextManager.CloseSignPanel();
+            signActive = false;
+            if (playerInRange) ShowInteractionPanel();
         }
     }
 }
