@@ -3,6 +3,14 @@ using UnityEngine.UI;
 using UnityEngine.Rendering;
 using TMPro;
 
+/* NOMBRE CLASE: GraphicsSettings
+ * AUTOR: Lucía García López
+ * FECHA: 23/04/2025
+ * DESCRIPCIÓN: Script que gestiona los ajustes gráficos del juego. Permite ajustar el brillo, la resolución y el modo de pantalla.
+ * VERSIÓN: 1.0 Sistema de ajustes gráficos inicial.
+ * 1.1 Se ha añadido la opción de cambiar el brillo al sistema SunController creado por Sara.
+ */
+
 public class GraphicsSettings : MonoBehaviour
 {
     [Header("Brillo")]
@@ -27,10 +35,8 @@ public class GraphicsSettings : MonoBehaviour
         // Asegurarse de que tenemos referencia al SunController
         if (sunController == null)
         {
-            // Intentar encontrar automáticamente el SunController en la escena
             sunController = FindObjectOfType<SunController>();
             
-            // Si aún es null, buscar en la luz direccional
             if (sunController == null && directionalLight != null)
             {
                 sunController = directionalLight.GetComponent<SunController>();
@@ -103,6 +109,7 @@ public class GraphicsSettings : MonoBehaviour
     {
         if (sunController != null)
         {
+            //He creado un multiplicador que se aplica a la intensidad de la luz desde el script SunController
             sunController.SetLightIntensityMultiplier(value);
         }
 

@@ -1,11 +1,26 @@
+#region Bibliotecas
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using System.Collections;
 using TMPro;
+#endregion
+
+ /* NOMBRE CLASE: NPCDialogRange
+ * AUTORES: Lucía García López y Sara Yue Madruga Martín
+ * FECHA: 10/04/2025
+ * DESCRIPCION: Clase que gestiona el rango de diálogo con un NPC. Un jugador puede interactuar con el NPC al entrar en su rango y presionar la tecla "E".
+ *              Cada NPC tiene un ID de inicio y un ID de fin para el diálogo, lo que permite gestionar múltiples diálogos.
+ *              Funciona con un archivo CSV que contiene las entradas de diálogo.
+ * VERSION: 1.0 Lucia: Sistema de diálogos inicial.
+ * 1.1 Sara: Cambio a New Input System.
+ * 1.2 Sara: Añadido el nombre del NPC en el panel de interacción y bloqueo de movimiento de la cámara durante el diálogo.
+ * 1.3 Lucia: Mejoras generales de funcionamiento
+ */
 
 public class NPCDialogRange : MonoBehaviour
 {
+    #region Variables
     [Header("Dialog Configuration")]
     public DialogManager dialogManager;
     public int startID;
@@ -22,6 +37,7 @@ public class NPCDialogRange : MonoBehaviour
     private bool playerInRange = false;
     private bool dialogStarted = false;
     private CinemachinePOV camComponents;
+    #endregion
 
     private void Awake()
     {
@@ -40,6 +56,8 @@ public class NPCDialogRange : MonoBehaviour
         playerInput.UIPanelActions.Dialogue.started -= OnInteract;
     }
 
+    // Método que se llama cuando el jugador entra en el rango del NPC. 
+    // Muestra el nombre del NPC en el panel de interacción.
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -50,6 +68,8 @@ public class NPCDialogRange : MonoBehaviour
         }
     }
 
+    // Método que se llama cuando el jugador sale del rango del NPC.
+    // Oculta el panel de interacción y cierra el diálogo si estaba abierto.
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -59,12 +79,13 @@ public class NPCDialogRange : MonoBehaviour
 
             if (dialogStarted)
             {
-                dialogManager.ForceCloseDialog();
+                dialogManager.ForceCloseDialog(); // Cierra el diálogo si estaba abierto
                 dialogStarted = false;
             }
         }
     }
 
+    // Método que se llama cuando el jugador presiona la tecla "E" para interactuar con el NPC.
     private void OnInteract(InputAction.CallbackContext context)
     {
         // Verificar si fue E (Keyboard)
@@ -77,10 +98,11 @@ public class NPCDialogRange : MonoBehaviour
 
         if (!dialogStarted)
         {
-            StartDialogue();
+            StartDialogue(); // Inicia el diálogo
         }
     }
 
+    // Método que inicia el diálogo con el NPC.
     private void StartDialogue()
     {
         uiManager.HideNPCPanelName();
@@ -89,6 +111,7 @@ public class NPCDialogRange : MonoBehaviour
         StartDialogCamera();
     }
 
+    //Método para desactivar las acciones del jugador y animar un movimiento de la cámara.
     private void StartDialogCamera()
     {
         playerInput.PlayerActions.Disable();
@@ -96,6 +119,7 @@ public class NPCDialogRange : MonoBehaviour
         StartCoroutine(TransitionCameraDialogue(-80f, 10f, 1f, true));
     }
 
+    // Método para reanudar las acciones del jugador y restaurar la cámara a su posición original.
     private void ResumePlayerCamera()
     {
         if (this == null) return;
@@ -105,6 +129,7 @@ public class NPCDialogRange : MonoBehaviour
         playerInput.PlayerActions.Enable();
     }
 
+    // Método para animar la cámara durante el diálogo.
     private IEnumerator TransitionCameraDialogue(float horizontalAxis, float verticalAxis, float duration, bool isDialogueActive)
     {
         float startPosX = camComponents.m_HorizontalAxis.Value;
@@ -134,12 +159,14 @@ public class NPCDialogRange : MonoBehaviour
             UnLockMovementCamera();
     }
 
+    // Método para bloquear el movimiento de la cámara durante el diálogo.
     private void LockMovementCamera()
     {
         camComponents.m_HorizontalAxis.m_MaxSpeed = 0f;
         camComponents.m_VerticalAxis.m_MaxSpeed = 0f;
     }
 
+    //Método para desbloquear el movimiento de la cámara después del diálogo.
     private void UnLockMovementCamera()
     {
         camComponents.m_HorizontalAxis.m_MaxSpeed = 300f;

@@ -1,3 +1,4 @@
+#region Bibliotecas
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -5,9 +6,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Collections;
 using UnityEngine.InputSystem;
+#endregion
+
+/*
+ * NOMBRE CLASE: DialogManager
+ * AUTOR: Lucía García López
+ * FECHA: 10/04/2025
+ * DESCRIPCIÓN: Clase que gestiona el sistema de diálogos. Funciona con archivos CSV. Los dialogos pueden tener varias opciones de respuesta 
+ * y opciones condicionales que solo aparecen si se ha desbloqueado otra linea de dialogo antes.
+ * VERSIÓN: 1.0 Sistema de diálogos inicial.
+ * 1.1 Añadida corrutina para hacer el efecto de máquina de escribir.
+ * 1.2 Añadido el efecto de pulsar la tecla para continuar. Se puede usar el ratón o el teclado.
+ * 1.3 DialogIDRead para el funcionamiento de apertura de una puerta en la escena 2.
+ */
 
 public class DialogManager : MonoBehaviour
 {
+    #region Variables
     [Header("Data")]
     public TextAsset csvFile;
 
@@ -35,6 +50,7 @@ public class DialogManager : MonoBehaviour
     private bool textCompleted = false;
     private Coroutine typingCoroutine;
     private Coroutine indicatorCoroutine;
+    #endregion
 
     void Awake()
     {
@@ -46,12 +62,12 @@ public class DialogManager : MonoBehaviour
 
     private void OnEnable()
     {
-        playerInput.UIPanelActions.DialogueContinue.performed += OnContinuePerformed;
+        playerInput.UIPanelActions.DialogueContinue.performed += OnContinuePerformed; // Suscribirse al evento de continuar diálogo
     }
 
     private void OnDisable()
     {
-        playerInput.UIPanelActions.DialogueContinue.performed -= OnContinuePerformed;
+        playerInput.UIPanelActions.DialogueContinue.performed -= OnContinuePerformed; // Desuscribirse del evento de continuar diálogo
     }
 
     private void OnContinuePerformed(InputAction.CallbackContext context)
@@ -72,6 +88,7 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    /// Método para cargar el CSV y llenar el diccionario de diálogos
     void LoadDialogFromCSV()
     {
         dialogDict.Clear();
@@ -82,6 +99,7 @@ public class DialogManager : MonoBehaviour
             string[] values = lines[i].Split(';');
             if (values.Length < 14 || !int.TryParse(values[0], out int id)) continue;
 
+            //Asignar cada columna del CSV a variables de la clase DialogEntry
             dialogDict[id] = new DialogEntry
             {
                 ID = id,
@@ -123,10 +141,12 @@ public class DialogManager : MonoBehaviour
     {
         if (!isDialogActive || isTyping || AnyOptionActive()) return;
 
+        //Si el diálogo no ha terminado, avanzar al siguiente
         if (currentEntry.NextLineID != -1)
         {
             ShowDialogue(currentEntry.NextLineID);
         }
+        //Si el dialogo no tiene más lineas, se muestran todas las opciones de dialogo
         else if (lastOptionsEntry != null)
         {
             //Debug.Log("Volviendo a mostrar opciones anteriores al finalizar diálogo");
@@ -163,6 +183,7 @@ public class DialogManager : MonoBehaviour
             unlockedDialogIDs.Add(currentEntry.RequiredID);
         }
 
+        //Cambiar el texto del diálogo y el nombre del personaje
         nameText.text = currentEntry.Name;
         continueIndicator.gameObject.SetActive(false);
 
@@ -176,6 +197,7 @@ public class DialogManager : MonoBehaviour
         typingCoroutine = StartCoroutine(TypeText(currentEntry.Text, () =>
         {
             textCompleted = true;
+            //Si el diálogo tiene opciones, mostrarlas
             if (currentEntry.HasOptions)
             {
                 //Debug.Log($"Mostrando opciones para diálogo ID: {id}");
@@ -194,6 +216,7 @@ public class DialogManager : MonoBehaviour
         }));
     }
 
+    // Corrutina para escribir el texto con efecto de máquina de escribir
     IEnumerator TypeText(string text, System.Action onComplete)
     {
         isTyping = true;
@@ -219,6 +242,7 @@ public class DialogManager : MonoBehaviour
         onComplete?.Invoke();
     }
 
+    // Corrutina para animar el indicador de continuar
     IEnumerator AnimateContinueIndicator()
     {
         if (continueIndicator == null || currentEntry.HasOptions) yield break;
@@ -230,6 +254,8 @@ public class DialogManager : MonoBehaviour
         float minAlpha = 0.3f;
         float maxAlpha = 1f;
 
+        //Mientras el texto esté completo y no haya opciones activas, animar el indicador
+        //Se hace un efecto de palpitación y se oculta al finalizar
         while (textCompleted && !isTyping && isDialogActive && !AnyOptionActive())
         {
             timer += Time.deltaTime * (increasing ? 1 : -1);
@@ -245,6 +271,7 @@ public class DialogManager : MonoBehaviour
         continueIndicator.gameObject.SetActive(false);
     }
 
+    // Método para completar el texto actual si se pulsa un input antes de que la corrutina haya acabado
     void CompleteCurrentText()
     {
         if (!isTyping || typingCoroutine == null) return;
@@ -269,6 +296,7 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    // Método para mostrar las opciones de diálogo
     void ShowOptions(DialogEntry entry)
     {
         HideAllOptions();
@@ -288,7 +316,7 @@ public class DialogManager : MonoBehaviour
         if (buttonIndex < optionButtons.Length &&
             !string.IsNullOrEmpty(entry.OptionWithRequirementText) &&
             entry.OptionWithRequirementID != -1 &&
-            seenDialogIDs.Contains(entry.RequiredID)) // <- condición correcta
+            seenDialogIDs.Contains(entry.RequiredID)) // <- condición requida
         {
             SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
         }
@@ -300,6 +328,7 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    // Método para configurar cada opción de diálogo en el botón correspondiente
     void SetupOption(int index, string text, int nextID)
     {
         if (index < 0 || index >= optionButtons.Length || optionButtons[index] == null)
@@ -316,12 +345,14 @@ public class DialogManager : MonoBehaviour
         //Debug.Log($"Configurada opción {index}: {text} -> {nextID}");
     }
 
+    // Método para manejar la selección de una opción
     void OnOptionSelected(int nextID)
     {
         if (!isDialogActive) return;
 
         //Debug.Log($"Opción seleccionada, siguiente ID: {nextID}");
 
+        //Cuando se ha seleccionado una opción, se ocultan todas las opciones
         HideAllOptions();
 
         if (nextID == -1)
@@ -337,7 +368,9 @@ public class DialogManager : MonoBehaviour
             return;
         }
 
+        //Al terminar de leer el texto, se muestra el siguiente diálogo
         ShowDialogue(nextID);
+        //Si el siguiente diálogo no tiene opciones, se inicia la animación del indicador de continuar
         if (!nextEntry.HasOptions)
         {
             if (indicatorCoroutine != null)
@@ -393,6 +426,7 @@ public class DialogManager : MonoBehaviour
         CloseDialog();
     }
 
+    //Método para realizar una accion si se ha desbloqueado una linea de dialogo especifica
     public bool DialogIDRead(int id)
     {
         return seenDialogIDs.Contains(id);

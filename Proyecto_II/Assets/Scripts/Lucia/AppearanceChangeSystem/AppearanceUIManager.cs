@@ -10,7 +10,10 @@ using static Cinemachine.CinemachinePathBase;
  * AUTOR: Lucía García López
  * FECHA: 25/03/2025
  * DESCRIPCIÓN: Script que se encarga de gestionar la interfaz de usuario para cambiar la apariencia del personaje.
- * VERSIÓN: 1.0
+ * VERSIÓN: 1.0 Apariencia inicial, cambio de apariencia a la derecha e izquierda.
+ * 1.1 Cambio de apariencia al hacer clic en el botón.
+ * 1.2 Cambios en la interfaz de usuario para mostrar información de la apariencia bloqueada y desbloqueada. 
+ *     Toma la cantidad del objeto necesario del InventoryManager.
  */
 
 public class AppearanceUIManager : MonoBehaviour

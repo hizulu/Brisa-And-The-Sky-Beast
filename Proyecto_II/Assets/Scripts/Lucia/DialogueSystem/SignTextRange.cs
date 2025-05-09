@@ -1,10 +1,22 @@
+#region Bibliotecas
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using Cinemachine;
+#endregion
+
+/*
+ * NOMBRE CLASE: SignTextRange
+ * AUTOR: Lucía García López
+ * FECHA: 03/05/2025
+ * DESCRIPCIÓN: Clase que gestiona el rango de interacción con un cartel. 
+ *              Permite al jugador leer el texto del cartel al entrar en su rango y presionar la tecla "E".
+ * VERSIÓN: 1.0 Sistema de carteles inicial.
+ */
 
 public class SignTextRange : MonoBehaviour
 {
+    #region Variables
     [Header("Sign Configuration")]
     [SerializeField] private SignTextManager signTextManager;
     [SerializeField] private int signId;
@@ -19,6 +31,7 @@ public class SignTextRange : MonoBehaviour
     private bool playerInRange = false;
     private bool signActive = false;
     private Camera mainCamera;
+    #endregion
 
     private void Awake()
     {
@@ -26,6 +39,7 @@ public class SignTextRange : MonoBehaviour
         if (interactionPanel != null) interactionPanel.SetActive(false);
     }
 
+    //Si el jugador entra en el rango del cartel, se activa el panel de interacción.
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -35,6 +49,7 @@ public class SignTextRange : MonoBehaviour
         }
     }
 
+    //Si el jugador sale del rango del cartel, se desactiva el panel de interacción.
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -45,6 +60,7 @@ public class SignTextRange : MonoBehaviour
         }
     }
 
+    //Si el jugador está en rango y presiona la tecla de interacción, se activa o desactiva el cartel.
     private void Update()
     {
         if (playerInRange && interactionPanel.activeSelf)
@@ -59,6 +75,7 @@ public class SignTextRange : MonoBehaviour
         }
     }
 
+    // Método que se llama cuando el jugador presiona la tecla de interacción.
     private void ShowInteractionPanel()
     {
         if (interactionPanel != null)
@@ -69,6 +86,7 @@ public class SignTextRange : MonoBehaviour
         }
     }
 
+    // Método que se llama cuando el jugador suelta la tecla de interacción.
     private void HideInteractionPanel()
     {
         if (interactionPanel != null)
@@ -77,6 +95,7 @@ public class SignTextRange : MonoBehaviour
         }
     }
 
+    // Método que actualiza la posición del panel de interacción en la pantalla.
     private void UpdatePanelPosition()
     {
         if (mainCamera != null && panelRectTransform != null)
@@ -90,6 +109,7 @@ public class SignTextRange : MonoBehaviour
         }
     }
 
+    // Método que se llama cuando el jugador presiona la tecla de interacción.
     private void ToggleSign()
     {
         if (!signActive)
@@ -102,6 +122,7 @@ public class SignTextRange : MonoBehaviour
         }
     }
 
+    //Método para abrir el cartel.
     private void OpenSign()
     {
         if (signTextManager != null)
@@ -112,6 +133,7 @@ public class SignTextRange : MonoBehaviour
         }
     }
 
+    //Método para cerrar el cartel.
     private void CloseSign()
     {
         if (signTextManager != null)

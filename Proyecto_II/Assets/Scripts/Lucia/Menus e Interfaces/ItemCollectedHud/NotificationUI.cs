@@ -3,6 +3,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
+/*
+ * NOMBRE CLASE: NotificationUI
+ * AUTOR: Lucía García López
+ * FECHA: 18/04/2025
+ * DESCRIPCIÓN: Script que gestiona la interfaz de usuario para las notificaciones de objetos recogidos. Va dentro del prefab de la notificación.
+ * VERSIÓN: 1.0 Solo lógica para el panel de timer screen 
+ */
+
 public class NotificationUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI itemText;

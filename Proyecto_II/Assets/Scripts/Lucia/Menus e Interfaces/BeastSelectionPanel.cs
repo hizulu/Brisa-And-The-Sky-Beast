@@ -7,10 +7,11 @@ using UnityEngine.EventSystems;
 #endregion
 
 /* NOMBRE CLASE: Beast Selection Panel
- * AUTOR: Lucía García López
+ * AUTORES: Lucía García López, Sara Yue Madruga Martín y Jone Sain Egea
  * FECHA: 03/04/2025
  * DESCRIPCIÓN: Script que se encarga de gestionar el panel de selección de la Bestia.
- * VERSIÓN: 1.0
+ * VERSIÓN: 1.0 Lucía: Sistema de selección de acciones de la bestia inicial.
+ * 
  */
 
 public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler

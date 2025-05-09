@@ -2,10 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * NOMBRE CLASE: NotificationManager
+ * AUTOR: Lucía García López
+ * FECHA: 18/04/2025
+ * DESCRIPCIÓN: Script que gestiona la aparición de notificaciones en la interfaz de usuario.
+ * VERSIÓN: 1.0 Sistema de notificaciones inicial.
+ * 1.1 Efecto de desvanecimiento FadeIn y FadeOut añadido.
+ */
+
 public class NotificationManager : MonoBehaviour
 {
-    public static NotificationManager Instance { get; private set; }
-
+    #region Variables
     [SerializeField] private GameObject notificationPrefab;
     [SerializeField] private Transform notificationParent;
     [SerializeField] private float displayDuration = 1.5f;
@@ -14,7 +22,10 @@ public class NotificationManager : MonoBehaviour
     [SerializeField] private int maxNotifications = 3;
 
     private Queue<GameObject> activeNotifications = new Queue<GameObject>();
+    #endregion
 
+    #region Singleton
+    public static NotificationManager Instance { get; private set; }
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -24,12 +35,15 @@ public class NotificationManager : MonoBehaviour
         }
         Instance = this;
     }
+    #endregion
 
+    //Muestra los objetos recogidos y su cantidad en la interfaz de usuario.
     public void ShowNotification(ItemData itemData, int quantity)
     {
         StartCoroutine(SpawnNotification(itemData, quantity));
     }
 
+    // Método que se encarga de crear la notificación y gestionar su aparición y desaparición.
     private IEnumerator SpawnNotification(ItemData itemData, int quantity)
     {
         while (activeNotifications.Count >= maxNotifications)

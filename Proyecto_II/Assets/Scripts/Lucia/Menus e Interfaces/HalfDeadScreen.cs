@@ -3,8 +3,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/* NOMBRE CLASE: HalfDeadScreen
+ * AUTOR: Lucía García López
+ * FECHA: 09/05/2025
+ * DESCRIPCIÓN: Script que gestiona la pantalla de medio muerto. 
+ * VERSIÓN: 1.0 Solo lógica para el panel de timer screen 
+ * 1.1 Añadido el panel de revivir.
+ */
+
 public class HalfDeadScreen : MonoBehaviour
 {
+    #region Singleton
     public static HalfDeadScreen Instance { get; private set; }
     private void Awake()
     {
@@ -17,7 +26,9 @@ public class HalfDeadScreen : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    #endregion
 
+    #region Variables
     [Header("UI References")]
     [Header("Brisa References")]
     [SerializeField] private GameObject halfDeadScreenBrisa;
@@ -46,7 +57,9 @@ public class HalfDeadScreen : MonoBehaviour
     private readonly Color targetColor = Color.white;
 
     private Coroutine transitionCoroutine;
+    #endregion
 
+    //Método para mostrar la pantalla de medio muerto de Brisa. Se añade el cursor porque hay un boton para rendirse.
     public void ShowHalfDeadScreenBrisa(float currentTime, float maxTime)
     {
         ResetBlurEffect();
@@ -63,13 +76,14 @@ public class HalfDeadScreen : MonoBehaviour
         Cursor.visible = true;
     }
 
+    // Método para mostrar la pantalla de mientras la Bestia está reviviendo a Brisa.
     public void ShowHalfDeadScreenBrisaRevive(float revivingTime)
     {
         halfDeadScreenBrisaRevive.SetActive(true);
         timerScreenBrisa.SetActive(false);
         revivingCircleBrisa.fillAmount = revivingTime;
 
-        // Configuración inicial con el color #6F3939
+        //Se configura el material de desenfoque dedl fondo
         blurMaterial.SetFloat("_BlurSize", 2f);
         blurMaterial.SetColor("_Color", initialColor);
         blurMaterial.SetFloat("_Brightness", 2f);
@@ -80,6 +94,7 @@ public class HalfDeadScreen : MonoBehaviour
         StartTransition();
     }
 
+    // Método para mostrar la pantalla de medio muerto de la Bestia.
     public void ShowHalfDeadScreenBestia (float currentTime, float maxTime)
     {
         ResetBlurEffect();
@@ -92,6 +107,7 @@ public class HalfDeadScreen : MonoBehaviour
         halfDeadScreenTextBestia.text = currentTime.ToString("00");
     }
 
+    // Método para mostrar la pantalla de mientras Brisa está reviviendo a la Bestia.
     public void ShowHalfDeadScreenBestiaRevive(float revivingTime)
     {
         halfDeadScreenBestiaRevive.SetActive(true);
@@ -106,7 +122,7 @@ public class HalfDeadScreen : MonoBehaviour
         StartTransition();
     }
 
-    // Métodos Hide permanecen igual
+    // Métodos para ocultar las pantallas de medio muerta de Brisa
     public void HideHalfDeadScreenBrisa()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -114,11 +130,13 @@ public class HalfDeadScreen : MonoBehaviour
         halfDeadScreenBrisa.SetActive(false);
     }
 
+    // Método para ocultar la pantalla de revivir de la Bestia
     public void HideHalfDeadScreenBestia()
     {
         halfDeadScreenBestia.SetActive(false);
     }
 
+    //Metodo para comenzar la animación de transición del desenfoque
     private void StartTransition()
     {
         if (transitionCoroutine != null)
@@ -128,6 +146,7 @@ public class HalfDeadScreen : MonoBehaviour
         transitionCoroutine = StartCoroutine(TransitionBlurEffect());
     }
 
+    // Método para iniciar la transición del desenfoque a el color normal
     private IEnumerator TransitionBlurEffect()
     {
         float elapsedTime = 0f;
@@ -149,7 +168,6 @@ public class HalfDeadScreen : MonoBehaviour
             yield return null;
         }
 
-        // Asegurar valores finales exactos
         blurMaterial.SetFloat("_BlurSize", targetBlurAmount);
         blurMaterial.SetColor("_Color", targetColor);
         blurMaterial.SetFloat("_Brightness", targetBrightness);
@@ -157,6 +175,7 @@ public class HalfDeadScreen : MonoBehaviour
         transitionCoroutine = null;
     }
 
+    //Metodo para reiniciar el efecto de desenfoque
     public void ResetBlurEffect()
     {
         if (transitionCoroutine != null)
@@ -169,6 +188,4 @@ public class HalfDeadScreen : MonoBehaviour
         blurMaterial.SetColor("_Color", initialColor);
         blurMaterial.SetFloat("_Brightness", 2f);
     }
-
-
 }

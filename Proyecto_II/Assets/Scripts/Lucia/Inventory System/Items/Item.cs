@@ -8,6 +8,7 @@ using UnityEngine;
  * FECHA: 13/03/2025
  * DESCRIPCIÓN: Script que se encarga de almacenar los items recogidos en el inventario.
  * VERSIÓN: 1.0 
+ * 1.1 Añadido el sistema de notificaciones.
  */
 
 public class Item : MonoBehaviour
@@ -22,7 +23,7 @@ public class Item : MonoBehaviour
         isCollected = true;
 
         InventoryManager.Instance.AddItem(itemData, itemQuantity);
-        NotificationManager.Instance?.ShowNotification(itemData, itemQuantity);
+        NotificationManager.Instance?.ShowNotification(itemData, itemQuantity); //La ? es para evitar que de error si no existe el NotificationManager
 
         gameObject.SetActive(false);  // Desactiva el objeto
         Destroy(gameObject, 1f);  // Lo destruye después de un pequeño delay

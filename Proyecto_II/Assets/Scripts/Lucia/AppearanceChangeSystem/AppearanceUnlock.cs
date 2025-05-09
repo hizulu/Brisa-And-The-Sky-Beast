@@ -1,6 +1,13 @@
 using TMPro;
 using UnityEngine;
 
+/* NOMBRE CLASE: Appearance Unlock
+ * AUTOR: Lucía García López
+ * FECHA: 04/05/2025
+ * DESCRIPCIÓN: Script que se encarga de gestionar el desbloqueo de apariencias.
+ * VERSIÓN: 1.0 Sistema de desbloqueo de apariencias.
+ */
+
 public class AppearanceUnlock : MonoBehaviour
 {
     [Header("Configuration")]
