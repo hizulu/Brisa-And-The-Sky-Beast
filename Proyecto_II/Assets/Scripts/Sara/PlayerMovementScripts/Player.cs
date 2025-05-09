@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     public CinemachinePOV CamComponents;
     [SerializeField] public Transform lookCamPlayer;
     [SerializeField] public GameObject PaloBrisa;
+    [SerializeField] public SpriteRenderer ShadowBrisa;
     [SerializeField] public GameObject hitBox;
     [SerializeField] public GameObject Shield;
     [SerializeField] private BeastSelectionPanel beastPanel;
