@@ -15,6 +15,7 @@ public class BeastHalfDeadState : BeastState
         beast.anim.SetBool("isHalfDead", true);
         beast.agent.ResetPath();
         Debug.Log("Beast is half dead");
+        HalfDeadScreen.Instance.ShowHalfDeadScreenBestia(beast.halfDeadDuration.ToString("00.00"));
 
         EventsManager.CallNormalEvents("ReviveBeast", ReviveBeast);
     }
@@ -59,5 +60,6 @@ public class BeastHalfDeadState : BeastState
     {
         // TODO: revive animation, sound effect, visual effect
         _beastRevived = true;
+        HalfDeadScreen.Instance.HideHalfDeadScreenBestia();
     }
 }
