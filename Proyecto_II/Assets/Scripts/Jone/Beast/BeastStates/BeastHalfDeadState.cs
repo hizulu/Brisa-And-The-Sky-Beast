@@ -15,7 +15,6 @@ public class BeastHalfDeadState : BeastState
         beast.anim.SetBool("isHalfDead", true);
         beast.agent.ResetPath();
         Debug.Log("Beast is half dead");
-        HalfDeadScreen.Instance.ShowHalfDeadScreenBestia(beast.halfDeadDuration.ToString("00.00"));
 
         EventsManager.CallNormalEvents("ReviveBeast", ReviveBeast);
     }
@@ -25,6 +24,7 @@ public class BeastHalfDeadState : BeastState
             return;
 
         beast.StartCoroutine(BeastHalfDeadCountdown(beast, beast.halfDeadDuration));
+        HalfDeadScreen.Instance.ShowHalfDeadScreenBestia(beast.halfDeadDuration, beast.halfDeadDuration);
     }
     public override void OnExit(Beast beast)
     {
@@ -43,7 +43,8 @@ public class BeastHalfDeadState : BeastState
             if (_beastRevived)
             {
                 Debug.Log("Beast ha sido revivida, volviendo a estado natural");
-                beast.currentHealth = beast.maxHealth;
+                beast.currentHealth = beast.maxHealth/2;
+                HalfDeadScreen.Instance.HideHalfDeadScreenBestia();
                 beast.TransitionToState(new BeastFreeState());                
             }
             elapsedTime += Time.deltaTime;
@@ -60,6 +61,5 @@ public class BeastHalfDeadState : BeastState
     {
         // TODO: revive animation, sound effect, visual effect
         _beastRevived = true;
-        HalfDeadScreen.Instance.HideHalfDeadScreenBestia();
     }
 }
