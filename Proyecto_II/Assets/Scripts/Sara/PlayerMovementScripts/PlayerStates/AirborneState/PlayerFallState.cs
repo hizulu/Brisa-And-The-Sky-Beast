@@ -35,6 +35,8 @@ public class PlayerFallState : PlayerAirborneState
 
     public override void HandleInput()
     {
+        base.HandleInput();
+
         if (maxNumDoubleJump == 0 && stateMachine.Player.PlayerInput.PlayerActions.Jump.triggered && jumpTimeElapsed > minTimeBeforeDoubleJump)
         {
             maxNumDoubleJump++; // Permite el doble salto solo una vez
