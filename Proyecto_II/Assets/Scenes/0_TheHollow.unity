@@ -40879,8 +40879,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.46814537, y: 1.1946601, z: 1.1206684}
-  m_Center: {x: 0.0075984, y: 0.6707069, z: 0.48513556}
+  m_Size: {x: 0.6894056, y: 1.1946601, z: 1.1206684}
+  m_Center: {x: -0.0071522295, y: 0.6707069, z: 0.48513556}
 --- !u!1 &1807319038
 GameObject:
   m_ObjectHideFlags: 0
@@ -52511,6 +52511,7 @@ GameObject:
   - component: {fileID: 1455187685785721448}
   - component: {fileID: 279718123850008332}
   - component: {fileID: 4342727676610107090}
+  - component: {fileID: 4342727676610107091}
   m_Layer: 6
   m_Name: puente2.001
   m_TagString: Untagged
@@ -53019,6 +53020,7 @@ GameObject:
   - component: {fileID: 2113239231520536942}
   - component: {fileID: 3477456506165253665}
   - component: {fileID: 907558217297976294}
+  - component: {fileID: 3477456506165253666}
   m_Layer: 6
   m_Name: Piedra03.001
   m_TagString: Untagged
@@ -57733,6 +57735,7 @@ GameObject:
   - component: {fileID: 1337572217931466183}
   - component: {fileID: 2453475757659020951}
   - component: {fileID: 3353074681174476084}
+  - component: {fileID: 3353074681174476085}
   m_Layer: 6
   m_Name: Piedra08.002
   m_TagString: Untagged
@@ -62393,6 +62396,7 @@ GameObject:
   - component: {fileID: 5707601482007875667}
   - component: {fileID: 2272502444842543330}
   - component: {fileID: 5205485691341608634}
+  - component: {fileID: 5707601482007875668}
   m_Layer: 6
   m_Name: Piedra07.002
   m_TagString: Untagged
@@ -63211,6 +63215,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3353074681174476085
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816665277145269174}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1808836837030150078, guid: a5420a1f100d4574ba88acc409cb69d8, type: 3}
 --- !u!1 &3356229560459182507
 GameObject:
   m_ObjectHideFlags: 0
@@ -63719,6 +63745,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 625128352024828446}
+  m_Mesh: {fileID: 1204770490079136521, guid: a5420a1f100d4574ba88acc409cb69d8, type: 3}
+--- !u!64 &3477456506165253666
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625128352024828446}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 1204770490079136521, guid: a5420a1f100d4574ba88acc409cb69d8, type: 3}
 --- !u!4 &3480363868171684828
 Transform:
@@ -67195,6 +67243,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4342727676610107091
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510486692785172983}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0032923943, y: 0.017682562, z: 0.034164473}
+  m_Center: {x: -1.2063413e-11, y: 0.000359837, z: 0}
 --- !u!4 &4347035585868308275
 Transform:
   m_ObjectHideFlags: 0
@@ -72229,6 +72298,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2397698389846007900}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &5707601482007875668
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3098098770248485224}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3009725702432638325, guid: a5420a1f100d4574ba88acc409cb69d8, type: 3}
 --- !u!23 &5710819633647143488
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -76608,6 +76699,7 @@ GameObject:
   - component: {fileID: 4544614625242787788}
   - component: {fileID: 8750187511368121704}
   - component: {fileID: 4157598438681175501}
+  - component: {fileID: 8750187511368121705}
   m_Layer: 6
   m_Name: Piedra07
   m_TagString: Untagged
@@ -78576,6 +78668,7 @@ GameObject:
   - component: {fileID: 5473403044456670493}
   - component: {fileID: 3485273297852845512}
   - component: {fileID: 6318011006799944128}
+  - component: {fileID: 7012729130340028909}
   m_Layer: 6
   m_Name: Piedra10.006
   m_TagString: Untagged
@@ -78583,6 +78676,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &7012729130340028909
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7012729130340028908}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6964403750474212373, guid: a5420a1f100d4574ba88acc409cb69d8, type: 3}
 --- !u!33 &7015538764927392561
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -79403,6 +79518,7 @@ GameObject:
   - component: {fileID: 7195497322589644838}
   - component: {fileID: 6724548744519367416}
   - component: {fileID: 277864765980701733}
+  - component: {fileID: 7195497322589644839}
   m_Layer: 6
   m_Name: Piedra02.002
   m_TagString: Untagged
@@ -79501,6 +79617,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2397698389846007900}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &7195497322589644839
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7187582387857794276}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3704558085492843498, guid: a5420a1f100d4574ba88acc409cb69d8, type: 3}
 --- !u!1 &7199407015612847572
 GameObject:
   m_ObjectHideFlags: 0
@@ -85697,6 +85835,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6634779962757555194}
   m_Mesh: {fileID: -3009725702432638325, guid: a5420a1f100d4574ba88acc409cb69d8, type: 3}
+--- !u!64 &8750187511368121705
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6634779962757555194}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3009725702432638325, guid: a5420a1f100d4574ba88acc409cb69d8, type: 3}
 --- !u!23 &8751123612273985346
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -87309,6 +87469,7 @@ GameObject:
   - component: {fileID: 1025271982990929665}
   - component: {fileID: 6327750181025226195}
   - component: {fileID: 5180211793727060574}
+  - component: {fileID: 9148652193288892224}
   m_Layer: 6
   m_Name: Piedra09
   m_TagString: Untagged
@@ -87316,6 +87477,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &9148652193288892224
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9148652193288892223}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4713359773794108903, guid: a5420a1f100d4574ba88acc409cb69d8, type: 3}
 --- !u!4 &9151923787074278697
 Transform:
   m_ObjectHideFlags: 0
@@ -87350,6 +87533,7 @@ GameObject:
   - component: {fileID: 401405123545042343}
   - component: {fileID: 4990025685558738771}
   - component: {fileID: 932320969491706116}
+  - component: {fileID: 9173236020733574383}
   m_Layer: 6
   m_Name: Piedra06.001
   m_TagString: Untagged
@@ -87357,6 +87541,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &9173236020733574383
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9173236020733574382}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -67362050580488183, guid: a5420a1f100d4574ba88acc409cb69d8, type: 3}
 --- !u!1 &9180828732860886807
 GameObject:
   m_ObjectHideFlags: 0
