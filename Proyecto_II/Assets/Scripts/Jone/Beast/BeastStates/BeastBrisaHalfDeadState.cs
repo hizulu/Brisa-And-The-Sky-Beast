@@ -50,6 +50,7 @@ public class BeastBrisaHalfDeadState : BeastState
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
+            HalfDeadScreen.Instance.ShowHalfDeadScreenBrisaRevive(elapsed);
             yield return null;
         }
 

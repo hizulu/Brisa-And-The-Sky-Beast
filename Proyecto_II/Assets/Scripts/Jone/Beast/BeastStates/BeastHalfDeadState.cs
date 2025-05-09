@@ -24,6 +24,7 @@ public class BeastHalfDeadState : BeastState
             return;
 
         beast.StartCoroutine(BeastHalfDeadCountdown(beast, beast.halfDeadDuration));
+        HalfDeadScreen.Instance.ShowHalfDeadScreenBestia(beast.halfDeadDuration, beast.halfDeadDuration);
     }
     public override void OnExit(Beast beast)
     {
@@ -42,7 +43,8 @@ public class BeastHalfDeadState : BeastState
             if (_beastRevived)
             {
                 Debug.Log("Beast ha sido revivida, volviendo a estado natural");
-                beast.currentHealth = beast.maxHealth;
+                beast.currentHealth = beast.maxHealth/2;
+                HalfDeadScreen.Instance.HideHalfDeadScreenBestia();
                 beast.TransitionToState(new BeastFreeState());                
             }
             elapsedTime += Time.deltaTime;

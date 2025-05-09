@@ -62,6 +62,7 @@ public class PlayerReviveBeastState : PlayerInteractionState
         }
 
         currentTime += Time.deltaTime;
+        HalfDeadScreen.Instance.ShowHalfDeadScreenBestiaRevive(currentTime);
     }
 
     protected override void OnReviveCanceled(InputAction.CallbackContext context)

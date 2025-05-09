@@ -102,6 +102,7 @@ public class AppearanceUIManager : MonoBehaviour
         if (newAppearance == null)
         {
             Debug.LogError("Nueva apariencia es NULL.");
+            //Debug.Log("UI. Bandera 1");
             return;
         }
 
@@ -109,35 +110,50 @@ public class AppearanceUIManager : MonoBehaviour
         if (appearanceImage != null && newAppearance.appearanceIcon != null)
         {
             appearanceImage.sprite = newAppearance.appearanceIcon;
+            //Debug.Log("UI. Bandera 2");
         }
         else
         {
-            Debug.LogError("appearanceImage no está asignado o appearanceIcon es NULL.");
+            //Debug.LogError("appearanceImage no está asignado o appearanceIcon es NULL.");
         }
 
         if (newAppearance.isUnlocked)
         {
+            //Debug.Log("UI. Bandera 3");
             // Mostrar panel desbloqueado y ocultar bloqueado
             unlockedSkinPanel.SetActive(true);
+            //Debug.Log("UI. Bandera 4");
             blockedSkinPanel.SetActive(false);
+            //Debug.Log("UI. Bandera 5");
             selectSkinButton.interactable = true;
+            //Debug.Log("UI. Bandera 6");
 
             // Actualizar textos
             if (unlockedNameText != null) unlockedNameText.text = newAppearance.appearanceName;
+            //Debug.Log("UI. Bandera 7");
             if (unlockedDescriptionText != null) unlockedDescriptionText.text = newAppearance.appearanceDescription;
+            //Debug.Log("UI. Bandera 8");
         }
         else
         {
+            //Debug.Log("UI. Bandera 9");
             // Mostrar panel bloqueado y ocultar desbloqueado
             unlockedSkinPanel.SetActive(false);
+            //Debug.Log("UI. Bandera 10");
             blockedSkinPanel.SetActive(true);
+            //Debug.Log("UI. Bandera 11");
             selectSkinButton.interactable = false;
+            //Debug.Log("UI. Bandera 12");
 
             // Actualizar textos
             if (blockedNameText != null) blockedNameText.text = newAppearance.appearanceName;
+            //Debug.Log("UI. Bandera 13");
             if (blockedDescriptionText != null) blockedDescriptionText.text = newAppearance.appearanceDescription;
+            //Debug.Log("UI. Bandera 14");
             if (objectsNeededText != null) objectsNeededText.text = $"Objetos necesarios: {newAppearance.objectsNeeded}";
+            //Debug.Log("UI. Bandera 15");
             objectsObtainedQuantityText.text = InventoryManager.Instance.GetItemQuantity(newAppearance.objectsNeededPrefab).ToString();
+            //Debug.Log("UI. Bandera 16");
         }
     }
 

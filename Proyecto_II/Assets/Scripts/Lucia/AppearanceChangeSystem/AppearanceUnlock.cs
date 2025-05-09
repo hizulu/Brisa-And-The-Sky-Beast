@@ -25,27 +25,36 @@ public class AppearanceUnlock : MonoBehaviour
     public bool TryUnlockAppearance(AppearanceChangeData appearanceData)
     {
         if (appearanceData == null) return false;
+        //Debug.Log("Bandera 1");
 
         // Verificar si ya está desbloqueado
         if (appearanceData.isUnlocked)
         {
             if (debugLogs) Debug.Log($"[Appearance] {appearanceData.appearanceName} ya estaba desbloqueado");
+            //Debug.Log("Bandera 2");
             return false;
         }
         
         // Verificar requisitos
         bool canUnlock = CheckUnlockRequirements(appearanceData);
-        
+        //Debug.Log("Bandera 3");
+
         if (canUnlock)
         {
             appearanceData.isUnlocked = true;
+            //Debug.Log("Bandera 4");
             if (debugLogs) Debug.Log($"[Appearance] Desbloqueado: {appearanceData.appearanceName}");
-            AppearanceUIManager.Instance.UpdateAppearanceUI(appearanceData); // Actualizar UI de apariencia
+            AppearanceUIManager.Instance?.UpdateAppearanceUI(appearanceData); // Actualizar UI de apariencia
+            //Debug.Log("Bandera 5");
             // Notificar otros sistemas
             EventsManager.TriggerSpecialEvent("OnAppearanceUnlocked", appearanceData);
+            //Debug.Log("Bandera 6");
+            AppearanceUIManager.Instance?.UpdateAppearanceUI(appearanceData); // Actualizar UI de apariencia
+            //Debug.Log("Bandera 7");
             return true;
         }
-        AppearanceUIManager.Instance.UpdateAppearanceUI(appearanceData); // Actualizar UI de apariencia
+
+        //Debug.Log("Bandera 8");
         return false;
     }
 

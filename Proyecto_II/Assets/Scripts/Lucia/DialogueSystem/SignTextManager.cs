@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using Cinemachine;
+using System.Linq;
 
 public class SignTextManager : MonoBehaviour
 {
@@ -27,7 +28,6 @@ public class SignTextManager : MonoBehaviour
 
     void Awake()
     {
-        // Inicialización segura de componentes  
         if (playerCamera != null)
         {
             cameraPOV = playerCamera.GetCinemachineComponent<CinemachinePOV>();
@@ -41,11 +41,7 @@ public class SignTextManager : MonoBehaviour
     {
         if (playerInput != null)
         {
-            playerInput.UIPanelActions.Dialogue.performed += OnContinueSignPerformed; //Solo se abre y se cierra con la E
-        }
-        else
-        {
-            Debug.LogWarning("PlayerInput no asignado en SignTextManager");
+            playerInput.UIPanelActions.Dialogue.performed += OnContinueSignPerformed;
         }
     }
 
@@ -54,10 +50,6 @@ public class SignTextManager : MonoBehaviour
         if (playerInput != null)
         {
             playerInput.UIPanelActions.Dialogue.performed -= OnContinueSignPerformed;
-        }
-        else
-        {
-            Debug.LogWarning("PlayerInput no asignado en SignTextManager");
         }
     }
 
@@ -75,17 +67,22 @@ public class SignTextManager : MonoBehaviour
             return;
         }
 
-        string[] lines = signsCSV.text.Split('\n');
+        // Elimina la condición !isTextActive que estaba aquí antes
 
-        for (int i = 0; i < lines.Length; i++)
+        var lines = signsCSV.text.Split('\n')
+            .Where(line => !string.IsNullOrWhiteSpace(line))
+            .Skip(1) // Saltar encabezado
+            .Select(line => line.Trim());
+
+        foreach (var line in lines)
         {
-            if (string.IsNullOrWhiteSpace(lines[i])) continue;
-
-            string[] values = lines[i].Split(';');
-
+            var values = line.Split(new[] { ';' }, 2);
             if (values.Length >= 2 && int.TryParse(values[0], out int signId))
             {
-                string text = values[1].Trim().Replace("\\n", "\n");
+                string text = values[1].Trim()
+                    .Replace("\\n", "\n")
+                    .Replace("\r\n", "\n")
+                    .Replace("\r", "\n");
                 signDictionary[signId] = text;
             }
         }
@@ -105,8 +102,6 @@ public class SignTextManager : MonoBehaviour
         }
 
         Time.timeScale = 0f;
-
-        // Bloquear controles
         LockPlayerControls();
     }
 
@@ -123,20 +118,16 @@ public class SignTextManager : MonoBehaviour
         }
 
         Time.timeScale = 1f;
-
-        // Restaurar controles
         UnlockPlayerControls();
     }
 
     private void LockPlayerControls()
     {
-        // Bloquear movimiento del jugador
         if (playerMovementScript != null)
         {
             playerMovementScript.enabled = false;
         }
 
-        // Bloquear movimiento de cámara
         if (cameraPOV != null)
         {
             cameraPOV.m_HorizontalAxis.m_MaxSpeed = 0f;
@@ -146,13 +137,11 @@ public class SignTextManager : MonoBehaviour
 
     private void UnlockPlayerControls()
     {
-        // Restaurar movimiento del jugador
         if (playerMovementScript != null)
         {
             playerMovementScript.enabled = true;
         }
 
-        // Restaurar movimiento de cámara
         if (cameraPOV != null)
         {
             cameraPOV.m_HorizontalAxis.m_MaxSpeed = 300f;

@@ -96,7 +96,9 @@ public class InventoryManager : MonoBehaviour
                 // Forzar actualización UI si el ítem es relevante para alguna apariencia
                 if (!wasUnlocked || unlockedNow)
                 {
-                    AppearanceUIManager.Instance.UpdateAppearanceUI(appearance);
+                    //Debug.Log("Inventario. Bandera 1");
+                    AppearanceUIManager.Instance?.UpdateAppearanceUI(appearance); //Importante la ? para que no de error nulo si no se puede acceder a la UI porque no está desbloqueada la apariencia
+                    //Debug.Log("Inventario. Bandera 2");
                 }
             }
         }
