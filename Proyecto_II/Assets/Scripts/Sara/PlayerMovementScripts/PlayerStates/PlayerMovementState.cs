@@ -286,8 +286,8 @@ public class PlayerMovementState : IState
             stateMachine.Player.pointTarget.ClearTarget();
             currentLockTarget = -1;
             stateMachine.Player.playerCam.LookAt = stateMachine.Player.lookCamPlayer;
-            stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 200f;
-            stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 200f;
+            //stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 200f;
+            //stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 200f;
             return;
         }
 
@@ -296,8 +296,8 @@ public class PlayerMovementState : IState
         GameObject selectedEnemy = enemiesTarget[currentLockTarget];
         stateMachine.Player.pointTarget.SetTarget(selectedEnemy.transform);
         stateMachine.Player.playerCam.LookAt = selectedEnemy.transform;
-        stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 0f;
-        stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 0f;
+        //stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 0f;
+        //stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 0f;
         Debug.Log("Enemigo fijado: " + selectedEnemy.name);
     }
 
@@ -349,10 +349,9 @@ public class PlayerMovementState : IState
      * Disminuye la salud del jugador en función del daño recibido y cambia al estado de Medio-Muerta si la salud llega a cero.
      * @param _enemyDamage - Daño recibido por parte del enemigo.
      */
-    protected bool isHalfDead = false;
     private void TakeDamage(float _enemyDamage)
     {
-        if (isHalfDead || stateMachine.Player.Shield.activeSelf) return;
+        if (stateMachine.CurrentState is PlayerHalfDeadState || stateMachine.Player.Shield.activeSelf) return;
 
         statsData.CurrentHealth -= _enemyDamage;
 
@@ -460,7 +459,6 @@ public class PlayerMovementState : IState
     protected virtual void PlayerDead()
     {
         statsData.CurrentHealth = Mathf.Max(statsData.CurrentHealth, 0f);
-        isHalfDead = true;
         stateMachine.ChangeState(stateMachine.HalfDeadState);
     }
 }

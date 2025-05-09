@@ -36,6 +36,7 @@ public class PlayerAnimationData
     [SerializeField] private string landParameterName = "isLanding";
     [SerializeField] private string hardLandParameterName = "isHardLanding";
     [SerializeField] private string halfDeadParameterName = "isHalfDeading";
+    [SerializeField] private string idleHalfDeadParameterName = "isIdleHalfDead";
     [SerializeField] private string finalDeadParameterName = "isFinalDeading";
     [SerializeField] private string revivePlayerParameterName = "isRevivingPlayer";
 
@@ -72,6 +73,7 @@ public class PlayerAnimationData
     public int LandParameterHash { get; private set; }
     public int HardLandParameterHash { get; private set; }
     public int HalfDeadParameterHash { get; private set; }
+    public int IdleHalfDeadParameterHash { get; private set; }
     public int FinalDeadParameterHash { get; private set; }
     public int RevivePlayerParameterHash { get; private set; }
 
@@ -113,6 +115,7 @@ public class PlayerAnimationData
         HardLandParameterHash = Animator.StringToHash(hardLandParameterName);
 
         HalfDeadParameterHash = Animator.StringToHash(halfDeadParameterName);
+        IdleHalfDeadParameterHash = Animator.StringToHash(idleHalfDeadParameterName);
         FinalDeadParameterHash = Animator.StringToHash(finalDeadParameterName);
         RevivePlayerParameterHash = Animator.StringToHash(revivePlayerParameterName);
 

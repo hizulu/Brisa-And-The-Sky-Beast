@@ -73,34 +73,33 @@ public class PlayerAirborneState : PlayerMovementState
      */
     protected override void Move()
     {
-        Vector2 input = stateMachine.MovementData.MovementInput;
-
-        if (input == Vector2.zero)
-        {
-            stateMachine.Player.RbPlayer.velocity = new Vector3(0, stateMachine.Player.RbPlayer.velocity.y, 0);
-            return;
-        }
-
-        Vector3 cameraForward = Camera.main.transform.forward;
-        cameraForward.y = 0;
+        Vector2 playerInput = stateMachine.MovementData.MovementInput;
+        Vector3 currentVelocity = stateMachine.Player.RbPlayer.velocity;
+        Vector3 cameraForward = Camera.main.transform.forward; // Obtenemos la dirección hacia delante de la cámara.
+        cameraForward.y = 0; // En el eje Y se ignora para que no apunte hacia el suelo o hacia el cielo.
         cameraForward.Normalize();
+        Vector3 movementDirection = (cameraForward * playerInput.y + Camera.main.transform.right * playerInput.x).normalized; // Calcula la dirección del movimiento basado en la cámara.
 
-        Vector3 movementDirection = (cameraForward * input.y + Camera.main.transform.right * input.x).normalized;
+        float airSpeed = airborneData.AirSpeed; // Variable para la velocidad que se quiere de movimiento en el aire.
+        float airControl = airborneData.AirControl; // Variable para determinar si la respuesta al input es más inmediata o menos. (Para tener más o menos control de movimiento en el aire).
+        Vector3 newVelocityInAir;
 
-        float airSpeed = airborneData.AirSpeed;
-        float airControl = airborneData.AirControl;
-
-        Vector3 newVelocity = new Vector3(movementDirection.x * airSpeed, stateMachine.Player.RbPlayer.velocity.y, movementDirection.z * airSpeed);
-
-        if (IsTouchingWall(movementDirection))
+        if (playerInput == Vector2.zero)
+            newVelocityInAir = new Vector3(0f, currentVelocity.y, 0f); // Si no detecta teclas presionadas, solo se mantiene la velocidad en Y.
+        else
         {
-            newVelocity.x = 0;
-            newVelocity.z = 0;
+            newVelocityInAir = new Vector3(movementDirection.x * airSpeed, currentVelocity.y, movementDirection.z * airSpeed); // Si detecta teclas se calcula la nueva velocidad de dirección.
+
+            if (IsTouchingWall(movementDirection)) // Si detecta una pared, frena la velocidad en X y en Z para que no se quede pegado.
+            {
+                newVelocityInAir.x = 0f;
+                newVelocityInAir.z = 0f;
+            }
+
+            Rotate(movementDirection); // El personaje rota en la dirección establecida por el input.
         }
 
-        stateMachine.Player.RbPlayer.velocity = Vector3.Lerp(stateMachine.Player.RbPlayer.velocity, newVelocity, airControl * Time.deltaTime);
-        //stateMachine.Player.RbPlayer.velocity = newVelocity; // Línea que hay que poner si elimino la variable de "airControl".
-        Rotate(movementDirection);
+        stateMachine.Player.RbPlayer.velocity = Vector3.Lerp(currentVelocity, newVelocityInAir, airControl * Time.deltaTime);
     }
 
     /*
@@ -140,8 +139,8 @@ public class PlayerAirborneState : PlayerMovementState
     protected virtual bool IsGrounded()
     {
         Vector3 boxCenter = stateMachine.Player.GroundCheckCollider.transform.position;
-        Vector3 boxHalfExtents = new Vector3(0.25f, 0.05f, 0.25f); // Ancho, altura pequeñita, profundidad
-        Quaternion boxOrientation = Quaternion.identity; // No rotado, si quieres rotarlo puedes poner la rotación de tu jugador
+        Vector3 boxHalfExtents = new Vector3(0.5f, 0.1f, 0.55f); // Tamaño de la caja.
+        Quaternion boxOrientation = Quaternion.identity; // Mantener la rotación como la del GroundCheckCollider.
         LayerMask groundMask = LayerMask.GetMask("Enviroment");
 
         bool isGrounded = Physics.CheckBox(boxCenter, boxHalfExtents, boxOrientation, groundMask, QueryTriggerInteraction.Ignore);

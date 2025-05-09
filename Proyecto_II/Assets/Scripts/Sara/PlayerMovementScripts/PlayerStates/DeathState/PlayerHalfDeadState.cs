@@ -16,12 +16,14 @@ public class PlayerHalfDeadState : PlayerDeathState
 
     private Beast beast;
     private BeastTrapped beastTrapped;
+    private bool halfDeadAnimPlayer = false;
 
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
         EventsManager.TriggerNormalEvent("BrisaHalfDead");
         EventsManager.CallNormalEvents("BrisaRevive", PlayerRevive);
+        halfDeadAnimPlayer = false;
         base.Enter();
         Debug.Log("Has entrado en el estado de MEDIO-MUERTA");
         //statsData.CurrentTimeHalfDead = 60f;
@@ -35,16 +37,22 @@ public class PlayerHalfDeadState : PlayerDeathState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+        FinishAnimation();
+
+        if (halfDeadAnimPlayer)
+            IdleHalfDeadAnimation();
+
         TimeToRevivePlayer();
     }
 
     public override void Exit()
     {
         EventsManager.StopCallNormalEvents("BrisaRevive", PlayerRevive);
-        isHalfDead = false;
+        //isHalfDead = false;
         base.Exit();
         Debug.Log("Has salido del estado de MEDIO-MUERTA");
-        StopAnimation(stateMachine.Player.PlayerAnimationData.HalfDeadParameterHash);
+        StopAnimation(stateMachine.Player.PlayerAnimationData.IdleHalfDeadParameterHash);
+        //StopAnimation(stateMachine.Player.PlayerAnimationData.HalfDeadParameterHash);
     }
     #endregion
 
@@ -72,6 +80,20 @@ public class PlayerHalfDeadState : PlayerDeathState
         beast.SetBrisaHalfDead(false);
         HalfDeadScreen.Instance.HideHalfDeadScreenBrisa();
         stateMachine.ChangeState(stateMachine.RevivePlayerState);
+    }
+
+    protected override void FinishAnimation()
+    {
+        if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("HalfDead") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        {
+            StopAnimation(stateMachine.Player.PlayerAnimationData.HalfDeadParameterHash);
+            halfDeadAnimPlayer = true;
+        }
+    }
+
+    private void IdleHalfDeadAnimation()
+    {
+        StartAnimation(stateMachine.Player.PlayerAnimationData.IdleHalfDeadParameterHash);
     }
 
     protected override void ChangeFacePlayer()

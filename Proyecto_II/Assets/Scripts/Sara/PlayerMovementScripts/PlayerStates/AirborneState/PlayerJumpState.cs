@@ -21,6 +21,11 @@ public class PlayerJumpState : PlayerAirborneState
         //Debug.Log("Has entrado en el estado de SALTAR.");
     }
 
+    public override void HandleInput()
+    {
+        base.HandleInput();
+    }
+
     public override void UpdateLogic()
     {
         base.UpdateLogic();
