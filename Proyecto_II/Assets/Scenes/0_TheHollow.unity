@@ -1943,6 +1943,18 @@ MonoBehaviour:
   brightnessValueText: {fileID: 745800000}
   minBrightness: 0.2
   maxBrightness: 2
+  targetCanvas:
+  - {fileID: 2065977329}
+  - {fileID: 1756723069}
+  - {fileID: 617278229}
+  - {fileID: 2100877382}
+  - {fileID: 1184627163}
+  - {fileID: 1343767638}
+  - {fileID: 1087304656}
+  - {fileID: 1695375431}
+  - {fileID: 751991761}
+  uiBrightnessMaterial: {fileID: 2100000, guid: d9eac98f1611d354dbc234ef845ce14b, type: 2}
+  tmpBrightnessMaterial: {fileID: 2100000, guid: 177e9a7b87c52af45b00d0e55a0b1202, type: 2}
   screenModeDropdown: {fileID: 547397399}
   resolutionDropdown: {fileID: 428359030}
 --- !u!4 &63485729
@@ -16916,7 +16928,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 672.5, y: -921.25}
+  m_AnchoredPosition: {x: 669.5, y: -921.25}
   m_SizeDelta: {x: 575, y: 75}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &644965133
@@ -21960,7 +21972,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 672.5, y: -699.5}
+  m_AnchoredPosition: {x: 669.5, y: -699.5}
   m_SizeDelta: {x: 575, y: 75}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &868140985
@@ -30156,7 +30168,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 672.5, y: -477.75}
+  m_AnchoredPosition: {x: 669.5, y: -477.75}
   m_SizeDelta: {x: 575, y: 75}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1315338308
@@ -34785,7 +34797,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 672.5, y: -256}
+  m_AnchoredPosition: {x: 669.5, y: -256}
   m_SizeDelta: {x: 575, y: 75}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1487023098
@@ -41240,7 +41252,8 @@ MonoBehaviour:
   - {fileID: 397516672}
   itemSlotPrefab: {fileID: 397516671}
   inventoryPanel: {fileID: 194252064}
-  appearanceData: []
+  appearanceData:
+  - {fileID: 11400000, guid: c6e12c3f7a0cda546901cd4af39afd6e, type: 2}
 --- !u!114 &1756723067
 MonoBehaviour:
   m_ObjectHideFlags: 0
