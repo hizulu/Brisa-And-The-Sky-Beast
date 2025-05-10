@@ -12,14 +12,18 @@ using UnityEngine;
 
 public class Sheep : MonoBehaviour
 {
+    #region Variables
     private SheepStateMachine sheepStateMachine;
 
+    public Rigidbody RbSheep { get; private set; }
     public Animator AnimSheep {  get; private set; }
+    #endregion
 
-    
+    [SerializeField] private float sheepRange = 2f;
 
     private void Awake()
     {
+        RbSheep = GetComponent<Rigidbody>();
         AnimSheep = GetComponent<Animator>();
 
         sheepStateMachine = new SheepStateMachine(this);
@@ -41,6 +45,10 @@ public class Sheep : MonoBehaviour
     }
 
     #region Métodos Propios Sheep
+    /// <summary>
+    /// Método que almacena en una lista los estados posibles con los que pueden empezar las ovejas.
+    /// Se utiliza aleatoriedad para que cada oveja, de manera independiente, sigan patrones diferentes.
+    /// </summary>
     private void RandomInitialStateSheep()
     {
         List<IState> initialState = new List<IState>()
@@ -54,4 +62,10 @@ public class Sheep : MonoBehaviour
         sheepStateMachine.ChangeState(initialState[randomState]);
     }
     #endregion
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, sheepRange);
+    }
 }
