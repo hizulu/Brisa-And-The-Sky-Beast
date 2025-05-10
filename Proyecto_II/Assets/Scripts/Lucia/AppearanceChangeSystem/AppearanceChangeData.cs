@@ -7,7 +7,7 @@ using UnityEngine;
  * FECHA: 22/03/2025
  * DESCRIPCIÓN: Script que se encarga de almacenar la información del cambio de apariencia.
  * VERSIÓN: 1.0 appearanceID, appearanceName, appearanceIcon, appearanceDescription, appearanceMaterial
- * 1.1 objectsNeeded, isUnlocked.
+ * 1.1 objectsNeeded, canShowNotification.
  * 1.2 eyebrowsBaseMap.
  */
 

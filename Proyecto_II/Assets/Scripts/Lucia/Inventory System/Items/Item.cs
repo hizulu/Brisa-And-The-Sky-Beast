@@ -22,8 +22,8 @@ public class Item : MonoBehaviour
         if (isCollected) return;  // Evita recogerlo más de una vez
         isCollected = true;
 
-        InventoryManager.Instance.AddItem(itemData, itemQuantity);
         NotificationManager.Instance?.ShowNotification(itemData, itemQuantity); //La ? es para evitar que de error si no existe el NotificationManager
+        InventoryManager.Instance.AddItem(itemData, itemQuantity);
 
         gameObject.SetActive(false);  // Desactiva el objeto
         Destroy(gameObject, 1f);  // Lo destruye después de un pequeño delay

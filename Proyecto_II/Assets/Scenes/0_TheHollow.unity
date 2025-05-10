@@ -1936,7 +1936,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0dcb05fadc14e84bb19da9e9f661d92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightIntensityMultiplier: 0
   sunController: {fileID: 809843308}
   directionalLight: {fileID: 1912030908}
   brightnessSlider: {fileID: 457343450}
@@ -1954,7 +1953,6 @@ MonoBehaviour:
   - {fileID: 1695375431}
   - {fileID: 751991761}
   uiBrightnessMaterial: {fileID: 2100000, guid: d9eac98f1611d354dbc234ef845ce14b, type: 2}
-  tmpBrightnessMaterial: {fileID: 2100000, guid: 177e9a7b87c52af45b00d0e55a0b1202, type: 2}
   screenModeDropdown: {fileID: 547397399}
   resolutionDropdown: {fileID: 428359030}
 --- !u!4 &63485729
@@ -21640,6 +21638,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 845061820}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &855386389 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5228220455652340351, guid: b677c4ad998fd414ba8cbeea19c3caf3, type: 3}
+  m_PrefabInstance: {fileID: 631720607}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &859032907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23971,6 +23980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   notificationPrefab: {fileID: 5287768615193140970, guid: 3e8520ce8d7f310409cc40255f47f40c, type: 3}
+  appearanceNotificationPrefab: {fileID: 6646731716635304373, guid: a3f93e608ebdd2c4ebe3849888d2262e, type: 3}
   notificationParent: {fileID: 20999320}
   displayDuration: 3
   fadeInDuration: 0.01
@@ -35156,7 +35166,7 @@ MonoBehaviour:
   blockedNameText: {fileID: 631720611}
   blockedDescriptionText: {fileID: 631720610}
   objectsNeededText: {fileID: 631720608}
-  objectsObtainedQuantityText: {fileID: 0}
+  objectsObtainedQuantityText: {fileID: 855386389}
   appearances:
   - {fileID: 11400000, guid: 7c6ec63dcb217b148a2778841812538e, type: 2}
   - {fileID: 11400000, guid: 09df38b04ff8b894a9d59897984019c0, type: 2}
@@ -38931,6 +38941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugLogs: 1
+  canUnlock: 0
 --- !u!1 &1656831457
 GameObject:
   m_ObjectHideFlags: 0
