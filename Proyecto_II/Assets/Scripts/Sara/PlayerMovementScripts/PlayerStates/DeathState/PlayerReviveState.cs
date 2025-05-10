@@ -28,6 +28,7 @@ public class PlayerReviveState : PlayerDeathState
         StartAnimation(stateMachine.Player.PlayerAnimationData.RevivePlayerParameterHash);
 
         statsData.CurrentHealth = statsData.MaxHealth / 2;
+        EventsManager.TriggerSpecialEvent<float>("PlayerHealth", statsData.CurrentHealth);
     }
 
     public override void UpdateLogic()

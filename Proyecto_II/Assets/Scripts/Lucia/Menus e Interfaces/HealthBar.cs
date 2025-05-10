@@ -46,6 +46,7 @@ public class HealthBar : MonoBehaviour
                 {
                     playerStats = player.Data.StatsData;
                     InitializeHealthBar(playerStats.MaxHealth, playerStats.CurrentHealth);
+                    //EventsManager.CallSpecialEvents<float>("PlayerHealth", UpdateHealth);
                 }
                 break;
 
@@ -67,6 +68,11 @@ public class HealthBar : MonoBehaviour
                 break;
         }
     }
+
+    //private void OnDestroy()
+    //{
+    //    EventsManager.StopCallSpecialEvents<float>("PlayerHealth", UpdateHealth);
+    //}
 
     void Update()
     {
@@ -140,14 +146,6 @@ public class HealthBar : MonoBehaviour
                 transform.localScale = Vector3.one;
                 isPulsing = false;
             }
-        }
-    }
-
-    public void SetHealth(float health)
-    {
-        if (healthBarSlider != null)
-        {
-            healthBarSlider.value = health;
         }
     }
 
