@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     public Animator AnimPlayer { get; private set; }
 
     private float attackDuration = 0.2f;
+
     private PlayerStateMachine playerStateMachine;
 
     private void Awake()

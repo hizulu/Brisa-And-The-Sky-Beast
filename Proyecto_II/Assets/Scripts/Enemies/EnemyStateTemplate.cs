@@ -23,6 +23,7 @@ public abstract class EnemyStateTemplate : IState
     {
         enemyStateMachine = _enemyStateMachine;
     }
+
     public virtual void Enter() { }
 
     public virtual void Exit() { }
