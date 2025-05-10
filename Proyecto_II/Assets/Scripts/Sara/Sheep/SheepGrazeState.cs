@@ -17,12 +17,14 @@ public class SheepGrazeState : SheepStateTemplate
     public override void Enter()
     {
         base.Enter();
+        sheepStateMachine.Sheep.AnimSheep.SetBool("isGrazing", true);
         Debug.Log("La oveja ha entrado en el estado de PASTAR");
     }
 
     public override void Exit()
     {
         base.Exit();
+        sheepStateMachine.Sheep.AnimSheep.SetBool("isGrazing", false);
         Debug.Log("La oveja ha salido del estado de PASTAR.");
     }
 }

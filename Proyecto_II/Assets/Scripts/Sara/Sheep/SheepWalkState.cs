@@ -17,12 +17,14 @@ public class SheepWalkState : SheepStateTemplate
     public override void Enter()
     {
         base.Enter();
+        sheepStateMachine.Sheep.AnimSheep.SetBool("isWalking", true);
         Debug.Log("La oveja ha entrado en el estado de CAMINAR");
     }
 
     public override void Exit()
     {
         base.Exit();
+        sheepStateMachine.Sheep.AnimSheep.SetBool("isWalking", false);
         Debug.Log("La oveja ha salido del estado de CAMINAR.");
     }
 }

@@ -17,12 +17,14 @@ public class SheepIdleState : SheepStateTemplate
     public override void Enter()
     {
         base.Enter();
+        sheepStateMachine.Sheep.AnimSheep.SetBool("isIdle", true);
         Debug.Log("La oveja ha entrado en el estado de IDLE");
     }
 
     public override void Exit()
     {
         base.Exit();
+        sheepStateMachine.Sheep.AnimSheep.SetBool("isIdle", false);
         Debug.Log("La oveja ha salido del estado de IDLE.");
     }
 }

@@ -14,18 +14,22 @@ public class Sheep : MonoBehaviour
 {
     private SheepStateMachine sheepStateMachine;
 
+    public Animator AnimSheep {  get; private set; }
+
+    
+
     private void Awake()
     {
+        AnimSheep = GetComponent<Animator>();
+
         sheepStateMachine = new SheepStateMachine(this);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        sheepStateMachine.ChangeState(sheepStateMachine.SheepIdleState);
+        RandomInitialStateSheep();
     }
 
-    // Update is called once per frame
     void Update()
     {
         sheepStateMachine.UpdateLogic();
@@ -35,4 +39,19 @@ public class Sheep : MonoBehaviour
     {
         sheepStateMachine.UpdatePhysics();
     }
+
+    #region Métodos Propios Sheep
+    private void RandomInitialStateSheep()
+    {
+        List<IState> initialState = new List<IState>()
+        {
+            sheepStateMachine.SheepIdleState,
+            sheepStateMachine.SheepWalkState,
+            sheepStateMachine.SheepGrazeState
+        };
+
+        int randomState = Random.Range(0, initialState.Count);
+        sheepStateMachine.ChangeState(initialState[randomState]);
+    }
+    #endregion
 }

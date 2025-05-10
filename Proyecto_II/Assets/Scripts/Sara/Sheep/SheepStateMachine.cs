@@ -23,5 +23,7 @@ public class SheepStateMachine : StateMachine
         Sheep = _sheep;
 
         SheepIdleState = new SheepIdleState(this);
+        SheepWalkState = new SheepWalkState(this);
+        SheepGrazeState = new SheepGrazeState(this);
     }
 }
