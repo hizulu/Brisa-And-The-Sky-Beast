@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using TMPro;
+using UnityEngine.UI;
 #endregion
 
 /* NOMBRE CLASE: Beast Selection Panel
@@ -12,18 +14,37 @@ using UnityEngine.EventSystems;
  * DESCRIPCIÓN: Script que se encarga de gestionar el panel de selección de la Bestia.
  * VERSIÓN: 1.0 Lucía: Sistema de selección de acciones de la bestia inicial.
  * 
+ * 1.? Lucía: Añadido el sistema de colores para los botones cuando están activos o inactivos.
  */
 
 public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
 {
+    [Header("Configuración")]
     [SerializeField] private GameObject beastSelectionPanel;
     [SerializeField] private Beast beast;
+    [SerializeField] private ItemData healingMango;
+    [SerializeField] private Button petButton;
+    [SerializeField] private Button healButton;
+    [SerializeField] private Button rideButton;
+    [SerializeField] private Button actionButton;
+    [SerializeField] private Button attackButton;
+
+    [Header("Colores")]
+    [SerializeField] private Color activeColor = Color.white;
+    [SerializeField] private Color inactiveColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+
     private bool beastPanelEnabled = false;
 
     private void Awake()
     {
         if (beastSelectionPanel == null)
             beastSelectionPanel = gameObject;
+    }
+
+    private void Start()
+    {
+        // Inicializar colores de los botones
+        ResetAllButtonColors();
     }
 
     // Método para abrir y cerrar el panel de selección de bestias
@@ -64,10 +85,14 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
         EventsManager.TriggerNormalEvent("AcariciarBestia_Bestia");
         EventsManager.TriggerNormalEvent("AcariciarBestia_Player");
     }
+
     public void SanarBestia()
     {
         EventsManager.TriggerNormalEvent("SanarBestia_Bestia");
         EventsManager.TriggerNormalEvent("SanarBestia_Player");
+
+        // Actualizar colores después de sanar
+        UpdateButtonColors();
     }
 
     public void MontarBestia()
@@ -79,12 +104,12 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
     public void AccionBestia()
     {
         EventsManager.TriggerNormalEvent("AccionBestia_Bestia");
-        //EventsManager.TriggerNormalEvent("MontarBestia_Player");
+        UpdateButtonColors();
     }
+
     public void AtaqueBestia()
     {
         EventsManager.TriggerNormalEvent("AtaqueBestia_Bestia");
-        //EventsManager.TriggerNormalEvent("MontarBestia_Player");
     }
 
     public void ClosePanel()
@@ -102,9 +127,70 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
         beastSelectionPanel.SetActive(true);
         beastPanelEnabled = true;
         beast.OpenBeastMenu();
+        UpdateButtonColors();
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         EventsManager.TriggerNormalEvent("UIPanelOpened");
+    }
+
+    // Método privado para actualizar todos los colores de los botones
+    private void UpdateButtonColors()
+    {
+        // Verificar referencias esenciales
+        if (beast == null || beast.blackboard == null || InventoryManager.Instance == null)
+        {
+            Debug.LogError("Referencias esenciales faltantes!");
+            return;
+        }
+
+        // Actualizar botón de sanar con lógica completa
+        UpdateHealButton();
+
+        // Actualizar botón de acción
+        UpdateActionButton();
+
+        // Los demás botones siempre activos
+        SetButtonActive(petButton);
+        SetButtonActive(rideButton);
+        SetButtonActive(attackButton);
+    }
+
+    private void UpdateHealButton()
+    {
+        if (healButton == null || healButton.image == null) return;
+
+        bool hasMango = InventoryManager.Instance.CheckForItem(healingMango);
+        //bool isHealActive = beast.blackboard.GetValue<bool>("isOptionHeal");
+        bool needsHealing = beast.currentHealth < beast.maxHealth;
+
+        healButton.image.color = (hasMango && needsHealing) ? activeColor : inactiveColor;
+
+        Debug.Log($"Botón Sanar - Mango: {hasMango}, Necesita cura: {needsHealing}");
+    }
+
+    private void UpdateActionButton()
+    {
+        if (actionButton == null || actionButton.image == null) return;
+
+        bool isActionActive = beast.blackboard.GetValue<bool>("isOptionAction");
+        actionButton.image.color = isActionActive ? activeColor : inactiveColor;
+
+        Debug.Log($"Botón Acción - Activo: {isActionActive}");
+    }
+
+    private void SetButtonActive(Button button)
+    {
+        if (button != null && button.image != null)
+            button.image.color = activeColor;
+    }
+
+    private void ResetAllButtonColors()
+    {
+        if (petButton != null && petButton.image != null) petButton.image.color = inactiveColor;
+        if (healButton != null && healButton.image != null) healButton.image.color = inactiveColor;
+        if (rideButton != null && rideButton.image != null) rideButton.image.color = inactiveColor;
+        if (actionButton != null && actionButton.image != null) actionButton.image.color = inactiveColor;
+        if (attackButton != null && attackButton.image != null) attackButton.image.color = inactiveColor;
     }
 }

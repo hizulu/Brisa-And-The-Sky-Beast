@@ -15938,6 +15938,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beastSelectionPanel: {fileID: 140369062}
   beast: {fileID: 1555036608}
+  healingMango: {fileID: 11400000, guid: cf1bcf053dd895d42a749bd233471da4, type: 2}
+  petButton: {fileID: 1512015919}
+  healButton: {fileID: 1463468924}
+  rideButton: {fileID: 496357089}
+  actionButton: {fileID: 1489959737}
+  attackButton: {fileID: 1939915599}
+  activeColor: {r: 1, g: 1, b: 1, a: 1}
+  inactiveColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!224 &617278226
 RectTransform:
   m_ObjectHideFlags: 0
@@ -38942,6 +38950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugLogs: 1
   canUnlock: 0
+  canShowNotification: 0
 --- !u!1 &1656831457
 GameObject:
   m_ObjectHideFlags: 0
