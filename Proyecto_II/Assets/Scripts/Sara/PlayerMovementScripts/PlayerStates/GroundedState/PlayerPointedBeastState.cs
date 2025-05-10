@@ -43,9 +43,7 @@ public class PlayerPointedBeastState : PlayerGroundedState
         stateMachine.Player.PlayerInput.PlayerActions.Attack.Enable();
         stateMachine.Player.AreaMoveBeast.SetActive(false);
         stateMachine.Player.CursorMarker.SetActive(false);
-
         //Debug.Log("Has salido del estado de APUNTANDO");
-
         CamExitSetting();
         LockCursor();
     }

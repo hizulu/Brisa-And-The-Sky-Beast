@@ -17,7 +17,7 @@ public class PlayerGroundedState : PlayerMovementState
 
     #region Variables PointedState
     protected bool isPointed = false;
-    private float rightButtontimePressed = 0f;
+    protected float rightButtontimePressed = 0f;
     protected bool isCentralButtonPressed;
     #endregion
 
@@ -94,8 +94,8 @@ public class PlayerGroundedState : PlayerMovementState
         stateMachine.Player.PlayerInput.PlayerActions.Heal.started -= HealPlayer;
         stateMachine.Player.PlayerInput.PlayerActions.Sprint.started -= SprintStart;
         stateMachine.Player.PlayerInput.PlayerActions.Jump.started -= JumpStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started -= OnPointedStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled -= OnPointedCanceled;
+        //stateMachine.Player.PlayerInput.PlayerActions.PointedMode.started -= OnPointedStarted;
+        //stateMachine.Player.PlayerInput.PlayerActions.PointedMode.canceled -= OnPointedCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.ReviveBeast.started -= OnReviveStarted;
         stateMachine.Player.PlayerInput.PlayerActions.ReviveBeast.canceled -= OnReviveCanceled;
     }
@@ -347,7 +347,7 @@ public class PlayerGroundedState : PlayerMovementState
         {
             rightButtontimePressed += Time.deltaTime;
 
-            if (rightButtontimePressed >= 0.5f)
+            if (rightButtontimePressed >= 1f)
             {
                 isPointed = false;
                 stateMachine.ChangeState(stateMachine.PointedBeastState);
