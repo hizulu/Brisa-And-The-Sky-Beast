@@ -68,9 +68,9 @@ public class PlayerAirborneState : PlayerMovementState
     #endregion
 
     #region Métodos Propios AirborneState
-    /*
-     * Método para mover a Player mientras está en el aire.
-     */
+    /// <summary>
+    /// Método para mover a Player mientras está en el aire.
+    /// </summary>
     protected override void Move()
     {
         Vector2 playerInput = stateMachine.MovementData.MovementInput;
@@ -102,17 +102,22 @@ public class PlayerAirborneState : PlayerMovementState
         stateMachine.Player.RbPlayer.velocity = Vector3.Lerp(currentVelocity, newVelocityInAir, airControl * Time.deltaTime);
     }
 
-    /*
-     * Método que resetea a 0 el número de doble saltos realizados.
-     */
+    /// <summary>
+    /// Método que resetea a 0 el número de doble saltos realizados.
+    /// </summary>
     protected void ResetDoubleJump()
     {
         maxNumDoubleJump = 0;
     }
 
-    /*
-     * Método que devuelve True/False dependiendo si detecta una pared pegada al Player o no.
-     */
+    /// <summary>
+    /// Método que devuelve True/False dependiendo si detecta una pared pegada al Player o no.
+    /// </summary>
+    /// <param name="direction">Vector de dirección del Player para detectar si tiene una pared delante</param>
+    /// <returns>
+    /// Si no detecta pared o no detecta movimiento, de vuelve False.
+    /// Si detecta una pared cercana a Player, devuelve True.
+    /// </returns>
     private bool IsTouchingWall(Vector3 direction)
     {
         float wallDistance = 0.5f;
@@ -132,28 +137,12 @@ public class PlayerAirborneState : PlayerMovementState
     }
     #endregion
 
-    #region Método Comprobar si Player Toca Suelo
-    /*
-     * Método que devuelve True/False para comprobar si Player ha tocado suelo o no.
-     */
-    protected virtual bool IsGrounded()
-    {
-        Vector3 boxCenter = stateMachine.Player.GroundCheckCollider.transform.position;
-        Vector3 boxHalfExtents = new Vector3(0.5f, 0.1f, 0.55f); // Tamaño de la caja.
-        Quaternion boxOrientation = Quaternion.identity; // Mantener la rotación como la del GroundCheckCollider.
-        LayerMask groundMask = LayerMask.GetMask("Enviroment");
-
-        bool isGrounded = Physics.CheckBox(boxCenter, boxHalfExtents, boxOrientation, groundMask, QueryTriggerInteraction.Ignore);
-
-        return isGrounded;
-    }
-    #endregion
-
     #region Método Cancelar Entrada Input
-    /*
-     * Método sobrescrito que se ejecuta cuando se cancela la entrada de movimiento.
-     * Si Player está en el estado de salto o de caída, se resetea el input de movimiento a cero.
-     */
+    /// <summary>
+    /// Método sobrescrito que se ejecuta cuando se cancela la entrada de movimiento.
+    /// Si Player está en el estado de salto o de caída, se resetea el input de movimiento a cero.
+    /// </summary>
+    /// <param name="context">Información del input asociado a la acción.</param>
     protected override void OnMovementCanceled(InputAction.CallbackContext context)
     {
         if (stateMachine.CurrentState is PlayerJumpState || stateMachine.CurrentState is PlayerFallState)

@@ -8,12 +8,14 @@
  */
 public class PlayerStateMachine : StateMachine
 {
+    #region Variables
     public Player Player { get; }
 
     #region Datas
     public PlayerMovementData MovementData { get; }
     public PlayerAirborneData AirborneData { get; }
     public PlayerStatsData StatsData { get; }
+    #endregion
     #endregion
 
     #region Movement States
@@ -46,11 +48,12 @@ public class PlayerStateMachine : StateMachine
     public PlayerPickUpState PickUpState { get; }
     #endregion
 
-    /*
-     * Constructor de la máquina de estados del Player.
-     * Inicializa los estados para dejarlos preparados para los cambios de estado.
-     * @param1 player - Recibe una referencia del Player para poder acceder a su información.
-     */
+    #region Constructor SM Player
+    /// <summary>
+    /// Constructor de la máquina de estados del Player.
+    /// Inicializa los estados para dejarlos preparados para los cambios de estado.
+    /// </summary>
+    /// <param name="player">Recibe una referencia del Player para poder acceder a su información.</param>
     public PlayerStateMachine(Player player)
     {
         Player = player;
@@ -87,4 +90,5 @@ public class PlayerStateMachine : StateMachine
         ReviveBeastState = new PlayerReviveBeastState(this);
         PickUpState = new PlayerPickUpState(this);
     }
+    #endregion
 }

@@ -14,9 +14,11 @@ public class PlayerHalfDeadState : PlayerDeathState
 {
     public PlayerHalfDeadState(PlayerStateMachine _stateMachine) : base(_stateMachine) { }
 
+    #region Variables
     private Beast beast;
     private BeastTrapped beastTrapped;
     private bool halfDeadAnimPlayer = false;
+    #endregion
 
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
@@ -57,10 +59,10 @@ public class PlayerHalfDeadState : PlayerDeathState
     #endregion
 
     #region Métodos Propios HalfDeadState
-    /*
-     * Método que realiza la cuenta atrás para que la Bestia pueda revivir a Player.
-     * Si el tiempo se acaba, muere definitivamente.
-     */
+    /// <summary>
+    /// Método que realiza la cuenta atrás para que la Bestia pueda revivir a Player.
+    /// Si el tiempo se acaba, muere definitivamente.
+    /// </summary>
     private void TimeToRevivePlayer()
     {
         // Debug.Log("Estás medio - muerta");
@@ -70,16 +72,19 @@ public class PlayerHalfDeadState : PlayerDeathState
             stateMachine.ChangeState(stateMachine.FinalDeadState);
     }
 
-    /*
-     * Método que revive a Brisa si su vida ha alcanzado el 100.
-     * Si se consigue, cambia el estado a IdleState.
-     */
+    /// <summary>
+    /// Método que revive a Brisa si Bestia ha conseguido cumplir sus condiciones.
+    /// Si se consigue, cambia el estado a ReviveState.
+    /// </summary>
     private void PlayerRevive()
     {
         beast.SetBrisaHalfDead(false);
         stateMachine.ChangeState(stateMachine.RevivePlayerState);
     }
 
+    /// <summary>
+    /// Método sobreescrito que gestiona que, al terminar la primera parte de la animación de medio-muerta, de paso a la animación de idle medio-muerta.
+    /// </summary>
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("HalfDead") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
@@ -89,11 +94,17 @@ public class PlayerHalfDeadState : PlayerDeathState
         }
     }
 
+    /// <summary>
+    /// Empieza la animación de idle medio-muerta.
+    /// </summary>
     private void IdleHalfDeadAnimation()
     {
         StartAnimation(stateMachine.Player.PlayerAnimationData.IdleHalfDeadParameterHash);
     }
 
+    /// <summary>
+    /// Método sobreescrito para cambiar la expresión de Brisa cuando está esperando a que Bestia la reviva.
+    /// </summary>
     protected override void ChangeFacePlayer()
     {
         base.ChangeFacePlayer();

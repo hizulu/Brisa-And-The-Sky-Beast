@@ -57,9 +57,9 @@ public class PlayerHealState : PlayerStopState
     #endregion
 
     #region Métodos Propios HealState
-    /*
-     * Método para comprobar que la animación de curar se ha terminado para pasar al siguiente estado requerido.
-     */
+    /// <summary>
+    /// Método sobreescrito para comprobar que la animación de curar se ha terminado para pasar a idle.
+    /// </summary>
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("HealBrisa") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
@@ -69,11 +69,19 @@ public class PlayerHealState : PlayerStopState
         }
     }
 
+    /// <summary>
+    /// Método que asigna el valor del parámetro del item concreto para curar vida a Brisa.
+    /// </summary>
+    /// <param name="_berry">Valor específico del item que aumenta la vida de Player.</param>
     public void SetHealingBerry(ItemData _berry)
     {
         healIncreaseSpecificItem = _berry;
     }
 
+    /// <summary>
+    /// Método para curar al Player.
+    /// Accede al item concreto del inventario y aumenta la vida de Brisa en base a su valor.
+    /// </summary>
     private void HealPlayer()
     {
         statsData.CurrentHealth += healIncreaseSpecificItem.healIncrease;
@@ -83,6 +91,9 @@ public class PlayerHealState : PlayerStopState
         healFinish = true;
     }
 
+    /// <summary>
+    /// Método sobreescrito para cambiar la expresión de Brisa cuando está curándose.
+    /// </summary>
     protected override void ChangeFacePlayer()
     {
         base.ChangeFacePlayer();

@@ -46,9 +46,9 @@ public class PlayerDoubleJumpState : PlayerAirborneState
     #endregion
 
     #region Métodos Propios DoubleJumpState
-    /*
-     * Método que gestiona la física del doble salto.
-     */
+    /// <summary>
+    /// Método sobreescrito que gestiona la física para realizar un doble salto.
+    /// </summary>
     protected override void Jump()
     {
         if(!isJumping)
@@ -64,9 +64,9 @@ public class PlayerDoubleJumpState : PlayerAirborneState
         }
     }
 
-    /*
-     * Método para comprobar que la animación del doble salto se ha terminado para pasar al siguiente estado requerido.
-     */
+    /// <summary>
+    /// Método para comprobar que la animación del doble salto se ha terminado para pasar a fallState.
+    /// </summary>
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("DoubleJump") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
@@ -76,6 +76,9 @@ public class PlayerDoubleJumpState : PlayerAirborneState
         }
     }
 
+    /// <summary>
+    /// Método sobreescrito para cambiar la expresión de Brisa cuando está haciendo un doble salto.
+    /// </summary>
     protected override void ChangeFacePlayer()
     {
         base.ChangeFacePlayer();

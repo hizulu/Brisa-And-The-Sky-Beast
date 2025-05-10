@@ -12,12 +12,6 @@ public class PlayerIdleState : PlayerGroundedState
 {
     public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
-    #region Variables
-    private float blinkTimer;
-    private float blinkInterval;
-    private bool isBlinking = false;
-    #endregion
-
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
@@ -55,9 +49,9 @@ public class PlayerIdleState : PlayerGroundedState
     #endregion
 
     #region Métodos Propios IdleState
-    /*
-     * Método para cambiar la expresión de Brisa al aterrizar desde muy alto.
-     */
+    /// <summary>
+    /// Método para cambiar la expresión de Brisa cuando está en en idle.
+    /// </summary>
     protected override void ChangeFacePlayer()
     {
         base.ChangeFacePlayer();
@@ -65,39 +59,6 @@ public class PlayerIdleState : PlayerGroundedState
         SetFaceProperty(1, new Vector2(0f, 0f));
         SetFaceProperty(2, new Vector2(0f, 0f));
         SetFaceProperty(3, new Vector2(0f, 0f));
-    }
-
-    /*
-     * Método que gestiona el pestañeo de Player cuando está en Idle.
-     */
-    private void HandleBlinking()
-    {
-        blinkTimer += Time.deltaTime;
-
-        if (!isBlinking && blinkTimer >= blinkInterval)
-        {
-            isBlinking = true;
-            blinkTimer = 0f;
-
-            SetFaceProperty(2, new Vector2(0.125f, 0f)); // Semi-cerrados
-        }
-
-        if (isBlinking && blinkTimer >= 0.1f && blinkTimer < 0.15f)
-        {
-            SetFaceProperty(2, new Vector2(0.25f, 0f)); // Cerrados
-        }
-
-        if (isBlinking && blinkTimer >= 0.15f)
-        {
-            isBlinking = false;
-            SetFaceProperty(2, new Vector2(0f, 0f)); // Abiertos
-            SetRandomBlink();
-        }
-    }
-
-    private void SetRandomBlink()
-    {
-        blinkInterval = Random.Range(3f, 8f);
     }
     #endregion
 }

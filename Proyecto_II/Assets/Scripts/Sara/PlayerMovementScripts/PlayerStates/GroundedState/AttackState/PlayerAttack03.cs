@@ -45,9 +45,9 @@ public class PlayerAttack03 : PlayerAttackState
     #endregion
 
     #region Métodos Propios ComboAttack03
-    /*
-     * Método para comprobar que la animación del ataque 3 se ha terminado para pasar al siguiente estado requerido.
-     */
+    /// <summary>
+    /// Método sobreescrito para comprobar que la animación del ataque 3 se ha terminado para pasar a idleState.
+    /// </summary>
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Attack03") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
@@ -62,6 +62,9 @@ public class PlayerAttack03 : PlayerAttackState
         if (!attackFinish) return;
     }
 
+    /// <summary>
+    /// Método sobreescrito para cambiar la expresión de Brisa cuando está realizando el último ataque.
+    /// </summary>
     protected override void ChangeFacePlayer()
     {
         base.ChangeFacePlayer();

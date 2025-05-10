@@ -52,9 +52,11 @@ public class PlayerPointedBeastState : PlayerGroundedState
     #endregion
 
     #region Métodos Propios PointedBeastState
-    /*
-     * Método para visualizar dónde está el cursor dentro del área permitida.
-     */
+    /// <summary>
+    /// Método para visualizar dónde está el cursor dentro del área permitida.
+    /// Se activa dentro del área permitida, si se sale, se desactiva.
+    /// </summary>
+    /// <returns>Vector que representa la posición en el mundo.</returns>
     private Vector3 CursorPosition()
     {
         SpriteRenderer circleArea = stateMachine.Player.AreaMoveBeast.GetComponent<SpriteRenderer>();
@@ -81,17 +83,21 @@ public class PlayerPointedBeastState : PlayerGroundedState
         return stateMachine.Player.CursorMarker.transform.position;
     }
 
-    /*
-     * Método que reconoce la entrada del input (click izquierdo).
-     */
+    /// <summary>
+    /// Método que reconoce la entrada del input (click izquierdo).
+    /// Si lo detecta, ejecuta el método de desplazarse hasta el punto en el que se ha hecho el click.
+    /// </summary>
+    /// <param name="context">Información del input asociado a la acción.</param>
     private void OnLeftClick(InputAction.CallbackContext context)
     {
         MoveToClick();
     }
 
-    /*
-     * Método para que la Bestia se mueva a la posición donde Player hizo click.
-     */
+    /// <summary>
+    /// Método para que la Bestia se mueva a la posición donde Player hizo click.
+    /// Se instancia un efecto para que el jugador sepa el lugar donde ha pulsado.
+    /// Se crea un evento de llamada para que la Bestia ejecute el método pertinente (desplazarse al lugar del click).
+    /// </summary>
     private void MoveToClick()
     {
         Vector3 clickPosition = CursorPosition();
@@ -106,9 +112,9 @@ public class PlayerPointedBeastState : PlayerGroundedState
     #endregion
 
     #region Métodos Cambio Cámara
-    /*
-     * Método que mueve la cámara a una posición concreta al entrar al estado de apuntado.
-     */
+    /// <summary>
+    /// Método que mueve la cámara a una posición concreta al entrar al estado de apuntado.
+    /// </summary>
     protected void CamEnterSetting()
     {
         float orbitMouseX = 50f;
@@ -121,9 +127,9 @@ public class PlayerPointedBeastState : PlayerGroundedState
         stateMachine.Player.playerCam.transform.position += new Vector3(0, 50, -10);
     }
 
-    /*
-     * Método que reposiciona la cámara al salir del estado de apuntado.
-     */
+    /// <summary>
+    /// Método que reposiciona la cámara al salir del estado de apuntado.
+    /// </summary>
     private void CamExitSetting()
     {
         stateMachine.Player.AreaMoveBeast.SetActive(false);        
@@ -135,12 +141,13 @@ public class PlayerPointedBeastState : PlayerGroundedState
     #endregion
 
     #region Método Cancelar Entrada Input
-    /*
-     * Método que reconoce si se ha dejado de pulsar el input (click derecho) y si así es, cambia de estado.
-     */
+    /// <summary>
+    /// Método que reconoce si se ha dejado de pulsar el input (click derecho) y si así es, cambia de estado.
+    /// </summary>
+    /// <param name="context"></param>
     protected override void OnPointedStateCanceled(InputAction.CallbackContext context)
     {
-        stateMachine.ChangeState(stateMachine.IdleState);
+        OnStop();
     }
     #endregion
 }

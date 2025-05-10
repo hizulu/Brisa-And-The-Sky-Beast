@@ -53,6 +53,10 @@ public class PlayerRideBeastState : PlayerInteractionState
     }
     #endregion
 
+    #region Métodos Propios RideBeastState
+    /// <summary>
+    /// Método sobreescrito para cambiar la expresión de Brisa cuando está montada en la Bestia.
+    /// </summary>
     protected override void ChangeFacePlayer()
     {
         base.ChangeFacePlayer();
@@ -61,34 +65,5 @@ public class PlayerRideBeastState : PlayerInteractionState
         SetFaceProperty(2, new Vector2(0f, 0f));
         SetFaceProperty(3, new Vector2(0f, 0f));
     }
-
-    private void HandleBlinking()
-    {
-        blinkTimer += Time.deltaTime;
-
-        if (!isBlinking && blinkTimer >= blinkInterval)
-        {
-            isBlinking = true;
-            blinkTimer = 0f;
-
-            SetFaceProperty(2, new Vector2(0.125f, 0f)); // Semi-cerrados
-        }
-
-        if (isBlinking && blinkTimer >= 0.1f && blinkTimer < 0.15f)
-        {
-            SetFaceProperty(2, new Vector2(0.25f, 0f)); // Cerrados
-        }
-
-        if (isBlinking && blinkTimer >= 0.15f)
-        {
-            isBlinking = false;
-            SetFaceProperty(2, new Vector2(0f, 0f)); // Abiertos
-            SetRandomBlink();
-        }
-    }
-
-    private void SetRandomBlink()
-    {
-        blinkInterval = Random.Range(3f, 8f);
-    }
+    #endregion
 }
