@@ -22,8 +22,11 @@ public class PlayerAttackState : PlayerGroundedState
     protected bool canContinueCombo;
     protected bool isWaitingForInput;
 
+    protected float detectionRange = 20f;
+
     protected float attackDamageModifierMin;
     protected float attackDamageModifierMax;
+
     #endregion
 
     #region Métodos Base de la Máquina de Estados
@@ -64,11 +67,10 @@ public class PlayerAttackState : PlayerGroundedState
     #endregion
 
     #region Métodos Propios AttackState
-    /*
-     * Método que orienta al Player en dirección del enemigo cuando ataca si este ha marcado al enemigo (facilitar un poco el combate).
-     */
-    protected float detectionRange = 20f;
-
+    /// <summary>
+    /// Método para orientar al Player hacia los enemigos si ataca.
+    /// Debe estar dentro de un rango limitado.
+    /// </summary>
     protected virtual void AlignPlayerToNearestEnemy()
     {
         Transform closestEnemy = null;
@@ -102,6 +104,7 @@ public class PlayerAttackState : PlayerGroundedState
         }
     }
 
+    #region MÉTODO PROVISIONAL MINI-DASH HACIA ENEMIGO
     /*
      * Método que hace que el Player, si tiene marcado un enemigo, haga un mini-dash para acercarse a él y golpearle (facilitar un poco el combate).
      */
@@ -139,6 +142,6 @@ public class PlayerAttackState : PlayerGroundedState
     //    if (dashTraveledDistance >= dashDistance)
     //        hasDashedToTarget = true;
     //}
-
+    #endregion
     #endregion
 }

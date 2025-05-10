@@ -43,14 +43,10 @@ public class PlayerRunState : PlayerMovedState
     }
     #endregion
 
-    #region Método Cancelar Entrada Input
-    protected override void OnMovementCanceled(InputAction.CallbackContext context)
-    {
-        stateMachine.ChangeState(stateMachine.IdleState);
-        base.OnMovementCanceled(context);
-    }
-    #endregion
-
+    #region Métodos Propios RunState
+    /// <summary>
+    /// Método sobreescrito para cambiar la expresión de Brisa cuando está corriendo.
+    /// </summary>
     protected override void ChangeFacePlayer()
     {
         base.ChangeFacePlayer();
@@ -59,4 +55,16 @@ public class PlayerRunState : PlayerMovedState
         SetFaceProperty(2, new Vector2(0f, 0f));
         SetFaceProperty(3, new Vector2(0f, 0f));
     }
+    #endregion
+
+    #region Método Cancelar Entrada Input
+    /// <summary>
+    /// Método sobrescrito que se ejecuta cuando se cancela la entrada de movimiento.
+    /// </summary>
+    /// <param name="context">Información del input asociado a la acción.</param>
+    protected override void OnMovementCanceled(InputAction.CallbackContext context)
+    {
+        OnStop();
+    }
+    #endregion
 }

@@ -41,9 +41,9 @@ public class PlayerPetBeastState : PlayerInteractionState
     #endregion
 
     #region Métodos Propios PetBeastState
-    /*
-     * Método para comprobar que la animación de acariciar se ha terminado para pasar al siguiente estado requerido.
-     */
+    /// <summary>
+    /// Método sobreescrito para comprobar que la animación de acariciar se ha terminado para pasar a idle.
+    /// </summary>
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("PetBeast") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
@@ -53,9 +53,9 @@ public class PlayerPetBeastState : PlayerInteractionState
         }
     }
 
-    /*
-     * Método para orientar a Player hacia donde esté la Bestia para acariciarle.
-     */
+    /// <summary>
+    /// Método para orientar a Player hacia donde esté la Bestia para acariciarle.
+    /// </summary>
     private void AlignPlayerToBeast()
     {
         Transform beastPosition = stateMachine.Player.Beast.transform;
@@ -71,6 +71,9 @@ public class PlayerPetBeastState : PlayerInteractionState
         }
     }
 
+    /// <summary>
+    /// Método sobreescrito para cambiar la expresión de Brisa cuando está acariciando a la Bestia.
+    /// </summary>
     protected override void ChangeFacePlayer()
     {
         base.ChangeFacePlayer();

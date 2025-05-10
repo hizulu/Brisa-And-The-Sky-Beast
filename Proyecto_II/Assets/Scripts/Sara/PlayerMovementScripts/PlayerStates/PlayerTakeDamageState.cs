@@ -37,6 +37,9 @@ public class PlayerTakeDamageState : PlayerMovementState
     #endregion
 
     #region Métodos Propios TakeDamageState
+    /// <summary>
+    /// Método sobreescrito que gestiona que al terminar la animación de recibir daño, pasa a IdleState.
+    /// </summary>
     private void FinishTakeDamage()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
@@ -46,6 +49,9 @@ public class PlayerTakeDamageState : PlayerMovementState
         }
     }
 
+    /// <summary>
+    /// Método sobreescrito para cambiar la expresión de Brisa cuando está recibiendo daño.
+    /// </summary>
     protected override void ChangeFacePlayer()
     {
         base.ChangeFacePlayer();

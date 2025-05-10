@@ -67,20 +67,18 @@ public class PlayerAttack01 : PlayerAttackState
     #endregion
 
     #region Métodos Propios Attack01State
-    /*
-     * Método para comprobar que la animación del ataque 1 se ha terminado para pasar al siguiente estado requerido.
-     */
+    /// <summary>
+    /// Método para comprobar que la animación del ataque 1 se ha terminado.
+    /// </summary>
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Attack01") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             attackFinish = true;
     }
 
-    protected override void Move()
-    {
-        if (!attackFinish) return;
-    }
-
+    /// <summary>
+    /// Método sobreescrito para cambiar la expresión de Brisa cuando está realizando el primer ataque.
+    /// </summary>
     protected override void ChangeFacePlayer()
     {
         base.ChangeFacePlayer();
