@@ -24,4 +24,7 @@ public class Tutorial
 
     [Tooltip("¿Debe esperar una confirmación externa para completar el tutorial?")]
     public bool waitForCompletion;
+
+    [Tooltip("¿Debe permanecer visible mientras el jugador está dentro del trigger?")]
+    public bool persistentWhileInsideTrigger;
 }

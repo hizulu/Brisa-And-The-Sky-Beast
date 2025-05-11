@@ -41,10 +41,22 @@ public class TutorialTrigger : MonoBehaviour
         if (canceled)
             return;
 
-        if (triggered) return;
-
         if (other.CompareTag("Player"))
         {
+            if (currentIndex >= tutorials.Count)
+            {
+                Debug.Log("Todos los tutoriales de esta lista han sido completados");
+                return;
+            }
+
+            if (tutorials[currentIndex].persistentWhileInsideTrigger)
+            {
+                DisplayTutorial(tutorials[currentIndex]);
+                return;
+            }
+
+            if (triggered) return;
+
             triggered = true;
 
             if (tutorials.Count == 0)
@@ -54,6 +66,24 @@ public class TutorialTrigger : MonoBehaviour
             }
 
             ShowNextMessage();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (canceled || other.CompareTag("Player") == false)
+            return;
+
+        if (tutorials.Count > currentIndex && tutorials[currentIndex].persistentWhileInsideTrigger)
+        {
+            if (currentMessage != null)
+            {
+                TutorialManager.Instance.RemoveMessage(currentMessage);
+                StartCoroutine(TutorialManager.Instance.FadeOutAndDestroy(currentMessage));
+                currentMessage = null;
+            }
+
+            triggered = false;
         }
     }
 
@@ -101,15 +131,15 @@ public class TutorialTrigger : MonoBehaviour
         DisplayTutorial(tutorial);
     }
 
-    private void TransitionToNextMessage()
+    private IEnumerator TransitionToNextMessage()
     {
         if (canceled)
-            return;
+            yield break;
 
         TutorialManager.Instance.RemoveMessage(currentMessage);
-        currentMessage = null;    
+        yield return StartCoroutine(TutorialManager.Instance.FadeOutAndDestroy(currentMessage));
+        currentMessage = null;
 
-        // Después de destruir el mensaje anterior, mostramos el siguiente
         ShowNextMessage();
     }
 
@@ -132,11 +162,11 @@ public class TutorialTrigger : MonoBehaviour
     // Método público para forzar el avance manual si es waitForCompletion
     public void CompleteCurrentStep()
     {
-        if(canceled)
+        if (canceled)
             return;
 
         currentIndex++;
-        TransitionToNextMessage();
+        StartCoroutine(TransitionToNextMessage());
     }
 
     public void HasBeenCanceled()

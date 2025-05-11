@@ -2107,13 +2107,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0dcb05fadc14e84bb19da9e9f661d92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightIntensityMultiplier: 0
   sunController: {fileID: 809843308}
   directionalLight: {fileID: 1912030908}
   brightnessSlider: {fileID: 457343450}
   brightnessValueText: {fileID: 745800000}
   minBrightness: 0.2
   maxBrightness: 2
+  defaultBrightness: 1
+  targetCanvas: []
+  uiBrightnessMaterial: {fileID: 0}
   screenModeDropdown: {fileID: 547397399}
   resolutionDropdown: {fileID: 428359030}
 --- !u!4 &63485729
@@ -8843,8 +8845,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.464939, y: 3.7175698, z: 6.6979218}
-  m_Center: {x: 10.149303, y: -1.4431164, z: 2.7927246}
+  m_Size: {x: 2.3876696, y: 3.7175698, z: 6.6979218}
+  m_Center: {x: 10.187939, y: -1.4431164, z: 2.7927246}
 --- !u!114 &324681335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8863,6 +8865,7 @@ MonoBehaviour:
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!1 &328031297
 GameObject:
   m_ObjectHideFlags: 0
@@ -11963,8 +11966,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 8.927316, y: 3.7175698, z: 6.6979218}
-  m_Center: {x: -1.8690219, y: -1.4431164, z: 2.7927246}
+  m_Size: {x: 6.054409, y: 3.7175698, z: 7.758732}
+  m_Center: {x: -11.238501, y: -1.4431164, z: 0.79699135}
 --- !u!114 &424970744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11983,6 +11986,7 @@ MonoBehaviour:
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!1001 &427520779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14774,7 +14778,7 @@ Transform:
   m_GameObject: {fileID: 521517682}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 26, y: 47.7, z: -9.2}
+  m_LocalPosition: {x: 36.88, y: 47.7, z: -11.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14798,11 +14802,13 @@ MonoBehaviour:
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: UIPanel/Inventory
     tutorialText: Presiona I para abrir el inventario
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!65 &521517685
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14822,8 +14828,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.1606236, y: 2.6144524, z: 3.3636456}
-  m_Center: {x: 2.6286983, y: 0.8072262, z: 0.26022243}
+  m_Size: {x: 3.893404, y: 3.3119116, z: 9.113138}
+  m_Center: {x: 1.9804716, y: -2.3239417, z: 0.5984278}
 --- !u!1 &528472222
 GameObject:
   m_ObjectHideFlags: 0
@@ -16889,6 +16895,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beastSelectionPanel: {fileID: 140369062}
   beast: {fileID: 1555036608}
+  healingMango: {fileID: 0}
+  petButton: {fileID: 0}
+  healButton: {fileID: 0}
+  rideButton: {fileID: 0}
+  actionButton: {fileID: 0}
+  attackButton: {fileID: 0}
+  activeColor: {r: 1, g: 1, b: 1, a: 1}
+  inactiveColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!224 &617278226
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25502,6 +25516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   notificationPrefab: {fileID: 5287768615193140970, guid: 3e8520ce8d7f310409cc40255f47f40c, type: 3}
+  appearanceNotificationPrefab: {fileID: 0}
   notificationParent: {fileID: 20999320}
   displayDuration: 3
   fadeInDuration: 0.01
@@ -27247,6 +27262,7 @@ MonoBehaviour:
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!1 &1084992322
 GameObject:
   m_ObjectHideFlags: 0
@@ -30045,16 +30061,19 @@ MonoBehaviour:
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: Player/Shield
     tutorialText: Presiona F para protegerte
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: Player/LockTarget
     tutorialText: Presiona ClickCentral para fijar el objetivo
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!65 &1223499266
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32546,28 +32565,33 @@ MonoBehaviour:
     triggeredByAction: 1
     activationEventName: BeastFreed
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: UIPanel/BeastPanel
     tutorialText: "Presiona TAB cuando la Bestia est\xE1 cerca para abir el men\xFA"
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: Player/PointedMode
     tutorialText: "Mant\xE9n ClickDer durante 2 segundos para dirigir a la Bestia"
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: Player/MoveBeast
     tutorialText: Presiona ClickIzq mientras mantienes ClickDer para dirigir a la
       Bestia
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: Player/ReviveBeast
     tutorialText: "Mant\xE9n ClickCentral durante 3 segundos estando cerca de Bestia
       para revivirla"
     triggeredByAction: 1
     activationEventName: ReviveBeast
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!1 &1333248235
 GameObject:
   m_ObjectHideFlags: 0
@@ -39224,16 +39248,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorials:
-  - inputActionName: UIPanel/PauseGame
-    tutorialText: Presiona ESC para pausar el juego
-    triggeredByAction: 0
-    activationEventName: 
-    waitForCompletion: 0
   - inputActionName: UIPanel/Map
     tutorialText: Presiona M para abrir el mapa
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!1 &1569019059
 GameObject:
   m_ObjectHideFlags: 0
@@ -40238,83 +40258,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618388277}
   m_CullTransparentMesh: 1
---- !u!1 &1624813313
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1624813314}
-  - component: {fileID: 1624813316}
-  - component: {fileID: 1624813315}
-  m_Layer: 0
-  m_Name: DialogueTutorialTrigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1624813314
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1624813313}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.10348692, z: 0, w: 0.9946308}
-  m_LocalPosition: {x: 27.923395, y: 38.68957, z: -51.31128}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1633028064}
-  m_LocalEulerAnglesHint: {x: 0, y: 11.88, z: 0}
---- !u!65 &1624813315
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1624813313}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 8.958245, y: 2.0699377, z: 27.536716}
-  m_Center: {x: 29.388515, y: 0.53496885, z: 8.55321}
---- !u!114 &1624813316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1624813313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38f9f3ce96dbb9a4faf8ca1a3e62d0b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorials:
-  - inputActionName: UIPanel/Dialogue
-    tutorialText: Presiona E para hablar
-    triggeredByAction: 0
-    activationEventName: 
-    waitForCompletion: 0
-  - inputActionName: UIPanel/DialogueContinue
-    tutorialText: Presiona E o ClickIzq para continuar
-    triggeredByAction: 0
-    activationEventName: 
-    waitForCompletion: 0
 --- !u!1 &1631723460
 GameObject:
   m_ObjectHideFlags: 0
@@ -40554,7 +40497,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1633028064
 Transform:
   m_ObjectHideFlags: 0
@@ -40569,8 +40512,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1921953880}
+  - {fileID: 1756431643}
   - {fileID: 1081758721}
-  - {fileID: 1624813314}
   - {fileID: 1568579195}
   - {fileID: 521517683}
   - {fileID: 1223499264}
@@ -41232,6 +41175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugLogs: 1
+  canUnlock: 0
+  canShowNotification: 0
 --- !u!1 &1656831457
 GameObject:
   m_ObjectHideFlags: 0
@@ -43416,6 +43361,85 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1469340867}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -70}
+--- !u!1 &1756431642
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1756431643}
+  - component: {fileID: 1756431645}
+  - component: {fileID: 1756431644}
+  m_Layer: 0
+  m_Name: MovementTutorialTrigger (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1756431643
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756431642}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 15.931395, y: 38.68957, z: -44.972015}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1633028064}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1756431644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756431642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f9f3ce96dbb9a4faf8ca1a3e62d0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorials:
+  - inputActionName: Player/Sprint
+    tutorialText: Presiona ClickDerecho mientras andas para hacer un sprint
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
+  - inputActionName: Player/Crouch
+    tutorialText: Presiona ControlIzq mientras andas para agacharte
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
+--- !u!65 &1756431645
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756431642}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 24.388, y: 2.8411684, z: 4.3376255}
+  m_Center: {x: 41.315063, y: 0.42395818, z: 0.17646313}
 --- !u!1 &1756723064
 GameObject:
   m_ObjectHideFlags: 0
@@ -48492,21 +48516,13 @@ MonoBehaviour:
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: Player/Run
-    tutorialText: Presiona ShiftIzq para correr
+    tutorialText: Presiona ShiftIzq mientras andas para correr
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
-  - inputActionName: Player/Sprint
-    tutorialText: Presiona ClickDerecho para hacer un sprint
-    triggeredByAction: 0
-    activationEventName: 
-    waitForCompletion: 0
-  - inputActionName: Player/Crouch
-    tutorialText: Presiona ControlIzq para agacharte
-    triggeredByAction: 0
-    activationEventName: 
-    waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!65 &1921953882
 BoxCollider:
   m_ObjectHideFlags: 0
