@@ -25,6 +25,7 @@ public class GraphicsSettings : MonoBehaviour
 
     [Header("Paneles UI")]
     [SerializeField] private List<Canvas> targetCanvas = new List<Canvas>();
+    [SerializeField] private List<Graphic> excludedElements = new List<Graphic>();
     [SerializeField] private Material uiBrightnessMaterial;
 
     [Header("Pantalla")]
@@ -86,7 +87,7 @@ public class GraphicsSettings : MonoBehaviour
             {
                 if (graphic == null) continue;
 
-                if (graphic is RawImage) continue;
+                if (excludedElements.Contains(graphic)) continue;
 
                 // Manejar elementos UI estándar (Image, RawImage, etc.)
                 if (!(graphic is TMP_Text) && !originalGraphicMaterials.ContainsKey(graphic))
@@ -101,6 +102,7 @@ public class GraphicsSettings : MonoBehaviour
                     originalMaskMaterials[mask] = mask.graphic.material;
                 }
             }
+
 
             // Almacenar colores originales de TextMeshPro
             TMP_Text[] textMeshPros = canvas.GetComponentsInChildren<TMP_Text>(true);
