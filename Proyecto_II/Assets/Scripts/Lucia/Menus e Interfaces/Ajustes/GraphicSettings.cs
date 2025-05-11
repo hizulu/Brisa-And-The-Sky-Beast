@@ -21,6 +21,7 @@ public class GraphicsSettings : MonoBehaviour
     [SerializeField] private TMP_Text brightnessValueText;
     [SerializeField] private float minBrightness = 0.3f;
     [SerializeField] private float maxBrightness = 2f;
+    [SerializeField] private float defaultBrightness = 1f;
 
     [Header("Paneles UI")]
     [SerializeField] private List<Canvas> targetCanvas = new List<Canvas>();
@@ -146,7 +147,7 @@ public class GraphicsSettings : MonoBehaviour
         {
             brightnessSlider.minValue = minBrightness;
             brightnessSlider.maxValue = maxBrightness;
-            brightnessSlider.value = PlayerPrefs.GetFloat("Brightness", 1f);
+            brightnessSlider.value = defaultBrightness;
             brightnessSlider.onValueChanged.AddListener(SetBrightness);
             UpdateBrightnessText(brightnessSlider.value);
         }
