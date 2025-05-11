@@ -39,6 +39,17 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
     {
         if (beastSelectionPanel == null)
             beastSelectionPanel = gameObject;
+
+        // Suscribir los eventos
+        EventsManager.CallNormalEvents("BeastActionableEntered", UpdateActionButton);
+        EventsManager.CallNormalEvents("BeastActionableExited", UpdateActionButton);
+    }
+
+    private void OnDestroy()
+    {
+        // Desuscribir los eventos
+        EventsManager.StopCallNormalEvents("BeastActionableEntered", UpdateActionButton);
+        EventsManager.StopCallNormalEvents("BeastActionableExited", UpdateActionButton);
     }
 
     private void Start()
@@ -104,6 +115,9 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
     public void AccionBestia()
     {
         EventsManager.TriggerNormalEvent("AccionBestia_Bestia");
+        EventsManager.CallNormalEvents("BeastActionableZone", UpdateActionButton);
+        EventsManager.CallNormalEvents("BeastActionableEntered", UpdateActionButton);
+        EventsManager.CallNormalEvents("BeastActionableExited", UpdateActionButton);
         UpdateButtonColors();
     }
 
@@ -127,7 +141,10 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
         beastSelectionPanel.SetActive(true);
         beastPanelEnabled = true;
         beast.OpenBeastMenu();
+
+        // Forzar actualización de todos los botones al abrir el panel
         UpdateButtonColors();
+
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -173,10 +190,12 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
     {
         if (actionButton == null || actionButton.image == null) return;
 
-        bool isActionActive = beast.blackboard.GetValue<bool>("isOptionAction");
-        actionButton.image.color = isActionActive ? activeColor : inactiveColor;
+        // Obtener el estado de la zona de acción desde la bestia
+        bool isInActionZone = beast != null && beast.blackboard != null &&
+                             beast.blackboard.GetValue<bool>("isInActionZone");
 
-        Debug.Log($"Botón Acción - Activo: {isActionActive}");
+        actionButton.image.color = isInActionZone ? activeColor : inactiveColor;
+        Debug.Log($"Botón Acción - En zona: {isInActionZone}");
     }
 
     private void SetButtonActive(Button button)

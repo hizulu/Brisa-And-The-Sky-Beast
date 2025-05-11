@@ -29,6 +29,9 @@ public abstract class BeastActionable : MonoBehaviour, IBeastActionable
             // TODO: beast action button is available
             Debug.Log("Beast entered");
             beastIsIn = true;
+            beast.blackboard.SetValue("isInActionZone", true);
+            beast.blackboard.SetValue("isOptionAction", true);
+            EventsManager.TriggerNormalEvent("BeastActionableEntered");
         }
     }
 
@@ -39,6 +42,9 @@ public abstract class BeastActionable : MonoBehaviour, IBeastActionable
             // TODO: beast action button is unavailable
             Debug.Log("Beast left");
             beastIsIn = false;
+            beast.blackboard.SetValue("isInActionZone", false);
+            beast.blackboard.SetValue("isOptionAction", false);
+            EventsManager.TriggerNormalEvent("BeastActionableExited");
         }
     }
 
