@@ -20,7 +20,7 @@ public class PlayerCrouchState : PlayerMovedState
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.CrouchParameterHash);
         EventsManager.TriggerSpecialEvent<bool>("CrouchState", true);
-        Debug.Log("Has entrado en el estado de AGACHARSE.");
+        // Debug.Log("Has entrado en el estado de AGACHARSE.");
     }
 
     public override void UpdateLogic()
@@ -36,7 +36,7 @@ public class PlayerCrouchState : PlayerMovedState
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.CrouchParameterHash);
         EventsManager.TriggerSpecialEvent<bool>("CrouchState", false);
-        Debug.Log("Has salido del estado de AGACHARSE.");
+        // Debug.Log("Has salido del estado de AGACHARSE.");
     }
     #endregion
 

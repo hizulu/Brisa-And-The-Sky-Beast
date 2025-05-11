@@ -152,7 +152,7 @@ public class DrawbridgeMover : MonoBehaviour, IMovableElement
         // Actualizar el NavMesh
         navMeshData = beastNavMeshSurface.navMeshData;
         beastNavMeshSurface.UpdateNavMesh(navMeshData);
-        Debug.Log("NavMesh updated");
+        // Debug.Log("NavMesh updated");
 
         // Restaurar el estado original
         foreach (var kvp in originalStates)

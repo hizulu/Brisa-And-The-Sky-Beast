@@ -13,7 +13,7 @@ public class BeastFreeState : BeastState
 
     public override void OnEnter(Beast beast)
     {
-        Debug.Log("Beast has entered Free State");
+        // Debug.Log("Beast has entered Free State");
 
         blackboard = beast.blackboard;
 
@@ -39,7 +39,7 @@ public class BeastFreeState : BeastState
 
     public override void OnExit(Beast beast)
     {
-        Debug.Log("Beast is leaving Free State");
+        // Debug.Log("Beast is leaving Free State");
     }
 
     private Node SetupFreeBehaviorTree(Beast beast)

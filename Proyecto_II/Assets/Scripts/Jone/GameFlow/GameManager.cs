@@ -68,16 +68,16 @@ public class GameManager : MonoBehaviour
         if (UIManager.Instance.CheckForOpenedMenus())
             return;
 
-        Debug.Log("Detecta escape");
+        // Debug.Log("Detecta escape");
         if (CurrentState == GameState.Paused)
         {
             ResumeGame();
-            Debug.Log("Debería resumir juego");
+            // Debug.Log("Debería reanudar juego");
         }
         else if (CurrentState == GameState.Playing)
         {
             PauseGame();
-            Debug.Log("Debería pausar juego");
+            // Debug.Log("Debería pausar juego");
         }
     }
 

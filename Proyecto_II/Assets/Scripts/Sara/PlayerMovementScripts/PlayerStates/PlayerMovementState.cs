@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using OpenCover.Framework.Model;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.PlayerSettings;
 
 /*
  * NOMBRE CLASE: PlayerMovementState

@@ -38,7 +38,7 @@ public class PlayerFallState : PlayerAirborneState
         base.Enter();
         //Debug.Log("Desde entrada de caída: " + maxNumDoubleJump);
         StartAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
-        Debug.Log("Has entrado en el estado de CAYENDO");
+        // Debug.Log("Has entrado en el estado de CAYENDO");
     }
 
     public override void HandleInput()
@@ -61,7 +61,7 @@ public class PlayerFallState : PlayerAirborneState
         GetFallVelocity(playerCurrentVelocityInY);
 
         CheckIfPlayerIsStuckInFallState();
-        Debug.Log(playerCurrentVelocityInY);
+        // Debug.Log(playerCurrentVelocityInY);
 
         if (IsGrounded())
             LandInGround();

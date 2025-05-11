@@ -45,7 +45,7 @@ public class TutorialTrigger : MonoBehaviour
         {
             if (currentIndex >= tutorials.Count)
             {
-                Debug.Log("Todos los tutoriales de esta lista han sido completados");
+                // Debug.Log("Todos los tutoriales de esta lista han sido completados");
                 return;
             }
 
@@ -106,7 +106,7 @@ public class TutorialTrigger : MonoBehaviour
         if (canceled)
             return;
 
-        Debug.Log($"Showing next message at number {currentIndex}");
+        // Debug.Log($"Showing next message at number {currentIndex}");
         if (currentMessage != null)
         {
             Debug.LogWarning("Ya hay un tutorial en marcha");
@@ -115,7 +115,7 @@ public class TutorialTrigger : MonoBehaviour
 
         if (currentIndex >= tutorials.Count)
         {
-            Debug.Log("Todos los tutoriales de esta lista han sido completados");
+            // Debug.Log("Todos los tutoriales de esta lista han sido completados");
             return;
         }
 

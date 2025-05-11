@@ -41,7 +41,7 @@ public class EnemyTargetDetectionSimpleRange : EnemyTargetDetectionSOBase
         float distanceToPlayerSQR = (enemy.transform.position - playerTransform.position).sqrMagnitude;
         if (distanceToPlayerSQR < targetDetectionRangeSQR)
         {
-            Debug.Log("Player is within detection range");
+            // Debug.Log("Player is within detection range");
             if (playerHealthPercentage <= 0f)
                 return false; // Player is dead
             enemy.targetIsPlayer = true;
@@ -52,7 +52,7 @@ public class EnemyTargetDetectionSimpleRange : EnemyTargetDetectionSOBase
         float distanceToBeastSQR = (enemy.transform.position - beastTransform.position).sqrMagnitude;
         if (distanceToBeastSQR < targetDetectionRangeSQR)
         {
-            Debug.Log("Beast is within detection range");
+            // Debug.Log("Beast is within detection range");
             if (beastHealthPercentage <= 0f)
                 return false; // Beast is dead
             enemy.targetIsPlayer = false;
@@ -60,7 +60,7 @@ public class EnemyTargetDetectionSimpleRange : EnemyTargetDetectionSOBase
         }
 
         // No target detected within detection range
-        Debug.Log("No target detected within detection range");
+        // Debug.Log("No target detected within detection range");
         return false;
     }
 }

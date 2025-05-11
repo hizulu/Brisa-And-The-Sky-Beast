@@ -18,7 +18,7 @@ public class EnemyPatrolRandomWander : EnemyStateSOBase
     [SerializeField] private float minRandomRadius = 5f;
     [SerializeField] private float maxRandomRadius = 12f;
     [SerializeField] private float randomWanderSpeed = 3f;
-    [SerializeField] private float playerDetectionRange = 12f;
+    // [SerializeField] private float playerDetectionRange = 12f;
 
     [SerializeField] private EnemyTargetDetectionSOBase targetDetection; // Comportamiento serializado de detección de objetivos
 
