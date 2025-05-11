@@ -6,10 +6,12 @@ using UnityEngine.InputSystem;
 
 // Jone Sainz Egea
 // 18/04/2025
-    //26/04/2025 added option to show queued messages
+    // 26/04/2025 added option to show queued messages
+    // 11/05/2025 tutorial gets removed after 5 seconds
 public class TutorialMessage : MonoBehaviour
 {
     [SerializeField] private TMPro.TMP_Text messageTextUI;
+    [SerializeField] private float messageDuration = 5f;
 
     private InputAction inputAction;
     private System.Action onTutorialCompleted;
@@ -32,6 +34,9 @@ public class TutorialMessage : MonoBehaviour
         onTutorialCompleted = callback;
 
         inputAction.Enable();
+
+        if(!waitForCompletion)
+            StartCoroutine(WaitAndDeactivate());
     }
 
     private void Update()
@@ -45,5 +50,16 @@ public class TutorialMessage : MonoBehaviour
                 onTutorialCompleted?.Invoke();
             }
         }
+    }
+
+    private IEnumerator WaitAndDeactivate()
+    {
+        float elapsedTime = 0f;
+        while(elapsedTime < messageDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        onTutorialCompleted?.Invoke();
     }
 }

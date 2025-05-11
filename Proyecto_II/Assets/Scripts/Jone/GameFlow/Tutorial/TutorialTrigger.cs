@@ -101,15 +101,15 @@ public class TutorialTrigger : MonoBehaviour
         DisplayTutorial(tutorial);
     }
 
-    private void TransitionToNextMessage()
+    private IEnumerator TransitionToNextMessage()
     {
         if (canceled)
-            return;
+            yield break;
 
         TutorialManager.Instance.RemoveMessage(currentMessage);
-        currentMessage = null;    
+        yield return StartCoroutine(TutorialManager.Instance.FadeOutAndDestroy(currentMessage));
+        currentMessage = null;
 
-        // Después de destruir el mensaje anterior, mostramos el siguiente
         ShowNextMessage();
     }
 
@@ -132,11 +132,11 @@ public class TutorialTrigger : MonoBehaviour
     // Método público para forzar el avance manual si es waitForCompletion
     public void CompleteCurrentStep()
     {
-        if(canceled)
+        if (canceled)
             return;
 
         currentIndex++;
-        TransitionToNextMessage();
+        StartCoroutine(TransitionToNextMessage());
     }
 
     public void HasBeenCanceled()

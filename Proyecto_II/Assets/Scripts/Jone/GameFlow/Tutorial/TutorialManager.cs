@@ -30,25 +30,24 @@ public class TutorialManager : MonoBehaviour
         GameObject obj = Instantiate(tutorialMessagePrefab, canvasParent);
         TutorialMessage msg = obj.GetComponent<TutorialMessage>();
 
-        msg.Initialize(tutorial);
         StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 0f, 1f, 0.25f, 0.5f));
         activeMessages.Add(msg);
+
         return msg;
     }
 
     public void RemoveMessage(TutorialMessage message)
     {
         if (activeMessages.Contains(message))
-        {
             activeMessages.Remove(message);
-            StartCoroutine(FadeOutAndDestroy(message));
-        }
     }
 
     public IEnumerator FadeOutAndDestroy(TutorialMessage msg)
     {
         yield return StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 1f, 0f, 0.4f, 0.2f));
+
         Destroy(msg.gameObject);
+        yield return null;
     }
 
     public IEnumerator FadeCanvasGroup(CanvasGroup group, float from, float to, float duration, float waitTime)
