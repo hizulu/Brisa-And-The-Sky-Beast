@@ -8,6 +8,7 @@ using UnityEngine;
  * FECHA: 27/03/2025
  * DESCRIPCIÓN: Script base que se encarga del fade in/fade out de la cámara
  * VERSIÓN: 1.0 funcionamiento del fade in/fade out básico
+ *              1.1. se añade método de FadeToBlackThenRemove
  */
 public class CameraFade : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class CameraFade : MonoBehaviour
     private Texture2D texture;
     private int direction = 0;
     private float time = 0f;
+
+    private bool manualFade = false;
 
     private void Start()
     {
@@ -57,7 +60,7 @@ public class CameraFade : MonoBehaviour
     public void OnGUI()
     {
         if (alpha > 0f) GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), texture);
-        if (direction != 0)
+        if (direction != 00 && !manualFade)
         {
             time += direction * Time.deltaTime * speedScale;
             alpha = Curve.Evaluate(time);
@@ -65,5 +68,49 @@ public class CameraFade : MonoBehaviour
             texture.Apply();
             if (alpha <= 0f || alpha >= 1f) direction = 0;
         }
+    }
+
+    public void FadeToBlackThenRemove()
+    {
+        StartCoroutine(FadeSequence());
+    }
+
+    private IEnumerator FadeSequence()
+    {
+        manualFade = true;
+
+        // Paso 1: Fade a negro (alpha de 0 a 1) en 1 segundo
+        float durationIn = 1f;
+        float timer = 0f;
+        while (timer < durationIn)
+        {
+            timer += Time.deltaTime;
+            alpha = Mathf.Clamp01(timer / durationIn);
+            texture.SetPixel(0, 0, new Color(fadeColor.r, fadeColor.g, fadeColor.b, alpha));
+            texture.Apply();
+            yield return null;
+        }
+
+        alpha = 1f;
+        texture.SetPixel(0, 0, new Color(fadeColor.r, fadeColor.g, fadeColor.b, alpha));
+        texture.Apply();
+
+        // Paso 2: Fade rápido para quitar la textura (alpha de 1 a 0) en 0.1 segundos
+        float durationOut = 0.1f;
+        timer = 0f;
+        while (timer < durationOut)
+        {
+            timer += Time.deltaTime;
+            alpha = Mathf.Clamp01(1f - (timer / durationOut));
+            texture.SetPixel(0, 0, new Color(fadeColor.r, fadeColor.g, fadeColor.b, alpha));
+            texture.Apply();
+            yield return null;
+        }
+
+        alpha = 0f;
+        texture.SetPixel(0, 0, new Color(fadeColor.r, fadeColor.g, fadeColor.b, alpha));
+        texture.Apply();
+
+        manualFade = false;
     }
 }

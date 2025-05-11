@@ -92,29 +92,6 @@ public class GameManager : MonoBehaviour
     }
 
     #region Pause & Resume
-    void TogglePause(InputAction.CallbackContext context)
-    {
-        if (InventoryManager.Instance.inventoryEnabled)
-        {
-            InventoryManager.Instance.OpenCloseInventory(context);
-            return;
-        }
-
-        if (CurrentState == GameState.Paused)
-        {
-            ChangeGameState(GameState.Playing);
-            Pause.TriggerResume();
-        }
-        else if (CurrentState == GameState.Playing)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            Debug.Log("Cursor activado desde game manager");
-            ChangeGameState(GameState.Paused);
-            Pause.TriggerPause();
-        }
-    }
-
     void PauseGame()
     {
         ChangeGameState(GameState.Paused);
@@ -148,6 +125,7 @@ public class GameManager : MonoBehaviour
     public void LoadNextScene()
     {
         EventsManager.CleanAllEvents();
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(nextSceneIndex);
     }

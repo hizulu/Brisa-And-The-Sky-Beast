@@ -21,14 +21,6 @@ public class BeastOpenTheHollowExit : BeastActionable
             Debug.Log("Beast is not in");
             return;
         }
-        StartCoroutine(FadeToNextScene());
-    }
-
-    IEnumerator FadeToNextScene()
-    {
-        // TODO: some animation
-        cam.DoFadeInOut();
-        yield return new WaitForSeconds(1f);
-        GameManager.Instance.LoadNextScene();
+        EventsManager.TriggerNormalEvent("LeaveTheHollow");
     }
 }

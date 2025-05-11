@@ -42,8 +42,6 @@ public class OpeningCinematic : MonoBehaviour
 
     public void NextScene()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
         Cinematics.CineReproduciendo = false;
         int escenaActual = SceneManager.GetActiveScene().buildIndex;
         int siguienteEscena = escenaActual + 1;
