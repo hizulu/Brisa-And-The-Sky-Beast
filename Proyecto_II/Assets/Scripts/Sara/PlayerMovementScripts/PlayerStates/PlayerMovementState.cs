@@ -14,6 +14,7 @@ using static UnityEditor.PlayerSettings;
  *              Gestiona las entradas de movimiento, las transiciones de animaciones y las interacciones con el mundo (colliders).
  * VERSIÓN: 1.0. Entradas del Input System y entrada y salida de animaciones.
  * VERSIÓN: 2.0. Entradas y salidas de triggers.
+ * 
  */
 public class PlayerMovementState : IState
 {
