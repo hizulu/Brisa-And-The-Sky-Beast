@@ -76,6 +76,11 @@ public class PlayerAttack01 : PlayerAttackState
             attackFinish = true;
     }
 
+    protected override void Move()
+    {
+        if (!attackFinish) return;
+    }
+
     /// <summary>
     /// Método sobreescrito para cambiar la expresión de Brisa cuando está realizando el primer ataque.
     /// </summary>

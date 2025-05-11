@@ -21,13 +21,13 @@ public class EnemyRetreatJumpBack : EnemyStateSOBase
     private float targetChaseRangeSQR;
 
     private Transform targetTransform;
-    private bool retreatFinish = false;
+    // private bool retreatFinish = false;
     #endregion
 
     #region Sobreescriturta de métodos de EnemyStateSOBase
     public override void DoEnterLogic()
     {
-        retreatFinish = false;
+        // retreatFinish = false;
         base.DoEnterLogic();
         enemy.anim.SetBool("isRetreating", true);
 

@@ -186,11 +186,11 @@ public class SaveManager : MonoBehaviour
 
     public void SavePlayerSettings()
     {
-        Debug.Log("Saving player settings");
+        // Debug.Log("Saving player settings");
     }
 
     public void LoadPlayerSettings()
     {
-        Debug.Log("Loading player settings");
+        // Debug.Log("Loading player settings");
     }
 }

@@ -19,7 +19,7 @@ public class PlayerWalkState : PlayerMovedState
         stateMachine.MovementData.MovementSpeedModifier = groundedData.WalkData.WalkSpeedModif;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.WalkParameterHash);
-        Debug.Log("Has entrado en el estado de CAMINAR.");
+        // Debug.Log("Has entrado en el estado de CAMINAR.");
     }
 
     public override void UpdateLogic()
@@ -33,7 +33,7 @@ public class PlayerWalkState : PlayerMovedState
         base.Exit();
         audioManager.StopSFX();
         StopAnimation(stateMachine.Player.PlayerAnimationData.WalkParameterHash);
-        Debug.Log("Has salido del estado de CAMINAR.");
+        // Debug.Log("Has salido del estado de CAMINAR.");
     }
     #endregion
 

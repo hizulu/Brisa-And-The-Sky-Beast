@@ -17,7 +17,7 @@ public class EnemyPatrolPointToPoint : EnemyStateSOBase
 {
     #region Variables
     [SerializeField] private float PointToPointMovementSpeed = 1f;
-    [SerializeField] private float playerDetectionRange = 20f;
+    // [SerializeField] private float playerDetectionRange = 20f;
     [SerializeField] private float randomIdle = 0.3f;
 
     private List<Transform> patrolPoints = new List<Transform>(); // Lista para guardar los puntos a los que deben ir los enemigos (el recorrido de patrulla).

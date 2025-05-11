@@ -33,7 +33,7 @@ public class SunController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(sun.transform.rotation.eulerAngles);
+        // Debug.Log(sun.transform.rotation.eulerAngles);
         currentTime = DateTime.Now.Date + TimeSpan.FromHours(startHour);
         sunriseTime = TimeSpan.FromHours(sunriseHour);
         sunsetTime = TimeSpan.FromHours(sunsetHour);

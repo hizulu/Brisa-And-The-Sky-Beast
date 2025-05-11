@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip walk;
     public AudioClip run;
 
-    private bool isLoopPlaying = false;
+    // private bool isLoopPlaying = false;
     [SerializeField] private float overlapTime = 0.01f; // Tiempo de solapamiento (1 milisegundo)
 
     public static AudioManager Instance
@@ -54,7 +54,7 @@ public class AudioManager : MonoBehaviour
             SFXSource.clip = clip;
             SFXSource.loop = false;
             SFXSource.Play();
-            Debug.Log("Reproduciendo SFX: " + clip);
+            // Debug.Log("Reproduciendo SFX: " + clip);
         }
     }
 
