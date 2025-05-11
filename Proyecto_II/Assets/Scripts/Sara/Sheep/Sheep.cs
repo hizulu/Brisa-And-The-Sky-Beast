@@ -17,9 +17,13 @@ public class Sheep : MonoBehaviour
 
     public Rigidbody RbSheep { get; private set; }
     public Animator AnimSheep {  get; private set; }
+
+    [SerializeField] public Transform PlayerTransform;
     #endregion
 
+    [field: Header("Gizmos")]
     [SerializeField] private float sheepRange = 2f;
+    [SerializeField] private float whistleRange = 15f;
 
     private void Awake()
     {
@@ -67,5 +71,7 @@ public class Sheep : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, sheepRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, whistleRange);
     }
 }

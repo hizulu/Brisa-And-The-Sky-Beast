@@ -17,6 +17,7 @@ public class SheepStateMachine : StateMachine
     public SheepIdleState SheepIdleState { get; }
     public SheepWalkState SheepWalkState { get; }
     public SheepGrazeState SheepGrazeState { get; }
+    public SheepJumpState SheepJumpState { get; }
 
     public SheepStateMachine(Sheep _sheep)
     {
@@ -25,5 +26,6 @@ public class SheepStateMachine : StateMachine
         SheepIdleState = new SheepIdleState(this);
         SheepWalkState = new SheepWalkState(this);
         SheepGrazeState = new SheepGrazeState(this);
+        SheepJumpState = new SheepJumpState(this);
     }
 }

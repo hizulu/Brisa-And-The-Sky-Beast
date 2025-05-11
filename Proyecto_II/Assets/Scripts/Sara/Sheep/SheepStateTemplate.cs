@@ -22,17 +22,63 @@ public abstract class SheepStateTemplate : IState
         sheepStateMachine = _sheepStateMachine;
     }
 
-    public virtual void Enter() { }
+    #region Métodos Base de la Máquina de Estados
+    public virtual void Enter()
+    {
+        EventsManager.CallNormalEvents("CallBeast", ListenPlayerWhistle);
+    }
 
-    public virtual void Exit() { }
+    public virtual void Exit()
+    {
+        EventsManager.StopCallNormalEvents("CallBeast", ListenPlayerWhistle);
+    }
 
     public virtual void HandleInput() { }
+
+    public virtual void UpdateLogic()
+    {
+        DetectPlayer();
+    }
+
+    public virtual void UpdatePhysics() { }
 
     public virtual void OnTriggerEnter(Collider collider) { }
 
     public virtual void OnTriggerExit(Collider collider) { }
+    #endregion
 
-    public virtual void UpdateLogic() { }
+    #region Métodos Propios Compartidos Todos Estados
+    /// <summary>
+    /// Método que comprueba si dentro de un rango está Player.
+    /// </summary>
+    /// <returns>Si detecta a Player, devuelve True, si no, devuelve False.</returns>
+    protected bool DetectPlayer()
+    {
+        float detectionRadius = 15f;
+        Collider[] colliders = Physics.OverlapSphere(sheepStateMachine.Sheep.transform.position, detectionRadius); // Radio para detectar si el collider de Player está dentro.
 
-    public virtual void UpdatePhysics() { }
+        foreach (Collider playerCollider in colliders)
+        {
+            if (playerCollider.CompareTag("Player"))
+            {
+                Debug.Log("Player detectado por las ovejas.");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Si el método de detecta a Player devuelve True, cambia al estado de saltar.
+    /// </summary>
+    private void ListenPlayerWhistle()
+    {
+        if (DetectPlayer())
+        {
+            Debug.Log("Escuchando a Player");
+            sheepStateMachine.ChangeState(sheepStateMachine.SheepJumpState);
+        }
+    }
+    #endregion
 }
