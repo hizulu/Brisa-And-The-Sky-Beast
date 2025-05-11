@@ -86,6 +86,8 @@ public class GraphicsSettings : MonoBehaviour
             {
                 if (graphic == null) continue;
 
+                if (graphic is RawImage) continue;
+
                 // Manejar elementos UI estándar (Image, RawImage, etc.)
                 if (!(graphic is TMP_Text) && !originalGraphicMaterials.ContainsKey(graphic))
                 {
