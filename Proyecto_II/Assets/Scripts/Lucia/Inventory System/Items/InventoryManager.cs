@@ -16,11 +16,12 @@ using UnityEngine.InputSystem;
  * 1.4 RemoveItem, UpdateItemQuantity, UpdateItemSlotVisibility OnValidate.
  * 1.5 Inventory Open and Close with i key.
  * 1.6 Logica para el desbloqueo de apariencias.
+ * 1.7 Guardado del estado del inventario.
  */
-
 public class InventoryManager : MonoBehaviour
 {
     #region Variables
+    public ItemDatabase itemDatabase;
     [Header("Paneles")]
     public GameObject inventoryMenu;
     public bool inventoryEnabled = false;
@@ -50,6 +51,7 @@ public class InventoryManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            allItems = itemDatabase.items;
         }
         else
         {
@@ -57,6 +59,15 @@ public class InventoryManager : MonoBehaviour
         }
     }
     #endregion
+
+    private void Start()
+    {
+        if (SaveManager.pendingInventoryLoad != null)
+        {
+            LoadInventory(SaveManager.pendingInventoryLoad);
+            SaveManager.pendingInventoryLoad = null;
+        }
+    }
 
     //Solo para pruebas
     // Método llamado cuando un valor cambia en el Inspector
@@ -279,4 +290,60 @@ public class InventoryManager : MonoBehaviour
             slot.DeselectItem(); // Desactiva la selección de cada slot
         }
     }
+
+    public List<ItemData> allItems;
+
+    #region Saving & Loading
+    public List<InventoryState> SaveInventory()
+    {
+        List<InventoryState> inventoryStateList = new();
+        foreach (var pair in inventory)
+        {
+            inventoryStateList.Add(new InventoryState
+            {
+                itemID = pair.Key.itemID,
+                amount = pair.Value
+            });
+        }
+        return inventoryStateList;
+    }
+
+    // Restaura el inventario desde una lista de InventoryState
+    public void LoadInventory(List<InventoryState> savedInventory)
+    {
+        inventory.Clear();
+        foreach (var state in savedInventory)
+        {
+            ItemData item = allItems.Find(i => i.itemID == state.itemID);
+            if (item != null)
+            {
+                inventory[item] = state.amount;
+            }
+            else
+            {
+                Debug.LogWarning($"Item with ID {state.itemID} not found in allItems.");
+            }
+        }
+
+        RefreshInventoryUI();
+        Debug.Log($"Finished loading data in inventory: {gameObject.name}");
+    }
+
+    private void RefreshInventoryUI()
+    {
+        // Limpiar slots visuales existentes
+        foreach (ItemSlot slot in itemSlots)
+        {
+            Destroy(slot.gameObject);
+        }
+        itemSlots.Clear();
+
+        // Crear nuevos slots según el contenido del inventario cargado
+        foreach (var pair in inventory)
+        {
+            AssignOrCreateItemSlot(pair.Key, pair.Value);
+        }
+    }
+
+    #endregion
 }

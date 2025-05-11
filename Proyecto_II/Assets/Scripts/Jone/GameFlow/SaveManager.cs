@@ -39,10 +39,8 @@ public struct ItemState
 [System.Serializable]
 public struct InventoryState
 {
-    public int itemID;
-    public bool itemInInventory;
-    public string itemName;
-    public Sprite itemSprite;
+    public string itemID;
+    public int amount;
 }
 [System.Serializable]
 public struct EnemyState
@@ -75,6 +73,8 @@ public class SaveManager : MonoBehaviour
     public static SaveManager Instance;
 
     private SceneState savedSceneState;
+
+    public static List<InventoryState> pendingInventoryLoad;
 
     // Singleton
     void Awake()
@@ -115,18 +115,20 @@ public class SaveManager : MonoBehaviour
         Debug.Log($"Player health saved: {sceneState.playerState.playerHealth}");
         #endregion
 
-        #region Saving Checkpoint
-        sceneState.checkpoints.Clear();
-        foreach (GameObject cp in Checkpoint.CheckPointsList)
-        {
-            Checkpoint checkpoint = cp.GetComponent<Checkpoint>();
-            sceneState.checkpoints.Add(new CheckpointState
-            {
-                position = cp.transform.position,
-                isActive = checkpoint.Activated
-            });
-        }
-        #endregion
+        //#region Saving Checkpoint
+        //sceneState.checkpoints.Clear();
+        //foreach (GameObject cp in Checkpoint.CheckPointsList)
+        //{
+        //    Checkpoint checkpoint = cp.GetComponent<Checkpoint>();
+        //    sceneState.checkpoints.Add(new CheckpointState
+        //    {
+        //        position = cp.transform.position,
+        //        isActive = checkpoint.Activated
+        //    });
+        //}
+        //#endregion
+
+        sceneState.inventoryState = InventoryManager.Instance.SaveInventory();
 
         // Saving in a JSON
         string sceneStateJson = JsonUtility.ToJson(sceneState);
@@ -151,14 +153,28 @@ public class SaveManager : MonoBehaviour
             }
             #endregion
 
-            #region Loading Checkpoints
-            for (int i = 0; i < savedSceneState.checkpoints.Count; i++)
-            {
-                Checkpoint checkpoint = Checkpoint.CheckPointsList[i].GetComponent<Checkpoint>();
-                checkpoint.Activated = savedSceneState.checkpoints[i].isActive;
-                checkpoint.GetComponent<MeshRenderer>().material = checkpoint.Activated ? checkpoint.green : checkpoint.magenta;
-            }
-            #endregion
+            //#region Loading Checkpoints
+            //for (int i = 0; i < savedSceneState.checkpoints.Count; i++)
+            //{
+            //    Checkpoint checkpoint = Checkpoint.CheckPointsList[i].GetComponent<Checkpoint>();
+            //    checkpoint.Activated = savedSceneState.checkpoints[i].isActive;
+            //    checkpoint.GetComponent<MeshRenderer>().material = checkpoint.Activated ? checkpoint.green : checkpoint.magenta;
+            //}
+            //#endregion
+
+            //InventoryManager.Instance.LoadInventory(savedSceneState.inventoryState);
+        }
+    }
+
+    public void LoadInventoryState()
+    {
+        Debug.Log("Loading inventory");
+        if (PlayerPrefs.HasKey("SavedSceneState"))
+        {
+            string sceneStateJson = PlayerPrefs.GetString("SavedSceneState");
+            savedSceneState = JsonUtility.FromJson<SceneState>(sceneStateJson);
+
+            pendingInventoryLoad = savedSceneState.inventoryState;
         }
     }
 

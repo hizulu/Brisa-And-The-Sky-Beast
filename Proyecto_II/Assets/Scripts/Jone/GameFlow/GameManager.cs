@@ -124,10 +124,12 @@ public class GameManager : MonoBehaviour
 
     public void LoadNextScene()
     {
+        saveManager.SaveSceneState();
         EventsManager.CleanAllEvents();
         Debug.Log(SceneManager.GetActiveScene().buildIndex);
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(nextSceneIndex);
+        saveManager.LoadInventoryState();
     }
     public void BackToMainMenu()
     {
