@@ -25031,7 +25031,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 675094807}
-  - {fileID: 1807319039}
   - {fileID: 1333248236}
   - {fileID: 410687751}
   - {fileID: 922291533}
@@ -43454,7 +43453,7 @@ GameObject:
   - component: {fileID: 1756723067}
   - component: {fileID: 1756723066}
   m_Layer: 5
-  m_Name: Inventory Canvas
+  m_Name: Inventory Canvas 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43495,6 +43494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0100c223c7d8d7e48916775e9125b91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemDatabase: {fileID: 11400000, guid: 4a4b75dddb158b948b4802fc1a8533f5, type: 2}
   inventoryMenu: {fileID: 130883441}
   inventoryEnabled: 0
   AppearanceChangeMenu: {fileID: 1493820061}
@@ -43509,6 +43509,7 @@ MonoBehaviour:
   itemSlotPrefab: {fileID: 397516671}
   inventoryPanel: {fileID: 194252064}
   appearanceData: []
+  allItems: []
 --- !u!114 &1756723067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44501,11 +44502,11 @@ Transform:
   m_GameObject: {fileID: 1807319038}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.71150357, y: -0.580992, z: -26.343302}
+  m_LocalPosition: {x: 0.64921194, y: 0.34821224, z: 0.6232052}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 963925348}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1807319040
 MonoBehaviour:
@@ -91533,6 +91534,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2073503220}
+  - {fileID: 1807319039}
   - {fileID: 963925348}
   - {fileID: 36852037}
   - {fileID: 804807494}
