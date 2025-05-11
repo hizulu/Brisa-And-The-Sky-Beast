@@ -2,17 +2,28 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Camera))] // Asegura que haya una cámara
+
+/* 
+ * NOMBRE CLASE: MapNavigation
+ * AUTOR: Lucía García López
+ * FECHA: 19/04/2025
+ * DESCRIPCIÓN: Script que gestiona la navegación del mapa. Permite arrastrar y hacer zoom en el mapa.
+ * VERSIÓN: 1.0 Sistema de navegación del mapa inicial.
+ * 1.1 La sensibilidad ajusta el valor de dragSpeed.
+ */
+
 public class MapNavigation : MonoBehaviour, IDragHandler, IScrollHandler
 {
+    #region Variables
     [SerializeField] private Camera mapCamera;
     [SerializeField] public float dragSpeed = 1f;
     [SerializeField] private float zoomSpeed = 5f;
     [SerializeField] private float minZoom = 20f;
     [SerializeField] private float maxZoom = 100f;
+    #endregion
 
     private void Awake()
     {
-        // Si no se asignó manualmente la cámara, usa la del mismo GameObject
         if (mapCamera == null)
         {
             mapCamera = GetComponent<Camera>();
@@ -23,6 +34,7 @@ public class MapNavigation : MonoBehaviour, IDragHandler, IScrollHandler
         }
     }
 
+    // Método para arrastrar el mapa
     public void OnDrag(PointerEventData eventData)
     {
         if (mapCamera == null) return;
@@ -31,6 +43,7 @@ public class MapNavigation : MonoBehaviour, IDragHandler, IScrollHandler
         mapCamera.transform.Translate(drag, Space.World);
     }
 
+    // Método para hacer zoom en el mapa
     public void OnScroll(PointerEventData eventData)
     {
         if (mapCamera == null || !mapCamera.orthographic) return;

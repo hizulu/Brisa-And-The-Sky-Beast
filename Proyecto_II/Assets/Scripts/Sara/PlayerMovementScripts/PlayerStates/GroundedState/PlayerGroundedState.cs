@@ -194,6 +194,7 @@ public class PlayerGroundedState : PlayerMovementState
             {
                 stateMachine.HealState.SetHealingBerry(healingBerry); // Pasamos el valor de curación del item específico que vayamos a comer.
                 stateMachine.ChangeState(stateMachine.HealState);
+                EventsManager.TriggerSpecialEvent<float>("PlayerHealth", statsData.CurrentHealth); // Llamamos al evento de curar.
             }
         }
     }

@@ -1,8 +1,20 @@
 using System.Collections;
 using UnityEngine;
 
+/*
+ * NOMBRE CLASE: MinimapChangeIcon
+ * AUTOR: Lucia García López
+ * FECHA: 19/04/2025
+ * DESCRIPCIÓN: Script que gestiona el cambio de icono en el minimapa entre Brisa y la Bestia. 
+ *              Si estan juntos, el icono de Brisa cambia a un icono diferente y el de la Bestia se desactiva
+ * VERSIÓN: 1.0 
+ * 1.1 Se añade la opción de cambiar el icono de Brisa a un icono diferente cuando está con la Bestia.
+ * 1.2 Se activa la barra de vida de la Bestia cuando está libre.
+ */
+
 public class MinimapChangeIcon : MonoBehaviour
 {
+    #region Variables
     [SerializeField] private GameObject brisaIcon;
     [SerializeField] private GameObject beastIcon;
     [SerializeField] private Sprite brisaIconSprite;
@@ -18,6 +30,7 @@ public class MinimapChangeIcon : MonoBehaviour
     private SpriteRenderer beastRenderer;
     private Coroutine transitionCoroutine;
     private bool isTogether = false;
+    #endregion
 
     private void Awake()
     {
@@ -51,6 +64,7 @@ public class MinimapChangeIcon : MonoBehaviour
         }
     }
 
+    //Método para cambiar el icono de Brisa al icono de la Bestia y viceversa.
     private IEnumerator TransitionIcons(bool together)
     {
         float elapsed = 0f;
@@ -72,6 +86,7 @@ public class MinimapChangeIcon : MonoBehaviour
         }
 
         // Midpoint
+        //Si estan juntos se cambia el icono a togetherIconSprite, si no se cambia a brisaIconSprite
         brisaRenderer.sprite = together ? togetherIconSprite : brisaIconSprite;
         beastIcon.SetActive(!together);
 
@@ -96,6 +111,7 @@ public class MinimapChangeIcon : MonoBehaviour
         }
     }
 
+    //Método para cambiar el alpha del icono
     private void SetAlpha(SpriteRenderer renderer, float alpha)
     {
         Color color = renderer.color;

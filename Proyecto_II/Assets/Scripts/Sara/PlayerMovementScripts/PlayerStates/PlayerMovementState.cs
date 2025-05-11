@@ -420,6 +420,7 @@ public class PlayerMovementState : IState
         if (stateMachine.CurrentState is PlayerHalfDeadState || stateMachine.Player.Shield.activeSelf) return;
 
         statsData.CurrentHealth -= _enemyDamage;
+        EventsManager.TriggerSpecialEvent<float>("PlayerHealth", statsData.CurrentHealth);
 
         if (statsData.CurrentHealth < Mathf.Epsilon)
             PlayerDead();

@@ -2,6 +2,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
+/*
+ * NOMBRE SCRIPT: HealthBar
+ * AUTOR: Lucía García López
+ * FECHA: 21/04/2025
+ * DESCRIPCIÓN: Script que gestiona la barra de salud de los personajes. Utiliza un Slider para mostrar la salud actual y un Gradient para el color de la barra.
+ *              Se puede seleccionar el tipo de entidad (Player, Beast, Enemy) para adaptar la barra a cada uno.
+ * VERSIÓN: 1.0. Solo para player.
+ * 1.1 . Se añade la lógica para Beast y Enemy.
+ */
+
 public class HealthBar : MonoBehaviour
 {
     public enum EntityType { Player, Beast, Enemy }
@@ -27,6 +37,7 @@ public class HealthBar : MonoBehaviour
 
     void Start()
     {
+        //Se hacen por separado porque cada uno tiene su propia lógica
         switch (entityType)
         {
             case EntityType.Player:
@@ -35,6 +46,7 @@ public class HealthBar : MonoBehaviour
                 {
                     playerStats = player.Data.StatsData;
                     InitializeHealthBar(playerStats.MaxHealth, playerStats.CurrentHealth);
+                    //EventsManager.CallSpecialEvents<float>("PlayerHealth", UpdateHealth);
                 }
                 break;
 
@@ -56,6 +68,11 @@ public class HealthBar : MonoBehaviour
                 break;
         }
     }
+
+    //private void OnDestroy()
+    //{
+    //    EventsManager.StopCallSpecialEvents<float>("PlayerHealth", UpdateHealth);
+    //}
 
     void Update()
     {
@@ -132,39 +149,26 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    public void SetHealth(float health)
-    {
-        if (healthBarSlider != null)
-        {
-            healthBarSlider.value = health;
-        }
-    }
-
     private IEnumerator Pulse()
     {
-        // Escalas para el efecto de latido
-        float bigPulse = 1.3f;    // Primer latido fuerte (PUM)
-        float smallPulse = 1.1f;   // Segundo latido suave (pum)
-        float restDuration = 0.3f;  // Pausa entre latidos
+        //Efecto latido para la barra cuando la vida es 0
+        float bigPulse = 1.3f;
+        float smallPulse = 1.1f;
+        float restDuration = 0.3f;
 
-        // Duración de cada fase del latido
-        float pulseInDuration = 0.1f;  // Tiempo para crecer
-        float pulseOutDuration = 0.2f; // Tiempo para volver a normal
+        float pulseInDuration = 0.1f;
+        float pulseOutDuration = 0.2f;
 
         while (true)
         {
-            // Primer latido fuerte (PUM)
             yield return ScaleTo(Vector3.one * bigPulse, pulseInDuration);
             yield return ScaleTo(Vector3.one, pulseOutDuration);
 
-            // Breve pausa entre latidos
             yield return new WaitForSeconds(0.05f);
 
-            // Segundo latido suave (pum)
             yield return ScaleTo(Vector3.one * smallPulse, pulseInDuration * 0.7f);
             yield return ScaleTo(Vector3.one, pulseOutDuration * 0.7f);
 
-            // Pausa completa antes de repetir
             yield return new WaitForSeconds(restDuration);
         }
     }

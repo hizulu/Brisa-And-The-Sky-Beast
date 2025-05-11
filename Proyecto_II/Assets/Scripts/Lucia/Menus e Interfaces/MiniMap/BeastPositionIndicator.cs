@@ -1,8 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * NOMBRE CLASE: BeastPositionIndicator
+ * AUTOR: Lucía García López
+ * FECHA: 20/04/2025
+ * DESCRIPCIÓN: Script que gestiona la posición del indicador de la bestia en el minimapa. 
+ *              Si la bestia está fuera del minimapa aparece un indicador de su posición que va desplazandose alrededor del mismo 
+ *              dependiendo de la posicion de la bestia.
+ * VERSIÓN: 1.0 Sistema de minimapa inicial.
+ * 1.1 Efecto de fade para el indicador de la bestia.
+ */
+
 public class BeastPositionIndicator : MonoBehaviour
 {
+    #region Variables
     [Header("Configuración")]
     [SerializeField] private float minimapRadius = 40f;
     [SerializeField] private float indicatorRadius = 100f;
@@ -16,10 +28,12 @@ public class BeastPositionIndicator : MonoBehaviour
     private Transform player;
     private BeastTrapped beastTrapped;
     private float targetAlpha = 0f;
+    #endregion
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        //Se tiene que revisar si la bestia está en estado de libertado o no
         beastTrapped = FindAnyObjectByType<BeastTrapped>();
 
         // Configuración inicial
@@ -49,6 +63,7 @@ public class BeastPositionIndicator : MonoBehaviour
         }
     }
 
+    //El indicador de posicion de la bestia gira entorno al minimapa indicando en que direccion esta la Bestia
     private void UpdatePosition(Vector3 direction)
     {
         Vector2 dir = new Vector2(direction.x, direction.z);

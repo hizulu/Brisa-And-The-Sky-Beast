@@ -14,9 +14,9 @@ public class CharacterAppearanceManager : MonoBehaviour
     [SerializeField] private Renderer characterRenderer;
 
     // Índices de materiales
-    private const int BODY_MATERIAL_INDEX = 0;
-    private const int EYES_MATERIAL_INDEX = 2;
-    private const int EYEBROWS_MATERIAL_INDEX = 3;
+    private const int bodyMaterialIndex = 0;
+    private const int eyesMaterialIndex = 2;
+    private const int eyebrowsMaterialIndex = 3;
 
     private AppearanceChangeData currentAppearance;
 
@@ -35,21 +35,21 @@ public class CharacterAppearanceManager : MonoBehaviour
         Material[] materials = characterRenderer.materials;
 
         // Cambiar textura del cuerpo
-        if (appearance.bodyBaseMap != null && materials.Length > BODY_MATERIAL_INDEX)
+        if (appearance.bodyBaseMap != null && materials.Length > bodyMaterialIndex)
         {
-            SetMaterialTexture(materials[BODY_MATERIAL_INDEX], "_BaseTex", appearance.bodyBaseMap);
+            SetMaterialTexture(materials[bodyMaterialIndex], "_BaseTex", appearance.bodyBaseMap);
         }
 
         // Cambiar textura de ojos
-        if (appearance.eyesBaseMap != null && materials.Length > EYES_MATERIAL_INDEX)
+        if (appearance.eyesBaseMap != null && materials.Length > eyesMaterialIndex)
         {
-            SetMaterialTexture(materials[EYES_MATERIAL_INDEX], "_BaseTex", appearance.eyesBaseMap);
+            SetMaterialTexture(materials[eyesMaterialIndex], "_BaseTex", appearance.eyesBaseMap);
         }
 
         // Cambiar textura de cejas
-        if (appearance.eyebrowsBaseMap != null && materials.Length > EYEBROWS_MATERIAL_INDEX)
+        if (appearance.eyebrowsBaseMap != null && materials.Length > eyebrowsMaterialIndex)
         {
-            SetMaterialTexture(materials[EYEBROWS_MATERIAL_INDEX], "_BaseTex", appearance.eyebrowsBaseMap);
+            SetMaterialTexture(materials[eyebrowsMaterialIndex], "_BaseTex", appearance.eyebrowsBaseMap);
         }
 
         // Aplicar los cambios
@@ -65,26 +65,6 @@ public class CharacterAppearanceManager : MonoBehaviour
         else
         {
             Debug.LogWarning($"Material {material.name} no tiene la propiedad {propertyName} o es nulo");
-        }
-    }
-
-    public void RefreshAppearance()
-    {
-        if (currentAppearance != null)
-        {
-            ApplyAppearance(currentAppearance);
-        }
-    }
-
-    // Método para debug
-    public void LogMaterialInfo()
-    {
-        if (characterRenderer == null) return;
-
-        Material[] materials = characterRenderer.materials;
-        for (int i = 0; i < materials.Length; i++)
-        {
-            Debug.Log($"Material {i}: {materials[i].name} | Shader: {materials[i].shader.name} | Has _BaseTex: {materials[i].HasProperty("_BaseTex")}");
         }
     }
 }

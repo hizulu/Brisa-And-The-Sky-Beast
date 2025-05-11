@@ -1,6 +1,14 @@
 using TMPro;
 using UnityEngine;
 
+/* NOMBRE CLASE: AudioSettings
+ * AUTOR: Lucía García López
+ * FECHA: 23/04/2025
+ * DESCRIPCIÓN: Script que gestiona los ajustes de audio del juego. Se puede modificar el volumen general, de música y de efectos de sonido.
+ * VERSIÓN: 1.0
+ * 1.1 Inicialmente se había pensado en añadir un AudioSource para diálogos, pero se ha decidido no implementarlo por el momento.
+ */
+
 public class AudioSettings : MonoBehaviour
 {
     [Range(0f, 1f)] public float generalVolume = 1f;

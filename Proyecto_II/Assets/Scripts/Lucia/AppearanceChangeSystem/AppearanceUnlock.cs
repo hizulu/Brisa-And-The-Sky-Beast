@@ -1,10 +1,20 @@
 using TMPro;
 using UnityEngine;
 
+/* NOMBRE CLASE: Appearance Unlock
+ * AUTOR: Lucía García López
+ * FECHA: 04/05/2025
+ * DESCRIPCIÓN: Script que se encarga de gestionar el desbloqueo de apariencias.
+ * VERSIÓN: 1.0 Sistema de desbloqueo de apariencias.
+ * 1.1 Se añadió la llamada a la notificación de apariencia.
+ */
+
 public class AppearanceUnlock : MonoBehaviour
 {
     [Header("Configuration")]
     [SerializeField] private bool debugLogs = true;
+    public bool canUnlock;
+    public bool canShowNotification=false;
 
     #region Singleton
     public static AppearanceUnlock Instance { get; private set; }
@@ -36,7 +46,7 @@ public class AppearanceUnlock : MonoBehaviour
         }
         
         // Verificar requisitos
-        bool canUnlock = CheckUnlockRequirements(appearanceData);
+        canUnlock = CheckUnlockRequirements(appearanceData);
         //Debug.Log("Bandera 3");
 
         if (canUnlock)
@@ -51,9 +61,11 @@ public class AppearanceUnlock : MonoBehaviour
             //Debug.Log("Bandera 6");
             AppearanceUIManager.Instance?.UpdateAppearanceUI(appearanceData); // Actualizar UI de apariencia
             //Debug.Log("Bandera 7");
+            canShowNotification = true; // Actualizar bandera de desbloqueo
+            NotificationManager.Instance?.ShowAppearanceNotification(); // Mostrar notificación
             return true;
         }
-
+        canShowNotification = false; // No se puede desbloquear
         //Debug.Log("Bandera 8");
         return false;
     }

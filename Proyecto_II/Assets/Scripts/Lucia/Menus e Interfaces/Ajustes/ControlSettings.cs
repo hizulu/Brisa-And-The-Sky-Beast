@@ -3,8 +3,16 @@ using UnityEngine.UI;
 using TMPro;
 using Cinemachine;
 
+/* NOMBRE CLASE: ControlSettings
+ * AUTOR: Lucía García López
+ * FECHA: 23/04/2025
+ * DESCRIPCIÓN: Script que gestiona los ajustes de control del juego. Permite modificar la sensibilidad del ratón y la velocidad de arrastre del mapa.
+ * VERSIÓN: 1.0
+ */
+
 public class ControlSettings : MonoBehaviour
 {
+    #region Variables
     [Header("Sensibilidad del ratón")]
     [SerializeField] private Slider mouseSensitivitySlider;
     [SerializeField] private float minSensitivity = 0.1f;
@@ -21,10 +29,10 @@ public class ControlSettings : MonoBehaviour
 
     private float currentSensitivity;
     private float baseDragSpeed; // Para almacenar el valor original
+    #endregion
 
     private void Awake()
     {
-        // Validación de referencias
         if (playerCam != null)
         {
             cinemachinePOV = playerCam.GetCinemachineComponent<CinemachinePOV>();

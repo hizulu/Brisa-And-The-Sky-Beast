@@ -15,6 +15,7 @@ using UnityEngine.InputSystem;
  * 1.3 CheckForItem.
  * 1.4 RemoveItem, UpdateItemQuantity, UpdateItemSlotVisibility OnValidate.
  * 1.5 Inventory Open and Close with i key.
+ * 1.6 Logica para el desbloqueo de apariencias.
  */
 
 public class InventoryManager : MonoBehaviour
