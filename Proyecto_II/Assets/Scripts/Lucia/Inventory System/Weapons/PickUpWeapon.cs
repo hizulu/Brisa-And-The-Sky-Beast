@@ -65,6 +65,7 @@ public class PickUpWeapons : MonoBehaviour
             {
                 weaponSlot.SetWeapon(weaponScript.weaponData); // Actualiza el slot con el nuevo arma
                 Debug.Log("Reemplazando el arma antigua con la nueva");
+                
             }
             else
             {
@@ -74,6 +75,9 @@ public class PickUpWeapons : MonoBehaviour
 
             if (weaponScript.weaponData.weaponName == "Palo")
                 player.PaloRecogido();
+
+            if (weaponScript.weaponData.weaponName == "Baculo")
+                EventsManager.TriggerNormalEvent("PickUpSceptre");
 
             Debug.Log("Palo collected");
         }

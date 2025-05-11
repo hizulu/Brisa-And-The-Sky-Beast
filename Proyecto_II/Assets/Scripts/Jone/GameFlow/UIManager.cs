@@ -46,6 +46,12 @@ public class UIManager : MonoBehaviour
             return true;
         }
 
+        if (CinematicsManager.CineReproduciendo)
+        {
+            CinematicsManager.Instance.TogglePauseResume();
+            return true;
+        }
+
         if (mapPanel.activeInHierarchy)
         {
             MapManager mapManager = mapPanel.GetComponent<MapManager>();
