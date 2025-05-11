@@ -41,10 +41,22 @@ public class TutorialTrigger : MonoBehaviour
         if (canceled)
             return;
 
-        if (triggered) return;
-
         if (other.CompareTag("Player"))
         {
+            if (currentIndex >= tutorials.Count)
+            {
+                Debug.Log("Todos los tutoriales de esta lista han sido completados");
+                return;
+            }
+
+            if (tutorials[currentIndex].persistentWhileInsideTrigger)
+            {
+                DisplayTutorial(tutorials[currentIndex]);
+                return;
+            }
+
+            if (triggered) return;
+
             triggered = true;
 
             if (tutorials.Count == 0)
@@ -54,6 +66,24 @@ public class TutorialTrigger : MonoBehaviour
             }
 
             ShowNextMessage();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (canceled || other.CompareTag("Player") == false)
+            return;
+
+        if (tutorials.Count > currentIndex && tutorials[currentIndex].persistentWhileInsideTrigger)
+        {
+            if (currentMessage != null)
+            {
+                TutorialManager.Instance.RemoveMessage(currentMessage);
+                StartCoroutine(TutorialManager.Instance.FadeOutAndDestroy(currentMessage));
+                currentMessage = null;
+            }
+
+            triggered = false;
         }
     }
 

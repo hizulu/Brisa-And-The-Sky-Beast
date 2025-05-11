@@ -8865,6 +8865,7 @@ MonoBehaviour:
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!1 &328031297
 GameObject:
   m_ObjectHideFlags: 0
@@ -11985,6 +11986,7 @@ MonoBehaviour:
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!1001 &427520779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14800,11 +14802,13 @@ MonoBehaviour:
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: UIPanel/Inventory
     tutorialText: Presiona I para abrir el inventario
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!65 &521517685
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27258,6 +27262,7 @@ MonoBehaviour:
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!1 &1084992322
 GameObject:
   m_ObjectHideFlags: 0
@@ -30056,16 +30061,19 @@ MonoBehaviour:
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: Player/Shield
     tutorialText: Presiona F para protegerte
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: Player/LockTarget
     tutorialText: Presiona ClickCentral para fijar el objetivo
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!65 &1223499266
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32557,28 +32565,33 @@ MonoBehaviour:
     triggeredByAction: 1
     activationEventName: BeastFreed
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: UIPanel/BeastPanel
     tutorialText: "Presiona TAB cuando la Bestia est\xE1 cerca para abir el men\xFA"
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: Player/PointedMode
     tutorialText: "Mant\xE9n ClickDer durante 2 segundos para dirigir a la Bestia"
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: Player/MoveBeast
     tutorialText: Presiona ClickIzq mientras mantienes ClickDer para dirigir a la
       Bestia
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: Player/ReviveBeast
     tutorialText: "Mant\xE9n ClickCentral durante 3 segundos estando cerca de Bestia
       para revivirla"
     triggeredByAction: 1
     activationEventName: ReviveBeast
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!1 &1333248235
 GameObject:
   m_ObjectHideFlags: 0
@@ -39240,6 +39253,7 @@ MonoBehaviour:
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!1 &1569019059
 GameObject:
   m_ObjectHideFlags: 0
@@ -43394,15 +43408,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorials:
   - inputActionName: Player/Sprint
-    tutorialText: Presiona ClickDerecho para hacer un sprint
+    tutorialText: Presiona ClickDerecho mientras andas para hacer un sprint
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: Player/Crouch
-    tutorialText: Presiona ControlIzq para agacharte
+    tutorialText: Presiona ControlIzq mientras andas para agacharte
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!65 &1756431645
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -48500,11 +48516,13 @@ MonoBehaviour:
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
   - inputActionName: Player/Run
-    tutorialText: Presiona ShiftIzq para correr
+    tutorialText: Presiona ShiftIzq mientras andas para correr
     triggeredByAction: 0
     activationEventName: 
     waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
 --- !u!65 &1921953882
 BoxCollider:
   m_ObjectHideFlags: 0

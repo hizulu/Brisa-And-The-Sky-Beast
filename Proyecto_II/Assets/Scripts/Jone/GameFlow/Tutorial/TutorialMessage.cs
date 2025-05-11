@@ -35,7 +35,7 @@ public class TutorialMessage : MonoBehaviour
 
         inputAction.Enable();
 
-        if(!waitForCompletion)
+        if (!waitForCompletion && !tutorial.persistentWhileInsideTrigger)
             StartCoroutine(WaitAndDeactivate());
     }
 
