@@ -16,7 +16,6 @@ public class LeavingTheHollowCinematic : MonoBehaviour
 
     private void OnLeaveTheHollow()
     {
-        Debug.Log("Should play cinematic 0");
         CinematicsManager.Instance.PlayCinematic(1);
     }
 }
