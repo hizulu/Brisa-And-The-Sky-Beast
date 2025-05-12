@@ -27,8 +27,6 @@ public class MapManager : MonoBehaviour
             Debug.LogError("mapPanel no asignado en el Inspector!");
             return;
         }
-        mapPanel.SetActive(false);
-
     }
 
     //Se activa el panel del mapa al presionar la tecla "M" y se desactiva al volver a presionarla.

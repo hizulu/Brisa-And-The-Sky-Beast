@@ -46,7 +46,13 @@ public class TutorialManager : MonoBehaviour
     {
         yield return StartCoroutine(FadeCanvasGroup(msg.CanvasGroup, 1f, 0f, 0.4f, 0.2f));
 
+        yield return null;
+
+        if (msg == null)
+            yield break;    
+            
         Destroy(msg.gameObject);
+
         yield return null;
     }
 
@@ -55,16 +61,20 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         
         float t = 0f;
-        group.alpha = from;
+
+        if (group != null)
+            group.alpha = from;
 
         while (t < duration)
         {
+            if (group == null) yield break;
             group.alpha = Mathf.Lerp(from, to, t / duration);
             t += Time.deltaTime;
             yield return null;
         }
 
-        group.alpha = to;
+        if (group != null)
+            group.alpha = to;
     }
 
     public void DeactivateTutorials()
