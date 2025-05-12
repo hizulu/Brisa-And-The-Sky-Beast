@@ -67,7 +67,8 @@ public class PlayerHalfDeadState : PlayerDeathState
     {
         // Debug.Log("Estás medio - muerta");
         statsData.CurrentTimeHalfDead -= Time.deltaTime;
-        HalfDeadScreen.Instance.ShowHalfDeadScreenBrisa(statsData.CurrentTimeHalfDead, statsData.MaxTimeHalfDead);
+        if(beastTrapped.beasIsFree)
+            HalfDeadScreen.Instance.ShowHalfDeadScreenBrisa(statsData.CurrentTimeHalfDead, statsData.MaxTimeHalfDead);
 
         if (statsData.CurrentTimeHalfDead <= 0 || !beastTrapped.beasIsFree)
             stateMachine.ChangeState(stateMachine.FinalDeadState);

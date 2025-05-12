@@ -179,20 +179,31 @@ public class GameManager : MonoBehaviour
 
     public void Victory()
     {
-        ChangeGameState(GameState.Victory);
-        EventsManager.TriggerNormalEvent("UIPanelOpened");
-        Time.timeScale = 0f;
-        uiManager.OpenVictoryMenu();
+        StartCoroutine(VictoryScreen());
     }
 
     public void GameOver()
     {
-        ChangeGameState(GameState.GameOver);
-        EventsManager.TriggerNormalEvent("UIPanelOpened");
-        Time.timeScale = 0f;
-        uiManager.OpenGameOverMenu();
+        Debug.Log("Game over called");
+        StartCoroutine(GameOverScreen());
     }
 
+    private IEnumerator VictoryScreen()
+    {
+        yield return new WaitForSeconds(1f);
+        ChangeGameState(GameState.Victory);
+        EventsManager.TriggerNormalEvent("UIPanelOpened");
+        uiManager.OpenVictoryMenu();
+    }
+    
+    private IEnumerator GameOverScreen()
+    {
+        yield return new WaitForSeconds(3f);
+        ChangeGameState(GameState.GameOver);
+        EventsManager.TriggerNormalEvent("UIPanelOpened");
+        uiManager.OpenGameOverMenu();
+        Debug.Log("Finished game over");
+    }
     #endregion
 
     #region Player Settings
