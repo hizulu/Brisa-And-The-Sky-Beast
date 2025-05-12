@@ -64,7 +64,6 @@ public class PlayerAirborneState : PlayerMovementState
 
     #region Métodos para Sobrescribir de Airborne
     protected virtual void Jump() { }
-    protected override void ContactWithGround(Collider collider) { }
     #endregion
 
     #region Métodos Propios AirborneState

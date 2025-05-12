@@ -44,6 +44,12 @@ public class PlayerGroundedState : PlayerMovementState
 
     public override void UpdateLogic()
     {
+        if (!IsGrounded())
+        {
+            stateMachine.ChangeState(stateMachine.FallState);
+            return;
+        }
+
         base.UpdateLogic();
         ChangeToPointedState();
     }
@@ -225,20 +231,6 @@ public class PlayerGroundedState : PlayerMovementState
         if (stateMachine.CurrentState is PlayerIdleState || stateMachine.CurrentState is PlayerRideBeastState) return;
 
         stateMachine.ChangeState(stateMachine.SprintState);
-    }
-    #endregion
-
-    #region Métodos Comprobar Si Player Toca Suelo
-    /// <summary>
-    /// Método que comprueba si ya no está en el suelo, si es así, cambia el estado a caída.
-    /// Se llama cuando el jugador pierde contacto con el suelo. 
-    /// </summary>
-    /// <param name="collider">El collider que ha perdido el contacto con el suelo</param>
-    protected override void NoContactWithGround(Collider collider)
-    {
-        if (stateMachine.CurrentState is PlayerRideBeastState) return;
-
-        stateMachine.ChangeState(stateMachine.FallState);
     }
     #endregion
 

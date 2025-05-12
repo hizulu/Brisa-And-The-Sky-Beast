@@ -111,25 +111,15 @@ public class PlayerMovementState : IState
 
     /// <summary>
     /// Método que recibe la entrada de colisiones de triggers del mundo.
-    /// Comprueba si el jugador ha entrado en contacto con el suelo.
     /// </summary>
     /// <param name="collider">El collider con el que choca el Player.</param>
-    public virtual void OnTriggerEnter(Collider collider)
-    {
-        if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
-            ContactWithGround(collider);
-    }
+    public virtual void OnTriggerEnter(Collider collider) {}
 
     /// <summary>
     /// Método que recibe la salida de colisiones de triggers del mundo.
-    /// Comprueba si el jugador ha dejado de estar en contacto con el suelo.
     /// </summary>
     /// <param name="collider">El collider del que sale el Player.</param>
-    public virtual void OnTriggerExit(Collider collider)
-    {
-        if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
-            NoContactWithGround(collider);
-    }
+    public virtual void OnTriggerExit(Collider collider) { }
 
     /// <summary>
     /// Método de salida del estado de <c>PlayerMovementState</c>.
@@ -267,7 +257,7 @@ public class PlayerMovementState : IState
         Vector3 boxCenter = stateMachine.Player.GroundCheckCollider.transform.position;
         Vector3 boxHalfExtents = new Vector3(0.5f, 0.1f, 0.55f); // Tamaño de la caja.
         Quaternion boxOrientation = Quaternion.identity; // Mantener la rotación como la del GroundCheckCollider.
-        LayerMask groundMask = LayerMask.GetMask("Enviroment");
+        LayerMask groundMask = stateMachine.Player.LayerData.EnviromentLayer;
 
         bool isGrounded = Physics.CheckBox(boxCenter, boxHalfExtents, boxOrientation, groundMask, QueryTriggerInteraction.Ignore);
 
@@ -281,18 +271,6 @@ public class PlayerMovementState : IState
     /// Se crea en este estado sin lógica, se sobreescriben en otros estados que hereden de <c>PlayerMovementState</c>.
     /// </summary>
     protected virtual void OnMovementCanceled(InputAction.CallbackContext context) { }
-
-    /// <summary>
-    /// Método virtual que comprueba si Player está tocando el suelo.
-    /// Se crea en este estado sin lógica, se sobreescriben en otros estados que hereden de <c>PlayerMovementState</c>.
-    /// </summary>
-    protected virtual void ContactWithGround(Collider collider) { }
-
-    /// <summary>
-    /// Método virtual que comprueba si Player no está tocando el suelo.
-    /// Se crea en este estado sin lógica, se sobreescriben en otros estados que hereden de <c>PlayerMovementState</c>.
-    /// </summary>
-    protected virtual void NoContactWithGround(Collider collider) { }
 
     /// <summary>
     /// Método virtual que comprueba si una animación ha terminado o no.
