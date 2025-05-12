@@ -18,7 +18,7 @@ public class BeastBrisaHalfDeadState : BeastState
     }
     public override void OnUpdate(Beast beast)
     {
-        if (!isRevivingBrisa && Vector3.Distance(beast.agent.transform.position, beast.playerTransform.position) < 2.5f)
+        if (!isRevivingBrisa && Vector3.Distance(beast.agent.transform.position, beast.playerTransform.position) < 3f)
         {
             reviveCoroutine = beast.StartCoroutine(ReviveBrisa(beast));
         }
@@ -38,6 +38,7 @@ public class BeastBrisaHalfDeadState : BeastState
 
     private IEnumerator ReviveBrisa(Beast beast)
     {
+        beast.agent.ResetPath();
         isRevivingBrisa = true;
         beast.anim.SetBool("isWalking", false);
         beast.anim.SetTrigger("reviveBrisa");
