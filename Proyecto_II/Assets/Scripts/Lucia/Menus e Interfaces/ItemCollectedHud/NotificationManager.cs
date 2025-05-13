@@ -10,6 +10,7 @@ using UnityEngine;
  * VERSIÓN: 1.0 Sistema de notificaciones inicial.
  * 1.1 Efecto de desvanecimiento FadeIn y FadeOut añadido.
  * 1.2 Se ha añadido la opción de mostrar una notificación de apariencia.
+ * 1.3 Se hace bien el limite de notificaciones. La notificacion de apariencia aparece sola.
  */
 
 public class NotificationManager : MonoBehaviour
@@ -23,7 +24,9 @@ public class NotificationManager : MonoBehaviour
     [SerializeField] private float fadeOutDuration = 0.5f;
     [SerializeField] private int maxNotifications = 3;
 
-    private Queue<GameObject> activeNotifications = new Queue<GameObject>();
+    private Queue<IEnumerator> notificationQueue = new Queue<IEnumerator>();
+    private int currentNotifications = 0;
+    private const string notificationCompletedEvent = "OnNotificationComplete";
     #endregion
 
     #region Singleton
@@ -36,23 +39,70 @@ public class NotificationManager : MonoBehaviour
             return;
         }
         Instance = this;
+
+        // Suscribir al evento de notificación completada
+        EventsManager.CallNormalEvents(notificationCompletedEvent, ProcessNextNotification);
+    }
+
+    private void OnDestroy()
+    {
+        // Desuscribir eventos
+        EventsManager.StopCallNormalEvents(notificationCompletedEvent, ProcessNextNotification);
     }
     #endregion
 
-    //Muestra los objetos recogidos y su cantidad en la interfaz de usuario.
     public void ShowNotification(ItemData itemData, int quantity)
     {
-        StartCoroutine(SpawnNotification(itemData, quantity));
+        notificationQueue.Enqueue(SpawnNotificationCoroutine(itemData, quantity));
+        TryProcessQueue();
     }
 
-    // Método que se encarga de crear la notificación y gestionar su aparición y desaparición.
-    private IEnumerator SpawnNotification(ItemData itemData, int quantity)
+    public void ShowAppearanceNotification()
     {
-        while (activeNotifications.Count >= maxNotifications)
+        if (AppearanceUnlock.Instance.canUnlock && AppearanceUnlock.Instance.canShowNotification)
         {
-            yield return null;
-        }
+            // Crear cola temporal para priorizar la notificación de apariencia
+            var tempQueue = new Queue<IEnumerator>();
+            tempQueue.Enqueue(SpawnAppearanceNotificationCoroutine());
 
+            while (notificationQueue.Count > 0)
+            {
+                tempQueue.Enqueue(notificationQueue.Dequeue());
+            }
+
+            notificationQueue = tempQueue;
+            TryProcessQueue();
+        }
+    }
+
+    private void ProcessNextNotification()
+    {
+        if (notificationQueue.Count > 0 && currentNotifications < maxNotifications)
+        {
+            StartCoroutine(ProcessNotificationCoroutine());
+        }
+    }
+
+    private void TryProcessQueue()
+    {
+        if (notificationQueue.Count > 0 && currentNotifications < maxNotifications)
+        {
+            StartCoroutine(ProcessNotificationCoroutine());
+        }
+    }
+
+    private IEnumerator ProcessNotificationCoroutine()
+    {
+        currentNotifications++;
+        yield return StartCoroutine(notificationQueue.Dequeue());
+        currentNotifications--;
+
+        // Disparar evento de notificación completada
+        EventsManager.TriggerNormalEvent(notificationCompletedEvent);
+    }
+
+    private IEnumerator SpawnNotificationCoroutine(ItemData itemData, int quantity)
+    {
         GameObject newNotif = Instantiate(notificationPrefab, notificationParent);
         NotificationUI ui = newNotif.GetComponent<NotificationUI>();
         CanvasGroup canvasGroup = newNotif.GetComponent<CanvasGroup>();
@@ -60,80 +110,44 @@ public class NotificationManager : MonoBehaviour
         ui.Setup(itemData, quantity);
 
         // FadeIn
-        canvasGroup.alpha = 0f;
-        float timeElapsed = 0f;
-        while (timeElapsed < fadeInDuration)
-        {
-            canvasGroup.alpha = Mathf.Lerp(0f, 1f, timeElapsed / fadeInDuration);
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-        canvasGroup.alpha = 1f;
-
-        activeNotifications.Enqueue(newNotif);
+        yield return FadeCanvasGroup(canvasGroup, 0f, 1f, fadeInDuration);
 
         yield return new WaitForSeconds(displayDuration);
 
         // FadeOut
-        timeElapsed = 0f;
-        while (timeElapsed < fadeOutDuration)
-        {
-            canvasGroup.alpha = Mathf.Lerp(1f, 0f, timeElapsed / fadeOutDuration);
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-        canvasGroup.alpha = 0f;
+        yield return FadeCanvasGroup(canvasGroup, 1f, 0f, fadeOutDuration);
 
-        // Eliminar la notificación
         Destroy(newNotif);
-        activeNotifications.Dequeue();
-    }
-    // Método que se encarga de crear la notificación de aparición y gestionar su aparición y desaparición.
-    public void ShowAppearanceNotification()
-    {
-        if(AppearanceUnlock.Instance.canUnlock && AppearanceUnlock.Instance.canShowNotification)
-        {
-            StartCoroutine(SpawnAppearanceNotification());
-        }
-        else
-        {
-            Debug.Log("No se puede mostrar la notificación de aparición porque no está desbloqueada o ya se ha mostrado.");
-        }
     }
 
-    private IEnumerator SpawnAppearanceNotification()
+    private IEnumerator SpawnAppearanceNotificationCoroutine()
     {
-        while (activeNotifications.Count >= maxNotifications-1) // Se reduce el número máximo de notificaciones para que no se solapen
-        {
-            yield return null;
-        }
         GameObject newNotif = Instantiate(appearanceNotificationPrefab, notificationParent);
         AppearanceNotificationUI ui = newNotif.GetComponent<AppearanceNotificationUI>();
         CanvasGroup canvasGroup = newNotif.GetComponent<CanvasGroup>();
+
         ui.Setup();
+
         // FadeIn
-        canvasGroup.alpha = 0f;
-        float timeElapsed = 0f;
-        while (timeElapsed < fadeInDuration)
-        {
-            canvasGroup.alpha = Mathf.Lerp(0f, 1f, timeElapsed / fadeInDuration);
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-        canvasGroup.alpha = 1f;
-        activeNotifications.Enqueue(newNotif);
+        yield return FadeCanvasGroup(canvasGroup, 0f, 1f, fadeInDuration);
+
         yield return new WaitForSeconds(displayDuration);
+
         // FadeOut
-        timeElapsed = 0f;
-        while (timeElapsed < fadeOutDuration)
+        yield return FadeCanvasGroup(canvasGroup, 1f, 0f, fadeOutDuration);
+
+        Destroy(newNotif);
+    }
+
+    private IEnumerator FadeCanvasGroup(CanvasGroup group, float start, float end, float duration)
+    {
+        float timeElapsed = 0f;
+        while (timeElapsed < duration)
         {
-            canvasGroup.alpha = Mathf.Lerp(1f, 0f, timeElapsed / fadeOutDuration);
+            group.alpha = Mathf.Lerp(start, end, timeElapsed / duration);
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-        canvasGroup.alpha = 0f;
-        // Eliminar la notificación
-        Destroy(newNotif);
-        activeNotifications.Dequeue();
+        group.alpha = end;
     }
 }
