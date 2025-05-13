@@ -209,7 +209,7 @@ public class PlayerMovementState : IState
         movementDirection.Normalize();
 
         float movSpeed = GetMovementSpeed();
-        movementDirection.Normalize();
+        //movementDirection.Normalize();
         stateMachine.Player.RbPlayer.MovePosition(stateMachine.Player.RbPlayer.position + movementDirection * movSpeed * Time.deltaTime);
         Rotate(movementDirection);
     }
