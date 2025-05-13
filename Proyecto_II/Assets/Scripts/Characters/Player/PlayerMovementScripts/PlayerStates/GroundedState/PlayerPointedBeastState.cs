@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +15,12 @@ public class PlayerPointedBeastState : PlayerGroundedState
 {
     public PlayerPointedBeastState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
+    #region Variables Pooling ClickEffect
+    private ParticleSystem clickEffect;
+    private int poolingEffect = 10;
+    private List<ParticleSystem> clickEffectPool = new List<ParticleSystem>();
+    #endregion
+
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
@@ -27,6 +35,13 @@ public class PlayerPointedBeastState : PlayerGroundedState
 
         UnlockCursor();
         //Debug.Log("Has entrado en el estado de APUNTANDO");
+
+        for (int i = 0; i < poolingEffect; i++)
+        {
+            clickEffect = GameObject.Instantiate(groundedData.ClickEffect);
+            clickEffect.gameObject.SetActive(false);
+            clickEffectPool.Add(clickEffect);
+        }
     }
 
     public override void UpdateLogic()
@@ -100,12 +115,30 @@ public class PlayerPointedBeastState : PlayerGroundedState
     {
         Vector3 clickPosition = CursorPosition();
 
-        if (groundedData.ClickEffect != null)
+        GameObject effect = GetPooledEffect();
+        if (effect != null)
         {
-            GameObject.Instantiate(groundedData.ClickEffect, clickPosition + new Vector3(0, 0.1f, 0), groundedData.ClickEffect.transform.rotation);
-            EventsManager.TriggerSpecialEvent<Vector3>("BeastDirected", clickPosition); // EVENTO: Crear evento de mover a la Bestia.
-            //Debug.Log("Has hecho click en la posición: " + " " + clickPosition);
+            effect.transform.position = clickPosition + new Vector3(0, 0.1f, 0);
+            effect.SetActive(true);
+            stateMachine.Player.StartCoroutine(DeactivateClickEffect(effect));
+            EventsManager.TriggerSpecialEvent<Vector3>("BeastDirected", clickPosition);
         }
+    }
+
+    private GameObject GetPooledEffect()
+    {
+        foreach (ParticleSystem effect in clickEffectPool)
+        {
+            if (!effect.gameObject.activeInHierarchy)
+                return effect.gameObject;
+        }
+        return null;
+    }
+
+    private IEnumerator DeactivateClickEffect(GameObject effect)
+    {
+        yield return new WaitForSeconds(2f);
+        effect.SetActive(false);
     }
     #endregion
 
@@ -130,7 +163,7 @@ public class PlayerPointedBeastState : PlayerGroundedState
     /// </summary>
     private void CamExitSetting()
     {
-        stateMachine.Player.AreaMoveBeast.SetActive(false);        
+        stateMachine.Player.AreaMoveBeast.SetActive(false);
         stateMachine.Player.playerCam.m_Lens.FieldOfView = 60f;
         stateMachine.Player.CamComponents.m_HorizontalAxis.m_MaxSpeed = 300f;
         stateMachine.Player.CamComponents.m_VerticalAxis.m_MaxSpeed = 300f;

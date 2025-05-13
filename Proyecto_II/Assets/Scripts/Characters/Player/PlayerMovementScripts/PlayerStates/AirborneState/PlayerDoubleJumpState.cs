@@ -12,12 +12,18 @@ public class PlayerDoubleJumpState : PlayerAirborneState
 {
     public PlayerDoubleJumpState(PlayerStateMachine _stateMachine) : base(_stateMachine) { }
 
+    #region Variables
+    private ParticleSystem swirlEffect;
+    #endregion
+
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
         base.Enter();
         //Debug.Log("Has entrado en el estado de DOBLE-SALTO");
         StartAnimation(stateMachine.Player.PlayerAnimationData.DoubleJumpParameterHash);
+
+        stateMachine.Player.SwirlEffect.Play();
     }
 
     public override void HandleInput()

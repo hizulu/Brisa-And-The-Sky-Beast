@@ -24,6 +24,12 @@ public class PlayerWalkState : PlayerMovedState
 
     public override void UpdateLogic()
     {
+        //if (!IsGrounded())
+        //{
+        //    stateMachine.ChangeState(stateMachine.FallState);
+        //    return;
+        //}
+
         base.UpdateLogic();
         audioManager.PlaySFX(audioManager.walk);
     }
@@ -59,6 +65,8 @@ public class PlayerWalkState : PlayerMovedState
     /// <param name="context">Información del input asociado a la acción.</param>
     protected override void OnMovementCanceled(InputAction.CallbackContext context)
     {
+        if (!IsGrounded()) return;
+
         OnStop();
     }
     #endregion
