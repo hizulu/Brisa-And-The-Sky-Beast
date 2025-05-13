@@ -9,7 +9,7 @@ public class EnemyComboAttacksSOBase : ScriptableObject
     public virtual void Initialize(Enemy _enemy)
     {
         enemy = _enemy;
-        Debug.Log("Leyendo SOBase de Combo Attack");
+        // Debug.Log("Leyendo SOBase de Combo Attack");
     }
 
     public virtual void FrameLogic() { }
