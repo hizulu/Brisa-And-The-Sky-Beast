@@ -6,15 +6,10 @@ public class PlayerCallBeastState : PlayerInteractionState
 {
     public PlayerCallBeastState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
-    #region Variables
-    private bool callBeastFinish;
-    #endregion
-
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
         EventsManager.TriggerNormalEvent("CallBeast");
-        callBeastFinish = false;
         base.Enter();
         Debug.Log("Has entrado en el estado de LLAMAR A LA BESTIA");
         StartAnimation(stateMachine.Player.PlayerAnimationData.CallBeastParameterHash);
@@ -41,10 +36,7 @@ public class PlayerCallBeastState : PlayerInteractionState
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("CallBeast") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-            callBeastFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
-        }
     }
 
     protected override void ChangeFacePlayer()

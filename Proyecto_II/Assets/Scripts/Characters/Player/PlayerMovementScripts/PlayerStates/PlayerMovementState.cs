@@ -143,7 +143,7 @@ public class PlayerMovementState : IState
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled += OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled += OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed += CallBeast;
-        stateMachine.Player.PlayerInput.PlayerActions.LockTarget.performed += LockTarget;
+        //stateMachine.Player.PlayerInput.PlayerActions.LockTarget.performed += LockTarget;
         stateMachine.Player.PlayerInput.PlayerActions.Shield.started += OnDefendedStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Shield.canceled+= OnDefendedCanceled;
     }
@@ -157,7 +157,7 @@ public class PlayerMovementState : IState
         stateMachine.Player.PlayerInput.PlayerActions.Run.canceled -= OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled -= OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed -= CallBeast;
-        stateMachine.Player.PlayerInput.PlayerActions.LockTarget.performed -= LockTarget;
+        //stateMachine.Player.PlayerInput.PlayerActions.LockTarget.performed -= LockTarget;
         stateMachine.Player.PlayerInput.PlayerActions.Shield.started -= OnDefendedStarted;
         stateMachine.Player.PlayerInput.PlayerActions.Shield.canceled -= OnDefendedCanceled;
     }

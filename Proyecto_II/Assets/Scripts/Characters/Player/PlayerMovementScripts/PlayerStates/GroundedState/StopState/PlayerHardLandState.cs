@@ -16,7 +16,6 @@ public class PlayerHardLandState : PlayerStopState
     public PlayerHardLandState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
     #region Variables
-    private bool hardLandFinish;
     private float fallDamage = 15f;
     #endregion
 
@@ -24,7 +23,6 @@ public class PlayerHardLandState : PlayerStopState
     public override void Enter()
     {
         stateMachine.Player.PlayerInput.PlayerActions.Disable();
-        hardLandFinish = false;
         statsData.CurrentHealth -= fallDamage;
         base.Enter();
         //Debug.Log("Has entrado en estado de ATERRIZAR");
@@ -43,7 +41,6 @@ public class PlayerHardLandState : PlayerStopState
     public override void Exit()
     {
         stateMachine.Player.PlayerInput.PlayerActions.Enable();
-        hardLandFinish = false;
         base.Exit();
         //Debug.Log("Has salido del estado de ATERRIZAR");
         StopAnimation(stateMachine.Player.PlayerAnimationData.HardLandParameterHash);
@@ -57,10 +54,7 @@ public class PlayerHardLandState : PlayerStopState
     private void FinishLand()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("HardLand") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-            hardLandFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
-        }
     }
 
     /*
