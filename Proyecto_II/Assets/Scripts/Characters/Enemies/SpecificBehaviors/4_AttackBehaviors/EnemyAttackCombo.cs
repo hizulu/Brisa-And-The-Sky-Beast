@@ -24,7 +24,7 @@ public class EnemyAttackCombo : EnemyStateSOBase
         Debug.Log("El enemigo ha entrado en el estado de COMBO ATAQUE");
         base.DoEnterLogic();
         enemy.anim.SetBool("Attack", true);
-        comboAttacks[0].Initialize(enemy);
+        comboAttacks[0].Initialize(enemy, playerTransform, beastTransform);
         currentAttack = 0;
         isComboFinished = false;
         comboAttacks[currentAttack].EnemyAttack();
@@ -45,7 +45,7 @@ public class EnemyAttackCombo : EnemyStateSOBase
 
             if (currentAttack < comboAttacks.Length)
             {
-                comboAttacks[currentAttack].Initialize(enemy);
+                comboAttacks[currentAttack].Initialize(enemy, playerTransform, beastTransform);
                 comboAttacks[currentAttack].EnemyAttack();
             }
             else

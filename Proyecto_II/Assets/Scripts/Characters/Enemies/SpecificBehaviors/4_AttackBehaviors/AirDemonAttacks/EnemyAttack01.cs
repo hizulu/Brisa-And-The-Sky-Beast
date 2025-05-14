@@ -15,16 +15,17 @@ public class EnemyAttack01 : EnemyComboAttacksSOBase
     bool attack01 = false;
     [SerializeField] private float attackDamageModifierMin = 15f;
     [SerializeField] private float attackDamageModifierMax = 20f;
+    [SerializeField] private float distanceToHit = 3f;
     #endregion
 
     #region Sobreescriturta de métodos de EnemyComboAttacksSOBase
-    public override void Initialize(Enemy _enemy)
+    public override void Initialize(Enemy _enemy, Transform _playerTransform, Transform _beastTransform)
     {
-        base.Initialize(_enemy);
+        base.Initialize(_enemy, _playerTransform, _beastTransform);
         attack01 = false;
         enemy.anim.SetBool("isAttacking01", true);
         float randomAttackDamage01 = Random.Range(attackDamageModifierMin, attackDamageModifierMax);
-        AttackTarget(randomAttackDamage01); // Método definido en el SOBase
+        AttackTarget(randomAttackDamage01, distanceToHit); // Método definido en el SOBase
     }
 
     public override void Exit()
