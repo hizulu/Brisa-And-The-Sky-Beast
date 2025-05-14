@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /*
@@ -13,11 +11,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Attack-Combo", menuName = "Enemy Logic/Attack Logic/Combo")]
 public class EnemyAttackCombo : EnemyStateSOBase
 {
+    #region Variables
     [SerializeField] private EnemyComboAttacksSOBase[] comboAttacks;
 
     private int currentAttack = 0;
     private bool isComboFinished = false;
+    #endregion
 
+    #region  Sobreescriturta de métodos de EnemyStateSOBase
     public override void DoEnterLogic()
     {
         Debug.Log("El enemigo ha entrado en el estado de COMBO ATAQUE");
@@ -58,4 +59,5 @@ public class EnemyAttackCombo : EnemyStateSOBase
         enemy.anim.SetBool("Attack", false);
         Debug.Log("El enemigo ha salido del estado de COMBO ATAQUE");
     }
+    #endregion
 }

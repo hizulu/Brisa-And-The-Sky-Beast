@@ -9513,6 +9513,7 @@ MonoBehaviour:
   Baya: {fileID: 1782272205}
   beastTrapped: {fileID: 1555036607}
   RenderPlayer: {fileID: 5330089509027177363}
+  SwirlEffect: {fileID: 7423173325103082160, guid: 67c25d7a29b8a5c498136826debbf5d8, type: 3}
   playerTargetEnemiesRange: 20
 --- !u!54 &353271127
 Rigidbody:
@@ -20715,37 +20716,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 809843307}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f86896adbbaa5d44387d2e1e582565a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 3306721ec85ad964bb4faacc58d8f3ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sun: {fileID: 1912030908}
   sunriseHour: 7
-  sunsetHour: 20.5
-  timeMultiplier: 50
-  startHour: 7
-  dayAmbientLight: {r: 0.6039216, g: 0.6039216, b: 0.68235296, a: 0}
-  nightAmbientLight: {r: 0.15686275, g: 0.3137255, b: 0.39215687, a: 0}
+  sunsetHour: 23
+  timeMultiplier: 100
+  startHour: 8
+  dayAmbientLight: {r: 0.5566038, g: 0.52493423, b: 0.26517445, a: 0}
+  nightAmbientLight: {r: 0.27750564, g: 0.26593092, b: 0.6792453, a: 0}
   lightCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
-    - serializedVersion: 3
-      time: 0.091216296
-      value: 0.7667714
-      inSlope: 1.3231046
-      outSlope: 1.3231046
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 1
-      outWeight: 0.1406674
     - serializedVersion: 3
       time: 1
       value: 1
@@ -20759,7 +20751,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   maxSunIntensity: 1
-  maxMoonIntensity: 0.5
+  maxMoonIntensity: 0.1
 --- !u!4 &809843309
 Transform:
   m_ObjectHideFlags: 0

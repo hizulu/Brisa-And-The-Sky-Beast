@@ -67,7 +67,7 @@ public class AttackCombatTarget : Node, ICoroutineNode
         {
             if (targetTransform == null)
             {
-                Debug.LogWarning("Ha muerto slime mientrás le atacaba");
+                Debug.LogWarning("Ha muerto target mientrás bestia le atacaba");
                 _blackboard.ClearKey("targetForCombat");
                 yield break;
             }
