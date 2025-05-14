@@ -23,7 +23,7 @@ public class EnemyAttack01 : EnemyComboAttacksSOBase
     {
         base.Initialize(_enemy, _playerTransform, _beastTransform);
         attack01 = false;
-        enemy.anim.SetBool("isAttacking01", true);
+        enemy.anim.SetTrigger("Attack01");
         float randomAttackDamage01 = Random.Range(attackDamageModifierMin, attackDamageModifierMax);
         AttackTarget(randomAttackDamage01, distanceToHit); // Método definido en el SOBase
     }
@@ -32,7 +32,6 @@ public class EnemyAttack01 : EnemyComboAttacksSOBase
     {
         Debug.Log("Has salido del primer ataque-");
         base.Exit();
-        enemy.anim.SetBool("isAttacking01", false);
     }
 
     public override void FrameLogic()

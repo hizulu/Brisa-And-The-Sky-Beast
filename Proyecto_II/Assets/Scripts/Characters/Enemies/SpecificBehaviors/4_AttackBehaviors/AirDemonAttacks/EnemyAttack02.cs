@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /*
@@ -23,16 +24,16 @@ public class EnemyAttack02 : EnemyComboAttacksSOBase
     {
         base.Initialize(_enemy, _playerTransform, _beastTransform);
         attack02 = false;
-        enemy.anim.SetBool("isAttacking02", true);
+        enemy.anim.SetTrigger("Attack02");
         float randomAttackDamage02 = Random.Range(attackDamageModifierMin, attackDamageModifierMax);
         AttackTarget(randomAttackDamage02, distanceToHit);
+        enemy.StartCoroutine(WaitForAnimation());
     }
 
     public override void Exit()
     {
         Debug.Log("Has salido del segundo ataque-");
         base.Exit();
-        enemy.anim.SetBool("isAttacking02", false);
     }
 
     public override void FrameLogic()
@@ -46,8 +47,14 @@ public class EnemyAttack02 : EnemyComboAttacksSOBase
         if (enemy.anim.GetCurrentAnimatorStateInfo(0).IsName("Attack02") && enemy.anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             attack02 = true;
-            enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyRetreatState);
+            Debug.Log("Finished animation2");
         }
+    }
+
+    private IEnumerator WaitForAnimation()
+    {
+        yield return new WaitForSeconds(1.5f);
+        attack02 = true;
     }
 
     public override bool IsFinished()

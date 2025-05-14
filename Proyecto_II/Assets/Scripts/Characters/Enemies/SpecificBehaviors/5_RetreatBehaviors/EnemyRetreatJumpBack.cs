@@ -17,6 +17,8 @@ public class EnemyRetreatJumpBack : EnemyStateSOBase
     [SerializeField] private float jumpBackForce = 5f;
     [SerializeField] private float jumpUpForce = 3f;
     [SerializeField] private float targetChaseRange = 10f;
+    [SerializeField] private float jumpDuration = 0.8f; // Duración del salto
+    [SerializeField] private AnimationCurve jumpArc = AnimationCurve.EaseInOut(0, 0, 1, 1); // Para controlar la curva del salto
 
     private float targetChaseRangeSQR;
 
@@ -80,15 +82,42 @@ public class EnemyRetreatJumpBack : EnemyStateSOBase
     }
 
     /*
-     * Método que gestiona las físicas del salto hacia atrás.
+     * Gestión del salto hacia atrás.
      */
-    private void JumpBack()
+    public void JumpBack()
     {
         Vector3 directionAway = (enemy.transform.position - targetTransform.position).normalized;
-        Vector3 jumpForce = directionAway * jumpBackForce + Vector3.up * jumpUpForce;
+        Vector3 horizontalOffset = directionAway * jumpBackForce;
+        float verticalOffset = jumpUpForce;
 
-        enemy.enemyRb.velocity = Vector3.zero;
-        enemy.enemyRb.AddForce(jumpForce, ForceMode.VelocityChange);
+        Vector3 startPos = enemy.transform.position;
+        Vector3 endPos = startPos + horizontalOffset;
+
+        enemy.StartCoroutine(SimulateJumpArc(startPos, endPos, verticalOffset));
+    }
+
+    private IEnumerator SimulateJumpArc(Vector3 start, Vector3 end, float height)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < jumpDuration)
+        {
+            float t = elapsed / jumpDuration;
+            float arc = jumpArc.Evaluate(t); // Altura basada en la curva
+
+            Vector3 currentPos = Vector3.Lerp(start, end, t);
+            currentPos.y += arc * height;
+
+            enemy.transform.position = currentPos;
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Aseguramos que llega exactamente al final
+        Vector3 finalPos = end;
+        finalPos.y = start.y;
+        enemy.transform.position = finalPos;
     }
 
     /*
