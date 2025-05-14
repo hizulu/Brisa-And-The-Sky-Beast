@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,15 +35,14 @@ public class PlayerReviveBeastState : PlayerInteractionState
         if (currentTime < maxTimeToRevive)
         {
             ReviveBeast();
-            Debug.Log(currentTime);
+            //Debug.Log(currentTime);
         }
-        else
-            stateMachine.ChangeState(stateMachine.IdleState);
     }
 
     public override void Exit()
     {
         stateMachine.Player.PlayerInput.PlayerActions.ReviveBeast.canceled -= OnReviveCanceled;
+        currentTime = 0f;
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.ReviveBeastParameterHash);
         Debug.Log("Has salido del estado de REVIVIR A LA BESTIA");
@@ -50,18 +50,16 @@ public class PlayerReviveBeastState : PlayerInteractionState
 
     public void ReviveBeast()
     {
-        Debug.Log("Brisa está reviviendo a Bestia");
-        float healPerSecond = stateMachine.Player.Beast.maxHealth / maxTimeToRevive;
-        stateMachine.Player.Beast.currentHealth += healPerSecond * Time.deltaTime;
+        currentTime += Time.deltaTime;
 
-        if (stateMachine.Player.Beast.currentHealth > stateMachine.Player.Beast.maxHealth)
+        if (currentTime >= maxTimeToRevive)
         {
-            stateMachine.Player.Beast.currentHealth = stateMachine.Player.Beast.maxHealth;
+            EventsManager.TriggerNormalEvent("ReviveBeast");
+            //stateMachine.Player.Beast.currentHealth = stateMachine.Player.Beast.maxHealth / 2;
             Debug.Log("La Bestia ha sido revivida.");
             stateMachine.ChangeState(stateMachine.IdleState);
         }
 
-        currentTime += Time.deltaTime;
         HalfDeadScreen.Instance.ShowHalfDeadScreenBestiaRevive(currentTime);
     }
 

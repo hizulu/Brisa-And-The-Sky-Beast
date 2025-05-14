@@ -13,17 +13,16 @@ using UnityEngine;
 public class PlayerSprintState : PlayerMovedState
 {
     public PlayerSprintState(PlayerStateMachine stateMachine) : base(stateMachine) { }
-
-    private bool sprintFinish;
+    #region Variables
     private Vector3 sprintDirection;
     private float sprintDistance = 5f;
     private float sprintSpeed = 10f;
     private float distanceTraveled = 0f;
+    #endregion
 
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        sprintFinish = false;
         distanceTraveled = 0f;
         GetHorizontalDirection();
         base.Enter();
@@ -45,7 +44,6 @@ public class PlayerSprintState : PlayerMovedState
 
     public override void Exit()
     {
-        sprintFinish = false;
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.SprintParameterHash);
         //Debug.Log("Has salido del estado de SPRINTAR");
@@ -56,10 +54,7 @@ public class PlayerSprintState : PlayerMovedState
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Sprint") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-            sprintFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
-        }
     }
 
     private void GetHorizontalDirection()

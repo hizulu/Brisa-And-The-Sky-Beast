@@ -292,7 +292,8 @@ public class PlayerGroundedState : PlayerMovementState
     /// <param name="context">Información del input asociado a la acción.</param>
     protected virtual void OnReviveStarted(InputAction.CallbackContext context)
     {
-        if (Vector3.Distance(stateMachine.Player.transform.position, stateMachine.Player.Beast.transform.position) < 3.5f)
+        Debug.Log("Pulsando para revivir a Bestia");
+        if (Vector3.Distance(stateMachine.Player.transform.position, stateMachine.Player.Beast.transform.position) < 3.5f && stateMachine.Player.Beast.currentHealth <= 0f)
         {
             isCentralButtonPressed = true;
             stateMachine.ChangeState(stateMachine.ReviveBeastState);

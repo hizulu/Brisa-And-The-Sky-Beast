@@ -23,7 +23,8 @@ public class Beast : MonoBehaviour
     [Header("Stats")]
     [SerializeField] public float maxHealth = 500f;
     [SerializeField] public float healingAmount = 50f; // Estoy gestionando la cura de la Bestia desde el script de Brisa.
-    [SerializeField] public float halfDeadDuration = 30f;
+    [SerializeField] public float maxHalfDeadDuration = 30f;
+    [SerializeField] public float currentHalffDeadDuration = 0f;
     [SerializeField] public float swipeAttackDamage = 15f;
     [SerializeField] public float biteAttackDamage = 25f;
 

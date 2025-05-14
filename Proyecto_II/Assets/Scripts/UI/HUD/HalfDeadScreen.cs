@@ -65,6 +65,7 @@ public class HalfDeadScreen : MonoBehaviour
         ResetBlurEffect();
         halfDeadScreenBrisa.SetActive(true);
         timerScreenBrisa.SetActive(true);
+        halfDeadScreenBrisaRevive.SetActive(false);
 
         // Configurar slider correctamente
         timerSliderBrisa.minValue = 0;
@@ -100,6 +101,7 @@ public class HalfDeadScreen : MonoBehaviour
         ResetBlurEffect();
         halfDeadScreenBestia.SetActive(true);
         timerScreenBestia.SetActive(true);
+        halfDeadScreenBestiaRevive.SetActive(false);
         // Configurar slider correctamente
         timerSliderBestia.minValue = 0;
         timerSliderBestia.maxValue = maxTime;
@@ -128,12 +130,16 @@ public class HalfDeadScreen : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         halfDeadScreenBrisa.SetActive(false);
+        timerScreenBrisa.SetActive(false);
+        halfDeadScreenBestiaRevive.SetActive(false);
     }
 
     // Método para ocultar la pantalla de revivir de la Bestia
     public void HideHalfDeadScreenBestia()
     {
         halfDeadScreenBestia.SetActive(false);
+        timerScreenBestia.SetActive(false);
+        halfDeadScreenBestiaRevive.SetActive(false);
     }
 
     //Metodo para comenzar la animación de transición del desenfoque
