@@ -34,10 +34,8 @@ public class PlayerReviveBeastState : PlayerInteractionState
         if (currentTime < maxTimeToRevive)
         {
             ReviveBeast();
-            Debug.Log(currentTime);
+            //Debug.Log(currentTime);
         }
-        else
-            stateMachine.ChangeState(stateMachine.IdleState);
     }
 
     public override void Exit()
@@ -50,18 +48,15 @@ public class PlayerReviveBeastState : PlayerInteractionState
 
     public void ReviveBeast()
     {
-        Debug.Log("Brisa está reviviendo a Bestia");
-        float healPerSecond = stateMachine.Player.Beast.maxHealth / maxTimeToRevive;
-        stateMachine.Player.Beast.currentHealth += healPerSecond * Time.deltaTime;
+        currentTime += Time.deltaTime;
 
-        if (stateMachine.Player.Beast.currentHealth > stateMachine.Player.Beast.maxHealth)
+        if (currentTime > maxTimeToRevive)
         {
-            stateMachine.Player.Beast.currentHealth = stateMachine.Player.Beast.maxHealth;
+            stateMachine.Player.Beast.currentHealth = stateMachine.Player.Beast.maxHealth / 2;
             Debug.Log("La Bestia ha sido revivida.");
             stateMachine.ChangeState(stateMachine.IdleState);
         }
 
-        currentTime += Time.deltaTime;
         HalfDeadScreen.Instance.ShowHalfDeadScreenBestiaRevive(currentTime);
     }
 
