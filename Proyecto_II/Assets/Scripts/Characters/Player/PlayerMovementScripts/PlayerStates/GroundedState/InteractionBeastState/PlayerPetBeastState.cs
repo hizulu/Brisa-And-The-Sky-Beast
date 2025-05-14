@@ -12,14 +12,9 @@ public class PlayerPetBeastState : PlayerInteractionState
 {
     public PlayerPetBeastState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
-    #region Variables
-    private bool petBeastFinish;
-    #endregion
-
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        petBeastFinish = false;
         base.Enter();
         AlignPlayerToBeast();
         //Debug.Log("Has entrado en estado de Acariciar a la Bestia.");
@@ -47,10 +42,7 @@ public class PlayerPetBeastState : PlayerInteractionState
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("PetBeast") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-            petBeastFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
-        }
     }
 
     /// <summary>

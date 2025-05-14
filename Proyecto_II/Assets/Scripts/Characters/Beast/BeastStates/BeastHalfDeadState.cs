@@ -10,6 +10,7 @@ public class BeastHalfDeadState : BeastState
     private bool _beastRevived = false;
     public override void OnEnter(Beast beast)
     {
+        //beast.currentHalffDeadDuration = beast.maxHalfDeadDuration;
         EventsManager.TriggerNormalEvent("AskForHelpBrisa"); // Cuando Bestia entra en estado de medio - muerto, manda un evento para avisar a Brisa de que necesita que le reviva.
         beast.anim.SetBool("isWalking", false);
         beast.anim.SetBool("isHalfDead", true);
@@ -23,8 +24,7 @@ public class BeastHalfDeadState : BeastState
         if (_countdownStarted)
             return;
 
-        beast.StartCoroutine(BeastHalfDeadCountdown(beast, beast.halfDeadDuration));
-        HalfDeadScreen.Instance.ShowHalfDeadScreenBestia(beast.halfDeadDuration, beast.halfDeadDuration);
+        beast.StartCoroutine(BeastHalfDeadCountdown(beast, beast.maxHalfDeadDuration));
     }
     public override void OnExit(Beast beast)
     {
@@ -37,29 +37,36 @@ public class BeastHalfDeadState : BeastState
     private IEnumerator BeastHalfDeadCountdown(Beast beast, float duration)
     {
         _countdownStarted = true;
-        float elapsedTime = 0f;
-        while (elapsedTime < duration)
+        float elapsedTime = duration;
+        while (elapsedTime <= duration)
         {
             if (_beastRevived)
             {
+                HalfDeadScreen.Instance.HideHalfDeadScreenBestia();
                 Debug.Log("Beast ha sido revivida, volviendo a estado natural");
                 beast.currentHealth = beast.maxHealth/2;
-                HalfDeadScreen.Instance.HideHalfDeadScreenBestia();
-                beast.TransitionToState(new BeastFreeState());                
+                beast.TransitionToState(new BeastFreeState());
+                beast.StopAllCoroutines();
+                break;
             }
-            elapsedTime += Time.deltaTime;
+            elapsedTime -= Time.deltaTime;
+            HalfDeadScreen.Instance.ShowHalfDeadScreenBestia(elapsedTime, duration);
             yield return null;
         }
 
-        Debug.Log("Tiempo de espera completado sin que player reviva a Beast. Llamando a condición de fin de juego");
-        beast.anim.SetBool("isDead", true);
-        // TODO: wait for animation before game end
-        GameManager.Instance.GameOver();
+        if(elapsedTime <= 0f || !_beastRevived)
+        {
+            Debug.Log("Tiempo de espera completado sin que player reviva a Beast. Llamando a condición de fin de juego");
+            beast.anim.SetBool("isDead", true);
+            // TODO: wait for animation before game end
+            GameManager.Instance.GameOver();
+        }
     }
 
     private void ReviveBeast()
     {
         // TODO: revive animation, sound effect, visual effect
+        Debug.Log("La Bestia ha recibido bien la llamada de Revivir");
         _beastRevived = true;
     }
 }

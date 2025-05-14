@@ -12,12 +12,6 @@ public class PlayerRideBeastState : PlayerInteractionState
 {
     public PlayerRideBeastState(PlayerStateMachine _stateMachine) : base(_stateMachine) { }
 
-    #region Variables
-    private float blinkTimer;
-    private float blinkInterval;
-    private bool isBlinking = false;
-    #endregion
-
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {

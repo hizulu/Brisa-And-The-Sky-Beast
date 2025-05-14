@@ -13,7 +13,6 @@ public class PlayerHealState : PlayerStopState
     public PlayerHealState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
     #region Variables
-    bool healFinishAnimation;
     bool healFinish;
     
     private float healDelay = 0.5f;
@@ -23,7 +22,6 @@ public class PlayerHealState : PlayerStopState
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        healFinishAnimation = false;
         healFinish = false;
         stateMachine.Player.Baya.SetActive(true);
         
@@ -63,10 +61,7 @@ public class PlayerHealState : PlayerStopState
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("HealBrisa") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-            healFinishAnimation = true;
             stateMachine.ChangeState(stateMachine.IdleState);
-        }
     }
 
     /// <summary>

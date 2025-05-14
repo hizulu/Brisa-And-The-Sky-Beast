@@ -7,7 +7,6 @@ public class PlayerHealBeastState : PlayerInteractionState
     public PlayerHealBeastState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
     #region Variables
-    private bool healBeastFinishAnimation;
     private bool healBeastFinish;
 
     private float healDelay = 0.7f;
@@ -18,7 +17,6 @@ public class PlayerHealBeastState : PlayerInteractionState
     public override void Enter()
     {
         healBeastFinish = false;
-        healBeastFinishAnimation = false;
         stateMachine.Player.Mango.SetActive(true);
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.HealBeastParameterHash);
@@ -55,10 +53,7 @@ public class PlayerHealBeastState : PlayerInteractionState
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("HealBeast") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-            healBeastFinishAnimation = true;
             stateMachine.ChangeState(stateMachine.IdleState);
-        }
     }
 
     public void SetHealingMango(ItemData _mango)

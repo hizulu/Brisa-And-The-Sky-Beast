@@ -9,14 +9,9 @@ public class PlayerPickUpState : PlayerMovementState
 {
     public PlayerPickUpState(PlayerStateMachine _stateMachine) : base(_stateMachine) { }
 
-    #region Variables
-    private bool pickUpFinish;
-    #endregion
-
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        pickUpFinish = false;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.PickUpParameterHash);
     }
@@ -38,10 +33,7 @@ public class PlayerPickUpState : PlayerMovementState
     private void FinishPickUp()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("PickUp_Brisa") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-            pickUpFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
-        }
     }
     #endregion
 }

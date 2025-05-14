@@ -15,14 +15,9 @@ public class PlayerReviveState : PlayerDeathState
 {
     public PlayerReviveState(PlayerStateMachine _stateMachine) : base(_stateMachine) { }
 
-    #region Variables
-    bool reviveFinish = false;
-    #endregion
-
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        reviveFinish = false;
         base.Enter();
         Debug.Log("Has entrado en el estado de REVIVIR");
         StartAnimation(stateMachine.Player.PlayerAnimationData.RevivePlayerParameterHash);
@@ -49,10 +44,7 @@ public class PlayerReviveState : PlayerDeathState
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Revive") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-            reviveFinish = true;
             stateMachine.ChangeState(stateMachine.IdleState);
-        }
     }
 
     protected override void ChangeFacePlayer()
