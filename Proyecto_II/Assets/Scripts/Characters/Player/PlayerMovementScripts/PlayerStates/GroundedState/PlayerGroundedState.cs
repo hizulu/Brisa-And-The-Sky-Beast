@@ -15,6 +15,8 @@ public class PlayerGroundedState : PlayerMovementState
     #region Variables
     protected ItemData healIncreaseSpecificItem;
 
+    protected bool canFall = true;
+
     #region Variables PointedState
     protected bool isPointed = false;
     protected float rightButtontimePressed = 0f;
@@ -44,7 +46,7 @@ public class PlayerGroundedState : PlayerMovementState
 
     public override void UpdateLogic()
     {
-        if (!IsGrounded())
+        if (!IsGrounded() && canFall)
         {
             stateMachine.ChangeState(stateMachine.FallState);
             return;
