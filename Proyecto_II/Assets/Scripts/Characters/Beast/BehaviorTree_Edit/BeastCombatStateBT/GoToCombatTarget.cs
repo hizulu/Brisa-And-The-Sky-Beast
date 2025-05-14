@@ -42,7 +42,7 @@ public class GoToCombatTarget : Node
 
         float distance = Vector3.Distance(_beast.transform.position, _target.transform.position);
 
-        if (distance < _arrivalThreshold)
+        if (distance < _arrivalThreshold + 1)
         {
             if (_wasWalking)
             {

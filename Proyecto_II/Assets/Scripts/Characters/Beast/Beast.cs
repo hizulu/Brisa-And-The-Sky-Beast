@@ -8,7 +8,6 @@ using UnityEngine.AI;
 // 15/04/2025
 public class Beast : MonoBehaviour
 {
-
     [Header("Components")]
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Animator anim;
