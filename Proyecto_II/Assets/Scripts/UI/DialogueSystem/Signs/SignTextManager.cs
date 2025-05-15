@@ -24,11 +24,7 @@ public class SignTextManager : MonoBehaviour
     public TextMeshProUGUI signText;
     [SerializeField] private Canvas hudCanvas;
 
-    [Header("Input Settings")]
-    [SerializeField] private PlayerInput playerInput;
-
     [Header("Player Control")]
-    [SerializeField] private MonoBehaviour playerMovementScript;
     [SerializeField] private CinemachineVirtualCamera playerCamera;
     private CinemachinePOV cameraPOV;
 
@@ -37,10 +33,12 @@ public class SignTextManager : MonoBehaviour
 
     private Dictionary<int, string> signDictionary = new Dictionary<int, string>();
     private bool isTextActive = false;
+    private PlayerInput playerInput;
     #endregion
 
-    void Awake()
+    private void Awake()
     {
+        playerInput = FindObjectOfType<PlayerInput>();
         if (playerCamera != null)
         {
             cameraPOV = playerCamera.GetCinemachineComponent<CinemachinePOV>();
@@ -50,26 +48,12 @@ public class SignTextManager : MonoBehaviour
         signPanel.SetActive(false);
     }
 
-    private void OnEnable()
+    private void Update()
     {
-        if (playerInput != null)
+        if (isTextActive && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            playerInput.UIPanelActions.Dialogue.performed += OnContinueSignPerformed;
+            CloseSignPanel();
         }
-    }
-
-    private void OnDisable()
-    {
-        if (playerInput != null)
-        {
-            playerInput.UIPanelActions.Dialogue.performed -= OnContinueSignPerformed;
-        }
-    }
-
-    private void OnContinueSignPerformed(InputAction.CallbackContext context)
-    {
-        if (!isTextActive) return;
-        CloseSignPanel();
     }
 
     void LoadSignTextFromCSV()
@@ -87,19 +71,18 @@ public class SignTextManager : MonoBehaviour
 
         foreach (var line in lines)
         {
-            var values = line.Split(new[] { ';' }, 2);
+            var values = line.Split(';');
             if (values.Length >= 2 && int.TryParse(values[0], out int signId))
             {
                 string text = values[1].Trim()
                     .Replace("\\n", "\n")
-                    .Replace("\r\n", "\n") //Hay varios saltos de linea en una misma celda, por eso se hace el replace
+                    .Replace("\r\n", "\n")
                     .Replace("\r", "\n");
                 signDictionary[signId] = text;
             }
         }
     }
 
-    //Metodo que muestra el texto del cartel dependiendo de cual sea su ID
     public void ShowSignTextById(int signId)
     {
         if (isTextActive || !signDictionary.ContainsKey(signId)) return;
@@ -108,7 +91,6 @@ public class SignTextManager : MonoBehaviour
         signText.text = signDictionary[signId];
         signPanel.SetActive(true);
 
-        // Desactivar el canvas del HUD si está asignado
         if (hudCanvas != null)
         {
             hudCanvas.gameObject.SetActive(false);
@@ -118,7 +100,6 @@ public class SignTextManager : MonoBehaviour
         LockPlayerControls();
     }
 
-    /// Método para cerrar el panel de texto del cartel
     public void CloseSignPanel()
     {
         if (!isTextActive) return;
@@ -135,14 +116,8 @@ public class SignTextManager : MonoBehaviour
         UnlockPlayerControls();
     }
 
-    //Método para bloquear los controles del jugador y la cámara
     private void LockPlayerControls()
     {
-        if (playerMovementScript != null)
-        {
-            playerMovementScript.enabled = false;
-        }
-
         if (cameraPOV != null)
         {
             cameraPOV.m_HorizontalAxis.m_MaxSpeed = 0f;
@@ -150,14 +125,8 @@ public class SignTextManager : MonoBehaviour
         }
     }
 
-    //Método para desbloquear los controles del jugador y la cámara
     private void UnlockPlayerControls()
     {
-        if (playerMovementScript != null)
-        {
-            playerMovementScript.enabled = true;
-        }
-
         if (cameraPOV != null)
         {
             cameraPOV.m_HorizontalAxis.m_MaxSpeed = 300f;

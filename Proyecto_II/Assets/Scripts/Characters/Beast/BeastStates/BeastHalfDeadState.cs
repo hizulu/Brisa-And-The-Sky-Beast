@@ -38,23 +38,29 @@ public class BeastHalfDeadState : BeastState
     {
         _countdownStarted = true;
         float elapsedTime = duration;
-        while (elapsedTime <= duration)
+
+        while (elapsedTime > 0f)
         {
             if (_beastRevived)
             {
                 HalfDeadScreen.Instance.HideHalfDeadScreenBestia();
                 Debug.Log("Beast ha sido revivida, volviendo a estado natural");
-                beast.currentHealth = beast.maxHealth/2;
+                beast.currentHealth = beast.maxHealth / 2;
                 beast.TransitionToState(new BeastFreeState());
                 beast.StopAllCoroutines();
                 break;
             }
-            elapsedTime -= Time.deltaTime;
-            HalfDeadScreen.Instance.ShowHalfDeadScreenBestia(elapsedTime, duration);
+            
+            if (!HalfDeadScreen.Instance.IsReviving)
+            {
+                elapsedTime -= Time.deltaTime;
+                HalfDeadScreen.Instance.ShowHalfDeadScreenBestia(elapsedTime, duration);
+            }
+
             yield return null;
         }
 
-        if(elapsedTime <= 0f || !_beastRevived)
+        if (!_beastRevived)
         {
             Debug.Log("Tiempo de espera completado sin que player reviva a Beast. Llamando a condición de fin de juego");
             beast.anim.SetBool("isDead", true);
