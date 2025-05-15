@@ -105,6 +105,7 @@ public class NPCDialogRange : MonoBehaviour
     // Método que inicia el diálogo con el NPC.
     private void StartDialogue()
     {
+        EventsManager.TriggerNormalEvent("NPCStartTalk");
         uiManager.HideNPCPanelName();
         dialogManager.StartDialog(startID, endID);
         dialogStarted = true;
@@ -124,6 +125,7 @@ public class NPCDialogRange : MonoBehaviour
     {
         if (this == null) return;
 
+        EventsManager.TriggerNormalEvent("NPCIdle");
         playerCam.m_Lens.FieldOfView = 60f;
         StartCoroutine(TransitionCameraDialogue(0f, 0f, 1f, false));
         playerInput.PlayerActions.Enable();
