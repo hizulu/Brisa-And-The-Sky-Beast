@@ -1,12 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /*
  * NOMBRE CLASE: EnemyRetreatJumpBack
  * AUTOR: Sara Yue Madruga Martín
  * FECHA: 07/05/2025
- * DESCRIPCIÓN: Clase que define el comportamiento específico de Retreat con un salto hacia atrás.
+ * DESCRIPCIÓN: Clase que define el comportamiento específico de Retreat en el que el enemigo huye con un gran salto en la dirección contraria del objetivo.
+ *              Después de huir, cambia a estado de Chase si el objetivo se encuentra lo suficientemente cerca para seguirlo.
+ *              Después de huir, si el objetivo se encuentra lejos, vuelve a estado de Idle.
+ *              Hereda de EnemyStateSOBase, por lo que se crea desde el editor de Unity. Sobreescribe sus métodos y tiene acceso a sus variables.            
  * VERSIÓN: 1.0.
  */
 
@@ -14,9 +16,11 @@ using UnityEngine;
 public class EnemyRetreatJumpBack : EnemyStateSOBase
 {
     #region Variables
-    [SerializeField] private float jumpBackForce = 5f;
-    [SerializeField] private float jumpUpForce = 3f;
+    [SerializeField] private float jumpBackForce = 7f;
+    [SerializeField] private float jumpUpForce = 4f;
     [SerializeField] private float targetChaseRange = 10f;
+    [SerializeField] private float jumpDuration = 1f; // Duración del salto
+    [SerializeField] private AnimationCurve jumpArc = AnimationCurve.EaseInOut(0, 0, 1, 1); // Para controlar la curva del salto
 
     private float targetChaseRangeSQR;
 
@@ -80,15 +84,45 @@ public class EnemyRetreatJumpBack : EnemyStateSOBase
     }
 
     /*
-     * Método que gestiona las físicas del salto hacia atrás.
+     * Gestión del salto hacia atrás.
      */
-    private void JumpBack()
+    public void JumpBack()
     {
         Vector3 directionAway = (enemy.transform.position - targetTransform.position).normalized;
-        Vector3 jumpForce = directionAway * jumpBackForce + Vector3.up * jumpUpForce;
+        Vector3 horizontalOffset = directionAway * jumpBackForce;
+        float verticalOffset = jumpUpForce;
 
-        enemy.enemyRb.velocity = Vector3.zero;
-        enemy.enemyRb.AddForce(jumpForce, ForceMode.VelocityChange);
+        Vector3 startPos = enemy.transform.position;
+        Vector3 endPos = startPos + horizontalOffset;
+
+        enemy.StartCoroutine(SimulateJumpArc(startPos, endPos, verticalOffset));
+    }
+
+    private IEnumerator SimulateJumpArc(Vector3 start, Vector3 end, float height)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < jumpDuration)
+        {
+            float t = elapsed / jumpDuration;
+
+            Vector3 horizontalPos = Vector3.Lerp(start, end, t);
+            float arcHeight = jumpArc.Evaluate(t) * height;
+
+            Vector3 currentPos = new Vector3(
+                horizontalPos.x,
+                Mathf.Lerp(start.y, end.y, t) + arcHeight,
+                horizontalPos.z
+            );
+
+            enemy.transform.position = currentPos;
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Asegura que termine exactamente en el suelo (end.y)
+        enemy.transform.position = end;
     }
 
     /*

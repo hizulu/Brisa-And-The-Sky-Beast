@@ -34,7 +34,7 @@ public class GoToCombatTarget : Node
 
         if(_target == null)
         {
-            Debug.LogWarning("Ha muerto slime mientrás iba a por él");
+            Debug.LogWarning("Ha muerto target mientrás iba a por él");
             _blackboard.ClearKey("targetForCombat");
             state = NodeState.FAILURE;
             return state;
@@ -42,7 +42,7 @@ public class GoToCombatTarget : Node
 
         float distance = Vector3.Distance(_beast.transform.position, _target.transform.position);
 
-        if (distance < _arrivalThreshold)
+        if (distance < _arrivalThreshold + 1f)
         {
             if (_wasWalking)
             {

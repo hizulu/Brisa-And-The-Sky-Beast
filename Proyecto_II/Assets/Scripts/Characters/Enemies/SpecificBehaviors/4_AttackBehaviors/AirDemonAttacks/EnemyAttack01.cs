@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /*
@@ -23,16 +24,16 @@ public class EnemyAttack01 : EnemyComboAttacksSOBase
     {
         base.Initialize(_enemy, _playerTransform, _beastTransform);
         attack01 = false;
-        enemy.anim.SetBool("isAttacking01", true);
+        enemy.anim.SetTrigger("Attack01");
         float randomAttackDamage01 = Random.Range(attackDamageModifierMin, attackDamageModifierMax);
         AttackTarget(randomAttackDamage01, distanceToHit); // Método definido en el SOBase
+        enemy.StartCoroutine(WaitForAnimation());
     }
 
     public override void Exit()
     {
         Debug.Log("Has salido del primer ataque-");
         base.Exit();
-        enemy.anim.SetBool("isAttacking01", false);
     }
 
     public override void FrameLogic()
@@ -47,6 +48,12 @@ public class EnemyAttack01 : EnemyComboAttacksSOBase
         {
             attack01 = true;
         }
+    }
+
+    private IEnumerator WaitForAnimation()
+    {
+        yield return new WaitForSeconds(0.6f);
+        attack01 = true;
     }
 
     public override bool IsFinished()

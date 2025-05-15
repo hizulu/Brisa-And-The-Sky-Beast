@@ -13,7 +13,7 @@ public class AttackCombatTarget : Node, ICoroutineNode
     private bool _hasFinished = false;
 
     private bool _isAttackNormal = true;
-    private float _distanceToHit = 5f;
+    private float _distanceToHit = 6f;
     private float _attackDamage = 0f;
 
     public AttackCombatTarget(Blackboard blackboard, Beast beast)

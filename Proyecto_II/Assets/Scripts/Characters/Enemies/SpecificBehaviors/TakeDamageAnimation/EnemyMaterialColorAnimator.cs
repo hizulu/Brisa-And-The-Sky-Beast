@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // Jone Sainz Egea
 // 30/04/2025
+// Animación de recibir daño del Slime (cambio del base color)
 [RequireComponent(typeof(Renderer))]
 public class EnemyMaterialColorAnimator : MonoBehaviour
 {

@@ -4,7 +4,7 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: EnemyPatrolPointToPoint
  * AUTOR: Sara Yue Madruga Martín
- * FECHA: 
+ * FECHA: 02/04/2025
  * DESCRIPCIÓN: Clase que define el comportamiento específico de Patrol en el que el enemigo se mueve de punto a punto.
  *              Los puntos  de patrulla se definen como hijos del objeto que contiene el script de Enemy.
  *              Vuelve al estado de Idle cuando llega al destino. Cambia a estado de Chase si detecta al objetivo.

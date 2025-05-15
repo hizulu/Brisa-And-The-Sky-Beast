@@ -5,13 +5,13 @@ using UnityEngine.AI;
 /*
  * NOMBRE CLASE: Enemy
  * AUTOR: Sara Yue Madruga Martín, Jone Sainz Egea
- * FECHA: 
+ * FECHA: 11/03/2025
  * DESCRIPCIÓN: Script que gestiona toda la lógica del enemigo, así como sus estadísticas.
  *              Instancia e inicializa los comportamientos de cada estado.
  *              Funcionamiento modular de los diferentes estados.
  *              Crea una EnemyStateMachine y efecuta sus funciones.
  * VERSIÓN: 1.0. Script base para la gestión de la FSM con comportamientos en SO
- *              1.1. Se añade lógica para dañar al enemigo
+ *              1.1. Se añade lógica de recibir daño y morir
  */
 public class Enemy : HittableElement
 {
@@ -55,9 +55,6 @@ public class Enemy : HittableElement
     [SerializeField] private float playerAttackRange = 1f;
     [SerializeField] private float playerLostRange = 15f;
     [SerializeField] private float playerDetectionRange = 12f;
-    #endregion
-
-    #region Suscripciones y desuspripciones a eventos
     #endregion
 
     private void Awake()

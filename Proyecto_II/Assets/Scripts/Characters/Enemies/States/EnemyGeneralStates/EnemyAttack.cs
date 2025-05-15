@@ -1,7 +1,7 @@
 /*
  * NOMBRE CLASE: EnemyAttack
  * AUTOR: Sara Yue Madruga Martín, Jone Sainz Egea
- * FECHA: 
+ * FECHA: 11/03/2025
  * DESCRIPCIÓN: Clase que define el estado de Attack del enemigo.
  *              Hereda de EnemyStateTemplete, por lo que tiene acceso a la máquina de estados y a Enemy.
  *              Se encarga de ejecutar la lógica de la instancia específica que contiene Enemy para el estado de Attack.
