@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /*
@@ -26,6 +27,7 @@ public class EnemyAttack01 : EnemyComboAttacksSOBase
         enemy.anim.SetTrigger("Attack01");
         float randomAttackDamage01 = Random.Range(attackDamageModifierMin, attackDamageModifierMax);
         AttackTarget(randomAttackDamage01, distanceToHit); // Método definido en el SOBase
+        enemy.StartCoroutine(WaitForAnimation());
     }
 
     public override void Exit()
@@ -46,6 +48,12 @@ public class EnemyAttack01 : EnemyComboAttacksSOBase
         {
             attack01 = true;
         }
+    }
+
+    private IEnumerator WaitForAnimation()
+    {
+        yield return new WaitForSeconds(0.6f);
+        attack01 = true;
     }
 
     public override bool IsFinished()

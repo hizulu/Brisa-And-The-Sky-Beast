@@ -14,10 +14,10 @@ using UnityEngine;
 public class EnemyRetreatJumpBack : EnemyStateSOBase
 {
     #region Variables
-    [SerializeField] private float jumpBackForce = 5f;
-    [SerializeField] private float jumpUpForce = 3f;
+    [SerializeField] private float jumpBackForce = 7f;
+    [SerializeField] private float jumpUpForce = 4f;
     [SerializeField] private float targetChaseRange = 10f;
-    [SerializeField] private float jumpDuration = 0.8f; // Duración del salto
+    [SerializeField] private float jumpDuration = 1f; // Duración del salto
     [SerializeField] private AnimationCurve jumpArc = AnimationCurve.EaseInOut(0, 0, 1, 1); // Para controlar la curva del salto
 
     private float targetChaseRangeSQR;
@@ -103,10 +103,15 @@ public class EnemyRetreatJumpBack : EnemyStateSOBase
         while (elapsed < jumpDuration)
         {
             float t = elapsed / jumpDuration;
-            float arc = jumpArc.Evaluate(t); // Altura basada en la curva
 
-            Vector3 currentPos = Vector3.Lerp(start, end, t);
-            currentPos.y += arc * height;
+            Vector3 horizontalPos = Vector3.Lerp(start, end, t);
+            float arcHeight = jumpArc.Evaluate(t) * height;
+
+            Vector3 currentPos = new Vector3(
+                horizontalPos.x,
+                Mathf.Lerp(start.y, end.y, t) + arcHeight,
+                horizontalPos.z
+            );
 
             enemy.transform.position = currentPos;
 
@@ -114,10 +119,8 @@ public class EnemyRetreatJumpBack : EnemyStateSOBase
             yield return null;
         }
 
-        // Aseguramos que llega exactamente al final
-        Vector3 finalPos = end;
-        finalPos.y = start.y;
-        enemy.transform.position = finalPos;
+        // Asegura que termine exactamente en el suelo (end.y)
+        enemy.transform.position = end;
     }
 
     /*
