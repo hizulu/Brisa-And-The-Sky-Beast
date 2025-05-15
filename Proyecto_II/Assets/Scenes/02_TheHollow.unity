@@ -20652,10 +20652,6 @@ MonoBehaviour:
   halfDeadScreenTextBestia: {fileID: 450327145}
   halfDeadScreenBestiaRevive: {fileID: 124241297}
   revivingCircleBestia: {fileID: 951943045}
-  blurMaterial: {fileID: 2100000, guid: c806aac8098fb0a4e884825ee89706bd, type: 2}
-  transitionDuration: 2
-  targetBlurAmount: 0
-  targetBrightness: 1
 --- !u!1 &804807493
 GameObject:
   m_ObjectHideFlags: 0
@@ -38015,7 +38011,8 @@ MonoBehaviour:
   interactionThreshold: 5
   maxHealth: 500
   healingAmount: 50
-  halfDeadDuration: 30
+  maxHalfDeadDuration: 30
+  currentHalffDeadDuration: 0
   swipeAttackDamage: 15
   biteAttackDamage: 25
   currentHealth: 0

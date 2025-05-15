@@ -24,9 +24,15 @@ public class PlayerReviveBeastState : PlayerInteractionState
         currentTime = 0f;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.ReviveBeastParameterHash);
+
+        // Indicar que estamos en proceso de revivir
+        HalfDeadScreen.Instance.IsReviving = true;
+        HalfDeadScreen.Instance.ShowHalfDeadScreenBestiaRevive(0f);
+
         Debug.Log("Has entrado en el estado de REVIVIR A LA BESTIA");
         stateMachine.Player.PlayerInput.PlayerActions.ReviveBeast.canceled += OnReviveCanceled;
     }
+
 
     public override void UpdateLogic()
     {
@@ -41,6 +47,8 @@ public class PlayerReviveBeastState : PlayerInteractionState
 
     public override void Exit()
     {
+        // Restablecer el estado de revivir al salir
+        HalfDeadScreen.Instance.IsReviving = false;
         stateMachine.Player.PlayerInput.PlayerActions.ReviveBeast.canceled -= OnReviveCanceled;
         currentTime = 0f;
         base.Exit();
@@ -51,16 +59,15 @@ public class PlayerReviveBeastState : PlayerInteractionState
     public void ReviveBeast()
     {
         currentTime += Time.deltaTime;
+        float normalizedTime = currentTime / maxTimeToRevive;
+        HalfDeadScreen.Instance.ShowHalfDeadScreenBestiaRevive(normalizedTime);
 
         if (currentTime >= maxTimeToRevive)
         {
             EventsManager.TriggerNormalEvent("ReviveBeast");
-            //stateMachine.Player.Beast.currentHealth = stateMachine.Player.Beast.maxHealth / 2;
             Debug.Log("La Bestia ha sido revivida.");
             stateMachine.ChangeState(stateMachine.IdleState);
         }
-
-        HalfDeadScreen.Instance.ShowHalfDeadScreenBestiaRevive(currentTime);
     }
 
     protected override void OnReviveCanceled(InputAction.CallbackContext context)
