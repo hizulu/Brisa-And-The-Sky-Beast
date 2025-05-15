@@ -1,12 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /*
  * NOMBRE CLASE: EnemyRetreatJumpBack
  * AUTOR: Sara Yue Madruga Martín
  * FECHA: 07/05/2025
- * DESCRIPCIÓN: Clase que define el comportamiento específico de Retreat con un salto hacia atrás.
+ * DESCRIPCIÓN: Clase que define el comportamiento específico de Retreat en el que el enemigo huye con un gran salto en la dirección contraria del objetivo.
+ *              Después de huir, cambia a estado de Chase si el objetivo se encuentra lo suficientemente cerca para seguirlo.
+ *              Después de huir, si el objetivo se encuentra lejos, vuelve a estado de Idle.
+ *              Hereda de EnemyStateSOBase, por lo que se crea desde el editor de Unity. Sobreescribe sus métodos y tiene acceso a sus variables.            
  * VERSIÓN: 1.0.
  */
 

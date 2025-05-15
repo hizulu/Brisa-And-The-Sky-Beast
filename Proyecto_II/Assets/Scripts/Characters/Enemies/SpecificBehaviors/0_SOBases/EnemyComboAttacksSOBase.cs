@@ -6,7 +6,7 @@ using UnityEngine;
  * FECHA: 07/05/2025
  * DESCRIPCIÓN: Clase abstracta que sirve de base para los Scriptable Object que definen los ataques de combo de cada enemigo.
  *              Hereda de ScriptableObject.
- *              Contiene la información de Enemy.
+ *              Contiene la información de Enemy y los Transform de Player y Beast.
  *              Las clases que hereden de esta pueden sobreescribir sus métodos y tienen acceso a sus variables.
  * VERSIÓN: 1.0. Script que sirve de molde para los distintos ataques de combo de los enemigos.
  *              1.1. Hace daño también a bestia y comprueba distancia antes de hacer daño.

@@ -16,7 +16,7 @@ public class EnemyAttack02 : EnemyComboAttacksSOBase
     [SerializeField] private float attackDamageModifierMin = 20f;
     [SerializeField] private float attackDamageModifierMax = 30f;
     bool attack02 = false;
-    [SerializeField] private float distanceToHit = 4f;
+    [SerializeField] private float distanceToHit = 5f;
     #endregion
 
     #region Sobreescriturta de métodos de EnemyComboAttacksSOBase

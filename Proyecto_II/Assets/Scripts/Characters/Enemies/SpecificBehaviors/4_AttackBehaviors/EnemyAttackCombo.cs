@@ -4,7 +4,7 @@ using UnityEngine;
  * NOMBRE CLASE: EnemyAttackCombo
  * AUTOR: Sara Yue Madruga Martín
  * FECHA: 06/05/2025
- * DESCRIPCIÓN: Clase que define el comportamiento específico del Demonio del Aire.        
+ * DESCRIPCIÓN: Clase que define el comportamiento específico de ataque del Demonio del Aire.        
  * VERSIÓN: 1.0.
  */
 

@@ -3,7 +3,7 @@ using UnityEngine;
 /*
  * NOMBRE CLASE: EnemyStateTemplate
  * AUTOR: Sara Yue Madruga Martín, Jone Sainz Egea
- * FECHA: 
+ * FECHA: 11/03/2025
  * DESCRIPCIÓN: Clase abstracta que sirve de base para los estados del enemigo
  *              Hereda de la interfaz IState, implementando sus métodos.
  *              Las clases que hereden de esta pueden implementar sus métodos.
