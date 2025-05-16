@@ -168,7 +168,10 @@ public class PlayerGroundedState : PlayerMovementState
         if (stateMachine.CurrentState == stateMachine.RunState) // Si el estado actual del jugador es "Run", no se cambia a "Crouch".
             return;
 
-        stateMachine.ChangeState(stateMachine.CrouchState);
+        if(stateMachine.MovementData.MovementInput == Vector2.zero)
+            stateMachine.ChangeState(stateMachine.CrouchPoseState);
+        else
+            stateMachine.ChangeState(stateMachine.CrouchState);
     }
 
     /// <summary>
