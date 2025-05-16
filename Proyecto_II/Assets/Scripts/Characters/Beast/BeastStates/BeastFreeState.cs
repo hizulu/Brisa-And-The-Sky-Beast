@@ -64,7 +64,7 @@ public class BeastFreeState : BeastState
                     new IdleBehavior(blackboard, beast)
                 })),
             new IdleBehavior(blackboard, beast), // Cuando no encuentra ningún objetivo
-            new AlwaysTrue()
+            // new AlwaysTrue()
         });
 
         Node beastFreeTree = new Selector(new List<Node>
