@@ -40,8 +40,9 @@ public class MapManager : MonoBehaviour
             {
                 ClosePanel();
             }
-            else
+            else if (UIManager.Instance.CheckForOpenedMenus() == false)
             {
+                // Si no hay ningún panel de UI abierto, abre el mapa.
                 OpenPanel();
             }
         }

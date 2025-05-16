@@ -6,7 +6,7 @@ using System.Collections;
 using TMPro;
 #endregion
 
- /* NOMBRE CLASE: NPCDialogRange
+/* NOMBRE CLASE: NPCDialogRange
  * AUTORES: Lucía García López y Sara Yue Madruga Martín
  * FECHA: 10/04/2025
  * DESCRIPCION: Clase que gestiona el rango de diálogo con un NPC. Un jugador puede interactuar con el NPC al entrar en su rango y presionar la tecla "E".
@@ -92,8 +92,6 @@ public class NPCDialogRange : MonoBehaviour
         bool isKeyboard = context.control.device is Keyboard && context.control.name == "e";
 
         if (!isKeyboard) return;
-
-        //Debug.Log("Iniciando conversación");
         if (!playerInRange) return;
 
         if (!dialogStarted)
@@ -129,6 +127,11 @@ public class NPCDialogRange : MonoBehaviour
         playerCam.m_Lens.FieldOfView = 60f;
         StartCoroutine(TransitionCameraDialogue(0f, 0f, 1f, false));
         playerInput.PlayerActions.Enable();
+        dialogStarted = false; // Permite volver a iniciar el diálogo si el jugador sigue en rango
+        if (playerInRange)
+        {
+            uiManager.ShowNPCPanelName(npcName, transform);
+        }
     }
 
     // Método para animar la cámara durante el diálogo.

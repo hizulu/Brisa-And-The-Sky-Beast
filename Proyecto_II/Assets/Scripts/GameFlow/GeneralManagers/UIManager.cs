@@ -22,8 +22,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject settingsPanel;
     [SerializeField] GameObject mapPanel;
     [SerializeField] GameObject dialoguePanel;
+    [SerializeField] GameObject signPanel;
 
     [SerializeField] DialogManager diaManager;
+    [SerializeField] SignTextManager signTextManager;
 
     // Singleton
     private void Awake()
@@ -61,6 +63,7 @@ public class UIManager : MonoBehaviour
 
         if (settingsPanel.activeInHierarchy)
         {
+            GeneralSettings.Instance.CloseSettings();
             settingsPanel.SetActive(false);
             return false; // Se gestiona desde pause
         }
@@ -68,6 +71,12 @@ public class UIManager : MonoBehaviour
         if (dialoguePanel.activeInHierarchy)
         {
             diaManager.CloseDialog();
+            return true;
+        }
+
+        if (signPanel.activeInHierarchy)
+        {
+            signTextManager.CloseSignPanel();
             return true;
         }
 

@@ -97,4 +97,13 @@ public class WeaponSlot : MonoBehaviour, IPointerClickHandler
             SelectWeapon();
         }
     }
+
+    public bool CheckForWeapon(WeaponData weapon)
+    {
+        if (weaponData != null && weaponData.weaponID == weapon.weaponID)
+        {
+            return true; // El arma ya está en el inventario
+        }
+        return false; // El arma no está en el inventario
+    }
 }

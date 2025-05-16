@@ -18,6 +18,7 @@ using UnityEngine.InputSystem;
  * 1.1 Añadida corrutina para hacer el efecto de máquina de escribir.
  * 1.2 Añadido el efecto de pulsar la tecla para continuar. Se puede usar el ratón o el teclado.
  * 1.3 DialogIDRead para el funcionamiento de apertura de una puerta en la escena 2.
+ * 1.4 Hay ciertas preguntas de brisa que solo aparecen si ha recogido un arma especial
  */
 
 public class DialogManager : MonoBehaviour
@@ -36,6 +37,10 @@ public class DialogManager : MonoBehaviour
 
     [Header("Input Settings")]
     [SerializeField] private PlayerInput playerInput;
+
+    [Header("Special Weapon")]
+    [SerializeField] WeaponSlot weaponSlot;
+    [SerializeField] WeaponData specialWeapon;
 
     private Dictionary<int, DialogEntry> dialogDict = new Dictionary<int, DialogEntry>();
     private List<int> unlockedDialogIDs = new List<int>();
@@ -302,13 +307,23 @@ public class DialogManager : MonoBehaviour
         HideAllOptions();
 
         int buttonIndex = 0;
+        bool hasSpecialWeapon = weaponSlot.CheckForWeapon(specialWeapon);
 
         // Mostrar opciones normales
         for (int i = 0; i < 3 && buttonIndex < optionButtons.Length; i++)
         {
-            if (!string.IsNullOrEmpty(entry.OptionTexts[i]) && entry.OptionNextIDs[i] != -1)
+            if (!string.IsNullOrEmpty(entry.OptionTexts[i]))
             {
-                SetupOption(buttonIndex++, entry.OptionTexts[i], entry.OptionNextIDs[i]);
+                // Condición especial para la columna de "¿Sabes dónde está la anciana?"
+                if (i == 0 && entry.OptionTexts[i].Contains("anciana") && !hasSpecialWeapon)
+                {
+                    continue; // Saltar esta opción si no tiene el arma
+                }
+
+                if (entry.OptionNextIDs[i] != -1)
+                {
+                    SetupOption(buttonIndex++, entry.OptionTexts[i], entry.OptionNextIDs[i]);
+                }
             }
         }
 
@@ -316,7 +331,7 @@ public class DialogManager : MonoBehaviour
         if (buttonIndex < optionButtons.Length &&
             !string.IsNullOrEmpty(entry.OptionWithRequirementText) &&
             entry.OptionWithRequirementID != -1 &&
-            seenDialogIDs.Contains(entry.RequiredID)) // <- condición requida
+            seenDialogIDs.Contains(entry.RequiredID))
         {
             SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
         }
