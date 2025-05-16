@@ -29,10 +29,7 @@ public class PlayerHealBeastState : PlayerInteractionState
         if (currentTime < healDelay)
             currentTime += Time.deltaTime;
         else if (!healBeastFinish)
-        {
             HealBeast();
-            stateMachine.Player.Mango.SetActive(false);
-        }
 
         FinishAnimation();
     }
@@ -53,7 +50,10 @@ public class PlayerHealBeastState : PlayerInteractionState
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("HealBeast") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        {
+            stateMachine.Player.Mango.SetActive(false);
             stateMachine.ChangeState(stateMachine.IdleState);
+        }
     }
 
     public void SetHealingMango(ItemData _mango)

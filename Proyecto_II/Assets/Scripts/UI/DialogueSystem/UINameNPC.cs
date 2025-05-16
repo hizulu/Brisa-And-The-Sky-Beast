@@ -23,9 +23,13 @@ public class UINameNPC : MonoBehaviour
         interactionText.text = $"Habla con {npcName}";
         interactionPanel.SetActive(true);
         currentNPC = npcTransform;
+        SkinnedMeshRenderer npcRender = npcTransform.GetComponentInChildren<SkinnedMeshRenderer>();
 
-        if (npcTransform.TryGetComponent(out Renderer renderer))
-            npcOffset = new Vector3(0, renderer.bounds.max.y - npcTransform.position.y + 0.5f, 0f);
+        if (npcRender != null)
+        {
+            float height = npcRender.bounds.size.y;
+            npcOffset = new Vector3(0f, height + 0.5f, 0f);
+        }
     }
 
 
