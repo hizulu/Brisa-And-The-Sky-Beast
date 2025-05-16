@@ -13,13 +13,14 @@ public class BeastFreeState : BeastState
 
     public override void OnEnter(Beast beast)
     {
-        // Debug.Log("Beast has entered Free State");
+        Debug.Log("Beast has entered Free State");
 
         blackboard = beast.blackboard;
 
         // Activamos las flag en el Blackboard
         blackboard.SetValue("isConstrained", false);
         blackboard.SetValue("lookForTarget", true);
+        blackboard.SetValue("reachedTarget", false);
         blackboard.SetValue("isCoroutineActive", false);
 
         // Creamos el árbol de comportamiento libre
@@ -39,7 +40,11 @@ public class BeastFreeState : BeastState
 
     public override void OnExit(Beast beast)
     {
-        // Debug.Log("Beast is leaving Free State");
+        blackboard.SetValue("lookForTarget", true);
+        blackboard.ClearKey("target");
+        blackboard.SetValue("reachedTarget", false);
+
+        Debug.Log("Beast has leaved Free State");
     }
 
     private Node SetupFreeBehaviorTree(Beast beast)
