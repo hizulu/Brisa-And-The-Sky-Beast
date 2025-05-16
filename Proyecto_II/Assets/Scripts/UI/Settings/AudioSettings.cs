@@ -7,13 +7,14 @@ using UnityEngine;
  * DESCRIPCIÓN: Script que gestiona los ajustes de audio del juego. Se puede modificar el volumen general, de música y de efectos de sonido.
  * VERSIÓN: 1.0
  * 1.1 Inicialmente se había pensado en añadir un AudioSource para diálogos, pero se ha decidido no implementarlo por el momento.
+ * 1.2 Sonido de 0 a 100, no decimal.
  */
 
 public class AudioSettings : MonoBehaviour
 {
-    [Range(0f, 1f)] public float generalVolume = 1f;
-    [Range(0f, 1)] public float musicVolume = 1f;
-    [Range(0f, 1f)] public float sfxVolume = 1f;
+    [Range(0f, 100)] public int generalVolume = 100;
+    [Range(0f, 100)] public int musicVolume = 100;
+    [Range(0f, 100)] public int sfxVolume = 100;
     // [Range(0f, 1f)] public float dialogueVolume = 1f; // Volumen de diálogos
 
     // [SerializeField] private AudioSource dialogueSource; // AudioSource para diálogos
@@ -40,22 +41,22 @@ public class AudioSettings : MonoBehaviour
 
     public void SetGeneralVolumeFromSlider(float value)
     {
-        generalVolume = value;
-        SetGeneralText(value);
+        generalVolume = Mathf.RoundToInt(value);
+        SetGeneralText(generalVolume);
         UpdateAllVolumes();
     }
 
     public void SetMusicVolumeFromSlider(float value)
     {
-        musicVolume = value;
-        SetMusicText(value);
+        musicVolume = Mathf.RoundToInt(value);
+        SetMusicText(musicVolume);
         UpdateAllVolumes();
     }
 
     public void SetSFXVolumeFromSlider(float value)
     {
-        sfxVolume = value;
-        SetSFXText(value);
+        sfxVolume = Mathf.RoundToInt(value);
+        SetSFXText(sfxVolume);
         UpdateAllVolumes();
     }
 
@@ -69,8 +70,8 @@ public class AudioSettings : MonoBehaviour
     {
         if (audioManager == null) return;
 
-        audioManager.musicSource.volume = generalVolume * musicVolume;
-        audioManager.SFXSource.volume = generalVolume * sfxVolume;
+        audioManager.musicSource.volume = generalVolume / 100f * (musicVolume / 100f);
+        audioManager.SFXSource.volume = generalVolume / 100f * (sfxVolume / 100f);
 
         // if (dialogueSource != null)
         //     dialogueSource.volume = Mathf.Pow(generalVolume * dialogueVolume, 1.5f);
@@ -94,24 +95,24 @@ public class AudioSettings : MonoBehaviour
     public void SetGeneralText(float value)
     {
         if (generalVolumeText != null)
-            generalVolumeText.text = value.ToString("0.0");
+            generalVolumeText.text = value.ToString("0");
     }
 
     public void SetMusicText(float value)
     {
         if (musicVolumeText != null)
-            musicVolumeText.text = value.ToString("0.0");
+            musicVolumeText.text = value.ToString("0");
     }
 
     void SetSFXText(float value)
     {
         if (sfxVolumeText != null)
-            sfxVolumeText.text = value.ToString("0.0");
+            sfxVolumeText.text = value.ToString("0");
     }
 
     void SetDialogueText(float value)
     {
         // if (dialogueVolumeText != null)
-        //     dialogueVolumeText.text = value.ToString("0.0");
+        //     dialogueVolumeText.text = value.ToString("0");
     }
 }

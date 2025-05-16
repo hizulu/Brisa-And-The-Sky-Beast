@@ -10,10 +10,12 @@ using System.Collections.Generic;
  * VERSIÓN: 1.0 Sistema de ajustes gráficos inicial.
  * 1.1 Se ha añadido la opción de cambiar el brillo al sistema SunController creado por Sara.
  * 1.2 El brillo también afecta al UI. Se utiliza un shader.
+ * 1.3 Cambio de resolución funciona correctamente.
  */
 
 public class GraphicsSettings : MonoBehaviour
 {
+    #region Variables
     [Header("Brillo")]
     [SerializeField] private SunManager sunController;
     [SerializeField] private Light directionalLight;
@@ -34,11 +36,15 @@ public class GraphicsSettings : MonoBehaviour
     [Header("Resolución")]
     [SerializeField] private TMP_Dropdown resolutionDropdown;
 
-    private int defaultResolutionIndex = 2;
+    private Resolution[] resolutions;
+    private List<Resolution> filteredResolutions;
+    private int currentResolutionIndex = 0;
+
     private Dictionary<Graphic, Material> originalGraphicMaterials = new Dictionary<Graphic, Material>();
     private Dictionary<TMP_Text, Color> originalTextColors = new Dictionary<TMP_Text, Color>();
     private Dictionary<Mask, Material> originalMaskMaterials = new Dictionary<Mask, Material>();
     private Material sharedBrightnessMaterial;
+    #endregion
 
     private void Awake()
     {
@@ -102,7 +108,6 @@ public class GraphicsSettings : MonoBehaviour
                     originalMaskMaterials[mask] = mask.graphic.material;
                 }
             }
-
 
             // Almacenar colores originales de TextMeshPro
             TMP_Text[] textMeshPros = canvas.GetComponentsInChildren<TMP_Text>(true);
@@ -224,7 +229,6 @@ public class GraphicsSettings : MonoBehaviour
         }
     }
 
-    // Métodos para configuración de pantalla (sin cambios)
     private void SetupScreenModes()
     {
         if (screenModeDropdown == null) return;
@@ -245,19 +249,41 @@ public class GraphicsSettings : MonoBehaviour
     {
         if (resolutionDropdown == null) return;
 
-        resolutionDropdown.ClearOptions();
-        resolutionDropdown.AddOptions(new List<string> {
-            "3840 x 2160",
-            "2560 x 1440",
-            "1920 x 1080",
-            "1600 x 900",
-            "1366 x 768",
-            "1280 x 720"
-        });
+        resolutions = Screen.resolutions;
+        filteredResolutions = new List<Resolution>();
 
-        resolutionDropdown.value = PlayerPrefs.GetInt("Resolution", defaultResolutionIndex);
-        resolutionDropdown.onValueChanged.AddListener(SetResolution);
-        SetResolution(resolutionDropdown.value);
+        // Filtrar resoluciones únicas (sin duplicados)
+        foreach (Resolution res in resolutions)
+        {
+            if (!filteredResolutions.Exists(r => r.width == res.width && r.height == res.height))
+            {
+                filteredResolutions.Add(res);
+            }
+        }
+
+        // Ordenar de mayor a menor resolución
+        filteredResolutions.Sort((a, b) => b.width.CompareTo(a.width));
+
+        // Preparar opciones para el Dropdown
+        List<string> options = new List<string>();
+        for (int i = 0; i < filteredResolutions.Count; i++)
+        {
+            string resolutionOption = filteredResolutions[i].width + " x " + filteredResolutions[i].height;
+            options.Add(resolutionOption);
+
+            // Detectar la resolución actual
+            if (filteredResolutions[i].width == Screen.width &&
+                filteredResolutions[i].height == Screen.height)
+            {
+                currentResolutionIndex = i;
+            }
+        }
+
+        resolutionDropdown.ClearOptions();
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.RefreshShownValue();
+        PlayerPrefs.SetInt("Resolution", currentResolutionIndex);
     }
 
     public void SetScreenMode(int index)
@@ -273,23 +299,13 @@ public class GraphicsSettings : MonoBehaviour
         Screen.fullScreenMode = mode;
     }
 
-    public void SetResolution(int index)
+    public void SetResolution(int resolutionIndex)
     {
-        PlayerPrefs.SetInt("Resolution", index);
-        Vector2Int[] resolutions = new Vector2Int[]
-        {
-            new Vector2Int(3840, 2160),
-            new Vector2Int(2560, 1440),
-            new Vector2Int(1920, 1080),
-            new Vector2Int(1600, 900),
-            new Vector2Int(1366, 768),
-            new Vector2Int(1280, 720)
-        };
+        if (resolutionIndex < 0 || resolutionIndex >= filteredResolutions.Count) return;
 
-        if (index >= 0 && index < resolutions.Length)
-        {
-            Vector2Int res = resolutions[index];
-            Screen.SetResolution(res.x, res.y, Screen.fullScreenMode);
-        }
+        Resolution resolution = filteredResolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreenMode);
+        PlayerPrefs.SetInt("Resolution", resolutionIndex);
+        currentResolutionIndex = resolutionIndex;
     }
 }
