@@ -17,12 +17,14 @@ public class NPCTalkState : NPCStateTemplate
     public override void Enter()
     {
         base.Enter();
+        npcStateMachine.NPC.AnimNPC.SetBool("isTalking", true);
         Debug.Log("El NPC ha entrado en estado de HABLAR");
     }
 
     public override void Exit()
     {
         base.Exit();
+        npcStateMachine.NPC.AnimNPC.SetBool("isTalking", false);
         Debug.Log("El NPC ha salido del estado de HABLAR");
     }
 }
