@@ -24,7 +24,7 @@ public class SheepIdleState : SheepStateTemplate
     {
         base.Enter();
         sheepStateMachine.Sheep.AnimSheep.SetBool("isIdle", true);
-        Debug.Log("La oveja ha entrado en el estado de IDLE");
+        //Debug.Log("La oveja ha entrado en el estado de IDLE");
         currentTimeIdle = 0f;
         maxTimeInIdle = Random.Range(1f, 4f);
     }
@@ -39,7 +39,7 @@ public class SheepIdleState : SheepStateTemplate
     {
         base.Exit();
         sheepStateMachine.Sheep.AnimSheep.SetBool("isIdle", false);
-        Debug.Log("La oveja ha salido del estado de IDLE.");
+        //Debug.Log("La oveja ha salido del estado de IDLE.");
     }
     #endregion
 

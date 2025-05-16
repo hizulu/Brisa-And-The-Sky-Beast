@@ -71,6 +71,7 @@ public class PlayerMovementState : IState
     /// </summary>
     public virtual void Enter()
     {
+        stateMachine.Player.PlayerInput.PlayerActions.DesmountBeast.Disable();
         AddInputActionsCallbacks();
         CreateFaceMaterialPlayerDictionary();
         ChangeFacePlayer();

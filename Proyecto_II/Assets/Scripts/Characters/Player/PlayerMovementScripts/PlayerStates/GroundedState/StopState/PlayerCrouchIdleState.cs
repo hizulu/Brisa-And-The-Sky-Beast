@@ -47,8 +47,12 @@ public class PlayerCrouchIdleState : PlayerStopState
     public override void Exit()
     {
         base.Exit();
-        stateMachine.Player.StopCoroutine(repeatCrouchAnimation);
-        stateMachine.Player.StopCoroutine(changeFaceExpresionIdleCrouch);
+        if (repeatCrouchAnimation != null)
+            stateMachine.Player.StopCoroutine(repeatCrouchAnimation);
+
+        if (changeFaceExpresionIdleCrouch != null)
+            stateMachine.Player.StopCoroutine(changeFaceExpresionIdleCrouch);
+
         StopAnimation(stateMachine.Player.PlayerAnimationData.CrouchPoseParameterHash);
         //Debug.Log("Has salido del estado de AGACHADO IDLE");
     }

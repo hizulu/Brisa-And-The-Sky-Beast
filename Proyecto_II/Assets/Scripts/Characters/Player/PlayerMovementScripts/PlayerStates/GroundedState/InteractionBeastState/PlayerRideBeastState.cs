@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /*
  * NOMBRE CLASE: PlayerRideBeastState
@@ -6,7 +7,7 @@ using UnityEngine;
  * FECHA: 18/04/2025
  * DESCRIPCIÓN: Clase que hereda de PlayerInteractionState.
  *              Subestado que gestiona la acción de montar a la Bestia.
- * VERSIÓN: 1.0. 
+ * VERSIÓN: 1.0.
  */
 public class PlayerRideBeastState : PlayerInteractionState
 {
@@ -19,8 +20,11 @@ public class PlayerRideBeastState : PlayerInteractionState
         stateMachine.MovementData.MovementSpeedModifier = groundedData.RideBeastData.RideBeastSpeedModif;
         SetRandomBlink();
         base.Enter();
+        stateMachine.Player.PlayerInput.PlayerActions.DesmountBeast.Enable();
+        stateMachine.Player.PlayerInput.PlayerActions.Crouch.Disable();
         Debug.Log("Has entrado en el estado de MONTAR A LA BESTIA");
         StartAnimation(stateMachine.Player.PlayerAnimationData.RideBeastParameterHash);
+        stateMachine.Player.PlayerInput.PlayerActions.DesmountBeast.performed += DismountBeast;
     }
 
     public override void HandleInput()
@@ -44,12 +48,25 @@ public class PlayerRideBeastState : PlayerInteractionState
     {
         canFall = true;
         base.Exit();
+        stateMachine.Player.PlayerInput.PlayerActions.DesmountBeast.Disable();
+        stateMachine.Player.PlayerInput.PlayerActions.Crouch.Disable();
         Debug.Log("Has salido del estado de MONTAR A LA BESTIA");
         StopAnimation(stateMachine.Player.PlayerAnimationData.RideBeastParameterHash);
+        stateMachine.Player.PlayerInput.PlayerActions.DesmountBeast.performed -= DismountBeast;
     }
     #endregion
 
     #region Métodos Propios RideBeastState
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context">Información del input asociado a la acción.</param>
+    private void DismountBeast(InputAction.CallbackContext context)
+    {
+        Debug.Log("Quieres bajarte de la BESTIA");
+        stateMachine.ChangeState(stateMachine.DismountBeastState);
+    }
+
     /// <summary>
     /// Método sobreescrito para cambiar la expresión de Brisa cuando está montada en la Bestia.
     /// </summary>

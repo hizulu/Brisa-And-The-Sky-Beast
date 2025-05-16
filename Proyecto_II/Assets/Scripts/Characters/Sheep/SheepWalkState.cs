@@ -31,7 +31,7 @@ public class SheepWalkState : SheepStateTemplate
     {
         base.Enter();
         sheepStateMachine.Sheep.AnimSheep.SetBool("isWalking", true);
-        Debug.Log("La oveja ha entrado en el estado de CAMINAR");
+        //Debug.Log("La oveja ha entrado en el estado de CAMINAR");
         walkDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
         startPosition = sheepStateMachine.Sheep.transform.position;
         walkedDistance = 0f;
@@ -54,7 +54,7 @@ public class SheepWalkState : SheepStateTemplate
     {
         base.Exit();
         sheepStateMachine.Sheep.AnimSheep.SetBool("isWalking", false);
-        Debug.Log("La oveja ha salido del estado de CAMINAR.");
+        //Debug.Log("La oveja ha salido del estado de CAMINAR.");
     }
     #endregion
 

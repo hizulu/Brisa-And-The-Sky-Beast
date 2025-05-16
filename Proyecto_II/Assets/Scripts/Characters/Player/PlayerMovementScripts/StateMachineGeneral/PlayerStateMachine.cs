@@ -44,6 +44,7 @@ public class PlayerStateMachine : StateMachine
     public PlayerPetBeastState PetBeastState { get; }
     public PlayerPointedBeastState PointedBeastState { get; }
     public PlayerRideBeastState RideBeastState { get; }
+    public PlayerDismountBeastState DismountBeastState { get; }
     public PlayerHealBeastState HealBeastState { get; }
     public PlayerReviveBeastState ReviveBeastState { get; }
     public PlayerPickUpState PickUpState { get; }
@@ -88,6 +89,7 @@ public class PlayerStateMachine : StateMachine
         PetBeastState = new PlayerPetBeastState(this);
         PointedBeastState = new PlayerPointedBeastState(this);
         RideBeastState = new PlayerRideBeastState(this);
+        DismountBeastState = new PlayerDismountBeastState(this);
         HealBeastState = new PlayerHealBeastState(this);
         ReviveBeastState = new PlayerReviveBeastState(this);
         PickUpState = new PlayerPickUpState(this);
