@@ -15,8 +15,8 @@ public class PlayerIdleState : PlayerGroundedState
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
-        stateMachine.MovementData.MovementSpeedModifier = 0f;
         base.Enter();
+        stateMachine.MovementData.MovementSpeedModifier = 0f;
         SetRandomBlink();
         StartAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
         //Debug.Log("Has entrado en el estado de IDLE.");

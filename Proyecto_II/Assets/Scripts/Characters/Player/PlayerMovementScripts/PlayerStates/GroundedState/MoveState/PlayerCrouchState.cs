@@ -20,15 +20,12 @@ public class PlayerCrouchState : PlayerMovedState
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.CrouchParameterHash);
         EventsManager.TriggerSpecialEvent<bool>("CrouchState", true);
-        // Debug.Log("Has entrado en el estado de AGACHARSE.");
+        //Debug.Log("Has entrado en el estado de AGACHARSE.");
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-
-        if (stateMachine.MovementData.MovementInput == Vector2.zero)
-            stateMachine.ChangeState(stateMachine.IdleState);
     }
 
     public override void Exit()
@@ -36,7 +33,7 @@ public class PlayerCrouchState : PlayerMovedState
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.CrouchParameterHash);
         EventsManager.TriggerSpecialEvent<bool>("CrouchState", false);
-        // Debug.Log("Has salido del estado de AGACHARSE.");
+        //Debug.Log("Has salido del estado de AGACHARSE.");
     }
     #endregion
 
@@ -61,7 +58,10 @@ public class PlayerCrouchState : PlayerMovedState
     /// <param name="context">Información del input asociado a la acción.</param>
     protected override void OnMovementCanceled(InputAction.CallbackContext context)
     {
-        OnStop();
+        if (!stateMachine.Player.PlayerInput.PlayerActions.Crouch.IsPressed())
+            OnStop();
+        else
+            stateMachine.ChangeState(stateMachine.CrouchPoseState);
     }
     #endregion
 }

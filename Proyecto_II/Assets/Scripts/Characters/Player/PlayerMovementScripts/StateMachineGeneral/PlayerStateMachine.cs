@@ -23,6 +23,7 @@ public class PlayerStateMachine : StateMachine
     public PlayerWalkState WalkState { get; }
     public PlayerRunState RunState { get; }
     public PlayerSprintState SprintState { get; }
+    public PlayerCrouchIdleState CrouchPoseState { get; }
     public PlayerCrouchState CrouchState { get; }
     public PlayerAttackState AttackState { get; }
     public PlayerAttack01 Attack01State { get; }
@@ -66,6 +67,7 @@ public class PlayerStateMachine : StateMachine
         WalkState = new PlayerWalkState(this);
         RunState = new PlayerRunState(this);
         SprintState = new PlayerSprintState(this);
+        CrouchPoseState = new PlayerCrouchIdleState(this);
         CrouchState = new PlayerCrouchState(this);
         AttackState = new PlayerAttackState(this);
         Attack01State = new PlayerAttack01(this);

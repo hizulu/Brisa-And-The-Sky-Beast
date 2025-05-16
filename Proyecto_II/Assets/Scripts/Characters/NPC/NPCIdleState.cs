@@ -17,12 +17,14 @@ public class NPCIdleState : NPCStateTemplate
     public override void Enter()
     {
         base.Enter();
+        npcStateMachine.NPC.AnimNPC.SetBool("isIdle", true);
         Debug.Log("El NPC ha entrado en estado de IDLE");
     }
 
     public override void Exit()
     {
         base.Exit();
+        npcStateMachine.NPC.AnimNPC.SetBool("isIdle", false);
         Debug.Log("El NPC ha salido del estado de IDLE");
     }
 }
