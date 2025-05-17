@@ -23,6 +23,7 @@ public class PlayerAnimationData
     [SerializeField] private string walkParameterName = "isWalking";
     [SerializeField] private string runParameterName = "isRunning";
     [SerializeField] private string sprintParameterName = "isSprinting";
+    [SerializeField] private string crouchPoseParameterName = "isCrouchPose";
     [SerializeField] private string crouchParameterName = "isCrouching";
     [SerializeField] private string attack01ParameterName = "isAttacking01";
     [SerializeField] private string attack02ParameterName = "isAttacking02";
@@ -43,6 +44,7 @@ public class PlayerAnimationData
     [SerializeField] private string callBeastParameterName = "isCallingBeast";
     [SerializeField] private string petBeastParameterName = "isPettingBeast";
     [SerializeField] private string rideBeastParameterName = "isRidingBeast";
+    [SerializeField] private string dismountBeastParameterName = "isDismountingBeast";
     [SerializeField] private string healBeastParameterName = "isHealingBeast";
     [SerializeField] private string reviveBeastParameterName = "isRevivingBeast";
 
@@ -60,6 +62,7 @@ public class PlayerAnimationData
     public int WalkParameterHash { get; private set; }
     public int RunParameterHash { get; private set; }
     public int SprintParameterHash { get; private set; }
+    public int CrouchPoseParameterHash { get; private set; }
     public int CrouchParameterHash { get; private set; }
     public int Attack01ParameterHash { get; private set; }
     public int Attack02ParameterHash { get; private set; }
@@ -80,6 +83,7 @@ public class PlayerAnimationData
     public int CallBeastParameterHash { get; private set; }
     public int PetBeastParameterHash { get; private set; }
     public int RideBeastParameterHash { get; private set; }
+    public int DismountBeastParameterHash { get; private set; }
     public int HealBeastParameterHash { get; private set; }
     public int ReviveBeastParameterHash { get; private set; }
 
@@ -99,6 +103,7 @@ public class PlayerAnimationData
         WalkParameterHash = Animator.StringToHash(walkParameterName);
         RunParameterHash = Animator.StringToHash(runParameterName);
         SprintParameterHash = Animator.StringToHash(sprintParameterName);
+        CrouchPoseParameterHash = Animator.StringToHash(crouchPoseParameterName);
         CrouchParameterHash = Animator.StringToHash(crouchParameterName);
 
         Attack01ParameterHash = Animator.StringToHash(attack01ParameterName);
@@ -122,6 +127,7 @@ public class PlayerAnimationData
         CallBeastParameterHash = Animator.StringToHash(callBeastParameterName);
         PetBeastParameterHash = Animator.StringToHash(petBeastParameterName);
         RideBeastParameterHash = Animator.StringToHash(rideBeastParameterName);
+        DismountBeastParameterHash = Animator.StringToHash(dismountBeastParameterName);
         HealBeastParameterHash = Animator.StringToHash(healBeastParameterName);
         ReviveBeastParameterHash = Animator.StringToHash(reviveBeastParameterName);
 

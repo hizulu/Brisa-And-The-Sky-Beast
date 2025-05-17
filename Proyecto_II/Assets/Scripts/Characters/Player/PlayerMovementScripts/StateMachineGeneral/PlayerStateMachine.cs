@@ -23,6 +23,7 @@ public class PlayerStateMachine : StateMachine
     public PlayerWalkState WalkState { get; }
     public PlayerRunState RunState { get; }
     public PlayerSprintState SprintState { get; }
+    public PlayerCrouchIdleState CrouchPoseState { get; }
     public PlayerCrouchState CrouchState { get; }
     public PlayerAttackState AttackState { get; }
     public PlayerAttack01 Attack01State { get; }
@@ -43,6 +44,7 @@ public class PlayerStateMachine : StateMachine
     public PlayerPetBeastState PetBeastState { get; }
     public PlayerPointedBeastState PointedBeastState { get; }
     public PlayerRideBeastState RideBeastState { get; }
+    public PlayerDismountBeastState DismountBeastState { get; }
     public PlayerHealBeastState HealBeastState { get; }
     public PlayerReviveBeastState ReviveBeastState { get; }
     public PlayerPickUpState PickUpState { get; }
@@ -66,6 +68,7 @@ public class PlayerStateMachine : StateMachine
         WalkState = new PlayerWalkState(this);
         RunState = new PlayerRunState(this);
         SprintState = new PlayerSprintState(this);
+        CrouchPoseState = new PlayerCrouchIdleState(this);
         CrouchState = new PlayerCrouchState(this);
         AttackState = new PlayerAttackState(this);
         Attack01State = new PlayerAttack01(this);
@@ -86,6 +89,7 @@ public class PlayerStateMachine : StateMachine
         PetBeastState = new PlayerPetBeastState(this);
         PointedBeastState = new PlayerPointedBeastState(this);
         RideBeastState = new PlayerRideBeastState(this);
+        DismountBeastState = new PlayerDismountBeastState(this);
         HealBeastState = new PlayerHealBeastState(this);
         ReviveBeastState = new PlayerReviveBeastState(this);
         PickUpState = new PlayerPickUpState(this);

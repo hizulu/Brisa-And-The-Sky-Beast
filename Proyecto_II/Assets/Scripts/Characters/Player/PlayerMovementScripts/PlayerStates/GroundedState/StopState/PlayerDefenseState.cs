@@ -15,7 +15,7 @@ public class PlayerDefenseState : PlayerMovementState
 {
     public PlayerDefenseState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
-    private float maxTimeWithShield = 5f;
+    //private float maxTimeWithShield = 5f;
     private float currentTime;
 
     public override void Enter()

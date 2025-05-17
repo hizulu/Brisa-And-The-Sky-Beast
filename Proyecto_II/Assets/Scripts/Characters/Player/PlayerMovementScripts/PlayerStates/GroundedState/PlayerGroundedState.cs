@@ -44,6 +44,11 @@ public class PlayerGroundedState : PlayerMovementState
         StartAnimation(stateMachine.Player.PlayerAnimationData.GroundedParameterHash);
     }
 
+    public override void HandleInput()
+    {
+        base.HandleInput();
+    }
+
     public override void UpdateLogic()
     {
         if (!IsGrounded() && canFall)
@@ -163,7 +168,10 @@ public class PlayerGroundedState : PlayerMovementState
         if (stateMachine.CurrentState == stateMachine.RunState) // Si el estado actual del jugador es "Run", no se cambia a "Crouch".
             return;
 
-        stateMachine.ChangeState(stateMachine.CrouchState);
+        if(stateMachine.MovementData.MovementInput == Vector2.zero)
+            stateMachine.ChangeState(stateMachine.CrouchPoseState);
+        else
+            stateMachine.ChangeState(stateMachine.CrouchState);
     }
 
     /// <summary>
@@ -175,7 +183,7 @@ public class PlayerGroundedState : PlayerMovementState
     /// <param name="context">Información del input asociado a la acción.</param>
     protected virtual void AttackStart(InputAction.CallbackContext context)
     {
-        if (!stateMachine.Player.PaloBrisa.activeInHierarchy || stateMachine.CurrentState is PlayerRideBeastState) return;
+        if (!stateMachine.Player.PaloBrisa.activeInHierarchy || stateMachine.CurrentState is PlayerRideBeastState || startActiveShield) return;
         else
         {
             // Solo cambiar a Attack01 si no estamos en medio de un combo o ataque.

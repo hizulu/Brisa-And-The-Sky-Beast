@@ -24,7 +24,7 @@ public class SheepGrazeState : SheepStateTemplate
     {
         base.Enter();
         sheepStateMachine.Sheep.AnimSheep.SetBool("isGrazing", true);
-        Debug.Log("La oveja ha entrado en el estado de PASTAR");
+        //Debug.Log("La oveja ha entrado en el estado de PASTAR");
         currentTimeGrazing = 0f;
         maxTimeGrazing = Random.Range(3f, 7f);
     }
@@ -39,7 +39,7 @@ public class SheepGrazeState : SheepStateTemplate
     {
         base.Exit();
         sheepStateMachine.Sheep.AnimSheep.SetBool("isGrazing", false);
-        Debug.Log("La oveja ha salido del estado de PASTAR.");
+        //Debug.Log("La oveja ha salido del estado de PASTAR.");
     }
     #endregion
 

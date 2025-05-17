@@ -70,7 +70,8 @@ public class BeastMountedState : BeastState
     {
         Debug.Log("Leaving BeastMountedState, AI taking over Beast control");
         beast.transform.SetParent(null);
-        beast.playerTransform.position -= new Vector3(0, 2f, 0);
+        Vector3 posPlayerDismount = beast.transform.position - beast.transform.right * 2f + Vector3.up * 3f;
+        beast.playerTransform.position = posPlayerDismount;
         beast.agent.enabled = true;
         //beast.rb.constraints = RigidbodyConstraints.None;
 

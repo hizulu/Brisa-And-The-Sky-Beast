@@ -24,12 +24,6 @@ public class PlayerWalkState : PlayerMovedState
 
     public override void UpdateLogic()
     {
-        //if (!IsGrounded())
-        //{
-        //    stateMachine.ChangeState(stateMachine.FallState);
-        //    return;
-        //}
-
         base.UpdateLogic();
         audioManager.PlaySFX(audioManager.walk);
     }

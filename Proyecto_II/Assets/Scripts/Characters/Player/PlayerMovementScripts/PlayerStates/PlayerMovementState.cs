@@ -33,10 +33,10 @@ public class PlayerMovementState : IState
     #endregion
 
     #region Variables Defensa Player
-    protected bool shieldButtonPressed = false;
-    private float currentTimeWithShield;
-    private float maxTimeWithShield = 5f;
-    private bool startActiveShield = false;
+    protected static bool shieldButtonPressed = false;
+    protected static float currentTimeWithShield; // Lo pongo en estático para que no se reinicie el contador cada vez que cambia de estado.
+    protected float maxTimeWithShield = 5f;
+    protected static bool startActiveShield = false;
     #endregion
 
     #region Variables Cambio Expresiones Player
@@ -71,6 +71,7 @@ public class PlayerMovementState : IState
     /// </summary>
     public virtual void Enter()
     {
+        stateMachine.Player.PlayerInput.PlayerActions.DesmountBeast.Disable();
         AddInputActionsCallbacks();
         CreateFaceMaterialPlayerDictionary();
         ChangeFacePlayer();
@@ -158,8 +159,8 @@ public class PlayerMovementState : IState
         stateMachine.Player.PlayerInput.PlayerActions.Crouch.canceled -= OnMovementCanceled;
         stateMachine.Player.PlayerInput.PlayerActions.CallBeast.performed -= CallBeast;
         //stateMachine.Player.PlayerInput.PlayerActions.LockTarget.performed -= LockTarget;
-        stateMachine.Player.PlayerInput.PlayerActions.Shield.started -= OnDefendedStarted;
-        stateMachine.Player.PlayerInput.PlayerActions.Shield.canceled -= OnDefendedCanceled;
+        //stateMachine.Player.PlayerInput.PlayerActions.Shield.started -= OnDefendedStarted;
+        //stateMachine.Player.PlayerInput.PlayerActions.Shield.canceled -= OnDefendedCanceled;
     }
 
     /// <summary>
@@ -435,11 +436,11 @@ public class PlayerMovementState : IState
     /// Actualiza el tiempo que puede estar Player con el escudo activo.
     /// Si pasa del tiempo máximo, se desactiva el escudo.
     /// </summary>
-    private void UpdateTimeWithShield()
+    protected void UpdateTimeWithShield()
     {
         currentTimeWithShield += Time.deltaTime;
 
-        //Debug.Log(currentTimeWithShield);
+        Debug.Log(currentTimeWithShield);
 
         if (shieldButtonPressed && currentTimeWithShield < maxTimeWithShield)
             ActivateShield();
