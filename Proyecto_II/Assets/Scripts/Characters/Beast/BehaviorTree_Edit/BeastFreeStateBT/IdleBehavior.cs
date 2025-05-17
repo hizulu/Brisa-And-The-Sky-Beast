@@ -23,7 +23,6 @@ public class IdleBehavior : Node
             new OncePerCycle(_blackboard,
                 new Sequence(new List<Node>
                 {
-                    new DebuggingNode("secuencia sit"),
                     new SetRandomFlag(_blackboard, "shouldSit", 40f),
                     new CheckFlag(_blackboard, "shouldSit",
                         new CheckFlag(_blackboard, "isCoroutineActive",
@@ -33,7 +32,6 @@ public class IdleBehavior : Node
             new OncePerCycle(_blackboard,
                 new Sequence(new List<Node>
                 {
-                    new DebuggingNode("secuencia sleep"),
                     new SetRandomFlag(_blackboard, "shouldSleep", 30f),
                     new CheckFlag(_blackboard, "shouldSleep",
                         new CheckFlag(_blackboard, "isCoroutineActive",
@@ -48,7 +46,6 @@ public class IdleBehavior : Node
                     new OncePerCycle(_blackboard,
                         new Sequence(new List<Node>
                         {
-                            new DebuggingNode("secuencia stretch"),
                             new SetRandomFlag(_blackboard, "shouldStretch", 80f),
                             new CheckFlag(_blackboard, "shouldStretch",
                                 new CheckFlag(_blackboard, "isCoroutineActive",
@@ -58,7 +55,6 @@ public class IdleBehavior : Node
                     new OncePerCycle(_blackboard,
                         new Sequence(new List<Node>
                         {
-                            new DebuggingNode("secuencia howl"),
                             new SetRandomFlag(_blackboard, "shouldHowl", 50f),
                             new CheckFlag(_blackboard, "shouldHowl",
                                 new CheckFlag(_blackboard, "isCoroutineActive",
@@ -72,13 +68,6 @@ public class IdleBehavior : Node
             })
         });
 
-        Node sequence = new Sequence(new List<Node>
-        {
-            selector,
-            new ResetOncePerCycleNodes(_blackboard),
-            new GoBackToLooking(_blackboard)
-        });
-
-        return sequence.Evaluate();
+        return selector.Evaluate();
     }
 }
