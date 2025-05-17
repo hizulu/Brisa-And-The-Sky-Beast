@@ -18,29 +18,6 @@ public class IdleBehavior : Node
 
     public override NodeState Evaluate()
     {
-        //Node sequence = new Sequence(new List<Node>
-        //{
-        //    new SetRandomFlag(_blackboard, "shouldSit", _probabilityToSit),
-        //    new Selector(new List<Node> // Es un selector para que siempre devuelva true y siga al siguiente paso aunque no se realice la acción
-        //    {
-        //        new CheckFlag(_blackboard, "shouldSit",
-        //            new CheckFlag(_blackboard, "isCoroutineActive",
-        //                new Sit(_blackboard, _beast, 4f, 7f)), false),
-        //        new AlwaysTrue()
-        //    }),
-        //    //TODO: creo que sit y sleep se pisan
-        //    new SetRandomFlag(_blackboard, "shouldSleep", _probabilityToSleep),
-        //    new Selector(new List<Node>
-        //    {
-        //        new CheckFlag(_blackboard, "shouldSleep",
-        //            new CheckFlag(_blackboard, "isCoroutineActive",
-        //                new Sleep(_blackboard, _beast, 6f, 12f)), false),
-        //        new AlwaysTrue()
-        //    }),
-        //    new CheckFlag(_blackboard, "isCoroutineActive",
-        //        new GoBackToLooking(_blackboard), false)
-        //});
-
         Node selector = new Selector(new List<Node>
         {
             new OncePerCycle(_blackboard,
@@ -48,17 +25,20 @@ public class IdleBehavior : Node
                 {
                     new DebuggingNode("secuencia sit"),
                     new SetRandomFlag(_blackboard, "shouldSit", 40f),
-                    new DebuggingNode("debería sit"),
                     new CheckFlag(_blackboard, "shouldSit",
-                        new Sit(_blackboard, _beast, 4f, 7f)),
-                    new DebuggingNode("termina sit"),
+                        new CheckFlag(_blackboard, "isCoroutineActive",
+                            new Sit(_blackboard, _beast, 4f, 7f), false)),
+                    new DebuggingNode("termina sit")
                 })),
             new OncePerCycle(_blackboard,
                 new Sequence(new List<Node>
                 {
+                    new DebuggingNode("secuencia sleep"),
                     new SetRandomFlag(_blackboard, "shouldSleep", 30f),
                     new CheckFlag(_blackboard, "shouldSleep",
-                        new Sleep(_blackboard, _beast, 6f, 12f)),
+                        new CheckFlag(_blackboard, "isCoroutineActive",
+                            new Sleep(_blackboard, _beast, 6f, 12f), false)),
+                    new DebuggingNode("termina sleep")
                 })),
             new Sequence(new List<Node>
             {
@@ -68,16 +48,22 @@ public class IdleBehavior : Node
                     new OncePerCycle(_blackboard,
                         new Sequence(new List<Node>
                         {
-                            new SetRandomFlag(_blackboard, "shouldStretch", 20f),
+                            new DebuggingNode("secuencia stretch"),
+                            new SetRandomFlag(_blackboard, "shouldStretch", 80f),
                             new CheckFlag(_blackboard, "shouldStretch",
-                                new Stretch(_blackboard, _beast)),
+                                new CheckFlag(_blackboard, "isCoroutineActive",
+                                    new Stretch(_blackboard, _beast), false)),
+                            new DebuggingNode("termina stretch")
                         })),
                     new OncePerCycle(_blackboard,
                         new Sequence(new List<Node>
                         {
-                            new SetRandomFlag(_blackboard, "shouldHowl", 10f),
+                            new DebuggingNode("secuencia howl"),
+                            new SetRandomFlag(_blackboard, "shouldHowl", 50f),
                             new CheckFlag(_blackboard, "shouldHowl",
-                                new Howl(_blackboard, _beast)),
+                                new CheckFlag(_blackboard, "isCoroutineActive",
+                                    new Howl(_blackboard, _beast), false)),
+                            new DebuggingNode("termina howl")
                         })),
                     new AlwaysTrue()
                 }),
@@ -86,6 +72,13 @@ public class IdleBehavior : Node
             })
         });
 
-        return selector.Evaluate();
+        Node sequence = new Sequence(new List<Node>
+        {
+            selector,
+            new ResetOncePerCycleNodes(_blackboard),
+            new GoBackToLooking(_blackboard)
+        });
+
+        return sequence.Evaluate();
     }
 }

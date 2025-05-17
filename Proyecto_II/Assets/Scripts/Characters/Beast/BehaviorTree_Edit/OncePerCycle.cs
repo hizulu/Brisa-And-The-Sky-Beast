@@ -34,14 +34,22 @@ public class OncePerCycle : Node
             return state;
         }
 
-        var result = _child.Evaluate();
+        NodeState result = _child.Evaluate();
 
-        if (result == NodeState.SUCCESS || result == NodeState.RUNNING)
+        if (result == NodeState.SUCCESS)
         {
             _hasRunThisCycle = true;
+            state = NodeState.SUCCESS;
+        }
+        else if (result == NodeState.RUNNING)
+        {
+            state = NodeState.RUNNING;
+        }
+        else // FAILURE
+        {
+            state = NodeState.FAILURE;
         }
 
-        state = result;
         return state;
     }
 

@@ -17,6 +17,7 @@ public class ResetOncePerCycleNodes : Node
 
     public override NodeState Evaluate()
     {
+        ResetFlags();
         if (_blackboard.TryGetValue("oncePerCycleNodes", out List<OncePerCycle> nodes))
         {
             foreach (var node in nodes)
@@ -31,5 +32,14 @@ public class ResetOncePerCycleNodes : Node
 
         state = NodeState.SUCCESS;
         return state;
+    }
+
+    private void ResetFlags()
+    {
+        _blackboard.ClearKey("shouldSit");
+        _blackboard.ClearKey("shouldSleep");
+        _blackboard.ClearKey("shouldStretch");
+        _blackboard.ClearKey("shouldHowl");
+        _blackboard.SetValue("isCoroutineActive", false);
     }
 }
