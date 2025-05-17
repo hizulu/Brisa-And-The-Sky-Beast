@@ -911,6 +911,12 @@ AnimatorController:
   m_Name: BeastAnimator
   serializedVersion: 5
   m_AnimatorParameters:
+  - m_Name: stopAnimation
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   - m_Name: isFree
     m_Type: 4
     m_DefaultFloat: 0
@@ -1434,6 +1440,31 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &3156803817639709774
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: stopAnimation
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 121011455093114889}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.12
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &3323217137010148563
 AnimatorState:
   serializedVersion: 6
@@ -1632,12 +1663,13 @@ AnimatorStateMachine:
   - {fileID: -8182164589764991789}
   - {fileID: -8725861093648733162}
   - {fileID: 4467036180072175444}
+  - {fileID: 3156803817639709774}
   m_EntryTransitions: []
   m_StateMachineTransitions:
   - first: {fileID: 8617045639076141347}
     second: []
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 860, y: 40, z: 0}
+  m_AnyStatePosition: {x: 600, y: -90, z: 0}
   m_EntryPosition: {x: 370, y: 130, z: 0}
   m_ExitPosition: {x: 600, y: 140, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

@@ -19,6 +19,7 @@ public class BeastFreeState : BeastState
 
         // Activamos las flag en el Blackboard
         blackboard.SetValue("isConstrained", false);
+        blackboard.SetValue("goingToPlayer", false);
         blackboard.SetValue("lookForTarget", true);
         blackboard.SetValue("reachedTarget", false);
         blackboard.SetValue("isCoroutineActive", false);
@@ -71,6 +72,13 @@ public class BeastFreeState : BeastState
         {
             new CheckFlag(blackboard, "isConstrained",
                 new TransitionToBeastState(beast, new BeastConstrainedState())),
+            new CheckPlayerTooFar(beast, beast.playerTransform, 20f,
+                new Sequence(new List<Node>
+                {
+                    new StopEverything(blackboard, beast),
+                    new CheckFlag(blackboard, "goingToPlayer",
+                        new GoToPlayerFree(blackboard, beast, beast.playerTransform, beast.arrivalThreshold)),
+                })),
             new CheckFlag(blackboard, "isCoroutineActive", interestSubtree, false),
             new AlwaysTrue()
         });

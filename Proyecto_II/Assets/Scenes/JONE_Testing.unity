@@ -387,8 +387,6 @@ MonoBehaviour:
   signPanel: {fileID: 1067565933}
   signText: {fileID: 422860201}
   hudCanvas: {fileID: 1087304656}
-  playerInput: {fileID: 353271125}
-  playerMovementScript: {fileID: 353271126}
   playerCamera: {fileID: 1577233736}
   signsCSV: {fileID: 4900000, guid: 6c042580f9e84814d93ac3fb01916ded, type: 3}
 --- !u!1 &13184919
@@ -13644,6 +13642,8 @@ MonoBehaviour:
   - {fileID: 902806013}
   continueIndicator: {fileID: 1143239587}
   playerInput: {fileID: 353271125}
+  weaponSlot: {fileID: 0}
+  specialWeapon: {fileID: 0}
 --- !u!1 &693364843
 GameObject:
   m_ObjectHideFlags: 0
@@ -16141,10 +16141,6 @@ MonoBehaviour:
   halfDeadScreenTextBestia: {fileID: 238631353}
   halfDeadScreenBestiaRevive: {fileID: 1792379772}
   revivingCircleBestia: {fileID: 1943776511}
-  blurMaterial: {fileID: 2100000, guid: c806aac8098fb0a4e884825ee89706bd, type: 2}
-  transitionDuration: 2
-  targetBlurAmount: 0
-  targetBrightness: 1
 --- !u!1 &879941953
 GameObject:
   m_ObjectHideFlags: 0
@@ -23967,7 +23963,9 @@ MonoBehaviour:
   settingsPanel: {fileID: 1978495769}
   mapPanel: {fileID: 124168865}
   dialoguePanel: {fileID: 1020268905}
+  signPanel: {fileID: 0}
   diaManager: {fileID: 693174204}
+  signTextManager: {fileID: 0}
 --- !u!1 &1335984188
 GameObject:
   m_ObjectHideFlags: 0
