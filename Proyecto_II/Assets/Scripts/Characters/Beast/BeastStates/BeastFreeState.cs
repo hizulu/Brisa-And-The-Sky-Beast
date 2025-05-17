@@ -65,14 +65,13 @@ public class BeastFreeState : BeastState
                     new IdleBehavior(blackboard, beast)
                 })),
             new IdleBehavior(blackboard, beast), // Cuando no encuentra ningún objetivo
-            // new AlwaysTrue()
         });
 
         Node beastFreeTree = new Selector(new List<Node>
         {
             new CheckFlag(blackboard, "isConstrained",
                 new TransitionToBeastState(beast, new BeastConstrainedState())),
-            new CheckPlayerTooFar(beast, beast.playerTransform, 20f,
+            new CheckPlayerTooFar(beast, beast.playerTransform, 50f,
                 new Sequence(new List<Node>
                 {
                     new StopEverything(blackboard, beast),

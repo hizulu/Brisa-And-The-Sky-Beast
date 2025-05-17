@@ -32,9 +32,7 @@ public class GoToPlayerFree : Node
             if (_wasWalking)
             {
                 _beast.anim.SetBool("isWalking", false);
-                // Cambiaría a wait for order
-                _blackboard.SetValue("reachedPlayer", true);
-                _blackboard.SetValue("goToPlayer", false);
+                _blackboard.SetValue("goingToPlayer", false);
                 _beast.agent.ResetPath();
 
                 Debug.Log("Reached player.");
@@ -60,7 +58,7 @@ public class GoToPlayerFree : Node
             state = NodeState.FAILURE;
             return state;
         }
-
+        Debug.Log("Going to player.");
         state = NodeState.RUNNING;
         return state;
     }

@@ -77,8 +77,8 @@ public class IdleBehavior : Node
                             new CheckFlag(_blackboard, "shouldHowl",
                                 new CheckFlag(_blackboard, "isCoroutineActive",
                                     new Howl(_blackboard, _beast)), false),
-                        }))//,
-                    //new AlwaysTrue()
+                        })),
+                    new AlwaysTrue()
                 }),
                 new GoBackToLooking(_blackboard)
             })
