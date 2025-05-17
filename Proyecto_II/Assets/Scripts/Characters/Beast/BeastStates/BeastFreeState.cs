@@ -58,10 +58,15 @@ public class BeastFreeState : BeastState
             new CheckHasKey(blackboard, "target",
                 new GoToInterestPoint(beast, beast.arrivalThreshold)),
             new CheckFlag(blackboard, "reachedTarget",
-                new Sequence(new List<Node>
+                new Selector(new List<Node>
                 {
-                    new CheckFlag(blackboard, "isCoroutineActive",
-                        new Smell(blackboard, beast, 1f, 6f), false),
+                    new Sequence(new List<Node>
+                    {
+                        new SetRandomFlag(blackboard, "shouldSmell", 40f),
+                        new CheckFlag(blackboard, "shouldSmell",
+                            new CheckFlag(blackboard, "isCoroutineActive",
+                                new Smell(blackboard, beast), false))
+                    }),
                     new IdleBehavior(blackboard, beast)
                 })),
             new IdleBehavior(blackboard, beast), // Cuando no encuentra ningún objetivo

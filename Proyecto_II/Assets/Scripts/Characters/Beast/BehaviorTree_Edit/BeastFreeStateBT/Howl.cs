@@ -66,6 +66,7 @@ public class Howl : Node, ICoroutineNode
         if (_hasFinished) return;
 
         _blackboard.SetValue("isCoroutineActive", false);
+        _blackboard.ClearKey("shouldHowl");
 
         _hasFinished = true;
     }

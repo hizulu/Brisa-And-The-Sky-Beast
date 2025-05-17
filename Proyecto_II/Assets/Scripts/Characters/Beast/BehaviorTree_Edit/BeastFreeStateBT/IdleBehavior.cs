@@ -43,43 +43,45 @@ public class IdleBehavior : Node
 
         Node selector = new Selector(new List<Node>
         {
-            new Sequence(new List<Node>
-            {
-                new SetRandomFlag(_blackboard, "shouldSit", 40f),
-                new CheckFlag(_blackboard, "shouldSit",
-                    new CheckFlag(_blackboard, "isCoroutineActive",
-                        new Sit(_blackboard, _beast, 4f, 7f)), false),
-            }),
-            new Sequence(new List<Node>
-            {
-                new SetRandomFlag(_blackboard, "shouldSleep", 30f),
-                new CheckFlag(_blackboard, "shouldSleep",
-                    new CheckFlag(_blackboard, "isCoroutineActive",
-                        new Sleep(_blackboard, _beast, 6f, 12f)), false),
-            }),
+            new OncePerCycle(_blackboard,
+                new Sequence(new List<Node>
+                {
+                    new DebuggingNode("secuencia sit"),
+                    new SetRandomFlag(_blackboard, "shouldSit", 40f),
+                    new DebuggingNode("debería sit"),
+                    new CheckFlag(_blackboard, "shouldSit",
+                        new Sit(_blackboard, _beast, 4f, 7f)),
+                    new DebuggingNode("termina sit"),
+                })),
+            new OncePerCycle(_blackboard,
+                new Sequence(new List<Node>
+                {
+                    new SetRandomFlag(_blackboard, "shouldSleep", 30f),
+                    new CheckFlag(_blackboard, "shouldSleep",
+                        new Sleep(_blackboard, _beast, 6f, 12f)),
+                })),
             new Sequence(new List<Node>
             {
                 new DoIdle(_blackboard, _beast, 3f, 5f),
                 new Selector(new List<Node>
                 {
-                    new OncePerCycle(
+                    new OncePerCycle(_blackboard,
                         new Sequence(new List<Node>
                         {
-                            new SetRandomFlag(_blackboard, "shouldStretch", 10f),
+                            new SetRandomFlag(_blackboard, "shouldStretch", 20f),
                             new CheckFlag(_blackboard, "shouldStretch",
-                                new CheckFlag(_blackboard, "isCoroutineActive",
-                                    new Stretch(_blackboard, _beast)), false),
+                                new Stretch(_blackboard, _beast)),
                         })),
-                    new OncePerCycle(
+                    new OncePerCycle(_blackboard,
                         new Sequence(new List<Node>
                         {
                             new SetRandomFlag(_blackboard, "shouldHowl", 10f),
                             new CheckFlag(_blackboard, "shouldHowl",
-                                new CheckFlag(_blackboard, "isCoroutineActive",
-                                    new Howl(_blackboard, _beast)), false),
+                                new Howl(_blackboard, _beast)),
                         })),
                     new AlwaysTrue()
                 }),
+                new ResetOncePerCycleNodes(_blackboard),
                 new GoBackToLooking(_blackboard)
             })
         });
