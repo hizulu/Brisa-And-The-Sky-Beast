@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,7 +18,7 @@ public struct PlayerState
 {
     public Vector3 playerPosition;
     public float playerHealth;
-    // Weapon?
+    public string equippedWeaponID;
 }
 [System.Serializable]
 public struct Beast_State
@@ -74,6 +75,9 @@ public class SaveManager : MonoBehaviour
 
     private SceneState savedSceneState;
 
+    private Player player;
+    [SerializeField] private WeaponDatabase weaponDatabase;
+
     public static List<InventoryState> pendingInventoryLoad;
 
     // Singleton
@@ -92,10 +96,12 @@ public class SaveManager : MonoBehaviour
 
     private void Start()
     {
+        player = FindObjectOfType<Player>();
         if (PlayerPrefs.HasKey("SavedSceneState"))
         {
             string sceneStateJson = PlayerPrefs.GetString("SavedSceneState");
             savedSceneState = JsonUtility.FromJson<SceneState>(sceneStateJson);
+            LoadSceneState();
         }
         else
         {
@@ -111,7 +117,8 @@ public class SaveManager : MonoBehaviour
         #region Saving Player
         Player infoPlayer = FindObjectOfType<Player>();
         sceneState.playerState.playerPosition = Checkpoint.GetActiveCheckPointPosition();
-        //sceneState.playerState.playerHealth = infoPlayer.GetHealth();
+        sceneState.playerState.playerHealth = player.GetHealth();
+        sceneState.playerState.equippedWeaponID = player.weaponSlot.GetWeaponData()?.weaponID;
         Debug.Log($"Player health saved: {sceneState.playerState.playerHealth}");
         #endregion
 
@@ -143,27 +150,56 @@ public class SaveManager : MonoBehaviour
             string sceneStateJson = PlayerPrefs.GetString("SavedSceneState");
             savedSceneState = JsonUtility.FromJson<SceneState>(sceneStateJson);
 
-            #region Loading Player
-            Player savedPlayer = FindObjectOfType<Player>();
-            if (savedPlayer != null)
-            {
-                //savedPlayer.SetPosition(savedSceneState.playerState.playerPosition);
-                //savedPlayer.SetHealth(savedSceneState.playerState.playerHealth);
-                Debug.Log($"Player health should be: {savedSceneState.playerState.playerHealth}");
-            }
-            #endregion
-
-            //#region Loading Checkpoints
-            //for (int i = 0; i < savedSceneState.checkpoints.Count; i++)
-            //{
-            //    Checkpoint checkpoint = Checkpoint.CheckPointsList[i].GetComponent<Checkpoint>();
-            //    checkpoint.Activated = savedSceneState.checkpoints[i].isActive;
-            //    checkpoint.GetComponent<MeshRenderer>().material = checkpoint.Activated ? checkpoint.green : checkpoint.magenta;
-            //}
-            //#endregion
-
-            //InventoryManager.Instance.LoadInventory(savedSceneState.inventoryState);
+            StartCoroutine(LoadGameDataCoroutine());
         }
+    }
+
+    private IEnumerator LoadGameDataCoroutine()
+    {
+        yield return null;
+        #region Loading Player
+        // Asegurarse que el jugador existe
+        if (player == null)
+        {
+            player = FindObjectOfType<Player>();
+        }
+
+        if (player != null)
+        {
+            //savedPlayer.SetPosition(savedSceneState.playerState.playerPosition);
+            // Cargar vida
+            player.SetHealth(savedSceneState.playerState.playerHealth);
+            Debug.Log($"Player health should be: {savedSceneState.playerState.playerHealth}");
+
+            // Cargar arma
+            if (!string.IsNullOrEmpty(savedSceneState.playerState.equippedWeaponID))
+            {
+                WeaponData savedWeapon = weaponDatabase.GetWeaponByID(savedSceneState.playerState.equippedWeaponID);
+                if (savedWeapon != null)
+                {
+                    player.weaponSlot.SetWeapon(savedWeapon);
+                }
+            }
+
+            // Cargar inventario
+            if (InventoryManager.Instance != null && savedSceneState.inventoryState != null)
+            {
+                yield return new WaitUntil(() => InventoryManager.Instance.IsReady);
+                InventoryManager.Instance.LoadInventory(savedSceneState.inventoryState);
+            }
+        }
+        #endregion
+
+        //#region Loading Checkpoints
+        //for (int i = 0; i < savedSceneState.checkpoints.Count; i++)
+        //{
+        //    Checkpoint checkpoint = Checkpoint.CheckPointsList[i].GetComponent<Checkpoint>();
+        //    checkpoint.Activated = savedSceneState.checkpoints[i].isActive;
+        //    checkpoint.GetComponent<MeshRenderer>().material = checkpoint.Activated ? checkpoint.green : checkpoint.magenta;
+        //}
+        //#endregion
+
+        //InventoryManager.Instance.LoadInventory(savedSceneState.inventoryState);
     }
 
     public void LoadInventoryState()

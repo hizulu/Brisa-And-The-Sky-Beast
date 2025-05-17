@@ -10240,6 +10240,7 @@ MonoBehaviour:
     walkParameterName: isWalking
     runParameterName: isRunning
     sprintParameterName: isSprinting
+    crouchPoseParameterName: isCrouchPose
     crouchParameterName: isCrouching
     attack01ParameterName: isAttacking01
     attack02ParameterName: isAttacking02
@@ -10259,6 +10260,7 @@ MonoBehaviour:
     callBeastParameterName: isCallingBeast
     petBeastParameterName: isPettingBeast
     rideBeastParameterName: isRidingBeast
+    dismountBeastParameterName: isDismountingBeast
     healBeastParameterName: isHealingBeast
     reviveBeastParameterName: isRevivingBeast
     pickUpParameterName: isPickUp
@@ -10280,6 +10282,7 @@ MonoBehaviour:
   beastTrapped: {fileID: 1555036607}
   RenderPlayer: {fileID: 5330089509027177363}
   SwirlEffect: {fileID: 7423173325103082160, guid: 67c25d7a29b8a5c498136826debbf5d8, type: 3}
+  weaponSlot: {fileID: 1464668282}
   playerTargetEnemiesRange: 20
 --- !u!54 &353271127
 Rigidbody:
@@ -41751,7 +41754,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1593785348 stripped
@@ -46576,7 +46579,14 @@ MonoBehaviour:
   inventoryPanel: {fileID: 194252064}
   appearanceData:
   - {fileID: 11400000, guid: c6e12c3f7a0cda546901cd4af39afd6e, type: 2}
-  allItems: []
+  allItems:
+  - {fileID: 11400000, guid: 9259998a12240024d82685766a3190fc, type: 2}
+  - {fileID: 11400000, guid: 1f8ad697d8f967948ac02564e25114fa, type: 2}
+  - {fileID: 11400000, guid: 1610d7dce50f5884abf8468dc0813dcd, type: 2}
+  - {fileID: 11400000, guid: 730e861f571a95b4ebe09be2925315d4, type: 2}
+  - {fileID: 11400000, guid: cf1bcf053dd895d42a749bd233471da4, type: 2}
+  - {fileID: 11400000, guid: 10ae15fcb1d44334cb8129c3b1c1c2cc, type: 2}
+  - {fileID: 11400000, guid: 066b08ac6c08dd142a82aa285fdb54b4, type: 2}
 --- !u!114 &1756723067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47871,6 +47881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782f929c234f974419907cf35fcc21db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponDatabase: {fileID: 11400000, guid: b8c85261b3eee1b4ab9783a5989ea8f7, type: 2}
 --- !u!1 &1807363428
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class OnEhunaSceneEnter : MonoBehaviour
     void Start()
     {
         beastTrapped.SetBeastFreeFromCage();
-        player.PaloRecogido();
+        //player.PaloRecogido();
         leverActionsTempleDoor.isDoorOpen = false;
     }
 }
