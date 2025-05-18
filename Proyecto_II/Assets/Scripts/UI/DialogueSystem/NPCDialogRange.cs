@@ -32,7 +32,7 @@ public class NPCDialogRange : MonoBehaviour
 
     [Header("Camera References")]
     [SerializeField] private CinemachineVirtualCamera playerCam;
-    [SerializeField] private PlayerInput playerInput;
+    private PlayerInput playerInput;
 
     private bool playerInRange = false;
     private bool dialogStarted = false;
@@ -41,6 +41,7 @@ public class NPCDialogRange : MonoBehaviour
 
     private void Awake()
     {
+        playerInput = FindAnyObjectByType<PlayerInput>();
         EventsManager.CallNormalEvents("ResetCameraDialogue", ResumePlayerCamera);
         camComponents = playerCam.GetCinemachineComponent<CinemachinePOV>();
     }
