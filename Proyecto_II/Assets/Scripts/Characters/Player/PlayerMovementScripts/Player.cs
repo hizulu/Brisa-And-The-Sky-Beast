@@ -21,12 +21,13 @@ public class Player : MonoBehaviour
     [field: Header("Animations")]
     [field: SerializeField] public PlayerAnimationData PlayerAnimationData { get; private set; }
 
-    [field: Header("Objetcts")]
+    [field: Header("Objects")]
     [SerializeField] public Beast Beast;
     [SerializeField] public CinemachineVirtualCamera playerCam;
     public CinemachinePOV CamComponents;
     [SerializeField] public Transform lookCamPlayer;
     [SerializeField] public GameObject PaloBrisa;
+    [SerializeField] public GameObject Baculo;
     [SerializeField] public SpriteRenderer ShadowBrisa;
     [SerializeField] public GameObject hitBox;
     [SerializeField] public GameObject Shield;
@@ -39,7 +40,7 @@ public class Player : MonoBehaviour
     [SerializeField] public GameObject Baya;
     [SerializeField] public BeastTrapped beastTrapped;
     [SerializeField] public SkinnedMeshRenderer RenderPlayer;
-    [SerializeField] public ParticleSystem SwirlEffect;
+    [SerializeField] public MeshRenderer DoubleJumpEffect;
     [SerializeField] public WeaponSlot weaponSlot;
     public BoxCollider GroundCheckCollider { get; private set; }
     public PlayerInput PlayerInput { get; private set; }
@@ -143,12 +144,6 @@ public class Player : MonoBehaviour
       hitBox.SetActive(true); // Activa el hitbox
       yield return new WaitForSeconds(attackDuration);
       hitBox.SetActive(false); // Lo desactiva después de un tiempo
-    }
-
-    public void PaloRecogido()
-    {
-        Debug.Log("Palo recogido");
-        PaloBrisa.SetActive(true);
     }
 
     public void ResetHealth()
