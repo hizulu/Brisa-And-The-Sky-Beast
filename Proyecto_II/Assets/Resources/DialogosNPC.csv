@@ -1,28 +1,28 @@
-﻿ID;Name;Text;haveOptions;Option1Text;Option1NextID;Option2Text;Option2NextID;Option3Text;Option3NextID;OptionWithRequirementText;OptionWithRequirementID;NextLineID;RequiredID;
-0;Siroco;Pero que pintas llevas, ¿dónde te has metido?, creo que vas a necesitar un vestido nuevo. ;1;¿Sabes dónde está la anciana?;1;¿Qué ha pasado en el pueblo?;2;¿Cómo consigo un vestido nuevo?;3;;;;;
-1;Siroco;No chata, por aquí no se ha pasado.;0;;;;;;;;;;;
-2;Siroco;Vaya tela todo este marrón con los soldados. Bueno, algo me ha contado Launa, pero ya sabes la que se trae. ;0;;;;;;;;;;;
-3;Siroco;Para conseguir un vestido nuevo monísimo tendrás que recolectar tres ovillos de lana. Los puedes encontrar por el pueblo.;0;;;;;;;;;;;
-4;Launa;¡Hoy no paro de recibir visitas!, pero ya sabes, si quieres algo, ¡tendrás que soltar prenda! ;1;¿Sabes dónde está la anciana?;5;¿Qué ha pasado en el pueblo?;6;;;;;;;
-5;Launa;Mis palabras valen oro, ¿sabes por qué? Si yo no sé algo no me lo invento ¡No tengo ni idea de donde se ha podido meter esa viejecita!;0;;;;;;;;;;;
-6;Launa;Quizás sepa algo… ;0;;;;;;;;;;;
-7;Jena;¡Brisa! ¿¡De dónde has sacado esa vaca enorme!? Hay que ver, desapareces un día y mira con qué vuelves. ¿Cómo piensas alimentar semejante animal? ;1;¿Sabes dónde está la anciana?;8;¿Qué ha pasado en el pueblo?;11;;;;;;;
-8;Jena;¡Ojalá lo supiera! Llevo toda la mañana esperándola. ;0;;;;;;;;;9;;
-9;Jena;¡Todavía tengo una cesta de frutas que me encargó y no aparece por ningún lado! ;0;;;;;;;;;10;;
-10;Jena;¿Te la quieres quedar tu? ¡Seguro que esa vaca tiene buen tragar!;1;Sí;12;No;13;;;;;;;
-11;Jena;¡Se ha montado un follón tremendo! Pero yo no me he enterado de nada.;0;;;;;;;;;;;
-12;Jena;¡Ahí tienes guapetona!;0;;;;;;;;;;;
-13;Jena;¿Seguro? Con lo que tiene que comer el animal…;0;;;;;;;;;;;
-14;Lino;Hola Brisa, lo siento, pero hoy no puedo hablar. ¡No puedo parar, el tiempo se me va volando!;1;¿Sabes dónde está la anciana?;15;¿Qué ha pasado en el pueblo?;16;;;;;;;
-15;Lino;No…No tengo mucho tiempo, mejor pregúntale a mi hermano.;0;;;;;;;;;;;
-16;Lino;Ya te he dicho que no tengo tiempo. ;0;;;;;;;;;;;
-17;Nilo;Anda Brisa, vaya escolta peluda que traes eh… ;0;;;;;;;;;18;;
-18;Nilo;¿Has hablado con mi hermano? A ese tonto de Lino no sabe ni por dónde le sopla el aire.;1;¿Sabes dónde está la anciana?;19;¿Qué ha pasado en el pueblo?;20;;;¿Cómo llego hasta el templo?;21;;19;
-19;Nilo;Creo que la he visto ir hacia el gran molino.;0;;;;;;;;;;;
-20;Nilo;No sé nada de lo que ha podido pasar. Las cosas se han puesto muy raras. ;0;;;;;;;;;;;
-21;Nilo;(…) Si quieres saber más puedes hablar con Elevane. Ella puede contarte más sobre el molino.;0;;;;;;;;;;;
-22;Elevane;…;1;¿Sabes dónde está la anciana?;23;;;;;¿Qué sabes sobre el molino?;24;;21;
-23;Elevane;No… lo siento.;0;;;;;;;;;;;
-24;Elevane;El gran molino… se usaba de forma comunitaria para moler el grano. ;0;;;;;;;;;25;;
-25;Elevane;También se celebraban los grandes acontecimientos. Sin embargo… ya no está en funcionamiento. ;1;;;;;;;¿Cómo funciona el molino?;26;;25;
-26;Elevane;…;0;;;;;;;;;;;
+﻿ID;Name;Text;haveOptions;Option1Text;Option1NextID;Option2Text;Option2NextID;Option3Text;Option3NextID;OptionWithRequirementText;OptionWithRequirementID;NextLineID;RequiredID
+0;Siroco;Pero que pintas llevas, ¿dónde te has metido?, creo que vas a necesitar un vestido nuevo. ;1;¿Sabes dónde está la anciana?;1;¿Qué ha pasado en el pueblo?;2;¿Cómo consigo un vestido nuevo?;3;;;;
+1;Siroco;No chata, por aquí no se ha pasado.;0;;;;;;;;;;
+2;Siroco;Vaya tela todo este marrón con los soldados. Bueno, algo me ha contado Launa, pero ya sabes la que se trae. ;0;;;;;;;;;;
+3;Siroco;Para conseguir un vestido nuevo monísimo tendrás que recolectar tres ovillos de lana. Los puedes encontrar por el pueblo.;0;;;;;;;;;;
+4;Launa;¡Hoy no paro de recibir visitas!, pero ya sabes, si quieres algo, ¡tendrás que soltar prenda! ;1;¿Sabes dónde está la anciana?;5;¿Qué ha pasado en el pueblo?;6;;;;;;
+5;Launa;Mis palabras valen oro, ¿sabes por qué? Si yo no sé algo no me lo invento ¡No tengo ni idea de donde se ha podido meter esa viejecita!;0;;;;;;;;;;
+6;Launa;Quizás sepa algo… ;0;;;;;;;;;;
+7;Jena;¡Brisa! ¿¡De dónde has sacado esa vaca enorme!? Hay que ver, desapareces un día y mira con qué vuelves. ¿Cómo piensas alimentar semejante animal? ;1;¿Sabes dónde está la anciana?;8;¿Qué ha pasado en el pueblo?;11;;;;;;
+8;Jena;¡Ojalá lo supiera! Llevo toda la mañana esperándola. ;0;;;;;;;;;9;
+9;Jena;¡Todavía tengo una cesta de frutas que me encargó y no aparece por ningún lado! ;0;;;;;;;;;10;
+10;Jena;Si quieres, puedes llevartela tú, ¡seguro que esa vaca tiene buen tragar!;0;;;;;;;;;;
+11;Jena;¡Se ha montado un follón tremendo! Pero yo no me he enterado de nada.;0;;;;;;;;;;
+;;;0;;;;;;;;;;
+;;;0;;;;;;;;;;
+14;Lino;Hola Brisa, lo siento, pero hoy no puedo hablar. ¡No puedo parar, el tiempo se me va volando!;1;¿Sabes dónde está la anciana?;15;¿Qué ha pasado en el pueblo?;16;;;;;;
+15;Lino;No…No tengo mucho tiempo, mejor pregúntale a mi hermano.;0;;;;;;;;;;
+16;Lino;Ya te he dicho que no tengo tiempo. ;0;;;;;;;;;;
+17;Nilo;Anda Brisa, vaya escolta peluda que traes eh… ;0;;;;;;;;;18;
+18;Nilo;¿Has hablado con mi hermano? A ese tonto de Lino no sabe ni por dónde le sopla el aire.;1;¿Sabes dónde está la anciana?;19;¿Qué ha pasado en el pueblo?;20;;;¿Cómo llego hasta el templo?;21;;19
+19;Nilo;Creo que la he visto ir hacia el gran molino.;0;;;;;;;;;;
+20;Nilo;No sé nada de lo que ha podido pasar. Las cosas se han puesto muy raras. ;0;;;;;;;;;;
+21;Nilo;(…) Si quieres saber más puedes hablar con Elevane. Ella puede contarte más sobre el molino.;0;;;;;;;;;;
+22;Elevane;…;1;¿Sabes dónde está la anciana?;23;;;;;¿Qué sabes sobre el molino?;24;;21
+23;Elevane;No… lo siento.;0;;;;;;;;;;
+24;Elevane;El gran molino… se usaba de forma comunitaria para moler el grano. ;0;;;;;;;;;25;
+25;Elevane;También se celebraban los grandes acontecimientos. Sin embargo… ya no está en funcionamiento. ;1;;;;;;;¿Cómo funciona el molino?;26;;25
+26;Elevane;…;0;;;;;;;;;;
