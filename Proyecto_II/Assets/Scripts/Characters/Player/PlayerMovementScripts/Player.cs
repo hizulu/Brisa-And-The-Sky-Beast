@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     [field: Header("Animations")]
     [field: SerializeField] public PlayerAnimationData PlayerAnimationData { get; private set; }
 
-    [field: Header("Objetcts")]
+    [field: Header("Objects")]
     [SerializeField] public Beast Beast;
     [SerializeField] public CinemachineVirtualCamera playerCam;
     public CinemachinePOV CamComponents;
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     [SerializeField] public GameObject Baya;
     [SerializeField] public BeastTrapped beastTrapped;
     [SerializeField] public SkinnedMeshRenderer RenderPlayer;
-    [SerializeField] public ParticleSystem SwirlEffect;
+    [SerializeField] public MeshRenderer DoubleJumpEffect;
     [SerializeField] public WeaponSlot weaponSlot;
     public BoxCollider GroundCheckCollider { get; private set; }
     public PlayerInput PlayerInput { get; private set; }
