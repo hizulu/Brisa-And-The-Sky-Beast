@@ -74,12 +74,12 @@ public class PickUpWeapons : MonoBehaviour
             }
 
             if (weaponScript.weaponData.weaponName == "Palo")
-                player.PaloRecogido();
+                EventsManager.TriggerNormalEvent("PickUpStick");
 
             if (weaponScript.weaponData.weaponName == "Baculo")
                 EventsManager.TriggerNormalEvent("PickUpSceptre");
 
-            Debug.Log("Palo collected");
+            Debug.Log("Weapon collected");
         }
     }
 }

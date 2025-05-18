@@ -48,6 +48,24 @@ public class NPCDialogRange : MonoBehaviour
 
     private void OnEnable()
     {
+        StartCoroutine(DelayedEnable());
+    }
+
+    private IEnumerator DelayedEnable()
+    {
+        // Espera un frame para asegurar que todo está inicializado
+        yield return null;
+
+        if (playerInput == null)
+        {
+            playerInput = FindObjectOfType<PlayerInput>();
+            if (playerInput == null)
+            {
+                Debug.LogError("PlayerInput no encontrado en la escena!");
+                yield break;
+            }
+        }
+
         playerInput.UIPanelActions.Dialogue.started += OnInteract;
     }
 
