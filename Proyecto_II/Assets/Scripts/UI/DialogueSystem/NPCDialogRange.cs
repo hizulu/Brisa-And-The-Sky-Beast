@@ -63,7 +63,7 @@ public class NPCDialogRange : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = true;
+            playerInRange = true;        
             uiManager.ShowNPCPanelName(npcName, transform);
             Debug.Log("Puedes hablar con el NPC");
         }
@@ -92,7 +92,7 @@ public class NPCDialogRange : MonoBehaviour
         // Verificar si fue E (Keyboard)
         bool isKeyboard = context.control.device is Keyboard && context.control.name == "e";
 
-        if (!isKeyboard) return;
+        if (!isKeyboard) return;;
         if (!playerInRange) return;
 
         if (!dialogStarted)
