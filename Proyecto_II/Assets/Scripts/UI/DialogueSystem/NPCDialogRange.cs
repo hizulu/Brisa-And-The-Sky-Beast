@@ -32,7 +32,7 @@ public class NPCDialogRange : MonoBehaviour
 
     [Header("Camera References")]
     [SerializeField] private CinemachineVirtualCamera playerCam;
-    [SerializeField] private PlayerInput playerInput;
+    private PlayerInput playerInput;
 
     private bool playerInRange = false;
     private bool dialogStarted = false;
@@ -41,6 +41,7 @@ public class NPCDialogRange : MonoBehaviour
 
     private void Awake()
     {
+        playerInput = FindAnyObjectByType<PlayerInput>();
         EventsManager.CallNormalEvents("ResetCameraDialogue", ResumePlayerCamera);
         camComponents = playerCam.GetCinemachineComponent<CinemachinePOV>();
     }
@@ -62,7 +63,7 @@ public class NPCDialogRange : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = true;
+            playerInRange = true;        
             uiManager.ShowNPCPanelName(npcName, transform);
             Debug.Log("Puedes hablar con el NPC");
         }
@@ -91,7 +92,7 @@ public class NPCDialogRange : MonoBehaviour
         // Verificar si fue E (Keyboard)
         bool isKeyboard = context.control.device is Keyboard && context.control.name == "e";
 
-        if (!isKeyboard) return;
+        if (!isKeyboard) return;;
         if (!playerInRange) return;
 
         if (!dialogStarted)

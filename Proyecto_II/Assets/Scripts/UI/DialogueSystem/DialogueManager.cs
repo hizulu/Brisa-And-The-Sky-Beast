@@ -336,8 +336,8 @@ public class DialogManager : MonoBehaviour
             SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
         }
 
-        // Mostrar botón "Adiós" solo si hay al menos una opción mostrada
-        if (buttonIndex > 0 && buttonIndex < optionButtons.Length)
+        // Mostrar botón "Adiós" SIEMPRE que sea un diálogo con opciones
+        if (entry.HasOptions && buttonIndex < optionButtons.Length)
         {
             SetupOption(buttonIndex, "Adiós.", -1);
         }
@@ -429,6 +429,7 @@ public class DialogManager : MonoBehaviour
         dialogueText.text = "";
         nameText.text = "";
         dialogPanel.SetActive(false);
+        lastOptionsEntry = null;
         isDialogActive = false;
 
         EventsManager.TriggerNormalEvent("ResetCameraDialogue");
