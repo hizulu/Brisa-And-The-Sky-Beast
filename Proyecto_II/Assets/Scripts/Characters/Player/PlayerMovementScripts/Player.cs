@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     [SerializeField] public BeastTrapped beastTrapped;
     [SerializeField] public SkinnedMeshRenderer RenderPlayer;
     [SerializeField] public ParticleSystem SwirlEffect;
+    [SerializeField] public WeaponSlot weaponSlot;
     public BoxCollider GroundCheckCollider { get; private set; }
     public PlayerInput PlayerInput { get; private set; }
 
@@ -162,5 +163,20 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, playerTargetEnemiesRange);
+    }
+
+    public float GetHealth()
+    {
+        return Data.StatsData.CurrentHealth;
+    }
+
+    public void SetHealth(float health)
+    {
+        // Solo actualizar si el valor es diferente
+        if (Mathf.Abs(Data.StatsData.CurrentHealth - health) > 0.01f)
+        {
+            Data.StatsData.CurrentHealth = Mathf.Clamp(health, 0, Data.StatsData.MaxHealth);
+            Debug.Log($"Vida actualizada: {Data.StatsData.CurrentHealth}");
+        }
     }
 }

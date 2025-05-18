@@ -51,7 +51,13 @@ public class InventoryManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            allItems = itemDatabase.items;
+            DontDestroyOnLoad(gameObject);
+
+            // Inicializar con slots vacíos si es la primera vez
+            if (itemSlots.Count == 0)
+            {
+                InitializeEmptySlots();
+            }
         }
         else
         {
@@ -311,39 +317,73 @@ public class InventoryManager : MonoBehaviour
     // Restaura el inventario desde una lista de InventoryState
     public void LoadInventory(List<InventoryState> savedInventory)
     {
+        // Limpiar datos pero no destruir slots inmediatamente
         inventory.Clear();
+
+        // Desactivar todos los slots existentes
+        foreach (var slot in itemSlots)
+        {
+            slot.gameObject.SetActive(false);
+        }
+
+        // Cargar nuevos items
         foreach (var state in savedInventory)
         {
             ItemData item = allItems.Find(i => i.itemID == state.itemID);
             if (item != null)
             {
                 inventory[item] = state.amount;
-            }
-            else
-            {
-                Debug.LogWarning($"Item with ID {state.itemID} not found in allItems.");
+
+                // Reutilizar slot existente o crear nuevo
+                ItemSlot availableSlot = itemSlots.Find(s => !s.gameObject.activeSelf);
+
+                if (availableSlot != null)
+                {
+                    availableSlot.SetItem(item, state.amount);
+                    availableSlot.gameObject.SetActive(true);
+                }
+                else
+                {
+                    GameObject newSlot = Instantiate(itemSlotPrefab, inventoryPanel);
+                    ItemSlot slotComponent = newSlot.GetComponent<ItemSlot>();
+                    slotComponent.SetItem(item, state.amount);
+                    itemSlots.Add(slotComponent);
+                }
             }
         }
-
-        RefreshInventoryUI();
-        Debug.Log($"Finished loading data in inventory: {gameObject.name}");
     }
 
     private void RefreshInventoryUI()
     {
-        // Limpiar slots visuales existentes
+        // Destruir slots antiguos
         foreach (ItemSlot slot in itemSlots)
         {
-            Destroy(slot.gameObject);
+            if (slot != null) Destroy(slot.gameObject);
         }
         itemSlots.Clear();
 
-        // Crear nuevos slots según el contenido del inventario cargado
+        // Crear slots nuevos para cada ítem en el inventario
         foreach (var pair in inventory)
         {
-            AssignOrCreateItemSlot(pair.Key, pair.Value);
+            GameObject newSlot = Instantiate(itemSlotPrefab, inventoryPanel);
+            ItemSlot slotComponent = newSlot.GetComponent<ItemSlot>();
+            slotComponent.SetItem(pair.Key, pair.Value); // Asigna ItemData y cantidad
+            itemSlots.Add(slotComponent);
         }
     }
 
+    private void InitializeEmptySlots()
+    {
+        // Crear slots iniciales (ajusta el número según necesites)
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject newSlot = Instantiate(itemSlotPrefab, inventoryPanel);
+            ItemSlot slot = newSlot.GetComponent<ItemSlot>();
+            slot.gameObject.SetActive(false);
+            itemSlots.Add(slot);
+        }
+    }
+
+    public bool IsReady => inventoryPanel != null && itemSlotPrefab != null;
     #endregion
 }
