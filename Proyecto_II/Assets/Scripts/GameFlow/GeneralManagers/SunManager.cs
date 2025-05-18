@@ -4,10 +4,11 @@ using UnityEngine;
 
 /*
  * NOMBRE CLASE: SunManager
- * AUTOR: Sara Yue Madruga Martín
+ * AUTOR: Sara Yue Madruga Martín, Jone Sainz Egea
  * FECHA: 22/04/2025
  * DESCRIPCIÓN: Gestiona la rotación de la luz direccional (sol) para simular sistema de día y noche.
- * VERSIÓN: 1.0. 
+ * VERSIÓN: 1.0.
+ *              1.1. Funciona con el skybox
  */
 
 public class SunManager : MonoBehaviour
@@ -30,10 +31,17 @@ public class SunManager : MonoBehaviour
     [SerializeField] private float maxMoonIntensity;
     private float lightIntensityMultiplier = 1f;
 
+    // Skybox
+    [SerializeField] private Material blendedSkybox;
+    [SerializeField] private float skyboxBlendSpeed = 0.5f;
+    private float targetBlend = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
         // Debug.Log(sun.transform.rotation.eulerAngles);
+        RenderSettings.skybox = blendedSkybox;
+
         currentTime = DateTime.Now.Date + TimeSpan.FromHours(startHour);
         sunriseTime = TimeSpan.FromHours(sunriseHour);
         sunsetTime = TimeSpan.FromHours(sunsetHour);
@@ -89,8 +97,13 @@ public class SunManager : MonoBehaviour
         sun.intensity = Mathf.Lerp(0, maxSunIntensity, curveValue) * lightIntensityMultiplier;
         //moon.intensity = Mathf.Lerp(0, maxMoonIntensity, curveValue) * lightIntensityMultiplier;
 
-        // También aplicar el multiplicador a la luz ambiental si es necesario
         RenderSettings.ambientLight = Color.Lerp(nightAmbientLight, dayAmbientLight, curveValue) * lightIntensityMultiplier;
+
+        // Blend dinámico del cielo
+        targetBlend = 1f - curveValue; // Día a Noche
+        float currentBlend = blendedSkybox.GetFloat("_Blend");
+        float newBlend = Mathf.Lerp(currentBlend, targetBlend, Time.deltaTime * skyboxBlendSpeed);
+        blendedSkybox.SetFloat("_Blend", newBlend);
     }
 
     public void SetLightIntensityMultiplier(float multiplier)
