@@ -27,6 +27,7 @@ public class PlayerCrouchIdleState : PlayerStopState
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
+        EventsManager.TriggerSpecialEvent<bool>("PlayerCrouchState", true);
         isWaitingToRepeat = false;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.CrouchPoseParameterHash);
@@ -54,6 +55,7 @@ public class PlayerCrouchIdleState : PlayerStopState
             stateMachine.Player.StopCoroutine(changeFaceExpresionIdleCrouch);
 
         StopAnimation(stateMachine.Player.PlayerAnimationData.CrouchPoseParameterHash);
+        EventsManager.TriggerSpecialEvent<bool>("PlayerCrouchState", false);
         //Debug.Log("Has salido del estado de AGACHADO IDLE");
     }
     #endregion
@@ -84,7 +86,7 @@ public class PlayerCrouchIdleState : PlayerStopState
     private IEnumerator RepeatAnimationCrouchPose()
     {
         float maxTimeToRepeat = Random.Range(2f, 5f);
-        Debug.Log(maxTimeToRepeat);
+        //Debug.Log(maxTimeToRepeat);
         yield return new WaitForSeconds(maxTimeToRepeat);
         stateMachine.Player.AnimPlayer.Play("PoseCrouch", 0, 0f); // Fuerza a reproducir la animación desde el princpio.
         changeFaceExpresionIdleCrouch = stateMachine.Player.StartCoroutine(LookAroundFace());
