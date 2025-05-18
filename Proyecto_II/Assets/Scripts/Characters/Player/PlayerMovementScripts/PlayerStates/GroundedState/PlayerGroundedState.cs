@@ -184,7 +184,7 @@ public class PlayerGroundedState : PlayerMovementState
     protected virtual void AttackStart(InputAction.CallbackContext context)
     {
         if ((!stateMachine.Player.PaloBrisa.activeInHierarchy && !stateMachine.Player.Baculo.activeInHierarchy) || stateMachine.CurrentState is PlayerRideBeastState || startActiveShield) return;
-        else if (!stateMachine.Player.PaloBrisa.activeInHierarchy && stateMachine.Player.Baculo.activeInHierarchy)
+        else if ((!stateMachine.Player.PaloBrisa.activeInHierarchy && stateMachine.Player.Baculo.activeInHierarchy)|| stateMachine.Player.PaloBrisa.activeInHierarchy)
         {
             if (!(stateMachine.CurrentState is PlayerAttack02 || stateMachine.CurrentState is PlayerAttack03))
                 stateMachine.ChangeState(stateMachine.Attack01State);
