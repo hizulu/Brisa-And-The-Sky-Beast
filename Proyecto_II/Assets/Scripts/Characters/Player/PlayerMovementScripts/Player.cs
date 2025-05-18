@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     public CinemachinePOV CamComponents;
     [SerializeField] public Transform lookCamPlayer;
     [SerializeField] public GameObject PaloBrisa;
+    [SerializeField] public GameObject Baculo;
     [SerializeField] public SpriteRenderer ShadowBrisa;
     [SerializeField] public GameObject hitBox;
     [SerializeField] public GameObject Shield;
@@ -143,12 +144,6 @@ public class Player : MonoBehaviour
       hitBox.SetActive(true); // Activa el hitbox
       yield return new WaitForSeconds(attackDuration);
       hitBox.SetActive(false); // Lo desactiva después de un tiempo
-    }
-
-    public void PaloRecogido()
-    {
-        Debug.Log("Palo recogido");
-        PaloBrisa.SetActive(true);
     }
 
     public void ResetHealth()
