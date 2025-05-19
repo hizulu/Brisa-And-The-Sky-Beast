@@ -387,8 +387,6 @@ MonoBehaviour:
   signPanel: {fileID: 1067565933}
   signText: {fileID: 422860201}
   hudCanvas: {fileID: 1087304656}
-  playerInput: {fileID: 353271125}
-  playerMovementScript: {fileID: 353271126}
   playerCamera: {fileID: 1577233736}
   signsCSV: {fileID: 4900000, guid: 6c042580f9e84814d93ac3fb01916ded, type: 3}
 --- !u!1 &13184919
@@ -6142,6 +6140,7 @@ MonoBehaviour:
     walkParameterName: isWalking
     runParameterName: isRunning
     sprintParameterName: isSprinting
+    crouchPoseParameterName: isCrouchPose
     crouchParameterName: isCrouching
     attack01ParameterName: isAttacking01
     attack02ParameterName: isAttacking02
@@ -6161,6 +6160,7 @@ MonoBehaviour:
     callBeastParameterName: isCallingBeast
     petBeastParameterName: isPettingBeast
     rideBeastParameterName: isRidingBeast
+    dismountBeastParameterName: isDismountingBeast
     healBeastParameterName: isHealingBeast
     reviveBeastParameterName: isRevivingBeast
     pickUpParameterName: isPickUp
@@ -6169,6 +6169,7 @@ MonoBehaviour:
   CamComponents: {fileID: 0}
   lookCamPlayer: {fileID: 1594478463}
   PaloBrisa: {fileID: 2263008}
+  Baculo: {fileID: 0}
   ShadowBrisa: {fileID: 0}
   hitBox: {fileID: 1788924121}
   Shield: {fileID: 1436254889}
@@ -6181,7 +6182,8 @@ MonoBehaviour:
   Baya: {fileID: 1782272205}
   beastTrapped: {fileID: 1555036607}
   RenderPlayer: {fileID: 5330089509027177363}
-  SwirlEffect: {fileID: 0}
+  DoubleJumpEffect: {fileID: 0}
+  weaponSlot: {fileID: 0}
   playerTargetEnemiesRange: 20
 --- !u!54 &353271127
 Rigidbody:
@@ -13644,6 +13646,8 @@ MonoBehaviour:
   - {fileID: 902806013}
   continueIndicator: {fileID: 1143239587}
   playerInput: {fileID: 353271125}
+  weaponSlot: {fileID: 0}
+  specialWeapon: {fileID: 0}
 --- !u!1 &693364843
 GameObject:
   m_ObjectHideFlags: 0
@@ -16141,10 +16145,6 @@ MonoBehaviour:
   halfDeadScreenTextBestia: {fileID: 238631353}
   halfDeadScreenBestiaRevive: {fileID: 1792379772}
   revivingCircleBestia: {fileID: 1943776511}
-  blurMaterial: {fileID: 2100000, guid: c806aac8098fb0a4e884825ee89706bd, type: 2}
-  transitionDuration: 2
-  targetBlurAmount: 0
-  targetBrightness: 1
 --- !u!1 &879941953
 GameObject:
   m_ObjectHideFlags: 0
@@ -23967,7 +23967,9 @@ MonoBehaviour:
   settingsPanel: {fileID: 1978495769}
   mapPanel: {fileID: 124168865}
   dialoguePanel: {fileID: 1020268905}
+  signPanel: {fileID: 0}
   diaManager: {fileID: 693174204}
+  signTextManager: {fileID: 0}
 --- !u!1 &1335984188
 GameObject:
   m_ObjectHideFlags: 0
@@ -33488,6 +33490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782f929c234f974419907cf35fcc21db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponDatabase: {fileID: 0}
 --- !u!1 &1809314315
 GameObject:
   m_ObjectHideFlags: 0
@@ -44229,7 +44232,7 @@ SkinnedMeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3980985786738738977}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
