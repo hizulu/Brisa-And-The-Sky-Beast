@@ -43,9 +43,7 @@ public class OpeningCinematic : MonoBehaviour
     public void NextScene()
     {
         Cinematics.CineReproduciendo = false;
-        int escenaActual = SceneManager.GetActiveScene().buildIndex;
-        int siguienteEscena = escenaActual + 1;
-        SceneManager.LoadScene(siguienteEscena);
+        GameManager.Instance.LoadNextScene();
     }
 
     private void Pause()

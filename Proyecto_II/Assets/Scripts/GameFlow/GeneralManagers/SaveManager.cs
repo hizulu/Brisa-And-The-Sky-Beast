@@ -114,14 +114,22 @@ public class SaveManager : MonoBehaviour
 
     public void SaveSceneState() 
     {
+        Debug.Log("Entered save scene state");
         SceneState sceneState = new SceneState();
+        Debug.Log("new scene state created");
 
         #region Saving Player
         Player infoPlayer = FindObjectOfType<Player>();
-        sceneState.playerState.playerPosition = Checkpoint.GetActiveCheckPointPosition();
-        sceneState.playerState.playerHealth = player.GetHealth();
-        sceneState.playerState.equippedWeaponID = player.weaponSlot.GetWeaponData()?.weaponID;
-        Debug.Log($"Player health saved: {sceneState.playerState.playerHealth}");
+        if (infoPlayer != null)
+        {
+            Debug.Log("Player found");
+            //sceneState.playerState.playerPosition = Checkpoint.GetActiveCheckPointPosition();
+            //Debug.Log($"Player position saved: {sceneState.playerState.playerPosition}");
+            sceneState.playerState.playerHealth = player.GetHealth();
+            Debug.Log($"Player health saved: {sceneState.playerState.playerHealth}");
+            sceneState.playerState.equippedWeaponID = player.weaponSlot.GetWeaponData()?.weaponID;
+            Debug.Log($"Player weaponID saved: {player.weaponSlot.GetWeaponData()?.weaponID}");
+        }
         #endregion
 
         //#region Saving Checkpoint
@@ -152,22 +160,29 @@ public class SaveManager : MonoBehaviour
             string sceneStateJson = PlayerPrefs.GetString("SavedSceneState");
             savedSceneState = JsonUtility.FromJson<SceneState>(sceneStateJson);
 
+            Debug.Log("Starting coroutine");
             StartCoroutine(LoadGameDataCoroutine());
         }
     }
 
     private IEnumerator LoadGameDataCoroutine()
     {
-        yield return null;
+        Debug.Log("Dentro de la corrutina1");
+        // yield return null;
+        Debug.Log("Dentro de la corrutina2");
         #region Loading Player
         // Asegurarse que el jugador existe
         if (player == null)
         {
             player = FindObjectOfType<Player>();
-        }
+            Debug.Log("Looking for player");
+        } else
+            Debug.Log("Ya había player");
+
 
         if (player != null)
         {
+            Debug.Log("Player wasn't null");
             //savedPlayer.SetPosition(savedSceneState.playerState.playerPosition);
             // Cargar vida
             player.SetHealth(savedSceneState.playerState.playerHealth);

@@ -21,13 +21,13 @@ public class MainMenu : MonoBehaviour
 
         GameSession.IsNewGame = true;
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameManager.Instance.LoadScene("01_OpeningCinematic");
     }
 
     public void ContinueGame()
     {
         GameSession.IsNewGame = false;
-        GameManager.Instance.LoadScene("01_TheHollow"); //TODO: guardar nombre de escena
+        GameManager.Instance.LoadScene("02_TheHollow"); //TODO: guardar nombre de escena
     }
 
     public void Creditos()
