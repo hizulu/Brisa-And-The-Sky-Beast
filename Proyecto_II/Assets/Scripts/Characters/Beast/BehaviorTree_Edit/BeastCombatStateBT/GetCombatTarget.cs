@@ -52,11 +52,14 @@ public class GetCombatTarget : Node
 
         foreach (GameObject enemy in _beast.enemiesInRange)
         {
-            float distanceToEnemy = Vector3.Distance(_beast.transform.position, enemy.transform.position);
-            if (distanceToEnemy > bestDistanceToEnemy)
+            if (enemy != null)
             {
-                bestDistanceToEnemy = distanceToEnemy;
-                enemyTarget = enemy;
+                float distanceToEnemy = Vector3.Distance(_beast.transform.position, enemy.transform.position);
+                if (distanceToEnemy > bestDistanceToEnemy)
+                {
+                    bestDistanceToEnemy = distanceToEnemy;
+                    enemyTarget = enemy;
+                }
             }
         }
 

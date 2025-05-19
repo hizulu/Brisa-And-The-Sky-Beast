@@ -13,13 +13,15 @@ public class BeastFreeState : BeastState
 
     public override void OnEnter(Beast beast)
     {
-        // Debug.Log("Beast has entered Free State");
+        Debug.Log("Beast has entered Free State");
 
         blackboard = beast.blackboard;
 
         // Activamos las flag en el Blackboard
         blackboard.SetValue("isConstrained", false);
+        blackboard.SetValue("goingToPlayer", false);
         blackboard.SetValue("lookForTarget", true);
+        blackboard.SetValue("reachedTarget", false);
         blackboard.SetValue("isCoroutineActive", false);
 
         // Creamos el árbol de comportamiento libre
@@ -39,7 +41,11 @@ public class BeastFreeState : BeastState
 
     public override void OnExit(Beast beast)
     {
-        // Debug.Log("Beast is leaving Free State");
+        blackboard.SetValue("lookForTarget", true);
+        blackboard.ClearKey("target");
+        blackboard.SetValue("reachedTarget", false);
+
+        Debug.Log("Beast has leaved Free State");
     }
 
     private Node SetupFreeBehaviorTree(Beast beast)
@@ -52,20 +58,31 @@ public class BeastFreeState : BeastState
             new CheckHasKey(blackboard, "target",
                 new GoToInterestPoint(beast, beast.arrivalThreshold)),
             new CheckFlag(blackboard, "reachedTarget",
-                new Sequence(new List<Node>
+                new Selector(new List<Node>
                 {
-                    new CheckFlag(blackboard, "isCoroutineActive",
-                        new Smell(blackboard, beast, 1f, 6f), false),
+                    new Sequence(new List<Node>
+                    {
+                        new SetRandomFlag(blackboard, "shouldSmell", 40f),
+                        new CheckFlag(blackboard, "shouldSmell",
+                            new CheckFlag(blackboard, "isCoroutineActive",
+                                new Smell(blackboard, beast), false))
+                    }),
                     new IdleBehavior(blackboard, beast)
                 })),
             new IdleBehavior(blackboard, beast), // Cuando no encuentra ningún objetivo
-            new AlwaysTrue()
         });
 
         Node beastFreeTree = new Selector(new List<Node>
         {
             new CheckFlag(blackboard, "isConstrained",
                 new TransitionToBeastState(beast, new BeastConstrainedState())),
+            new CheckPlayerTooFar(beast, beast.playerTransform, 50f,
+                new Sequence(new List<Node>
+                {
+                    new StopEverything(blackboard, beast),
+                    new CheckFlag(blackboard, "goingToPlayer",
+                        new GoToPlayerFree(blackboard, beast, beast.playerTransform, beast.arrivalThreshold)),
+                })),
             new CheckFlag(blackboard, "isCoroutineActive", interestSubtree, false),
             new AlwaysTrue()
         });
