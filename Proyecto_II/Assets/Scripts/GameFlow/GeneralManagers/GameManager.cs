@@ -147,7 +147,6 @@ public class GameManager : MonoBehaviour
 
     private void LoadSceneWithVideo(string targetScene, bool loadSaved = false)
     {
-        Debug.Log("Llama a empezar corrutina");
         StartCoroutine(LoadSceneWithVideoAsync(targetScene, loadSaved));
 
     }
@@ -155,13 +154,10 @@ public class GameManager : MonoBehaviour
     private IEnumerator LoadSceneWithVideoAsync(string targetScene, bool loadSaved)
     {
         EventsManager.CleanAllEvents();
-        Debug.Log("Se han limpiado los eventos");
 
         // Cargar pantalla de carga
         yield return SceneManager.LoadSceneAsync("00_LoadingScreen", LoadSceneMode.Single);
-        Debug.Log("Carga escena de pantalla de carga");
         yield return null;
-        Debug.Log("Ya debería haber cargado");
 
         // Esperar a que el LoadingVideoPlayer esté disponible
         while (LoadingVideoPlayer.Instance == null)
@@ -178,7 +174,6 @@ public class GameManager : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-        Debug.Log("El vídeo de pantalla de carga ha empezado a reproducirse");
 
         // Cargar escena objetivo en segundo plano
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene);
@@ -188,16 +183,15 @@ public class GameManager : MonoBehaviour
         {
             yield return null;
         }
-        Debug.Log("Escena casi cargada");
-
-        yield return new WaitForSeconds(0.5f);
+        // Debug.Log("Escena casi cargada");
+        yield return null;
 
         if (LoadingVideoPlayer.Instance != null)
         {
             LoadingVideoPlayer.Instance.StopVideo();
             yield return null;
         }
-        Debug.Log("Activa escena nueva");
+        // Debug.Log("Activa escena nueva");
 
         asyncLoad.allowSceneActivation = true;
 
