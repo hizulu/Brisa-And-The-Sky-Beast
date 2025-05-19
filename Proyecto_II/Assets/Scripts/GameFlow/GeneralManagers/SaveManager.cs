@@ -125,10 +125,10 @@ public class SaveManager : MonoBehaviour
             Debug.Log("Player found");
             //sceneState.playerState.playerPosition = Checkpoint.GetActiveCheckPointPosition();
             //Debug.Log($"Player position saved: {sceneState.playerState.playerPosition}");
-            sceneState.playerState.playerHealth = player.GetHealth();
+            sceneState.playerState.playerHealth = infoPlayer.GetHealth();
             Debug.Log($"Player health saved: {sceneState.playerState.playerHealth}");
-            sceneState.playerState.equippedWeaponID = player.weaponSlot.GetWeaponData()?.weaponID;
-            Debug.Log($"Player weaponID saved: {player.weaponSlot.GetWeaponData()?.weaponID}");
+            sceneState.playerState.equippedWeaponID = infoPlayer.weaponSlot.GetWeaponData()?.weaponID;
+            Debug.Log($"Player weaponID saved: {infoPlayer.weaponSlot.GetWeaponData()?.weaponID}");
         }
         #endregion
 

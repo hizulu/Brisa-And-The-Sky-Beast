@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour
     public event Action<GameState> OnGameStateChanged;
 
     private SaveManager saveManager;
-    private UIManager uiManager;
 
     private bool loadInventory = false;
 
@@ -50,7 +49,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         saveManager = SaveManager.Instance;
-        uiManager = UIManager.Instance;
 
         // TODO: cambiar a estado main menu, por ahora empieza en playing
         ChangeGameState(GameState.Playing);
@@ -68,20 +66,23 @@ public class GameManager : MonoBehaviour
     private void OnEscape()
     {
         if(SceneManager.GetActiveScene().buildIndex == 2 || SceneManager.GetActiveScene().buildIndex == 3)
+        {
             if (UIManager.Instance.CheckForOpenedMenus())
-            return;
+                return;
 
-        // Debug.Log("Detecta escape");
-        if (CurrentState == GameState.Paused)
-        {
-            ResumeGame();
-            // Debug.Log("Debería reanudar juego");
+            // Debug.Log("Detecta escape");
+            if (CurrentState == GameState.Paused)
+            {
+                ResumeGame();
+                // Debug.Log("Debería reanudar juego");
+            }
+            else if (CurrentState == GameState.Playing)
+            {
+                PauseGame();
+                // Debug.Log("Debería pausar juego");
+            }
         }
-        else if (CurrentState == GameState.Playing)
-        {
-            PauseGame();
-            // Debug.Log("Debería pausar juego");
-        }
+        // En las otras escenas no afecta este escape    
     }
 
     public void ChangeGameState(GameState newState)
@@ -105,7 +106,7 @@ public class GameManager : MonoBehaviour
         ChangeGameState(GameState.Paused);
         EventsManager.TriggerNormalEvent("UIPanelOpened");
         Time.timeScale = 0f;
-        uiManager.OpenPauseMenu();
+        UIManager.Instance.OpenPauseMenu();
     }
 
     public void ResumeGame()
@@ -113,7 +114,7 @@ public class GameManager : MonoBehaviour
         ChangeGameState(GameState.Playing);
         EventsManager.TriggerNormalEvent("UIPanelClosed");
         Time.timeScale = 1f;
-        uiManager.ClosePauseMenu();
+        UIManager.Instance.ClosePauseMenu();
     }
     #endregion
 
@@ -268,7 +269,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         ChangeGameState(GameState.Victory);
         EventsManager.TriggerNormalEvent("UIPanelOpened");
-        uiManager.OpenVictoryMenu();
+        UIManager.Instance.OpenVictoryMenu();
     }
     
     private IEnumerator GameOverScreen()
@@ -276,7 +277,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         ChangeGameState(GameState.GameOver);
         EventsManager.TriggerNormalEvent("UIPanelOpened");
-        uiManager.OpenGameOverMenu();
+        UIManager.Instance.OpenGameOverMenu();
         Debug.Log("Finished game over");
     }
     #endregion

@@ -330,7 +330,7 @@ public class InventoryManager : MonoBehaviour
         foreach (var state in savedInventory)
         {
             ItemData item = allItems.Find(i => i.itemID == state.itemID);
-            if (item != null)
+            if (item != null && state.amount != 0)
             {
                 inventory[item] = state.amount;
 
