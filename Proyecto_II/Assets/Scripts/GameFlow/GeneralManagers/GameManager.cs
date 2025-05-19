@@ -167,13 +167,13 @@ public class GameManager : MonoBehaviour
         LoadingVideoPlayer.Instance.PlayVideo();
 
         // Esperar a que el vídeo empiece realmente
-        float timeout = 3f;
-        float elapsed = 0f;
-        while (!LoadingVideoPlayer.Instance.IsPlaying && elapsed < timeout)
-        {
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
+        //float timeout = 3f;
+        //float elapsed = 0f;
+        //while (!LoadingVideoPlayer.Instance.IsPlaying && elapsed < timeout)
+        //{
+        //    elapsed += Time.deltaTime;
+        //    yield return null;
+        //}
 
         // Cargar escena objetivo en segundo plano
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene);
@@ -183,7 +183,8 @@ public class GameManager : MonoBehaviour
         {
             yield return null;
         }
-        // Debug.Log("Escena casi cargada");
+
+        yield return null;
         // yield return new WaitForSeconds(1f);
 
         if (LoadingVideoPlayer.Instance != null)
