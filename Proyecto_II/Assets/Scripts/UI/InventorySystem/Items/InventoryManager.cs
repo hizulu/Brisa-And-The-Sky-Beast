@@ -353,25 +353,6 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private void RefreshInventoryUI()
-    {
-        // Destruir slots antiguos
-        foreach (ItemSlot slot in itemSlots)
-        {
-            if (slot != null) Destroy(slot.gameObject);
-        }
-        itemSlots.Clear();
-
-        // Crear slots nuevos para cada ítem en el inventario
-        foreach (var pair in inventory)
-        {
-            GameObject newSlot = Instantiate(itemSlotPrefab, inventoryPanel);
-            ItemSlot slotComponent = newSlot.GetComponent<ItemSlot>();
-            slotComponent.SetItem(pair.Key, pair.Value); // Asigna ItemData y cantidad
-            itemSlots.Add(slotComponent);
-        }
-    }
-
     private void InitializeEmptySlots()
     {
         // Crear slots iniciales (ajusta el número según necesites)
@@ -385,5 +366,24 @@ public class InventoryManager : MonoBehaviour
     }
 
     public bool IsReady => inventoryPanel != null && itemSlotPrefab != null;
+
+    //private void RefreshInventoryUI()
+    //{
+    //    // Destruir slots antiguos
+    //    foreach (ItemSlot slot in itemSlots)
+    //    {
+    //        if (slot != null) Destroy(slot.gameObject);
+    //    }
+    //    itemSlots.Clear();
+
+    //    // Crear slots nuevos para cada ítem en el inventario
+    //    foreach (var pair in inventory)
+    //    {
+    //        GameObject newSlot = Instantiate(itemSlotPrefab, inventoryPanel);
+    //        ItemSlot slotComponent = newSlot.GetComponent<ItemSlot>();
+    //        slotComponent.SetItem(pair.Key, pair.Value); // Asigna ItemData y cantidad
+    //        itemSlots.Add(slotComponent);
+    //    }
+    //}
     #endregion
 }

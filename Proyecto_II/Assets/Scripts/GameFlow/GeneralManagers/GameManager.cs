@@ -17,6 +17,7 @@ public enum GameState { MainMenu, Playing, Paused, GameOver, Victory }
  * VERSIÓN: 1.0 estructura básica de singleton y funciones de pausa
  *              1.1 funciones de guardado y cargado
  *              1.2. (20/04/2025) Corrección pausa
+ *              1.3. (19/05/2025) Guardado de sesión
  */
 
 public class GameManager : MonoBehaviour
@@ -89,6 +90,11 @@ public class GameManager : MonoBehaviour
         OnGameStateChanged?.Invoke(newState);
 
         Time.timeScale = (newState == GameState.Paused || newState == GameState.GameOver || newState == GameState.Victory) ? 0 : 1;
+    }
+
+    public static class GameSession
+    {
+        public static bool IsNewGame = false;
     }
 
     #region Pause & Resume

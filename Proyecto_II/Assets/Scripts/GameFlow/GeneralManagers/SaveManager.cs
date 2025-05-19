@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static GameManager;
 
 /* NOMBRE CLASE: SaveManager
  * AUTOR: Jone Sainz Egea
@@ -97,7 +98,8 @@ public class SaveManager : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<Player>();
-        if (PlayerPrefs.HasKey("SavedSceneState"))
+
+        if (!GameSession.IsNewGame && PlayerPrefs.HasKey("SavedSceneState"))
         {
             string sceneStateJson = PlayerPrefs.GetString("SavedSceneState");
             savedSceneState = JsonUtility.FromJson<SceneState>(sceneStateJson);
@@ -106,7 +108,7 @@ public class SaveManager : MonoBehaviour
         else
         {
             savedSceneState = new SceneState();
-            Debug.Log("La escena acaba de empezar sin ningún dato guardado.");
+            Debug.Log("La escena empieza sin datos guardados (nueva partida).");
         }
     }
 
