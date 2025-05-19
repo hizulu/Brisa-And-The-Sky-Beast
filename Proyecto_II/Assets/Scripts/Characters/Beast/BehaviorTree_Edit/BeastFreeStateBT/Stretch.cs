@@ -67,6 +67,7 @@ public class Stretch : Node, ICoroutineNode
         if (_hasFinished) return;
 
         _blackboard.SetValue("isCoroutineActive", false);
+        _blackboard.ClearKey("shouldStretch");
 
         _hasFinished = true;
     }

@@ -44,13 +44,17 @@ public class GetInterestPoint : Node
 
         if (bestPoint != null)
         {
-            CompareWithInterestInBrisa(bestPoint);           
+            CompareWithInterestInBrisa(bestPoint);
+            Debug.Log("Compared Interest in Brisa with POI");
             _blackboard.SetValue("lookForTarget", false); // Ya ha encontrado un objetivo
             state = NodeState.SUCCESS;
         }
         else if (GetInterestInBrisa() > 10) // No hay puntos de interés y Brisa está lejos
         {
             Debug.Log("No interest points and Brisa is far");
+            _blackboard.SetValue("target", _playerTransform);
+            _blackboard.SetValue("lookForTarget", false);
+            state = NodeState.SUCCESS;
         }
 
         return state;
