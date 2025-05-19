@@ -315,7 +315,8 @@ public class DialogManager : MonoBehaviour
             if (!string.IsNullOrEmpty(entry.OptionTexts[i]))
             {
                 // Condición especial para la columna de "¿Sabes dónde está la anciana?"
-                if (i == 0 && entry.OptionTexts[i].Contains("anciana") && !hasSpecialWeapon)
+                //Y si la opcion es diferente a la de la id 26 para que Bermeclon te diga la ubicacion de la casa de la anciana
+                if (i == 0 && entry.OptionTexts[i].Contains("anciana") && !hasSpecialWeapon && entry.ID!=26)
                 {
                     continue; // Saltar esta opción si no tiene el arma
                 }
@@ -336,8 +337,8 @@ public class DialogManager : MonoBehaviour
             SetupOption(buttonIndex++, entry.OptionWithRequirementText, entry.OptionWithRequirementID);
         }
 
-        // Mostrar botón "Adiós" solo si hay al menos una opción mostrada
-        if (buttonIndex > 0 && buttonIndex < optionButtons.Length)
+        // Mostrar botón "Adiós" SIEMPRE que sea un diálogo con opciones
+        if (entry.HasOptions && buttonIndex < optionButtons.Length)
         {
             SetupOption(buttonIndex, "Adiós.", -1);
         }
@@ -429,6 +430,7 @@ public class DialogManager : MonoBehaviour
         dialogueText.text = "";
         nameText.text = "";
         dialogPanel.SetActive(false);
+        lastOptionsEntry = null;
         isDialogActive = false;
 
         EventsManager.TriggerNormalEvent("ResetCameraDialogue");

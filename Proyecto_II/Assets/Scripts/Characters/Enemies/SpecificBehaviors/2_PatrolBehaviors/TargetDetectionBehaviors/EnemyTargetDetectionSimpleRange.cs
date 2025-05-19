@@ -8,11 +8,14 @@ using UnityEngine;
  *              Si ambos objetivos posibles están dentro del rango, prioriza la detección del jugador.
  *              Hereda de EnemyTargetDetectionSOBase, por lo que se crea desde el editor de Unity. Sobreescribe sus métodos y tiene acceso a sus variables.  
  * VERSIÓN: 1.0. Script base con la detección de objetivos dentro de un rango.
+ *          1.1. Sara Yue Madruga Martín - Disminución del tamaño de detección de Player cuando este está en modo sigilo. (17/05/2025).
  */
 [CreateAssetMenu(fileName = "Target-By Simple Range", menuName = "Enemy Logic/Detection Logic/Simple Range")]
 public class EnemyTargetDetectionSimpleRange : EnemyTargetDetectionSOBase
 {
-    [SerializeField] private float targetDetectionRange = 12f;
+    [SerializeField] private float baseTargetDetectionRange = 12f;
+    [Range(0.1f, 1f)][SerializeField] private float targetDetectionModifier = 0.5f;
+    private float targetDetectionRange;
 
     private float targetDetectionRangeSQR = 0f;
 
@@ -21,12 +24,22 @@ public class EnemyTargetDetectionSimpleRange : EnemyTargetDetectionSOBase
 
     public override void Initialize(Enemy enemy)
     {
+        targetDetectionRange = baseTargetDetectionRange;
+
         base.Initialize(enemy);
 
-        targetDetectionRangeSQR = targetDetectionRange * targetDetectionRange;
+        //targetDetectionRangeSQR = targetDetectionRange * targetDetectionRange;
 
         playerHealthPercentage = player.Data.StatsData.CurrentHealth / player.Data.StatsData.MaxHealth * 100;
         beastHealthPercentage = beast.currentHealth / beast.maxHealth * 100;
+
+        ChangeRangeDetection();
+        //Debug.Log("Normal rango" + enemy.name + targetDetectionRange);
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
     }
 
     /*
@@ -62,5 +75,23 @@ public class EnemyTargetDetectionSimpleRange : EnemyTargetDetectionSOBase
         // No target detected within detection range
         // Debug.Log("No target detected within detection range");
         return false;
+    }
+
+   
+
+    protected void ChangeRangeDetection()
+    {
+        if (isCrouching)
+        {
+            targetDetectionRange = baseTargetDetectionRange * targetDetectionModifier;
+            //Debug.Log("Reducción de rango" + enemy.name + targetDetectionRange);
+        }
+        else
+        {
+            targetDetectionRange = baseTargetDetectionRange;
+            //Debug.Log("Normal rango" + enemy.name + targetDetectionRange);
+        }
+
+        targetDetectionRangeSQR = targetDetectionRange * targetDetectionRange;
     }
 }

@@ -60,8 +60,8 @@ public class PlayerFallState : PlayerAirborneState
 
         GetFallVelocity(playerCurrentVelocityInY);
 
-        CheckIfPlayerIsStuckInFallState();
-        // Debug.Log(playerCurrentVelocityInY);
+        if (CheckIfPlayerIsStuckInFallState())
+            ForceLandPlayer();
 
         if (IsGrounded())
             LandInGround();
@@ -135,7 +135,7 @@ public class PlayerFallState : PlayerAirborneState
     /// Método para detectar si Player se ha quedado atrapado en FallState.
     /// Si detecta que su velocidad en Y es 0 más de 2 segundos, fuerza un aterrizaje para poder salir de FallState.
     /// </summary>
-    private void CheckIfPlayerIsStuckInFallState()
+    private bool CheckIfPlayerIsStuckInFallState()
     {
         if (Mathf.Approximately(playerCurrentVelocityInY, 0f))
         {
@@ -144,11 +144,11 @@ public class PlayerFallState : PlayerAirborneState
             if (timeWithoutVelocityInY >= maxTimeStuck)
             {
                 Debug.Log("Player está atascado en FallState, se va a forzar que aterrice.");
-                ForceLandPlayer();
+                return true;
             }
         }
-        else
-            timeWithoutVelocityInY = 0f;
+
+        return false;
     }
 
     /// <summary>
@@ -157,8 +157,9 @@ public class PlayerFallState : PlayerAirborneState
     /// </summary>
     private void ForceLandPlayer()
     {
+        timeWithoutVelocityInY = 0f;
         Vector3 pushBackDirection = -stateMachine.Player.transform.forward;
-        float pushBackForce = 5f;
+        float pushBackForce = 10f;
         Vector3 currentVelocity = stateMachine.Player.RbPlayer.velocity;
         Vector3 newVelocity = new Vector3(pushBackDirection.x * pushBackForce, Mathf.Min(0f, currentVelocity.y), pushBackDirection.z * pushBackForce);
         stateMachine.Player.RbPlayer.velocity = newVelocity;

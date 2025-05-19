@@ -27,7 +27,7 @@ public class PlayerRunState : PlayerMovedState
     {
         base.UpdateLogic();
         //AudioManager.Instance.PlaySFX(AudioManager.Instance.run);
-        audioManager.PlaySFX(AudioManager.Instance.run);
+        //audioManager.PlaySFX(AudioManager.Instance.run);
         // Brisa no puede correr si no está en movimiento.
         if (stateMachine.MovementData.MovementInput == Vector2.zero)
             stateMachine.ChangeState(stateMachine.IdleState);
@@ -37,7 +37,7 @@ public class PlayerRunState : PlayerMovedState
     {
         base.Exit();
         //AudioManager.Instance.StopSFX();
-        audioManager.StopSFX();
+        //audioManager.StopSFX();
         StopAnimation(stateMachine.Player.PlayerAnimationData.RunParameterHash);
         //Debug.Log("Has salido del estado de CORRER.");
     }

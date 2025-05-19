@@ -52,13 +52,33 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     // Método para asignar un ítem a un slot
     public void SetItem(ItemData newItemData, int quantity)
     {
+        // Verificación de seguridad
+        if (itemIconImage == null || itemQuantityText == null)
+        {
+            Debug.LogError("Referencias faltantes en ItemSlot");
+            return;
+        }
+
         itemData = newItemData;
         itemQuantity = quantity;
 
-        itemIconImage.sprite = itemData.itemIcon;
-        itemQuantityText.text = quantity.ToString();
-        itemQuantityText.enabled = true;
-        gameObject.SetActive(true); // Se activa cuando recibe un ítem
+        // Actualizar UI solo si tenemos item
+        if (itemData != null)
+        {
+            itemIconImage.sprite = itemData.itemIcon;
+            itemQuantityText.text = quantity.ToString();
+            itemIconImage.enabled = true;
+            itemQuantityText.enabled = quantity > 0;
+            gameObject.SetActive(true);
+        }
+        else // Limpiar slot
+        {
+            itemIconImage.sprite = null;
+            itemQuantityText.text = "";
+            itemIconImage.enabled = false;
+            itemQuantityText.enabled = false;
+            gameObject.SetActive(false);
+        }
     }
 
     public bool IsEmpty()

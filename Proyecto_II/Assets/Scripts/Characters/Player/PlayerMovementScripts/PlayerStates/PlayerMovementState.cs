@@ -77,6 +77,8 @@ public class PlayerMovementState : IState
         ChangeFacePlayer();
         EventsManager.CallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
         EventsManager.CallNormalEvents("PickUpItem", PickUp);
+        EventsManager.CallNormalEvents("PickUpStick", PickUpStick);
+        EventsManager.CallNormalEvents("PickUpSceptre", PickUpSceptre);
     }
 
     /// <summary>
@@ -130,6 +132,8 @@ public class PlayerMovementState : IState
     {
         EventsManager.StopCallSpecialEvents<float>("OnAttackPlayer", TakeDamage);
         EventsManager.StopCallNormalEvents("PickUpItem", PickUp);
+        EventsManager.StopCallNormalEvents("PickUpStick", PickUpStick);
+        EventsManager.StopCallNormalEvents("PickUpSceptre", PickUpSceptre);
         RemoveInputActionsCallbacks();
     }
     #endregion
@@ -287,6 +291,19 @@ public class PlayerMovementState : IState
     private void PickUp()
     {
         stateMachine.ChangeState(stateMachine.PickUpState);
+    }
+
+    private void PickUpStick()
+    {
+        //Debug.Log("Palo recogido");
+        stateMachine.Player.PaloBrisa.SetActive(true);
+    }
+
+    private void PickUpSceptre()
+    {
+        Debug.Log("Palo recogido");
+        stateMachine.Player.PaloBrisa.SetActive(false);
+        stateMachine.Player.Baculo.SetActive(true);
     }
     #endregion
 

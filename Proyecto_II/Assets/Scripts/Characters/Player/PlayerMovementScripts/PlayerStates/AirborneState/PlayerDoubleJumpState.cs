@@ -22,8 +22,7 @@ public class PlayerDoubleJumpState : PlayerAirborneState
         base.Enter();
         //Debug.Log("Has entrado en el estado de DOBLE-SALTO");
         StartAnimation(stateMachine.Player.PlayerAnimationData.DoubleJumpParameterHash);
-
-        stateMachine.Player.SwirlEffect.Play();
+        stateMachine.Player.DoubleJumpEffect.gameObject.SetActive(true);
     }
 
     public override void HandleInput()
@@ -34,6 +33,7 @@ public class PlayerDoubleJumpState : PlayerAirborneState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+        DoubleJumpEffect();
         FinishAnimation();
     }
 
@@ -45,6 +45,7 @@ public class PlayerDoubleJumpState : PlayerAirborneState
 
     public override void Exit()
     {
+        stateMachine.Player.DoubleJumpEffect.gameObject.SetActive(false);
         base.Exit();
         //Debug.Log("Has salido del estado de DOBLE-SALTO");
         StopAnimation(stateMachine.Player.PlayerAnimationData.DoubleJumpParameterHash);
@@ -80,6 +81,23 @@ public class PlayerDoubleJumpState : PlayerAirborneState
             isJumping = false;
             stateMachine.ChangeState(stateMachine.FallState);
         }
+    }
+
+    /// <summary>
+    /// Método que gestiona el efecto visual del doble salto.
+    /// Accede a su material y modica el offset para hacer que gire.
+    /// </summary>
+    private void DoubleJumpEffect()
+    {
+
+        MeshRenderer meshRenderEffect = stateMachine.Player.DoubleJumpEffect;
+        Material materialEffect = meshRenderEffect.material;
+
+        Vector2 currentOffset = materialEffect.mainTextureOffset;
+        float speed = -2f;
+        Vector2 newOffset = currentOffset + new Vector2(speed * Time.deltaTime, 0f); // Para que se vea cómo gira.
+
+        materialEffect.mainTextureOffset = newOffset;
     }
 
     /// <summary>
