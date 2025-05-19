@@ -10,19 +10,16 @@ public class Smell : Node, ICoroutineNode
 {
     private Blackboard _blackboard;
     private Beast _beast;
-    private float _minDuration;
-    private float _maxDuration;
+    private float _duration;
 
     private bool _isRunning = false;
     private bool _hasFinished = false;
 
 
-    public Smell(Blackboard blackboard, Beast beast, float minDuration, float maxDuration)
+    public Smell(Blackboard blackboard, Beast beast)
     {
         _blackboard = blackboard;
         _beast = beast;
-        _minDuration = minDuration;
-        _maxDuration = maxDuration;
     }
 
     public override NodeState Evaluate()
@@ -37,9 +34,10 @@ public class Smell : Node, ICoroutineNode
 
             _beast.agent.ResetPath();
 
-            float duration = Random.Range(_minDuration, _maxDuration);
+            _duration = AnimationDurationDatabase.Instance.GetClipDuration("Beast_SmellDown");
+
             Debug.Log("Starting to smell");
-            _beast.StartNewCoroutine(Smelling(duration), this);
+            _beast.StartNewCoroutine(Smelling(_duration), this);
         }
 
         if (_hasFinished)
@@ -72,6 +70,7 @@ public class Smell : Node, ICoroutineNode
         if (_hasFinished) return;
 
         _blackboard.SetValue("isCoroutineActive", false);
+        _blackboard.ClearKey("shouldSmell");
 
         Debug.Log("Finished smelling");
 
