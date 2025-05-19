@@ -26,7 +26,7 @@ public class TEMPToNextScene : MonoBehaviour
     {
         cam.DoFadeInOut();
         yield return new WaitForSeconds(1f);
-        GameManager.Instance.LoadNextScene();
+        GameManager.Instance.LoadNextScene(true,true);
     }
 
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static GameManager;
 
 public class MainMenu : MonoBehaviour
 {
@@ -18,7 +19,15 @@ public class MainMenu : MonoBehaviour
     {
         EventsManager.CleanAllEvents();
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameSession.IsNewGame = true;
+
+        GameManager.Instance.LoadScene("01_OpeningCinematic");
+    }
+
+    public void ContinueGame()
+    {
+        GameSession.IsNewGame = false;
+        GameManager.Instance.LoadScene("02_TheHollow"); //TODO: guardar nombre de escena
     }
 
     public void Creditos()

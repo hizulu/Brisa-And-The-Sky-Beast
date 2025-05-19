@@ -17,6 +17,8 @@ public enum GameState { MainMenu, Playing, Paused, GameOver, Victory }
  * VERSIÓN: 1.0 estructura básica de singleton y funciones de pausa
  *              1.1 funciones de guardado y cargado
  *              1.2. (20/04/2025) Corrección pausa
+ *              1.3. (19/05/2025) Guardado de sesión
+ *              1.4. (19/05/2025) Pantalla de carga
  */
 
 public class GameManager : MonoBehaviour
@@ -27,9 +29,8 @@ public class GameManager : MonoBehaviour
     public event Action<GameState> OnGameStateChanged;
 
     private SaveManager saveManager;
-    private UIManager uiManager;
 
-    [SerializeField] private PlayerInput playerInput;
+    private bool loadInventory = false;
 
     // Estructura Singleton
     void Awake()
@@ -48,7 +49,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         saveManager = SaveManager.Instance;
-        uiManager = UIManager.Instance;
 
         // TODO: cambiar a estado main menu, por ahora empieza en playing
         ChangeGameState(GameState.Playing);
@@ -65,20 +65,24 @@ public class GameManager : MonoBehaviour
 
     private void OnEscape()
     {
-        if (UIManager.Instance.CheckForOpenedMenus())
-            return;
+        if(SceneManager.GetActiveScene().buildIndex == 2 || SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            if (UIManager.Instance.CheckForOpenedMenus())
+                return;
 
-        // Debug.Log("Detecta escape");
-        if (CurrentState == GameState.Paused)
-        {
-            ResumeGame();
-            // Debug.Log("Debería reanudar juego");
+            // Debug.Log("Detecta escape");
+            if (CurrentState == GameState.Paused)
+            {
+                ResumeGame();
+                // Debug.Log("Debería reanudar juego");
+            }
+            else if (CurrentState == GameState.Playing)
+            {
+                PauseGame();
+                // Debug.Log("Debería pausar juego");
+            }
         }
-        else if (CurrentState == GameState.Playing)
-        {
-            PauseGame();
-            // Debug.Log("Debería pausar juego");
-        }
+        // En las otras escenas no afecta este escape    
     }
 
     public void ChangeGameState(GameState newState)
@@ -91,13 +95,18 @@ public class GameManager : MonoBehaviour
         Time.timeScale = (newState == GameState.Paused || newState == GameState.GameOver || newState == GameState.Victory) ? 0 : 1;
     }
 
+    public static class GameSession
+    {
+        public static bool IsNewGame = false;
+    }
+
     #region Pause & Resume
     void PauseGame()
     {
         ChangeGameState(GameState.Paused);
         EventsManager.TriggerNormalEvent("UIPanelOpened");
         Time.timeScale = 0f;
-        uiManager.OpenPauseMenu();
+        UIManager.Instance.OpenPauseMenu();
     }
 
     public void ResumeGame()
@@ -105,14 +114,14 @@ public class GameManager : MonoBehaviour
         ChangeGameState(GameState.Playing);
         EventsManager.TriggerNormalEvent("UIPanelClosed");
         Time.timeScale = 1f;
-        uiManager.ClosePauseMenu();
+        UIManager.Instance.ClosePauseMenu();
     }
     #endregion
 
     #region Scene Management
     public void LoadScene(string sceneName)
     {
-        StartCoroutine(LoadSceneAsync(sceneName));
+        LoadSceneWithVideo(sceneName, loadSaved: false);
     }
 
     private IEnumerator LoadSceneAsync(string sceneName)
@@ -122,20 +131,89 @@ public class GameManager : MonoBehaviour
         yield return SceneManager.LoadSceneAsync(sceneName);
     }
 
-    public void LoadNextScene()
+    public void LoadNextScene(bool saveState = false, bool loadSaved = false)
     {
-        saveManager.SaveSceneState();
+        Debug.Log($"Cargando siguiente escena con loadSaved: {loadSaved}");
+        if(saveState)
+            saveManager.SaveSceneState();
         EventsManager.CleanAllEvents();
-        Debug.Log(SceneManager.GetActiveScene().buildIndex);
+
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        SceneManager.LoadScene(nextSceneIndex);
-        saveManager.LoadInventoryState();
-    }
-    public void BackToMainMenu()
-    {
-        SceneManager.LoadScene(0);
+        string nextSceneName = System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(nextSceneIndex));
+        Debug.Log($"Trying to load scene with index: {nextSceneIndex} and name: {nextSceneName}");
+
+        LoadSceneWithVideo(nextSceneName, loadSaved);
     }
 
+    private void LoadSceneWithVideo(string targetScene, bool loadSaved = false)
+    {
+        StartCoroutine(LoadSceneWithVideoAsync(targetScene, loadSaved));
+
+    }
+
+    private IEnumerator LoadSceneWithVideoAsync(string targetScene, bool loadSaved)
+    {
+        EventsManager.CleanAllEvents();
+
+        // Cargar pantalla de carga
+        yield return SceneManager.LoadSceneAsync("00_LoadingScreen", LoadSceneMode.Single);
+        yield return null;
+
+        // Esperar a que el LoadingVideoPlayer esté disponible
+        while (LoadingVideoPlayer.Instance == null)
+            yield return null;
+
+        // Iniciar vídeo
+        LoadingVideoPlayer.Instance.PlayVideo();
+
+        // Esperar a que el vídeo empiece realmente
+        float timeout = 3f;
+        float elapsed = 0f;
+        while (!LoadingVideoPlayer.Instance.IsPlaying && elapsed < timeout)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Cargar escena objetivo en segundo plano
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene);
+        asyncLoad.allowSceneActivation = false;
+
+        while (asyncLoad.progress < 0.9f)
+        {
+            yield return null;
+        }
+        // Debug.Log("Escena casi cargada");
+        yield return null;
+
+        if (LoadingVideoPlayer.Instance != null)
+        {
+            LoadingVideoPlayer.Instance.StopVideo();
+            yield return null;
+        }
+        // Debug.Log("Activa escena nueva");
+
+        asyncLoad.allowSceneActivation = true;
+
+        // Esperar a que termine la activación
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        Debug.Log("Escena nueva activada");
+
+        // Cargar estados guardados si es necesario
+        if (loadSaved)
+        {
+            saveManager.LoadSceneState();
+            saveManager.LoadInventoryState();
+        }
+    }
+
+    public void BackToMainMenu()
+    {
+        LoadSceneWithVideo("00_MenuInicial", loadSaved: false);
+    }
     #endregion
 
     #region Save & Load
@@ -147,10 +225,10 @@ public class GameManager : MonoBehaviour
 
     public void ReloadScene()
     {
-        EventsManager.CleanAllEvents();
+        saveManager.SaveSceneState();
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        SceneManager.sceneLoaded += LoadSavedSceneChanges; 
+        string currentScene = SceneManager.GetActiveScene().name;
+        LoadSceneWithVideo(currentScene, loadSaved: true);
     }
 
     private void LoadSavedSceneChanges(Scene scene, LoadSceneMode mode)
@@ -162,18 +240,10 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Global Events
-
-    //public void StartTutorial()
-    //{
-    //    LoadScene(tutorialSceneName);
-    //    // También puedes lanzar aquí eventos relacionados si los necesitas
-    //}
-
     public void StartNewGame()
     {
         SaveManager.Instance.ResetProgress();
-        // TODO: sustituir por la escena que sea la primera (cinemática?)
-        LoadScene("TheHollow");
+        LoadSceneWithVideo("01_OpeningCinematic", loadSaved: false);
         ChangeGameState(GameState.Playing);
     }
 
@@ -193,7 +263,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         ChangeGameState(GameState.Victory);
         EventsManager.TriggerNormalEvent("UIPanelOpened");
-        uiManager.OpenVictoryMenu();
+        UIManager.Instance.OpenVictoryMenu();
     }
     
     private IEnumerator GameOverScreen()
@@ -201,7 +271,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         ChangeGameState(GameState.GameOver);
         EventsManager.TriggerNormalEvent("UIPanelOpened");
-        uiManager.OpenGameOverMenu();
+        UIManager.Instance.OpenGameOverMenu();
         Debug.Log("Finished game over");
     }
     #endregion
@@ -220,5 +290,4 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-   
 }

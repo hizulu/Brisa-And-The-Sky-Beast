@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+ // Script de prototipo
 public class EndingTrigger : MonoBehaviour
 {
     public static bool beastUp;
@@ -29,7 +29,7 @@ public class EndingTrigger : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadScene(0);
+                // SceneManager.LoadScene(0);
             }
        } 
     }

@@ -140,6 +140,6 @@ public class CinematicsManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Cinematics.CineReproduciendo = false;
-        GameManager.Instance.LoadNextScene();
+        GameManager.Instance.LoadNextScene(true, true);
     }
 }
