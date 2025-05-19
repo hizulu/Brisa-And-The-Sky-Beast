@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.17063051, g: 0.3569006, b: 0.57553166, a: 1}
+  m_IndirectSpecularColor: {r: 0.20921141, g: 0.4113007, b: 0.6518166, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -68324,6 +68324,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2397698389846007900}
+  - component: {fileID: 3030224737293597417}
+  - component: {fileID: 3030224737293597416}
+  - component: {fileID: 3030224737293597415}
   m_Layer: 6
   m_Name: Piedras
   m_TagString: Untagged
@@ -68331,6 +68334,69 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &3030224737293597415
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3030224737293597414}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.1906433, y: 1.9216747, z: 1.4344177}
+  m_Center: {x: -13.608997, y: -13.437272, z: -49.6616}
+--- !u!65 &3030224737293597416
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3030224737293597414}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.6789789, y: 1.0892506, z: 1.4344177}
+  m_Center: {x: -4.752417, y: -13.853484, z: -49.6616}
+--- !u!65 &3030224737293597417
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3030224737293597414}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7.612419, y: 4.4067383, z: 1.4344177}
+  m_Center: {x: -9.303621, y: -12.19474, z: -49.6616}
 --- !u!4 &3037902121144414454
 Transform:
   m_ObjectHideFlags: 0
