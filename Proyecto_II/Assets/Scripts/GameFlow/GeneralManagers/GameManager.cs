@@ -184,7 +184,7 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
         // Debug.Log("Escena casi cargada");
-        yield return null;
+        // yield return new WaitForSeconds(1f);
 
         if (LoadingVideoPlayer.Instance != null)
         {
