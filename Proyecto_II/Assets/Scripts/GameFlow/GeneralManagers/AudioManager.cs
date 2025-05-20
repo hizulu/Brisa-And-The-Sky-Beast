@@ -4,12 +4,14 @@ public class AudioManager : MonoBehaviour
 {
     private static AudioManager instance;
 
-    [SerializeField] public AudioSource musicSource;
+    //[SerializeField] public AudioSource musicSource;
     [SerializeField] public AudioSource SFXSource;
 
 
     public AudioClip walk;
     public AudioClip run;
+    public AudioClip attack01;
+    public AudioClip attack02;
 
     // private bool isLoopPlaying = false;
     [SerializeField] private float overlapTime = 0.01f; // Tiempo de solapamiento (1 milisegundo)

@@ -124,6 +124,7 @@ public class AttackCombatTarget : Node, ICoroutineNode
         {
             _beast.anim.SetBool("attackBite", true);
             _attackDamage = _beast.biteAttackDamage;
+            _beast.BeastSounds.PlayRandomSFX(BeastSFXType.Attack);
         }
     }
 
