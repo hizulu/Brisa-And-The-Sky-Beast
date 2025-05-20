@@ -16,6 +16,7 @@ using TMPro;
  * 1.1 Sara: Cambio a New Input System.
  * 1.2 Sara: Añadido el nombre del NPC en el panel de interacción y bloqueo de movimiento de la cámara durante el diálogo.
  * 1.3 Lucia: Mejoras generales de funcionamiento
+ * 1.4 Lucia: Llamadas a NPCLookAtPlayer para que el NPC mire al jugador.
  */
 
 public class NPCDialogRange : MonoBehaviour
@@ -37,6 +38,8 @@ public class NPCDialogRange : MonoBehaviour
     private bool playerInRange = false;
     private bool dialogStarted = false;
     private CinemachinePOV camComponents;
+
+    private NPCLookAtPlayer npcLookAtPlayer;
     #endregion
 
     private void Awake()
@@ -44,6 +47,12 @@ public class NPCDialogRange : MonoBehaviour
         playerInput = FindAnyObjectByType<PlayerInput>();
         EventsManager.CallNormalEvents("ResetCameraDialogue", ResumePlayerCamera);
         camComponents = playerCam.GetCinemachineComponent<CinemachinePOV>();
+
+        npcLookAtPlayer = GetComponent<NPCLookAtPlayer>();
+        if (npcLookAtPlayer == null)
+        {
+            npcLookAtPlayer = gameObject.AddComponent<NPCLookAtPlayer>();
+        }
     }
 
     private void OnEnable()
@@ -83,6 +92,7 @@ public class NPCDialogRange : MonoBehaviour
         {
             playerInRange = true;        
             uiManager.ShowNPCPanelName(npcName, transform);
+            npcLookAtPlayer?.SetLookAtTarget(other.transform, true);
             Debug.Log("Puedes hablar con el NPC");
         }
     }
@@ -95,6 +105,7 @@ public class NPCDialogRange : MonoBehaviour
         {
             playerInRange = false;
             uiManager.HideNPCPanelName();
+            npcLookAtPlayer?.SetLookAtTarget(null, false);
 
             if (dialogStarted)
             {
