@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.38364285, g: 0.6535193, b: 0.991453, a: 1}
+  m_IndirectSpecularColor: {r: 0.1986936, g: 0.39650252, b: 0.6309907, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -27800,8 +27800,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.054409, y: 3.7175698, z: 7.758732}
-  m_Center: {x: -11.238501, y: -1.4431164, z: 0.79699135}
+  m_Size: {x: 7.0706625, y: 3.7175698, z: 7.758732}
+  m_Center: {x: -4.6195683, y: -1.4431164, z: 0.79699135}
 --- !u!114 &967356033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41749,6 +41749,12 @@ MonoBehaviour:
     tutorialText: "Presiona TAB cuando la Bestia est\xE1 cerca para abir el men\xFA"
     triggeredByAction: 0
     activationEventName: 
+    waitForCompletion: 0
+    persistentWhileInsideTrigger: 0
+  - inputActionName: Player/GetOffBeast
+    tutorialText: Pulsa Control Izq. para bajarte de la Bestia.
+    triggeredByAction: 1
+    activationEventName: GetOffBeast
     waitForCompletion: 0
     persistentWhileInsideTrigger: 0
   - inputActionName: Player/PointedMode
