@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.1677573, g: 0.3530516, b: 0.5702036, a: 1}
+  m_IndirectSpecularColor: {r: 0.21045816, g: 0.4128187, b: 0.65377647, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -28598,12 +28598,6 @@ MonoBehaviour:
     activationEventName: 
     waitForCompletion: 0
     persistentWhileInsideTrigger: 0
-  - inputActionName: Player/LockTarget
-    tutorialText: Presiona ClickCentral para fijar el objetivo
-    triggeredByAction: 0
-    activationEventName: 
-    waitForCompletion: 0
-    persistentWhileInsideTrigger: 0
 --- !u!65 &1018178151
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41757,10 +41751,10 @@ MonoBehaviour:
     activationEventName: 
     waitForCompletion: 0
     persistentWhileInsideTrigger: 0
-  - inputActionName: Player/GetOffBeast
+  - inputActionName: Player/DesmountBeast
     tutorialText: Pulsa Control Izq. para bajarte de la Bestia.
-    triggeredByAction: 1
-    activationEventName: GetOffBeast
+    triggeredByAction: 0
+    activationEventName: 
     waitForCompletion: 0
     persistentWhileInsideTrigger: 0
   - inputActionName: Player/PointedMode
