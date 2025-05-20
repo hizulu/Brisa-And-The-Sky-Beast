@@ -22,7 +22,7 @@ public enum SoundType
 public class SoundPlayerManager : MonoBehaviour
 {
     [SerializeField] private SoundList[] soundList;
-    private static SoundPlayerManager instance;
+    public static SoundPlayerManager instance;
     private AudioSource audioSource;
 
     private void Awake()
