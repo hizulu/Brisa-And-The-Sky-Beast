@@ -15,6 +15,7 @@ public class EnemyStateMachine : StateMachine
     public EnemyChase EnemyChaseState { get; }
     public EnemyAttack EnemyAttackState { get; }
     public EnemyRetreat EnemyRetreatState { get; }
+    public EnemyDeath EnemyDeathState { get; }
 
     /*
      * Constructor de la máquina de estados de los Enemigos.
@@ -30,5 +31,6 @@ public class EnemyStateMachine : StateMachine
         EnemyChaseState = new EnemyChase(this);
         EnemyAttackState = new EnemyAttack(this);
         EnemyRetreatState = new EnemyRetreat(this);
+        EnemyDeathState = new EnemyDeath(this);
     }
 }

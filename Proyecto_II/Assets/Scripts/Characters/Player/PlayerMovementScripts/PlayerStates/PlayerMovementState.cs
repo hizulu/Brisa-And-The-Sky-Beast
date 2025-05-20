@@ -293,17 +293,33 @@ public class PlayerMovementState : IState
         stateMachine.ChangeState(stateMachine.PickUpState);
     }
 
+    /// <summary>
+    /// Método que activa el báculo y desactiva el palo.
+    /// </summary>
     private void PickUpStick()
-    {
-        //Debug.Log("Palo recogido");
-        stateMachine.Player.PaloBrisa.SetActive(true);
+    {        
+        for(int i = 0; i < stateMachine.Player.WeaponsBrisa.Length; i++)
+        {
+            stateMachine.Player.WeaponsBrisa[0].SetActive(true);
+            //Debug.Log("Palo recogido");
+        }
     }
 
     private void PickUpSceptre()
     {
-        Debug.Log("Palo recogido");
-        stateMachine.Player.PaloBrisa.SetActive(false);
-        stateMachine.Player.Baculo.SetActive(true);
+        stateMachine.Player.StartCoroutine(ChangeWeapon());
+    }
+
+    private IEnumerator ChangeWeapon()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+
+        for (int i = 0; i < stateMachine.Player.WeaponsBrisa.Length; i++)
+        {
+            stateMachine.Player.WeaponsBrisa[0].SetActive(false);
+            stateMachine.Player.WeaponsBrisa[1].SetActive(true);
+            //Debug.Log("Báculo recogido");
+        }
     }
     #endregion
 

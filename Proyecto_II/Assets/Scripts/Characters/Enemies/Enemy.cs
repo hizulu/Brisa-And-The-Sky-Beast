@@ -30,7 +30,7 @@ public class Enemy : HittableElement
 
     public bool targetIsPlayer = true;
 
-    bool isDead = false;
+    //bool isDead = false;
 
     #endregion
 
@@ -42,12 +42,14 @@ public class Enemy : HittableElement
     [SerializeField] private EnemyStateSOBase EnemyChaseBase;
     [SerializeField] private EnemyStateSOBase EnemyAttackBase;
     [SerializeField] private EnemyStateSOBase EnemyRetreatBase;
+    [SerializeField] private EnemyStateSOBase EnemyDeathBase;
 
     public EnemyStateSOBase EnemyIdleBaseInstance { get; set; }
     public EnemyStateSOBase EnemyPatrolBaseInstance { get; set; }
     public EnemyStateSOBase EnemyChaseBaseInstance { get; set; }
     public EnemyStateSOBase EnemyAttackBaseInstance { get; set; }
     public EnemyStateSOBase EnemyRetreatBaseInstance { get; set; }
+    public EnemyStateSOBase EnemyDeathBaseInstance { get; set; }
     #endregion
 
     #region Variables temporales para visualizar las áreas: Gizmos
@@ -65,6 +67,7 @@ public class Enemy : HittableElement
         EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
         EnemyAttackBaseInstance = Instantiate(EnemyAttackBase);
         EnemyRetreatBaseInstance = Instantiate(EnemyRetreatBase);
+        EnemyDeathBaseInstance = Instantiate(EnemyDeathBase);
 
         enemyStateMachine = new EnemyStateMachine(this);
 
@@ -87,6 +90,7 @@ public class Enemy : HittableElement
         EnemyChaseBaseInstance.Initialize(this);
         EnemyAttackBaseInstance.Initialize(this);
         EnemyRetreatBaseInstance.Initialize(this);
+        EnemyDeathBaseInstance.Initialize(this);
 
         enemyStateMachine.ChangeState(enemyStateMachine.EnemyIdleState);
 
@@ -103,8 +107,8 @@ public class Enemy : HittableElement
 
     private void Update()
     {
-        if(!isDead)
-            enemyStateMachine.UpdateLogic();
+        enemyStateMachine.UpdateLogic();
+        //if (!isDead)
     }
 
     private void FixedUpdate()
@@ -141,6 +145,7 @@ public class Enemy : HittableElement
     public void ApplyDamageToEnemy()
     {
         currentHealth -= damageAmount;
+        currentHealth = Mathf.Max(currentHealth, 0f);
 
         if (currentHealth <= Mathf.Epsilon)
         {
@@ -151,13 +156,15 @@ public class Enemy : HittableElement
 
     public void Die()
     {
-        Debug.Log("Enemigo muerto");
-        if(agent.enabled)
+        //Debug.Log("Enemigo muerto");
+        if (agent.enabled)
             agent.ResetPath();
 
-        anim.SetTrigger("Death");
-        isDead = true;
-        StartCoroutine(WaitForDeathAnimation());
+        enemyStateMachine.ChangeState(enemyStateMachine.EnemyDeathState);
+
+        //anim.SetTrigger("Death");
+        //isDead = true;
+        //StartCoroutine(WaitForDeathAnimation());
         // TODO: play enemy death sound depending on enemy
         // TODO: character deactivation (collider, script...)
         // TEMP

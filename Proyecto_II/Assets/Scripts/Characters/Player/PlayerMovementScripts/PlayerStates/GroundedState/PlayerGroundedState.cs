@@ -183,18 +183,21 @@ public class PlayerGroundedState : PlayerMovementState
     /// <param name="context">Información del input asociado a la acción.</param>
     protected virtual void AttackStart(InputAction.CallbackContext context)
     {
-        if ((!stateMachine.Player.PaloBrisa.activeInHierarchy && !stateMachine.Player.Baculo.activeInHierarchy) || stateMachine.CurrentState is PlayerRideBeastState || startActiveShield) return;
-        else if ((!stateMachine.Player.PaloBrisa.activeInHierarchy && stateMachine.Player.Baculo.activeInHierarchy)|| stateMachine.Player.PaloBrisa.activeInHierarchy)
+        bool anyWeaponActive = false;
+
+        foreach(GameObject weapon in stateMachine.Player.WeaponsBrisa)
         {
-            if (!(stateMachine.CurrentState is PlayerAttack02 || stateMachine.CurrentState is PlayerAttack03))
-                stateMachine.ChangeState(stateMachine.Attack01State);
+            if (weapon.activeInHierarchy)
+            {
+                anyWeaponActive = true;
+                break;
+            }
         }
-        //else
-        //{
-        //    // Solo cambiar a Attack01 si no estamos en medio de un combo o ataque.
-        //    if (!(stateMachine.CurrentState is PlayerAttack02 || stateMachine.CurrentState is PlayerAttack03))
-        //        stateMachine.ChangeState(stateMachine.Attack01State);
-        //}
+
+        if (!anyWeaponActive || stateMachine.CurrentState is PlayerRideBeastState || startActiveShield) return;
+
+        if (!(stateMachine.CurrentState is PlayerAttack02 || stateMachine.CurrentState is PlayerAttack03))
+            stateMachine.ChangeState(stateMachine.Attack01State);
     }
 
     /// <summary>
