@@ -9,7 +9,7 @@ using UnityEngine;
 // Interfaz común para las zonas en las que la bestia puede realizar una acción específica
 public interface IBeastActionable
 {
-    void OnBeast();
+    bool OnBeast();
 }
 
 // Clase abstracta abierta a extensiones, permitiendo nuevos acciones golpeables
@@ -26,11 +26,9 @@ public abstract class BeastActionable : MonoBehaviour, IBeastActionable
     {
         if (other.CompareTag("Beast"))
         {
-            // TODO: beast action button is available
-            Debug.Log("Beast entered");
+            // Debug.Log("Beast entered");
             beastIsIn = true;
             beast.blackboard.SetValue("isInActionZone", true);
-            beast.blackboard.SetValue("isOptionAction", true);
             EventsManager.TriggerNormalEvent("BeastActionableEntered");
         }
     }
@@ -39,14 +37,12 @@ public abstract class BeastActionable : MonoBehaviour, IBeastActionable
     {
         if (other.CompareTag("Beast"))
         {
-            // TODO: beast action button is unavailable
-            Debug.Log("Beast left");
+            // Debug.Log("Beast left");
             beastIsIn = false;
             beast.blackboard.SetValue("isInActionZone", false);
-            beast.blackboard.SetValue("isOptionAction", false);
             EventsManager.TriggerNormalEvent("BeastActionableExited");
         }
     }
 
-    public abstract void OnBeast();
+    public abstract bool OnBeast();
 }
