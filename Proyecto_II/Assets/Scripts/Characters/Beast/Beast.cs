@@ -24,7 +24,7 @@ public class Beast : MonoBehaviour
     [SerializeField] public float maxHealth = 500f;
     [SerializeField] public float healingAmount = 50f; // Estoy gestionando la cura de la Bestia desde el script de Brisa.
     [SerializeField] public float maxHalfDeadDuration = 30f;
-    [SerializeField] public float currentHalffDeadDuration = 0f;
+    [SerializeField] public float currentHalfDeadDuration = 0f;
     [SerializeField] public float swipeAttackDamage = 15f;
     [SerializeField] public float biteAttackDamage = 25f;
 
@@ -260,7 +260,7 @@ public class Beast : MonoBehaviour
     {
         ResetBeastSelection();
         blackboard.SetValue("isOptionAttack", true);
-        ChangeEnemyDetectionRange(30f); // Si el jugador le manda atacar, aumenta su rango de detección de enemigos
+        ChangeEnemyDetectionRange(40f); // Si el jugador le manda atacar, aumenta su rango de detección de enemigos
     }
 
     public void MountBeastSelected()

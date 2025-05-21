@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.36333027, g: 0.62524694, b: 0.9515937, a: 1}
+  m_IndirectSpecularColor: {r: 0.36664447, g: 0.629914, b: 0.9581514, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3090,7 +3090,7 @@ MonoBehaviour:
   maxHealth: 500
   healingAmount: 50
   maxHalfDeadDuration: 30
-  currentHalffDeadDuration: 0
+  currentHalfDeadDuration: 0
   swipeAttackDamage: 15
   biteAttackDamage: 25
   currentHealth: 0
@@ -51560,6 +51560,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -179.99998
       objectReference: {fileID: 0}
+    - target: {fileID: -34700747528906243, guid: 400dead5fec0d0142aba8b2e5cc98313, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -34700747528906243, guid: 400dead5fec0d0142aba8b2e5cc98313, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 02c387e0ac3b27048858e9af4e9b52ca, type: 2}
+    - target: {fileID: -34700747528906243, guid: 400dead5fec0d0142aba8b2e5cc98313, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 02c387e0ac3b27048858e9af4e9b52ca, type: 2}
     - target: {fileID: 169764713909450169, guid: 400dead5fec0d0142aba8b2e5cc98313, type: 3}
       propertyPath: m_Layer
       value: 3

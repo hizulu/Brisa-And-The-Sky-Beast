@@ -32,7 +32,7 @@ public class HealBeast : Node, ICoroutineNode
             _beast.agent.ResetPath(); // TODO: si hay que reposicionar a la bestia se haría aquí
 
             _beast.anim.SetBool("isWalking", false);
-            _beast.anim.SetTrigger("healBeast");
+            _beast.anim.SetTrigger("petBeast");
 
             Heal(_healthAmount);// TODO: añadir funcionalidad de sanación
 
