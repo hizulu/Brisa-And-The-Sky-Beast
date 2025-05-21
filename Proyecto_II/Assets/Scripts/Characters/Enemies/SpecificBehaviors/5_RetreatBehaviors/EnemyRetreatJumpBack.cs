@@ -42,6 +42,8 @@ public class EnemyRetreatJumpBack : EnemyStateSOBase
         enemy.agent.enabled = false;
 
         JumpBack();
+
+        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Retreat);
     }
 
     public override void DoExitLogic()

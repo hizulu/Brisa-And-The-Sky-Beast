@@ -28,6 +28,7 @@ public class EnemyAttack02 : EnemyComboAttacksSOBase
         float randomAttackDamage02 = Random.Range(attackDamageModifierMin, attackDamageModifierMax);
         AttackTarget(randomAttackDamage02, distanceToHit);
         enemy.StartCoroutine(WaitForAnimation());
+        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Attack);
     }
 
     public override void Exit()

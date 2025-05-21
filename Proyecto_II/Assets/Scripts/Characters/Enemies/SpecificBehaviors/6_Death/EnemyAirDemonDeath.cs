@@ -6,21 +6,20 @@ using UnityEngine;
 public class EnemyAirDemonDeath : EnemyStateSOBase
 {
     [SerializeField] private float maxTimeToDeath = 2f;
-    [SerializeField] private float currentTime = 0f;
 
     public override void DoEnterLogic()
     {
         enemy.anim.SetTrigger("Death");
         base.DoEnterLogic();
-        currentTime = 0f;
         Debug.Log("Has entrado en el estado de Muerte del Demonio de Aire.");
+        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Death);
+
+        enemy.StartCoroutine(AirDemonDeath());
     }
 
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-
-        AirDemonDeath();
     }
 
     public override void DoExitLogic()
@@ -29,19 +28,31 @@ public class EnemyAirDemonDeath : EnemyStateSOBase
         Debug.Log("Has salido del estado de Muerte del Demonio de Aire.");
     }
 
-    public void AirDemonDeath()
+    private IEnumerator AirDemonDeath()
     {
-        currentTime += Time.deltaTime;
+        yield return new WaitForSeconds(maxTimeToDeath);
 
-        if (currentTime > maxTimeToDeath)
-        {
-            //enemy.anim.enabled = false;
-            enemy.beast?.OnEnemyExit(enemy.gameObject);
-            Debug.Log("Destruye al enemigo");
-            Destroy(enemy.gameObject);
-            enemy.GetComponent<LootBox>()?.DropLoot();
-            Debug.Log("Triggerea evento");
-            EventsManager.TriggerNormalEvent("GameEndTrigger");
-        }
+        enemy.beast?.OnEnemyExit(enemy.gameObject);
+        Debug.Log("Destruye al enemigo");
+        Destroy(enemy.gameObject);
+        enemy.GetComponent<LootBox>()?.DropLoot();
+        Debug.Log("Triggerea evento");
+        EventsManager.TriggerNormalEvent("GameEndTrigger");
     }
+
+    //public void AirDemonDeath()
+    //{
+    //    currentTime += Time.deltaTime;
+
+    //    if (currentTime > maxTimeToDeath)
+    //    {
+    //        //enemy.anim.enabled = false;
+    //        enemy.beast?.OnEnemyExit(enemy.gameObject);
+    //        Debug.Log("Destruye al enemigo");
+    //        Destroy(enemy.gameObject);
+    //        enemy.GetComponent<LootBox>()?.DropLoot();
+    //        Debug.Log("Triggerea evento");
+    //        EventsManager.TriggerNormalEvent("GameEndTrigger");
+    //    }
+    //}
 }

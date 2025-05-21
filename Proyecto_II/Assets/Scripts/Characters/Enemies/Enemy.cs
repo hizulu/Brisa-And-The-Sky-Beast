@@ -21,7 +21,7 @@ public class Enemy : HittableElement
     public Animator anim { get; private set; }
     public Rigidbody enemyRb { get; private set; }
     public NavMeshAgent agent;
-    public SXFEnemy SfxEnemy { get; private set; }
+    public SFXEnemy SfxEnemy { get; private set; }
 
 
     [SerializeField] public float maxHealth = 100f;
@@ -75,7 +75,7 @@ public class Enemy : HittableElement
         anim = GetComponent<Animator>();
         enemyRb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
-        SfxEnemy = GetComponent<SXFEnemy>();
+        SfxEnemy = GetComponent<SFXEnemy>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
         EventsManager.CallSpecialEvents<float>("OnAttack01Enemy", SetDamageEnemy);
