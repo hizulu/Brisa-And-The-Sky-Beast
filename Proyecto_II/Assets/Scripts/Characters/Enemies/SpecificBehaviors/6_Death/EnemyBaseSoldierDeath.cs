@@ -6,39 +6,42 @@ using UnityEngine;
 public class EnemyBaseSoldierDeath : EnemyStateSOBase
 {
     [SerializeField] private float maxTimeToDeath = 2f;
-    [SerializeField] private float currentTime = 0f;
 
     public override void DoEnterLogic()
     {
-        enemy.anim.SetTrigger("Death");
         base.DoEnterLogic();
-        currentTime = 0f;
-        Debug.Log("Has entrado en el estado de Muerte del Soldado Base.");
-    }
-
-    public override void DoFrameUpdateLogic()
-    {
-        base.DoFrameUpdateLogic();
-
-        BaseSoldierDeath();
+        //Debug.Log("Has entrado en el estado de Muerte del Soldado Base.");
+        enemy.anim.SetTrigger("Death");
+        enemy.StartCoroutine(BaseSoldierDeath());
     }
 
     public override void DoExitLogic()
     {
         base.DoExitLogic();
-        Debug.Log("Has salido del estado de Muerte del Soldado Base.");
+        //Debug.Log("Has salido del estado de Muerte del Soldado Base.");
     }
 
-    public void BaseSoldierDeath()
+    private IEnumerator BaseSoldierDeath()
     {
-        currentTime += Time.deltaTime;
+        yield return new WaitForSeconds(maxTimeToDeath);
 
-        if (currentTime > maxTimeToDeath)
-        {
-            //enemy.anim.enabled = false;
-            enemy.beast?.OnEnemyExit(enemy.gameObject);
-            Destroy(enemy.gameObject);
-            enemy.GetComponent<LootBox>()?.DropLoot();
-        }
+        enemy.beast?.OnEnemyExit(enemy.gameObject);
+        Destroy(enemy.gameObject);
+        //Debug.Log("Soldier desaparece");
+        enemy.GetComponent<LootBox>()?.DropLoot();
     }
+
+    //public void BaseSoldierDeath()
+    //{
+    //    currentTime += Time.deltaTime;
+
+    //    if (currentTime > maxTimeToDeath)
+    //    {
+    //        //enemy.anim.enabled = false;
+    //        enemy.beast?.OnEnemyExit(enemy.gameObject);
+    //        Destroy(enemy.gameObject);
+    //        Debug.Log("Soldier desaparece");
+    //        enemy.GetComponent<LootBox>()?.DropLoot();
+    //    }
+    //}
 }

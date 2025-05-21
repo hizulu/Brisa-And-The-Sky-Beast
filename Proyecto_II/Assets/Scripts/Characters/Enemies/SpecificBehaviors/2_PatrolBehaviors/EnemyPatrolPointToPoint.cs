@@ -34,6 +34,7 @@ public class EnemyPatrolPointToPoint : EnemyStateSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
+        //Debug.Log("Entra en patrol");
 
         enemy.anim.SetBool("isPatrol", true);
 

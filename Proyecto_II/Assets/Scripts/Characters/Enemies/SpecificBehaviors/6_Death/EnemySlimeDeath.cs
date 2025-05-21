@@ -22,7 +22,7 @@ public class EnemySlimeDeath : EnemyStateSOBase
         base.DoEnterLogic();
 
         currentTime = 0f;
-        Debug.Log("Has entrado en el estado de Muerte del Slime.");
+        //Debug.Log("Has entrado en el estado de Muerte del Slime.");
     }
 
     public override void DoFrameUpdateLogic()
@@ -35,7 +35,7 @@ public class EnemySlimeDeath : EnemyStateSOBase
     public override void DoExitLogic()
     {
         base.DoExitLogic();
-        Debug.Log("Has salido del estado de Muerte del Slime.");
+        //Debug.Log("Has salido del estado de Muerte del Slime.");
     }
 
     private void SlimeDeath()

@@ -335,11 +335,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6b551cae4b68b8b4e8e7a6fbae202303, type: 3}
   m_PrefabInstance: {fileID: 2263006}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2263008 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b551cae4b68b8b4e8e7a6fbae202303, type: 3}
-  m_PrefabInstance: {fileID: 2263006}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3219545
 GameObject:
   m_ObjectHideFlags: 0
@@ -2682,7 +2677,7 @@ MonoBehaviour:
   maxHealth: 500
   healingAmount: 50
   maxHalfDeadDuration: 30
-  currentHalffDeadDuration: 0
+  currentHalfDeadDuration: 0
   swipeAttackDamage: 15
   biteAttackDamage: 25
   currentHealth: 0
@@ -3847,6 +3842,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63438b5ed418b6740a6f8ef27491e65b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  generalVolume: 100
+  musicVolume: 100
+  sfxVolume: 100
+  generalVolumeText: {fileID: 0}
+  musicVolumeText: {fileID: 0}
+  sfxVolumeText: {fileID: 0}
 --- !u!1 &134257106
 GameObject:
   m_ObjectHideFlags: 0
@@ -7038,8 +7039,7 @@ MonoBehaviour:
   playerCam: {fileID: 1577233736}
   CamComponents: {fileID: 0}
   lookCamPlayer: {fileID: 1594478463}
-  PaloBrisa: {fileID: 2263008}
-  Baculo: {fileID: 0}
+  WeaponsBrisa: []
   ShadowBrisa: {fileID: 0}
   hitBox: {fileID: 1788924121}
   Shield: {fileID: 1436254889}
@@ -7053,7 +7053,7 @@ MonoBehaviour:
   beastTrapped: {fileID: 76035502}
   RenderPlayer: {fileID: 5330089509027177363}
   DoubleJumpEffect: {fileID: 0}
-  weaponSlot: {fileID: 0}
+  weaponSlot: {fileID: 1464668282}
   playerTargetEnemiesRange: 20
 --- !u!54 &353271127
 Rigidbody:
@@ -9455,6 +9455,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 353271126}
+    - target: {fileID: 6936492970290777454, guid: 13438b1c1a40c5b44bb3e38f13c7baf9, type: 3}
+      propertyPath: EnemyDeathBase
+      value: 
+      objectReference: {fileID: 11400000, guid: 0b0d38ad736e2f543845b3e503c6b1c2, type: 2}
     - target: {fileID: 6949262426741073871, guid: 13438b1c1a40c5b44bb3e38f13c7baf9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 31.830114
@@ -14253,7 +14257,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5d42b1f014fa74d86c92a0eb783f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 353271125}
 --- !u!1 &680910427
 GameObject:
   m_ObjectHideFlags: 0
@@ -35732,7 +35735,7 @@ MonoBehaviour:
   fadeSpeed: 4
   indicatorRect: {fileID: 1939967405}
   indicatorImage: {fileID: 1939967407}
-  beastScript: {fileID: 0}
+  beastScript: {fileID: 76035503}
 --- !u!114 &1939967407
 MonoBehaviour:
   m_ObjectHideFlags: 0

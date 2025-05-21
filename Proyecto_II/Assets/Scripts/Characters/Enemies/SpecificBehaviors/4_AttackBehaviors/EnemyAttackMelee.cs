@@ -15,10 +15,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Attack-Melee", menuName = "Enemy Logic/Attack Logic/Melee")]
 public class EnemyAttackMelee : EnemyStateSOBase
 {
-    #region Variables
-    [SerializeField] private float _timeBetweenHits = 2f;
+    #region Variables   
     [SerializeField] private float _attackDamage = 10f;
-    private float _timer;
     [SerializeField] private float distanceToStopAttackState = 5f;
     private float distanceToStopAttackStateSQR = 0f; // Variable auxiliar para almacenar distancia evitando cálculo de raíz cuadrada cada frame.
 
@@ -29,12 +27,14 @@ public class EnemyAttackMelee : EnemyStateSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-        _timer = _timeBetweenHits;
-        
+        Debug.Log("Entra en attack");
+
         distanceToStopAttackStateSQR = distanceToStopAttackState * distanceToStopAttackState;
         SetTarget();
         // Debug.Log("Has entrado en el estado de Attack Melee");
         enemy.agent.ResetPath();
+        enemy.anim.SetTrigger("Attack");
+        Attack();
     }
 
     public override void DoExitLogic()
@@ -54,17 +54,6 @@ public class EnemyAttackMelee : EnemyStateSOBase
         // Si el jugador se aleja demasiado, vuelve al estado de Chase
         if (distanceToTargetSQR > distanceToStopAttackStateSQR)
             enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyChaseState);
-
-        // Gestión del tiempo entre ataques
-        _timer += Time.deltaTime;
-
-        if (_timer > _timeBetweenHits)
-        {
-            _timer = 0f;
-            enemy.anim.SetTrigger("Attack");
-            Attack();
-            // TODO: lógica de ataque
-        }
     }
     #endregion
 
@@ -104,6 +93,7 @@ public class EnemyAttackMelee : EnemyStateSOBase
             EventsManager.TriggerSpecialEvent<float>("OnAttackBeast", _attackDamage);
 
         // TODO: diferente daño según a quién golpee
+        enemy.enemyStateMachine.ChangeState(enemy.enemyStateMachine.EnemyRetreatState);
     }
     #endregion
 }
