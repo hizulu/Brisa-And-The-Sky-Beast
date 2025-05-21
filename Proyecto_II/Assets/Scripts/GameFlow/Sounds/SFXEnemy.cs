@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SXFEnemy : MonoBehaviour
+public class SFXEnemy : MonoBehaviour
 {
     [SerializeField] private AudioSource enemyAudioSource;
 
     [Header("Tipos de Audios Enemigos")]
     [SerializeField] private AudioClip[] idle;
     [SerializeField] private AudioClip[] walk;
+    [SerializeField] private AudioClip[] chase;
     [SerializeField] private AudioClip[] detectTarget;
     [SerializeField] private AudioClip[] takeDamage;
     [SerializeField] private AudioClip[] retreat;
@@ -20,18 +21,11 @@ public class SXFEnemy : MonoBehaviour
 
     private void Awake()
     {
-        //if (instance == null)
-        //{
-        //    instance = this;
-        //    DontDestroyOnLoad(gameObject);
-        //}
-        //else
-        //    Destroy(gameObject);
-
         sfxEnemyClips = new Dictionary<EnemySFXType, AudioClip[]>
         {
             { EnemySFXType.Idle, idle },
             { EnemySFXType.Walk, walk },
+            { EnemySFXType.Chase, chase },
             { EnemySFXType.DetectTarget, detectTarget },
             { EnemySFXType.TakeDamage, takeDamage },
             { EnemySFXType.Retreat, retreat },
@@ -57,6 +51,18 @@ public class SXFEnemy : MonoBehaviour
         }
     }
 
+    public void StopSound(EnemySFXType _soundType)
+    {
+        if (sfxEnemyClips.TryGetValue(_soundType, out AudioClip[] clips) && clips.Length > 0)
+        {
+            int randomIndex = Random.Range(0, clips.Length);
+            AudioClip selectedClip = clips[randomIndex];
+
+            enemyAudioSource.clip = selectedClip;
+            enemyAudioSource.Stop();
+        }
+    }
+
     //public void PlayLoopSound(BrisaSFXType _soundType, float _volume = 1.0f)
     //{
     //    if (sfxBrisaClips.TryGetValue(_soundType, out AudioClip[] clips) && clips.Length > 0)
@@ -72,24 +78,13 @@ public class SXFEnemy : MonoBehaviour
     //        Debug.Log(selectedClip);
     //    }
     //}
-
-    public void StopSound(EnemySFXType _soundType)
-    {
-        if (sfxEnemyClips.TryGetValue(_soundType, out AudioClip[] clips) && clips.Length > 0)
-        {
-            int randomIndex = Random.Range(0, clips.Length);
-            AudioClip selectedClip = clips[randomIndex];
-
-            enemyAudioSource.clip = selectedClip;
-            enemyAudioSource.Stop();
-        }
-    }
 }
 
 public enum EnemySFXType
 {
     Idle,
     Walk,
+    Chase,
     DetectTarget,
     TakeDamage,
     Retreat,

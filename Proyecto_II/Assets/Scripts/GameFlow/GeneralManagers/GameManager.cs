@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
         if(saveState)
             saveManager.SaveSceneState();
         EventsManager.CleanAllEvents();
-
+        Debug.Log("Se han limpiado eventos.");
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         string nextSceneName = System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(nextSceneIndex));
         Debug.Log($"Trying to load scene with index: {nextSceneIndex} and name: {nextSceneName}");

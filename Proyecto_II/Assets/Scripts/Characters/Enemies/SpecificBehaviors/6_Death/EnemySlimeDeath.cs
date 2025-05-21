@@ -15,40 +15,47 @@ using UnityEngine;
 public class EnemySlimeDeath : EnemyStateSOBase
 {
     [SerializeField] private float maxTimeToDeath = 1f;
-    [SerializeField] private float currentTime = 0f;
+    //[SerializeField] private float currentTime = 0f;
 
     public override void DoEnterLogic()
     {
         enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Death);
         base.DoEnterLogic();
-
-        currentTime = 0f;
-        //Debug.Log("Has entrado en el estado de Muerte del Slime.");
+        enemy.StartCoroutine(SlimeDeath());
+        //currentTime = 0f;
+        Debug.Log("Has entrado en el estado de Muerte del Slime.");
     }
 
     public override void DoFrameUpdateLogic()
     {
-        base.DoFrameUpdateLogic();
-
-        SlimeDeath();
+        base.DoFrameUpdateLogic();        
     }
 
     public override void DoExitLogic()
     {
         base.DoExitLogic();
-        //Debug.Log("Has salido del estado de Muerte del Slime.");
+        Debug.Log("Has salido del estado de Muerte del Slime.");
     }
 
-    private void SlimeDeath()
+    private IEnumerator SlimeDeath()
     {
-        currentTime += Time.deltaTime;
+        yield return new WaitForSeconds(maxTimeToDeath);
 
-        if(currentTime > maxTimeToDeath)
-        {
-            enemy.anim.enabled = false;
-            enemy.beast?.OnEnemyExit(enemy.gameObject);
-            Destroy(enemy.gameObject);
-            enemy.GetComponent<LootBox>()?.DropLoot();
-        }
+        enemy.beast?.OnEnemyExit(enemy.gameObject);
+        Destroy(enemy.gameObject);
+        enemy.GetComponent<LootBox>()?.DropLoot();
     }
+
+    //private void SlimeDeath()
+    //{
+    //    currentTime += Time.deltaTime;
+
+    //    if(currentTime > maxTimeToDeath)
+    //    {
+    //        enemy.anim.enabled = false;
+    //        enemy.beast?.OnEnemyExit(enemy.gameObject);
+    //        Destroy(enemy.gameObject);
+    //        enemy.GetComponent<LootBox>()?.DropLoot();
+    //    }
+    //}
 }

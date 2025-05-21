@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class TextLookAtCamera : MonoBehaviour
+public class TEMPTextLookAtCamera : MonoBehaviour
 {
     private Camera mainCamera;
     private bool maintainVerticalOrientation = true;
-    private bool invertDirection = false;
 
     private void Start()
     {
@@ -22,11 +21,6 @@ public class TextLookAtCamera : MonoBehaviour
         if (mainCamera == null) return;
         Vector3 directionToCamera = mainCamera.transform.position - transform.position;
 
-        if (invertDirection)
-        {
-            directionToCamera = -directionToCamera;
-        }
-
         if (maintainVerticalOrientation)
         {
             directionToCamera.y = 0;
@@ -34,7 +28,7 @@ public class TextLookAtCamera : MonoBehaviour
 
         if (directionToCamera != Vector3.zero)
         {
-            transform.rotation = Quaternion.LookRotation(directionToCamera);
+            transform.rotation = Quaternion.LookRotation(-directionToCamera);
         }
     }
 }

@@ -49,6 +49,8 @@ public class EnemyPatrolPointToPoint : EnemyStateSOBase
 
     public override void DoFrameUpdateLogic()
     {
+        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Walk);
+
         base.DoFrameUpdateLogic();
         ChangePoint();
 
@@ -59,6 +61,7 @@ public class EnemyPatrolPointToPoint : EnemyStateSOBase
 
     public override void DoExitLogic()
     {
+        enemy.SfxEnemy.StopSound(EnemySFXType.Walk);
         base.DoExitLogic();
         enemy.anim.SetBool("isPatrol", false);
     }

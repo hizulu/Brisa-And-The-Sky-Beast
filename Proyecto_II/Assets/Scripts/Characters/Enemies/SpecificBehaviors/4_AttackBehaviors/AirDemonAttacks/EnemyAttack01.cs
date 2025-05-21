@@ -28,6 +28,7 @@ public class EnemyAttack01 : EnemyComboAttacksSOBase
         float randomAttackDamage01 = Random.Range(attackDamageModifierMin, attackDamageModifierMax);
         AttackTarget(randomAttackDamage01, distanceToHit); // Método definido en el SOBase
         enemy.StartCoroutine(WaitForAnimation());
+        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Attack);
     }
 
     public override void Exit()

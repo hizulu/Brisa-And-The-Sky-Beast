@@ -35,6 +35,7 @@ public class EnemyPatrolRandomWander : EnemyStateSOBase
 
         enemy.agent.speed = randomWanderSpeed;
         enemy.MoveEnemy(targetPos);
+        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Walk);
     }
 
     public override void DoExitLogic()
@@ -47,7 +48,6 @@ public class EnemyPatrolRandomWander : EnemyStateSOBase
 
     public override void DoFrameUpdateLogic()
     {
-        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Walk);
         base.DoFrameUpdateLogic();
 
         // Cambia de estado cuando detecta al jugador o a la bestia
