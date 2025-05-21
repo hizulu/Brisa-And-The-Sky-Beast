@@ -185,8 +185,16 @@ public class SaveManager : MonoBehaviour
             Debug.Log("Player wasn't null");
             //savedPlayer.SetPosition(savedSceneState.playerState.playerPosition);
             // Cargar vida
-            player.SetHealth(savedSceneState.playerState.playerHealth);
-            Debug.Log($"Player health should be: {savedSceneState.playerState.playerHealth}");
+            if(savedSceneState.playerState.playerHealth < 50)
+            {
+                player.SetHealth(100f);
+            }
+            else
+            {
+                player.SetHealth(savedSceneState.playerState.playerHealth);
+                Debug.Log($"Player health should be: {savedSceneState.playerState.playerHealth}");
+            }
+                        
 
             // Cargar arma
             if (!string.IsNullOrEmpty(savedSceneState.playerState.equippedWeaponID))

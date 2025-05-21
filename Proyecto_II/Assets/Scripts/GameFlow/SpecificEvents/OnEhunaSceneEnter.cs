@@ -5,13 +5,15 @@ using UnityEngine;
 public class OnEhunaSceneEnter : MonoBehaviour
 {
     [SerializeField] private BeastTrapped beastTrapped;
-    [SerializeField] private Player player;
     [SerializeField] private LeverActionsTempleDoor leverActionsTempleDoor;
 
     void Start()
     {
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         beastTrapped.SetBeastFreeFromCage();
-        //player.PaloRecogido();
         leverActionsTempleDoor.isDoorOpen = false;
     }
 }

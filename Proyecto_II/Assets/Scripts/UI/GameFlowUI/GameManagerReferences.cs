@@ -18,4 +18,6 @@ public class GameManagerReferences : MonoBehaviour
     {
         GameManager.Instance.ReloadScene();
     }
+
+    public void GameOver() { GameManager.Instance.GameOver(); }
 }
