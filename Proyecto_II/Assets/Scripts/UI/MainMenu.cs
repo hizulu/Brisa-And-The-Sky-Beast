@@ -43,7 +43,7 @@ public class MainMenu : MonoBehaviour
         EventsManager.CleanAllEvents();
 
         GameSession.IsNewGame = true;
-
+        GameManager.HasSaved = true;
         GameManager.Instance.LoadScene("01_OpeningCinematic");
     }
 

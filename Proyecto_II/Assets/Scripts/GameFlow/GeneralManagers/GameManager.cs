@@ -194,7 +194,6 @@ public class GameManager : MonoBehaviour
         {
             yield return null;
         }
-        Debug.Log("Escena nueva activada");
 
         // Cargar estados guardados si es necesario
         if (loadSaved)
@@ -239,7 +238,6 @@ public class GameManager : MonoBehaviour
         SaveManager.Instance.ResetProgress();
         LoadSceneWithVideo("01_OpeningCinematic", loadSaved: false);
         ChangeGameState(GameState.Playing);
-        HasSaved = true;
     }
 
     public void Victory()
