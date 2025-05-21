@@ -4,11 +4,16 @@ using UnityEngine;
 
 public enum BeastSFXType
 {
-    Howl,
-    Attack,
+    Idle,
     Walk,
     Run,
-    Idle
+    AttackClaw,
+    AttackBite,
+    Howl,
+    Bark,
+    Growl,
+    Eat,
+    Smell,
 }
 
 public class SFXBeast : MonoBehaviour
@@ -16,11 +21,16 @@ public class SFXBeast : MonoBehaviour
     [SerializeField] private AudioSource beastAudioSource;
 
     [Header("Tipos de Audios Bestia")]
-    [SerializeField] private AudioClip[] howlClips;
-    [SerializeField] private AudioClip[] attackClips;
-    [SerializeField] private AudioClip[] walkClips;
-    [SerializeField] private AudioClip[] runClips;
-    [SerializeField] private AudioClip[] idleClips;
+    [SerializeField] private AudioClip[] idle;
+    [SerializeField] private AudioClip[] walk;
+    [SerializeField] private AudioClip[] run;
+    [SerializeField] private AudioClip[] attackClaw;
+    [SerializeField] private AudioClip[] attackBite;
+    [SerializeField] private AudioClip[] howl;
+    [SerializeField] private AudioClip[] bark;
+    [SerializeField] private AudioClip[] growl;
+    [SerializeField] private AudioClip[] eat;
+    [SerializeField] private AudioClip[] smell;
 
     private Dictionary<BeastSFXType, AudioClip[]> sfxBeastClips;
 
@@ -28,11 +38,16 @@ public class SFXBeast : MonoBehaviour
     {
         sfxBeastClips = new Dictionary<BeastSFXType, AudioClip[]>
         {
-            { BeastSFXType.Howl, howlClips },
-            { BeastSFXType.Attack, attackClips },
-            { BeastSFXType.Walk, walkClips },
-            { BeastSFXType.Run, runClips },
-            { BeastSFXType.Idle, idleClips }
+            { BeastSFXType.Idle, idle },
+            { BeastSFXType.Walk, walk },
+            { BeastSFXType.Run, run },
+            { BeastSFXType.AttackClaw, attackClaw},
+            { BeastSFXType.AttackBite, attackBite},
+            { BeastSFXType.Howl, howl },
+            { BeastSFXType.Bark, bark },
+            { BeastSFXType.Growl, growl},
+            { BeastSFXType.Eat, eat },
+            { BeastSFXType.Smell, smell},
         };
     }
 
@@ -46,17 +61,29 @@ public class SFXBeast : MonoBehaviour
         }
     }
 
-    public void PlayLoopSound(BeastSFXType _soundType, float _volume = 1.0f)
+    public void StopSound(BeastSFXType _soundType)
     {
-        if (sfxBeastClips.TryGetValue(_soundType, out AudioClip[] clips) && clips != null && clips.Length > 0)
+        if (sfxBeastClips.TryGetValue(_soundType, out AudioClip[] clips) && clips.Length > 0)
         {
             int randomIndex = Random.Range(0, clips.Length);
             AudioClip selectedClip = clips[randomIndex];
 
             beastAudioSource.clip = selectedClip;
-            beastAudioSource.volume = _volume;
-            beastAudioSource.loop = true;
-            beastAudioSource.Play();
+            beastAudioSource.Stop();
         }
     }
+
+    //public void PlayLoopSound(BeastSFXType _soundType, float _volume = 1.0f)
+    //{
+    //    if (sfxBeastClips.TryGetValue(_soundType, out AudioClip[] clips) && clips != null && clips.Length > 0)
+    //    {
+    //        int randomIndex = Random.Range(0, clips.Length);
+    //        AudioClip selectedClip = clips[randomIndex];
+
+    //        beastAudioSource.clip = selectedClip;
+    //        beastAudioSource.volume = _volume;
+    //        beastAudioSource.loop = true;
+    //        beastAudioSource.Play();
+    //    }
+    //}
 }

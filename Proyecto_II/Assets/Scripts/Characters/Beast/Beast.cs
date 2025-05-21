@@ -48,7 +48,7 @@ public class Beast : MonoBehaviour
     private bool isInCombat = false;
     private SphereCollider detectionCollider;
 
-    public SFXBeast BeastSounds;
+    public SFXBeast SfxBeast { get; private set; }
 
     private void Awake()
     {
@@ -58,7 +58,7 @@ public class Beast : MonoBehaviour
 
         currentHealth = maxHealth;
 
-        BeastSounds = FindObjectOfType<SFXBeast>();
+        SfxBeast = GetComponent<SFXBeast>();
 
         AnimationDurationDatabase.Instance.RegisterAnimatorClips(anim.runtimeAnimatorController);
 
