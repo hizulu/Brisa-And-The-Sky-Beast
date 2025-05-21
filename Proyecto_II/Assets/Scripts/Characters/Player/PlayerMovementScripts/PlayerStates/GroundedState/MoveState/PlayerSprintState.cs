@@ -27,6 +27,7 @@ public class PlayerSprintState : PlayerMovedState
         GetHorizontalDirection();
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.SprintParameterHash);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Sprint);
         //Debug.Log("Has entrado en el estado de SPRINTAR");
     }
 

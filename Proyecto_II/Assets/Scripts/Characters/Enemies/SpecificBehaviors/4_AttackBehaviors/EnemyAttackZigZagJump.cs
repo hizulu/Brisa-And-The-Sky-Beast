@@ -177,6 +177,8 @@ public class EnemyAttackZigZagJump : EnemyStateSOBase
         // Golpea al objetivo
         if (distanceToTargetSQR < distanceToHit * distanceToHit)
         {
+            enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Attack);
+
             if (enemy.targetIsPlayer)
             {
                 Debug.Log("triggerea evento de hacer daño a player");

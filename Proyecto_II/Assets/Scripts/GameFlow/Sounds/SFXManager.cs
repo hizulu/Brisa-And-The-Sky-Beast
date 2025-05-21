@@ -12,6 +12,8 @@ public class SFXManager : MonoBehaviour
     [SerializeField] private AudioClip[] walk;
     [SerializeField] private AudioClip[] run;
     [SerializeField] private AudioClip[] crouch;
+    [SerializeField] private AudioClip[] sprint;
+    [SerializeField] private AudioClip[] pickUp;
     [SerializeField] private AudioClip[] attack;
     [SerializeField] private AudioClip[] takeDamage;
     [SerializeField] private AudioClip[] callBeast;
@@ -20,6 +22,8 @@ public class SFXManager : MonoBehaviour
     [SerializeField] private AudioClip[] fall;
     [SerializeField] private AudioClip[] land;
     [SerializeField] private AudioClip[] hardLand;
+    [SerializeField] private AudioClip[] halfDeath;
+    [SerializeField] private AudioClip[] death;
 
     private Dictionary<BrisaSFXType, AudioClip[]> sfxBrisaClips;
 
@@ -39,6 +43,8 @@ public class SFXManager : MonoBehaviour
             { BrisaSFXType.Walk, walk },
             { BrisaSFXType.Run, run },
             { BrisaSFXType.Crouch, crouch },
+            { BrisaSFXType.Sprint, sprint},
+            { BrisaSFXType.PickUp, pickUp},
             { BrisaSFXType.Attack, attack },
             { BrisaSFXType.TakeDamage, takeDamage },
             { BrisaSFXType.CallBeast, callBeast },
@@ -46,7 +52,9 @@ public class SFXManager : MonoBehaviour
             { BrisaSFXType.DoubleJump, doubleJump },
             { BrisaSFXType.Fall, fall },
             { BrisaSFXType.Land, land },
-            { BrisaSFXType.HardLand, hardLand }
+            { BrisaSFXType.HardLand, hardLand },
+            { BrisaSFXType.HalfDeath, halfDeath},
+            { BrisaSFXType.Death, death }
         };
     }
 
@@ -101,6 +109,8 @@ public enum BrisaSFXType
     Walk,
     Run,
     Crouch,
+    Sprint,
+    PickUp,
     Attack,
     TakeDamage,
     CallBeast,
@@ -109,4 +119,6 @@ public enum BrisaSFXType
     Fall,
     Land,
     HardLand,
+    HalfDeath,
+    Death
 }

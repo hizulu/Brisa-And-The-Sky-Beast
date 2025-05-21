@@ -45,6 +45,7 @@ public class EnemyChaseStraightToTarget : EnemyStateSOBase
 
     public override void DoExitLogic()
     {
+        enemy.SfxEnemy.StopSound(EnemySFXType.Idle);
         base.DoExitLogic();
         enemy.anim.SetBool("isChasing", false);
         enemy.agent.ResetPath();
@@ -53,6 +54,7 @@ public class EnemyChaseStraightToTarget : EnemyStateSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
+        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.DetectTarget);
 
         float distanceToTargetSQR = (enemy.transform.position - targetTransform.position).sqrMagnitude;
 

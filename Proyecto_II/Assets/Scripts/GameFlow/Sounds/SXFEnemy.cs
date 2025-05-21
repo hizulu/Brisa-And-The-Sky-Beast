@@ -6,7 +6,7 @@ public class SXFEnemy : MonoBehaviour
 {
     [SerializeField] private AudioSource enemyAudioSource;
 
-    [Header("Tipos de Audios Brisa")]
+    [Header("Tipos de Audios Enemigos")]
     [SerializeField] private AudioClip[] idle;
     [SerializeField] private AudioClip[] walk;
     [SerializeField] private AudioClip[] detectTarget;

@@ -14,6 +14,7 @@ public class PlayerPickUpState : PlayerMovementState
     {
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.PickUpParameterHash);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.PickUp);
     }
 
     public override void UpdateLogic()

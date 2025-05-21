@@ -17,6 +17,7 @@ public class PlayerDeathState : PlayerMovementState
         base.Enter();
         //Debug.Log("Has entrado en el estado de MUERTE");
         StartAnimation(stateMachine.Player.PlayerAnimationData.DeathParameterHash);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Death);
     }
 
     public override void UpdateLogic()

@@ -31,7 +31,7 @@ public class PlayerHalfDeadState : PlayerDeathState
         //statsData.CurrentTimeHalfDead = 60f;
         statsData.CurrentTimeHalfDead = statsData.MaxTimeHalfDead;
         StartAnimation(stateMachine.Player.PlayerAnimationData.HalfDeadParameterHash);
-
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.HalfDeath);
         beast = stateMachine.Player.Beast;
         beastTrapped = stateMachine.Player.beastTrapped;
     }
