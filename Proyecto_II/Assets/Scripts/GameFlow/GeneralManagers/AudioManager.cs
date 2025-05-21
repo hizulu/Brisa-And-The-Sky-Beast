@@ -4,7 +4,7 @@ public class AudioManager : MonoBehaviour
 {
     private static AudioManager instance;
 
-    //[SerializeField] public AudioSource musicSource;
+    [SerializeField] public AudioSource musicSource;
     [SerializeField] public AudioSource SFXSource;
 
 

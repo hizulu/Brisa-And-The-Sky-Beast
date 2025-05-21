@@ -18,6 +18,7 @@ public class PlayerLandState : PlayerStopState
         base.Enter();
         //Debug.Log("Has entrado en estado de ATERRIZAR");
         StartAnimation(stateMachine.Player.PlayerAnimationData.LandParameterHash);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Land);
     }
 
     public override void UpdateLogic()

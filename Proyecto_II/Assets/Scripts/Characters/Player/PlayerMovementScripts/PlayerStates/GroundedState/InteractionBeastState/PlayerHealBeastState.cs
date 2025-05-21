@@ -37,6 +37,7 @@ public class PlayerHealBeastState : PlayerInteractionState
     public override void Exit()
     {
         currentTime = 0f;
+        stateMachine.Player.Mango.SetActive(false);
         healBeastFinish = false;
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.HealBeastParameterHash);

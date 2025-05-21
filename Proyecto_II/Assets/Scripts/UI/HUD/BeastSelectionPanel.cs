@@ -13,8 +13,8 @@ using UnityEngine.UI;
  * FECHA: 03/04/2025
  * DESCRIPCIÓN: Script que se encarga de gestionar el panel de selección de la Bestia.
  * VERSIÓN: 1.0 Lucía: Sistema de selección de acciones de la bestia inicial.
- * 
- * 1.? Lucía: Añadido el sistema de colores para los botones cuando están activos o inactivos.
+ *          2.0 Sara: Eventos botones de acciones de Brisa - Bestia.
+ *          2.2 Lucía: Añadido el sistema de colores para los botones cuando están activos o inactivos.
  */
 
 public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler

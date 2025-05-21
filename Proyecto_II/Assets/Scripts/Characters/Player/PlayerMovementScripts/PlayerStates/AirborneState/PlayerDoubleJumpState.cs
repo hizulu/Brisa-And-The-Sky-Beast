@@ -23,6 +23,7 @@ public class PlayerDoubleJumpState : PlayerAirborneState
         //Debug.Log("Has entrado en el estado de DOBLE-SALTO");
         StartAnimation(stateMachine.Player.PlayerAnimationData.DoubleJumpParameterHash);
         stateMachine.Player.DoubleJumpEffect.gameObject.SetActive(true);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.DoubleJump);
     }
 
     public override void HandleInput()

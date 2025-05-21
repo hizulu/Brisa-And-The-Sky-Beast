@@ -60,7 +60,7 @@ public class PlayerAttack02 : PlayerAttackState
     {
         canContinueCombo = false;
         attackFinish = false;
-        stateMachine.Player.SfxPlayer.StopSound(BrisaSFXType.Attack);
+        //stateMachine.Player.SfxPlayer.StopSound(BrisaSFXType.Attack);
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.Attack02ParameterHash);
     }

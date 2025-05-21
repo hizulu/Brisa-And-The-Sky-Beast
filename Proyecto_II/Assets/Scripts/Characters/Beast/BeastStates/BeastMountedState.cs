@@ -31,7 +31,7 @@ public class BeastMountedState : BeastState
 
 
         lastPosition = beast.transform.position;
-        beast.anim.SetBool("isWalking", false);
+        //beast.anim.SetBool("isWalking", false);
     }
     public override void OnUpdate(Beast beast)
     {
@@ -49,7 +49,7 @@ public class BeastMountedState : BeastState
 
             if (!wasWalking)
             {
-                beast.anim.SetBool("isWalking", true);
+                beast.anim.SetBool("isRunning", true);
                 wasWalking = true;
             }
         }
@@ -59,7 +59,7 @@ public class BeastMountedState : BeastState
 
             if (wasWalking && stillTimer >= stopDelay)
             {
-                beast.anim.SetBool("isWalking", false);
+                beast.anim.SetBool("isRunning", false);
                 wasWalking = false;
             }
         }
@@ -75,6 +75,6 @@ public class BeastMountedState : BeastState
         beast.agent.enabled = true;
         //beast.rb.constraints = RigidbodyConstraints.None;
 
-        beast.anim.SetBool("isWalking", false);
+        beast.anim.SetBool("isRunning", false);
     }
 }

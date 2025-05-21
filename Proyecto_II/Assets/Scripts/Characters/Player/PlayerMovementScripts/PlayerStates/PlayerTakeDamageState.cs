@@ -16,6 +16,7 @@ public class PlayerTakeDamageState : PlayerMovementState
     {
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.TakeDamageParameterHash);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.TakeDamage);
     }
 
     public override void UpdateLogic()
@@ -25,7 +26,8 @@ public class PlayerTakeDamageState : PlayerMovementState
     }
 
     public override void Exit()
-    { 
+    {
+        //stateMachine.Player.SfxPlayer.StopSound(BrisaSFXType.TakeDamage);
         base.Exit(); 
         StopAnimation(stateMachine.Player.PlayerAnimationData.TakeDamageParameterHash);
     }

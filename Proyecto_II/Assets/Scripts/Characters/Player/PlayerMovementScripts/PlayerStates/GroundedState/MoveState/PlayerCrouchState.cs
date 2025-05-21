@@ -26,10 +26,12 @@ public class PlayerCrouchState : PlayerMovedState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Crouch);
     }
 
     public override void Exit()
     {
+        stateMachine.Player.SfxPlayer.StopSound(BrisaSFXType.Crouch);
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.CrouchParameterHash);
         EventsManager.TriggerSpecialEvent<bool>("PlayerCrouchState", false);

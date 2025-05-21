@@ -26,7 +26,7 @@ public class PlayerHealState : PlayerStopState
         stateMachine.Player.Baya.SetActive(true);
         
         base.Enter();
-        Debug.Log("Has entrado en el estado de curarte");
+        //Debug.Log("Has entrado en el estado de curarte");
         StartAnimation(stateMachine.Player.PlayerAnimationData.HealParameterHash);
     }
 
@@ -49,7 +49,8 @@ public class PlayerHealState : PlayerStopState
     {
         currentTime = 0f;
         base.Exit();
-        Debug.Log("Has salido del estado de curarte");
+        stateMachine.Player.Baya.SetActive(false);
+        //Debug.Log("Has salido del estado de curarte");
         StopAnimation(stateMachine.Player.PlayerAnimationData.HealParameterHash);
     }
     #endregion

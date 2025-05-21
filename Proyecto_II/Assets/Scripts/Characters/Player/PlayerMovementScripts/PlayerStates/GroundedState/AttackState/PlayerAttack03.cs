@@ -40,7 +40,7 @@ public class PlayerAttack03 : PlayerAttackState
     public override void Exit()
     {
         attackFinish = false;
-        stateMachine.Player.SfxPlayer.StopSound(BrisaSFXType.Attack);
+        //stateMachine.Player.SfxPlayer.StopSound(BrisaSFXType.Attack);
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.Attack03ParameterHash);
     }
