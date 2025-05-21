@@ -32,7 +32,7 @@ public class EnemyChaseStraightToTarget : EnemyStateSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-
+        //Debug.Log("Entra en chase");
 
         enemy.anim.SetBool("isChasing", true);
 

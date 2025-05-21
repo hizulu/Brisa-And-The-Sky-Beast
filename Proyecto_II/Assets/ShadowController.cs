@@ -32,7 +32,9 @@ public class ShadowController : MonoBehaviour
             projector.pivot = new Vector3(0, 0, -distance / 2f);
 
             // Atenuar la sombra
-            projector.fadeFactor = 1 - (distance / castDistance);
+            projector.fadeFactor = 0.7f - (distance *2/ castDistance);
+            //float t = distance / castDistance;
+            //projector.fadeFactor = 1 - t * t;
         }
         else
         {

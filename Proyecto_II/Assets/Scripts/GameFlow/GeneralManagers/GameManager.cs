@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     private SaveManager saveManager;
 
-    private bool loadInventory = false;
+    public static bool HasSaved = false;
 
     // Estructura Singleton
     void Awake()
@@ -124,13 +124,6 @@ public class GameManager : MonoBehaviour
         LoadSceneWithVideo(sceneName, loadSaved: false);
     }
 
-    private IEnumerator LoadSceneAsync(string sceneName)
-    {
-        EventsManager.CleanAllEvents();
-
-        yield return SceneManager.LoadSceneAsync(sceneName);
-    }
-
     public void LoadNextScene(bool saveState = false, bool loadSaved = false)
     {
         Debug.Log($"Cargando siguiente escena con loadSaved: {loadSaved}");
@@ -201,7 +194,6 @@ public class GameManager : MonoBehaviour
         {
             yield return null;
         }
-        Debug.Log("Escena nueva activada");
 
         // Cargar estados guardados si es necesario
         if (loadSaved)

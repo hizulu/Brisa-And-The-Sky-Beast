@@ -160,33 +160,31 @@ public class SaveManager : MonoBehaviour
             string sceneStateJson = PlayerPrefs.GetString("SavedSceneState");
             savedSceneState = JsonUtility.FromJson<SceneState>(sceneStateJson);
 
-            Debug.Log("Starting coroutine");
             StartCoroutine(LoadGameDataCoroutine());
         }
     }
 
     private IEnumerator LoadGameDataCoroutine()
     {
-        Debug.Log("Dentro de la corrutina1");
         // yield return null;
-        Debug.Log("Dentro de la corrutina2");
         #region Loading Player
         // Asegurarse que el jugador existe
         if (player == null)
-        {
             player = FindObjectOfType<Player>();
-            Debug.Log("Looking for player");
-        } else
-            Debug.Log("Ya había player");
-
 
         if (player != null)
         {
-            Debug.Log("Player wasn't null");
             //savedPlayer.SetPosition(savedSceneState.playerState.playerPosition);
             // Cargar vida
-            player.SetHealth(savedSceneState.playerState.playerHealth);
-            Debug.Log($"Player health should be: {savedSceneState.playerState.playerHealth}");
+            if(savedSceneState.playerState.playerHealth < 50)
+            {
+                player.SetHealth(100f);
+            }
+            else
+            {
+                player.SetHealth(savedSceneState.playerState.playerHealth);
+            }
+                        
 
             // Cargar arma
             if (!string.IsNullOrEmpty(savedSceneState.playerState.equippedWeaponID))

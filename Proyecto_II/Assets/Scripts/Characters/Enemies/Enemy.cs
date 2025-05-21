@@ -132,6 +132,8 @@ public class Enemy : HittableElement
     public static float damageAmount = 0f; // Debe ser estática para que todos los enemigos puedan acceder al cambio de parámetro de daño del evento.
     public override void OnHit()
     {
+        if (currentHealth <= Mathf.Epsilon)
+            return;
         anim.SetTrigger("Damage");
         ApplyDamageToEnemy();
     }

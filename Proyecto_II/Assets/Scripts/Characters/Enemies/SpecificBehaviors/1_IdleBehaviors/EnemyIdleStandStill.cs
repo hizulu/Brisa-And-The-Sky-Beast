@@ -24,6 +24,8 @@ public class EnemyIdleStandStill : EnemyStateSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
+        //Debug.Log("Entra en idle");
+
         enemy.anim.SetBool("isIdle", true);
         stillTime = Random.Range(minStillTime, maxStillTime);
     }
