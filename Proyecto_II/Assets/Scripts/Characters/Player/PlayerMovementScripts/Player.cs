@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
     public CinemachinePOV CamComponents;
     [SerializeField] public Transform lookCamPlayer;
     [SerializeField] public GameObject[] WeaponsBrisa;
-    [SerializeField] public SpriteRenderer ShadowBrisa;
     [SerializeField] public GameObject hitBox;
     [SerializeField] public GameObject Shield;
     [SerializeField] private BeastSelectionPanel beastPanel;
@@ -52,6 +51,8 @@ public class Player : MonoBehaviour
 
     private PlayerStateMachine playerStateMachine;
 
+    public SFXManager SfxPlayer { get; private set; }
+
     private void Awake()
     {
         PlayerAnimationData.Initialize();
@@ -61,6 +62,8 @@ public class Player : MonoBehaviour
         GroundCheckCollider = GetComponentInChildren<BoxCollider>();
 
         AnimPlayer = GetComponent<Animator>();
+
+        SfxPlayer = GetComponent<SFXManager>();
 
         PlayerInput = GetComponent<PlayerInput>();
 

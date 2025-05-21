@@ -26,6 +26,7 @@ public class PlayerRunState : PlayerMovedState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Run);
         //AudioManager.Instance.PlaySFX(AudioManager.Instance.run);
         //audioManager.PlaySFX(AudioManager.Instance.run);
         // Brisa no puede correr si no está en movimiento.
@@ -36,6 +37,7 @@ public class PlayerRunState : PlayerMovedState
     public override void Exit()
     {
         base.Exit();
+        stateMachine.Player.SfxPlayer.StopSound(BrisaSFXType.Run);
         //AudioManager.Instance.StopSFX();
         //audioManager.StopSFX();
         StopAnimation(stateMachine.Player.PlayerAnimationData.RunParameterHash);

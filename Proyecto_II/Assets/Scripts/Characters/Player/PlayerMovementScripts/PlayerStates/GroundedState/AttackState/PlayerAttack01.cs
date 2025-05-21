@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /*
  * NOMBRE CLASE: PlayerAttack01
@@ -23,10 +24,12 @@ public class PlayerAttack01 : PlayerAttackState
         float attackDamageCombo01 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
         EventsManager.TriggerSpecialEvent<float>("OnAttack01Enemy", attackDamageCombo01); // EVENTO: Crear evento de dañar al enemigo con daño del ComboAttack01.
         base.Enter();
-        //SoundManager.PlaySound(SoundType.ATTACK, 1);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Attack);
         stateMachine.Player.GolpearPrueba();
         StartAnimation(stateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
         //Debug.Log("Daño del ataque 1: " + " " + attackDamageCombo01);
+
+        //audioManager.PlaySFX(audioManager.attack01);
     }
 
     public override void HandleInput()
@@ -42,14 +45,17 @@ public class PlayerAttack01 : PlayerAttackState
             if (attackTimeElapsed < maxTimeToNextAttack && isWaitingForInput)
                 stateMachine.ChangeState(stateMachine.Attack02State);
             else
+            {
+                canContinueCombo = false;
                 stateMachine.ChangeState(stateMachine.IdleState);
+            }
         }
     }
 
     public override void UpdateLogic()
     {
         FinishAnimation();
-        attackTimeElapsed += Time.deltaTime;
+        attackTimeElapsed += Time.deltaTime;            
     }
 
     public override void UpdatePhysics()
@@ -62,6 +68,7 @@ public class PlayerAttack01 : PlayerAttackState
         canContinueCombo = false;
         isWaitingForInput = false;
         attackFinish = false;
+        //stateMachine.Player.SfxPlayer.StopSound(BrisaSFXType.Attack);
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
     }
@@ -74,7 +81,11 @@ public class PlayerAttack01 : PlayerAttackState
     protected override void FinishAnimation()
     {
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Attack01") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        {
             attackFinish = true;
+            if(!stateMachine.Player.PlayerInput.PlayerActions.Movement.IsPressed() && !canContinueCombo)
+                stateMachine.ChangeState(stateMachine.IdleState);
+        }
     }
 
     protected override void Move()

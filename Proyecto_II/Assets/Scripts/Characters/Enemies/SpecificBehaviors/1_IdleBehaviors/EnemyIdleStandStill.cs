@@ -33,7 +33,7 @@ public class EnemyIdleStandStill : EnemyStateSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-
+        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Idle);
         stillTime -= Time.deltaTime;
 
         // Cuando completa el tiempo de espera vuelve al estado de patrulla
@@ -43,6 +43,7 @@ public class EnemyIdleStandStill : EnemyStateSOBase
 
     public override void DoExitLogic()
     {
+        enemy.SfxEnemy.StopSound(EnemySFXType.Idle);
         base.DoExitLogic();
         enemy.anim.SetBool("isIdle", false);
     }

@@ -25,6 +25,7 @@ public class PlayerWalkState : PlayerMovedState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Walk);
         //audioManager.PlaySFX(audioManager.walk);
     }
 
@@ -32,6 +33,7 @@ public class PlayerWalkState : PlayerMovedState
     {
         base.Exit();
         //audioManager.StopSFX();
+        stateMachine.Player.SfxPlayer.StopSound(BrisaSFXType.Walk);
         StopAnimation(stateMachine.Player.PlayerAnimationData.WalkParameterHash);
         // Debug.Log("Has salido del estado de CAMINAR.");
     }

@@ -19,6 +19,7 @@ public class EnemySlimeDeath : EnemyStateSOBase
 
     public override void DoEnterLogic()
     {
+        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Death);
         base.DoEnterLogic();
 
         currentTime = 0f;

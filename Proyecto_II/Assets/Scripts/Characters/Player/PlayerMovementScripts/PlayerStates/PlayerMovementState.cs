@@ -290,6 +290,8 @@ public class PlayerMovementState : IState
     /// </summary>
     private void PickUp()
     {
+        if (stateMachine.CurrentState is PlayerRideBeastState) return;
+
         stateMachine.ChangeState(stateMachine.PickUpState);
     }
 

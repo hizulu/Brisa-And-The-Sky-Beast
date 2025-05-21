@@ -74,7 +74,7 @@ public class AudioSettings : MonoBehaviour
         if (audioManager == null) return;
 
         // Actualizar volúmenes principales
-        audioManager.musicSource.volume = generalVolume / 100f * (musicVolume / 100f);
+        //audioManager.musicSource.volume = generalVolume / 100f * (musicVolume / 100f);
         audioManager.SFXSource.volume = generalVolume / 100f * (sfxVolume / 100f);
 
         // Actualizar SoundPlayerManager

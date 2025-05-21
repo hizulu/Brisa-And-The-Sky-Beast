@@ -17,7 +17,7 @@ public class PlayerPetBeastState : PlayerInteractionState
     {
         base.Enter();
         AlignPlayerToBeast();
-        //Debug.Log("Has entrado en estado de Acariciar a la Bestia.");
+        Debug.Log("Has entrado en estado de Acariciar a la Bestia.");
         StartAnimation(stateMachine.Player.PlayerAnimationData.PetBeastParameterHash);
     }
 
@@ -30,7 +30,7 @@ public class PlayerPetBeastState : PlayerInteractionState
     public override void Exit()
     {
         base.Exit();
-        //Debug.Log("Has salido del estado de Acariciar a la Bestia.");
+        Debug.Log("Has salido del estado de Acariciar a la Bestia.");
         StopAnimation(stateMachine.Player.PlayerAnimationData.PetBeastParameterHash);
     }
     #endregion

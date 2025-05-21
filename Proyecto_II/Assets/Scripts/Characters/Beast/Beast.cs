@@ -48,6 +48,8 @@ public class Beast : MonoBehaviour
     private bool isInCombat = false;
     private SphereCollider detectionCollider;
 
+    public SFXBeast BeastSounds;
+
     private void Awake()
     {
         if (agent == null) agent = GetComponent<NavMeshAgent>();
@@ -55,6 +57,8 @@ public class Beast : MonoBehaviour
         if (blackboard == null) blackboard = new Blackboard();
 
         currentHealth = maxHealth;
+
+        BeastSounds = FindObjectOfType<SFXBeast>();
 
         AnimationDurationDatabase.Instance.RegisterAnimatorClips(anim.runtimeAnimatorController);
 
@@ -100,6 +104,7 @@ public class Beast : MonoBehaviour
     private void Update()
     {
         currentState?.OnUpdate(this);
+       
     }
 
     public void TransitionToState(BeastState newState)

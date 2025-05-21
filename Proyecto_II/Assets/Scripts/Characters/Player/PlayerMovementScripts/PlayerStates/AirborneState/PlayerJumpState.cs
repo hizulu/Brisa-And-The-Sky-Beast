@@ -18,6 +18,7 @@ public class PlayerJumpState : PlayerAirborneState
         jumpFinish = false;
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.JumpParameterHash);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Jump);
         //Debug.Log("Has entrado en el estado de SALTAR.");
     }
 

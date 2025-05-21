@@ -49,12 +49,15 @@ public class EnemyRetreatRunAway : EnemyStateSOBase
 
     public override void DoExitLogic()
     {
+        enemy.SfxEnemy.StopSound(EnemySFXType.Idle);
         base.DoExitLogic();
         enemy.agent.ResetPath();
     }
 
     public override void DoFrameUpdateLogic()
     {
+        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Retreat);
+
         base.DoFrameUpdateLogic();
 
         float distanceToTargetSQR = (enemy.transform.position - targetTransform.position).sqrMagnitude;

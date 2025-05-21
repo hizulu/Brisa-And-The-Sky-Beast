@@ -29,7 +29,6 @@ public class EnemyPatrolRandomWander : EnemyStateSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-
         targetDetection.Initialize(enemy);
 
         targetPos = GetRandomPointInRingAroundEnemy();
@@ -40,6 +39,7 @@ public class EnemyPatrolRandomWander : EnemyStateSOBase
 
     public override void DoExitLogic()
     {
+        enemy.SfxEnemy.StopSound(EnemySFXType.Idle);
         base.DoExitLogic();
 
         enemy.agent.ResetPath();
@@ -47,6 +47,7 @@ public class EnemyPatrolRandomWander : EnemyStateSOBase
 
     public override void DoFrameUpdateLogic()
     {
+        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Walk);
         base.DoFrameUpdateLogic();
 
         // Cambia de estado cuando detecta al jugador o a la bestia

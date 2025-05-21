@@ -8,9 +8,10 @@ public class PlayerDismountBeastState : PlayerAirborneState
 
     public override void Enter()
     {
+        stateMachine.Player.PlayerInput.PlayerActions.Disable();
         base.Enter();
         StartAnimation(stateMachine.Player.PlayerAnimationData.DismountBeastParameterHash);
-        Debug.Log("Has entrado al estado de DESMONTAR DE LA BESTIA");
+        //Debug.Log("Has entrado al estado de DESMONTAR DE LA BESTIA");
     }
 
     public override void UpdateLogic()
@@ -22,8 +23,9 @@ public class PlayerDismountBeastState : PlayerAirborneState
     public override void Exit()
     {
         base.Exit();
+        stateMachine.Player.PlayerInput.PlayerActions.Enable();
         StopAnimation(stateMachine.Player.PlayerAnimationData.DismountBeastParameterHash);        
-        Debug.Log("Has salido del estado de DESMONTAR DE LA BESTIA");
+        //Debug.Log("Has salido del estado de DESMONTAR DE LA BESTIA");
     }
 
     protected override void FinishAnimation()

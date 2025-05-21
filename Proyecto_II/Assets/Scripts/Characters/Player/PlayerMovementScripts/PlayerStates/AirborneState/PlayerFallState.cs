@@ -38,6 +38,7 @@ public class PlayerFallState : PlayerAirborneState
         base.Enter();
         //Debug.Log("Desde entrada de caída: " + maxNumDoubleJump);
         StartAnimation(stateMachine.Player.PlayerAnimationData.FallParameterHash);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Fall);
         // Debug.Log("Has entrado en el estado de CAYENDO");
     }
 

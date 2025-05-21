@@ -13,6 +13,7 @@ public class PlayerCallBeastState : PlayerInteractionState
         base.Enter();
         Debug.Log("Has entrado en el estado de LLAMAR A LA BESTIA");
         StartAnimation(stateMachine.Player.PlayerAnimationData.CallBeastParameterHash);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.CallBeast);
     }
 
     public override void UpdateLogic()
