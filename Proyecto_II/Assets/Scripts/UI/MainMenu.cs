@@ -10,11 +10,17 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject creditosMenu;
     [SerializeField] private GameObject seguroMenu;
+    [SerializeField] private GameObject botonCargarPartida;
 
     private void Start()
     {
         mainMenu.SetActive(true);
         creditosMenu.SetActive(false);
+
+        if (GameManager.HasSaved)
+        {
+            botonCargarPartida.SetActive(true);
+        }
     }
 
     private void Update()

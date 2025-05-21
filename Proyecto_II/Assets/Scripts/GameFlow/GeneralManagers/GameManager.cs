@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     private SaveManager saveManager;
 
-    private bool loadInventory = false;
+    public static bool HasSaved = false;
 
     // Estructura Singleton
     void Awake()
@@ -239,6 +239,7 @@ public class GameManager : MonoBehaviour
         SaveManager.Instance.ResetProgress();
         LoadSceneWithVideo("01_OpeningCinematic", loadSaved: false);
         ChangeGameState(GameState.Playing);
+        HasSaved = true;
     }
 
     public void Victory()
