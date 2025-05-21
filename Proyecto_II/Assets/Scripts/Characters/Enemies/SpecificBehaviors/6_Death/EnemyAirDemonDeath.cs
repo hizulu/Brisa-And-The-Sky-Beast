@@ -20,7 +20,7 @@ public class EnemyAirDemonDeath : EnemyStateSOBase
     {
         base.DoFrameUpdateLogic();
 
-        BaseSoldierDeath();
+        AirDemonDeath();
     }
 
     public override void DoExitLogic()
@@ -29,7 +29,7 @@ public class EnemyAirDemonDeath : EnemyStateSOBase
         Debug.Log("Has salido del estado de Muerte del Demonio de Aire.");
     }
 
-    public void BaseSoldierDeath()
+    public void AirDemonDeath()
     {
         currentTime += Time.deltaTime;
 
@@ -37,8 +37,11 @@ public class EnemyAirDemonDeath : EnemyStateSOBase
         {
             //enemy.anim.enabled = false;
             enemy.beast?.OnEnemyExit(enemy.gameObject);
+            Debug.Log("Destruye al enemigo");
             Destroy(enemy.gameObject);
             enemy.GetComponent<LootBox>()?.DropLoot();
+            Debug.Log("Triggerea evento");
+            EventsManager.TriggerNormalEvent("GameEndTrigger");
         }
     }
 }
