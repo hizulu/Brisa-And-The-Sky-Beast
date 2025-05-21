@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.3497602, g: 0.60663706, b: 0.9256023, a: 1}
+  m_IndirectSpecularColor: {r: 0.365462, g: 0.6281625, b: 0.9556839, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15828,11 +15828,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 0.88235295, b: 0.7921569, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_NormalColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    m_HighlightedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    m_PressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    m_SelectedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    m_DisabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -15850,31 +15850,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 496357090}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 617278225}
-        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
-        m_MethodName: MontarBestia
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 617278225}
-        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
-        m_MethodName: ClosePanel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &496357090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81235,7 +81211,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4975994517373955921, guid: 22e073bf1586b114f845e710ccf79410, type: 3}
+  - {fileID: 2100000, guid: 32182481c7b48824caede64167a9b880, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91780,11 +91756,11 @@ SceneRoots:
   - {fileID: 1146559305}
   - {fileID: 757643120}
   - {fileID: 155113283}
-  - {fileID: 757309857}
-  - {fileID: 759845776}
   - {fileID: 1098129783}
   - {fileID: 668074052}
   - {fileID: 2021625197}
   - {fileID: 1168643762}
   - {fileID: 297366782}
   - {fileID: 354137021}
+  - {fileID: 757309857}
+  - {fileID: 759845776}
