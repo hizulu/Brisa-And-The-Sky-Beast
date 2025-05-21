@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
 // Jone Sainz Egea
@@ -78,7 +79,9 @@ public class CinematicsManager : MonoBehaviour
             case 0:
                 return;
             case 1:
-                NextScene();
+                //NextScene();
+                if(SceneManager.GetActiveScene().buildIndex == 3) // Ehuna
+                    GameManager.Instance.Victory();
                 return;
             default:
                 return;

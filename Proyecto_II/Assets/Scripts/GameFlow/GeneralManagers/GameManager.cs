@@ -124,13 +124,6 @@ public class GameManager : MonoBehaviour
         LoadSceneWithVideo(sceneName, loadSaved: false);
     }
 
-    private IEnumerator LoadSceneAsync(string sceneName)
-    {
-        EventsManager.CleanAllEvents();
-
-        yield return SceneManager.LoadSceneAsync(sceneName);
-    }
-
     public void LoadNextScene(bool saveState = false, bool loadSaved = false)
     {
         Debug.Log($"Cargando siguiente escena con loadSaved: {loadSaved}");
