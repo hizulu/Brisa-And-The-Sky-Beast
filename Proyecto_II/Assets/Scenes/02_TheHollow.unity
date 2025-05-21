@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.35923827, g: 0.61979705, b: 0.9440332, a: 1}
+  m_IndirectSpecularColor: {r: 0.36089474, g: 0.62201947, b: 0.9471604, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -378,7 +378,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 89e0c9a6b9165364a9fe69b689936f3a, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 9c8de56ed13064d41bc14afdc6a1e2b4, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &10281516
 Transform:
@@ -15828,11 +15828,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 0.88235295, b: 0.7921569, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_NormalColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    m_HighlightedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    m_PressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    m_SelectedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    m_DisabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -15850,31 +15850,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 496357090}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 617278225}
-        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
-        m_MethodName: MontarBestia
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 617278225}
-        m_TargetAssemblyTypeName: BeastSelectionPanel, Assembly-CSharp
-        m_MethodName: ClosePanel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &496357090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17054,7 +17030,7 @@ MonoBehaviour:
   m_VoxelSize: 0.6666667
   m_MinRegionArea: 0.1
   m_NavMeshData: {fileID: 23800000, guid: 3dff992bb53a5d148999d3d2b0554242, type: 2}
-  m_BuildHeightMesh: 0
+  m_BuildHeightMesh: 1
 --- !u!4 &550037602
 Transform:
   m_ObjectHideFlags: 0
@@ -18998,7 +18974,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: c6eb3da827547644ea4577c80d0f1a0e, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 1a1a2e1cbe9a3f64ebcae36f4e0daf59, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &627377920
 Transform:
@@ -28403,6 +28379,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1493820062}
+    - target: {fileID: 8098323070735291347, guid: 8ff745458a0e5f341bee160d5f29851f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1756723066}
+    - target: {fileID: 8098323070735291347, guid: 8ff745458a0e5f341bee160d5f29851f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: CloseInventory
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -52499,6 +52483,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 400dead5fec0d0142aba8b2e5cc98313, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1897538789}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 400dead5fec0d0142aba8b2e5cc98313, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1897538793}
   m_SourcePrefab: {fileID: 100100000, guid: 400dead5fec0d0142aba8b2e5cc98313, type: 3}
 --- !u!4 &1897538786 stripped
 Transform:
@@ -52630,6 +52617,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1897538793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897538787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358e8acbf6446404bb3aba7136c26f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootItems:
+  - prefab: {fileID: 5053284680726284276, guid: ff07bcc085646e94780ec172230845a8, type: 3}
+    dropChance: 0.5
+  - prefab: {fileID: 5053284680726284276, guid: ff07bcc085646e94780ec172230845a8, type: 3}
+    dropChance: 1
 --- !u!1 &1898710712
 GameObject:
   m_ObjectHideFlags: 0
@@ -81207,7 +81211,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4975994517373955921, guid: 22e073bf1586b114f845e710ccf79410, type: 3}
+  - {fileID: 2100000, guid: 32182481c7b48824caede64167a9b880, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91752,11 +91756,11 @@ SceneRoots:
   - {fileID: 1146559305}
   - {fileID: 757643120}
   - {fileID: 155113283}
-  - {fileID: 757309857}
-  - {fileID: 759845776}
   - {fileID: 1098129783}
   - {fileID: 668074052}
   - {fileID: 2021625197}
   - {fileID: 1168643762}
   - {fileID: 297366782}
   - {fileID: 354137021}
+  - {fileID: 757309857}
+  - {fileID: 759845776}

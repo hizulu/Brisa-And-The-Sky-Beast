@@ -1,22 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TEMPTextLookAtCam : MonoBehaviour
+public class TextLookAtCamera : MonoBehaviour
 {
-    private Camera mainCam;
+    private Camera mainCamera;
+    private bool maintainVerticalOrientation = true;
+    private bool invertDirection = false;
 
-    void Start()
+    private void Start()
     {
-        mainCam = Camera.main;
+        mainCamera = Camera.main;
+
+        if (mainCamera == null)
+        {
+            Debug.LogError("No se encontró la cámara principal!");
+            enabled = false;
+        }
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
-        if (mainCam != null)
+        if (mainCamera == null) return;
+        Vector3 directionToCamera = mainCamera.transform.position - transform.position;
+
+        if (invertDirection)
         {
-            transform.LookAt(transform.position + mainCam.transform.rotation * Vector3.forward,
-                             mainCam.transform.rotation * Vector3.up);
+            directionToCamera = -directionToCamera;
+        }
+
+        if (maintainVerticalOrientation)
+        {
+            directionToCamera.y = 0;
+        }
+
+        if (directionToCamera != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(directionToCamera);
         }
     }
 }
