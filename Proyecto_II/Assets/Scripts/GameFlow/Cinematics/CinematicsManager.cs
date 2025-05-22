@@ -23,6 +23,10 @@ public class CinematicsManager : MonoBehaviour
     [SerializeField] GameObject camGO;
     private CameraFade cam;
 
+    PlayerInput playerInput;
+    int originalGeneralAudioVolume;
+    AudioManager audioManager;
+
     private void Awake()
     {
         // Estructura singleton
@@ -38,6 +42,9 @@ public class CinematicsManager : MonoBehaviour
     private void Start()
     {
         cam = camGO.GetComponent<CameraFade>();
+        playerInput = FindObjectOfType<PlayerInput>();
+        AudioSettings.Instance.generalVolume = originalGeneralAudioVolume;
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     public void PlayCinematic(int cinem)
@@ -58,6 +65,13 @@ public class CinematicsManager : MonoBehaviour
     private void CinematicEnd()
     {
         Debug.Log("OnVideoEnd triggered");
+
+        playerInput.PlayerActions.Enable();
+        AudioSettings.Instance.generalVolume = originalGeneralAudioVolume;
+        AudioSettings.Instance.UpdateAllVolumes();
+        audioManager.music.UnPause();
+        audioManager.smallSounds.UnPause();
+        audioManager.environmentSounds.UnPause();
 
         videoGO.SetActive(false);
         CineReproduciendo = false;
@@ -91,6 +105,13 @@ public class CinematicsManager : MonoBehaviour
     {
         yield return null;
 
+        playerInput.PlayerActions.Disable();
+        AudioSettings.Instance.generalVolume = 0;
+        AudioSettings.Instance.UpdateAllVolumes();
+        audioManager.music.Pause();
+        audioManager.smallSounds.Pause();
+        audioManager.environmentSounds.Pause();
+
         videoGO.SetActive(true);
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -104,6 +125,7 @@ public class CinematicsManager : MonoBehaviour
         // TODO: stop all sounds
         //AudioManager.instance.StopAllSounds();
         videoPlayer.loopPointReached += OnVideoEnd;
+
     }
 
     #region Pause & Resume
@@ -118,6 +140,8 @@ public class CinematicsManager : MonoBehaviour
     private void Pause()
     {
         videoPlayer.Pause();
+        CinematicsVolumeController.Instance.StopCinematicAudio();
+
         pausePanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -127,6 +151,7 @@ public class CinematicsManager : MonoBehaviour
     private void Resume()
     {
         videoPlayer.Play();
+        CinematicsVolumeController.Instance.PlayCinematicAudio();
         pausePanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

@@ -16,7 +16,7 @@ public class MeetingBeastCinematic : MonoBehaviour
         {
             hasBeenTriggered = true;
             CinematicsManager.Instance.PlayCinematic(0);
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }

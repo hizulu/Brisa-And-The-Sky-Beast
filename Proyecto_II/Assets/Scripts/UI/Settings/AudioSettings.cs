@@ -8,7 +8,8 @@ using UnityEngine;
  * VERSIÓN: 1.0
  * 1.1 Inicialmente se había pensado en añadir un AudioSource para diálogos, pero se ha decidido no implementarlo por el momento.
  * 1.2 Sonido de 0 a 100, no decimal.
- * 1.3 Funcionamiento con soundPlayerManager.
+ * 1.3 Funcionamiento para sfx.
+ * 1.4 Ajuste de audio para cinemáticas.
  */
 
 public class AudioSettings : MonoBehaviour
@@ -16,6 +17,7 @@ public class AudioSettings : MonoBehaviour
     [Range(0f, 100)] public int generalVolume = 50;
     [Range(0f, 100)] public int musicVolume = 50;
     [Range(0f, 100)] public int sfxVolume = 50;
+    [Range(0f, 100)] public int cinematicVolume = 50;
     // [Range(0f, 1f)] public float dialogueVolume = 1f; // Volumen de diálogos
 
     // [SerializeField] private AudioSource dialogueSource; // AudioSource para diálogos
@@ -30,11 +32,13 @@ public class AudioSettings : MonoBehaviour
     [SerializeField] private TextMeshProUGUI generalVolumeText;
     [SerializeField] private TextMeshProUGUI musicVolumeText;
     [SerializeField] private TextMeshProUGUI sfxVolumeText;
+    [SerializeField] private TextMeshProUGUI cinematicVolumeText;
 
     // Multiplicadores que se aplicarán a los volúmenes base
     public static float GeneralVolumeMultiplier { get; private set; } = 0.5f;
     public static float MusicVolumeMultiplier { get; private set; } = 0.5f;
     public static float SFXVolumeMultiplier { get; private set; } = 0.5f;
+    public static float CinematicVolumeMultiplier { get; private set; } = 0.5f;
 
     #region Singleton
     public static AudioSettings Instance { get; private set; }
@@ -68,6 +72,7 @@ public class AudioSettings : MonoBehaviour
         SetGeneralText(generalVolume);
         SetMusicText(musicVolume);
         SetSFXText(sfxVolume);
+        SetCinematicText(cinematicVolume);
 
         UpdateAllVolumes();
     }
@@ -96,13 +101,21 @@ public class AudioSettings : MonoBehaviour
         UpdateAllVolumes();
     }
 
+    public void SetCinematicVolumeFromSlider(float value)
+    {
+        cinematicVolume = Mathf.RoundToInt(value);
+        CinematicVolumeMultiplier = cinematicVolume / 100f;
+        SetCinematicText(cinematicVolume);
+        UpdateAllVolumes();
+    }
+
     // public void SetDialogueVolumeFromSlider(float value)
     // {
     //     dialogueVolume = value;
     //     UpdateAllVolumes();
     // }
 
-    private void UpdateAllVolumes()
+    public void UpdateAllVolumes()
     {
         if (audioManager == null) return;
 
@@ -160,6 +173,12 @@ public class AudioSettings : MonoBehaviour
     {
         if (sfxVolumeText != null)
             sfxVolumeText.text = value.ToString("0");
+    }
+
+    private void SetCinematicText(float value)
+    {
+        if (cinematicVolumeText != null)
+            cinematicVolumeText.text = value.ToString("0");
     }
 
     //void SetDialogueText(float value)
