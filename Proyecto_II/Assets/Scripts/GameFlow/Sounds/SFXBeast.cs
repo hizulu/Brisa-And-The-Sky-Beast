@@ -1,7 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Enum de los tipos de efectos de sonido existentes para la Bestia.
+/// </summary>
 public enum BeastSFXType
 {
     Idle,
@@ -15,6 +17,14 @@ public enum BeastSFXType
     Eat,
     Smell,
 }
+
+/*
+ * NOMBRE CLASE: SFXPlayer
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 22/05/2025
+ * DESCRIPCIÓN: Clase que gestiona la lógica de los efectos de sonido de la Bestia.
+ * VERSIÓN: 1.0.
+ */
 
 public class SFXBeast : MonoBehaviour
 {

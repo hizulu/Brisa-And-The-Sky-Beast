@@ -16,11 +16,14 @@ public class NPC : MonoBehaviour
     private NPCStateMachine npcStateMachine;
 
     public Animator AnimNPC {  get; private set; }
+    public SFXNPCs SfxNPC {  get; private set; }
     #endregion
 
     private void Awake()
     {
         AnimNPC = GetComponent<Animator>();
+
+        SfxNPC = GetComponent<SFXNPCs>();
 
         npcStateMachine = new NPCStateMachine(this);
     }

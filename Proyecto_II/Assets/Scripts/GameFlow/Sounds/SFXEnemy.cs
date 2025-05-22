@@ -1,6 +1,29 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>
+/// Enum de los tipos de efectos de sonido existentes para los enemigos.
+/// </summary>
+public enum EnemySFXType
+{
+    Idle,
+    Walk,
+    Chase,
+    DetectTarget,
+    TakeDamage,
+    Retreat,
+    Jump,
+    Attack,
+    Death
+}
+
+/*
+ * NOMBRE CLASE: SFXEnemy
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 22/05/2025
+ * DESCRIPCIÓN: Clase que gestiona la lógica de los efectos de sonido de los enemigos.
+ * VERSIÓN: 1.0.
+ */
 
 public class SFXEnemy : MonoBehaviour
 {
@@ -78,17 +101,4 @@ public class SFXEnemy : MonoBehaviour
     //        Debug.Log(selectedClip);
     //    }
     //}
-}
-
-public enum EnemySFXType
-{
-    Idle,
-    Walk,
-    Chase,
-    DetectTarget,
-    TakeDamage,
-    Retreat,
-    Jump,
-    Attack,
-    Death
 }

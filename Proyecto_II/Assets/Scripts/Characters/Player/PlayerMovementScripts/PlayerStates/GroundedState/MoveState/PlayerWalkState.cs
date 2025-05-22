@@ -25,7 +25,7 @@ public class PlayerWalkState : PlayerMovedState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Walk, 0.1f);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Walk);
         //audioManager.PlaySFX(audioManager.walk);
     }
 

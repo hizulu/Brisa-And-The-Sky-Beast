@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
 
     private PlayerStateMachine playerStateMachine;
 
-    public SFXManager SfxPlayer { get; private set; }
+    public SFXPlayer SfxPlayer { get; private set; }
 
     private void Awake()
     {
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
 
         AnimPlayer = GetComponent<Animator>();
 
-        SfxPlayer = GetComponent<SFXManager>();
+        SfxPlayer = GetComponent<SFXPlayer>();
 
         PlayerInput = GetComponent<PlayerInput>();
 
