@@ -89,7 +89,7 @@ public class SFXPlayer : MonoBehaviour
             AudioClip selectedClip = clips[randomIndex];
 
             brisaAudioSource.clip = selectedClip;
-            brisaAudioSource.volume = _volume;
+            brisaAudioSource.volume = _volume * AudioSettings.GeneralVolumeMultiplier*AudioSettings.SFXVolumeMultiplier;
             brisaAudioSource.loop = false;
             brisaAudioSource.Play();
         }

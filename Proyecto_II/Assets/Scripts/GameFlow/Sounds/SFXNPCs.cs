@@ -47,7 +47,7 @@ public class SFXNPCs : MonoBehaviour
             AudioClip selectedClip = clips[randomIndex];
 
             npcAudioSource.clip = selectedClip;
-            npcAudioSource.volume = _volume;
+            npcAudioSource.volume = _volume * AudioSettings.GeneralVolumeMultiplier * AudioSettings.SFXVolumeMultiplier; ;
             npcAudioSource.loop = false;
             npcAudioSource.Play();
         }

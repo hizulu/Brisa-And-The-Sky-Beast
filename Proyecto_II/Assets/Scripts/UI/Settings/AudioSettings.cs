@@ -13,25 +13,55 @@ using UnityEngine;
 
 public class AudioSettings : MonoBehaviour
 {
-    [Range(0f, 100)] public int generalVolume = 100;
-    [Range(0f, 100)] public int musicVolume = 100;
-    [Range(0f, 100)] public int sfxVolume = 100;
+    [Range(0f, 100)] public int generalVolume = 50;
+    [Range(0f, 100)] public int musicVolume = 50;
+    [Range(0f, 100)] public int sfxVolume = 50;
     // [Range(0f, 1f)] public float dialogueVolume = 1f; // Volumen de diálogos
 
     // [SerializeField] private AudioSource dialogueSource; // AudioSource para diálogos
 
     private AudioManager audioManager;
-    private SoundObjectsManager soundPlayerManager;
+    private SFXPlayer sfxPlayer;
+    private SFXBeast sfxBeast;
+    private SFXEnemy sfxEnemy;
+    private SFXNPCs sfxNPCs;
+    private SFXSheep sfxSheep;
 
     [SerializeField] private TextMeshProUGUI generalVolumeText;
     [SerializeField] private TextMeshProUGUI musicVolumeText;
     [SerializeField] private TextMeshProUGUI sfxVolumeText;
 
+    // Multiplicadores que se aplicarán a los volúmenes base
+    public static float GeneralVolumeMultiplier { get; private set; } = 0.5f;
+    public static float MusicVolumeMultiplier { get; private set; } = 0.5f;
+    public static float SFXVolumeMultiplier { get; private set; } = 0.5f;
+
+    #region Singleton
+    public static AudioSettings Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    #endregion
+
     private void Start()
     {
-        //audioManager = AudioManager.Instance;
-        //soundPlayerManager = SoundObjectsManager.instance;
-
+        audioManager = FindObjectOfType<AudioManager>();
+        sfxPlayer = FindObjectOfType<SFXPlayer>();
+        sfxBeast = FindObjectOfType<SFXBeast>();
+        sfxEnemy = FindObjectOfType<SFXEnemy>();
+        sfxNPCs = FindObjectOfType<SFXNPCs>();
+        sfxSheep = FindObjectOfType<SFXSheep>();
+        
         // if (dialogueSource == null)
         //     Debug.LogWarning("No se asignó AudioSource para diálogos.");
 
@@ -45,6 +75,7 @@ public class AudioSettings : MonoBehaviour
     public void SetGeneralVolumeFromSlider(float value)
     {
         generalVolume = Mathf.RoundToInt(value);
+        GeneralVolumeMultiplier = generalVolume / 100f;
         SetGeneralText(generalVolume);
         UpdateAllVolumes();
     }
@@ -52,6 +83,7 @@ public class AudioSettings : MonoBehaviour
     public void SetMusicVolumeFromSlider(float value)
     {
         musicVolume = Mathf.RoundToInt(value);
+        MusicVolumeMultiplier = musicVolume / 100f;
         SetMusicText(musicVolume);
         UpdateAllVolumes();
     }
@@ -59,6 +91,7 @@ public class AudioSettings : MonoBehaviour
     public void SetSFXVolumeFromSlider(float value)
     {
         sfxVolume = Mathf.RoundToInt(value);
+        SFXVolumeMultiplier = sfxVolume / 100f;
         SetSFXText(sfxVolume);
         UpdateAllVolumes();
     }
@@ -73,16 +106,25 @@ public class AudioSettings : MonoBehaviour
     {
         if (audioManager == null) return;
 
-        // Actualizar volúmenes principales
-        //audioManager.musicSource.volume = generalVolume / 100f * (musicVolume / 100f);
-        //audioManager.SFXSource.volume = generalVolume / 100f * (sfxVolume / 100f);
-
-        // Actualizar SoundPlayerManager
-        if (soundPlayerManager != null && soundPlayerManager.GetComponent<AudioSource>() != null)
+        // Actualizar música (solo afectada por volumen general y música)
+        if (audioManager != null && audioManager.music != null)
         {
-            soundPlayerManager.GetComponent<AudioSource>().volume = generalVolume / 100f * (sfxVolume / 100f);
+            audioManager.music.volume = GeneralVolumeMultiplier * MusicVolumeMultiplier;
         }
 
+        // Actualizar sonidos ambientales (tratados como SFX)
+        if (audioManager != null)
+        {
+            if (audioManager.environmentSounds != null)
+            {
+                audioManager.environmentSounds.volume = GeneralVolumeMultiplier * SFXVolumeMultiplier;
+            }
+
+            if (audioManager.smallSounds != null)
+            {
+                audioManager.smallSounds.volume = GeneralVolumeMultiplier * SFXVolumeMultiplier;
+            }
+        }
         // if (dialogueSource != null)
         //     dialogueSource.volume = Mathf.Pow(generalVolume * dialogueVolume, 1.5f);
     }

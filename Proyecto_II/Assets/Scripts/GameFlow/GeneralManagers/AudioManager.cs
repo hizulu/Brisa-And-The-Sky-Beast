@@ -102,7 +102,7 @@ public class AudioManager : MonoBehaviour
     private IEnumerator PlayRandomSmallSound()
     {
         AudioClip clip = smallClips[Random.Range(0, smallClips.Length)];
-        smallSounds.PlayOneShot(clip);
+        smallSounds?.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
     }
 }

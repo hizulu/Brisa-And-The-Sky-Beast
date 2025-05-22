@@ -57,7 +57,7 @@ public class SFXSheep : MonoBehaviour
             AudioClip selectedClip = clips[randomIndex];
 
             sheepAudioSource.clip = selectedClip;
-            sheepAudioSource.volume = _volume;
+            sheepAudioSource.volume = _volume * AudioSettings.GeneralVolumeMultiplier * AudioSettings.SFXVolumeMultiplier; ;
             sheepAudioSource.loop = false;
             sheepAudioSource.Play();
         }

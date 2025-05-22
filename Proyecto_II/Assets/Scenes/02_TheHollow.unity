@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.379041, g: 0.6471168, b: 0.9823906, a: 1}
+  m_IndirectSpecularColor: {r: 0.3606009, g: 0.6215321, b: 0.9463287, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2243,7 +2243,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 100
+  m_Value: 50
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -3302,9 +3302,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63438b5ed418b6740a6f8ef27491e65b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generalVolume: 100
-  musicVolume: 100
-  sfxVolume: 100
+  generalVolume: 50
+  musicVolume: 50
+  sfxVolume: 50
   generalVolumeText: {fileID: 695752510}
   musicVolumeText: {fileID: 1739455134}
   sfxVolumeText: {fileID: 80529735}
@@ -15032,7 +15032,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 100
+  m_Value: 50
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -26286,7 +26286,7 @@ MonoBehaviour:
   smallSounds: {fileID: 2072397785}
   environmentSounds: {fileID: 2123731712}
   musicClip: {fileID: 8300000, guid: 6521b0843b0c2c1478a7f3f81d968009, type: 3}
-  birdClips:
+  smallClips:
   - {fileID: 8300000, guid: 2f8d2198b0e2abb4c8b49da7f1110865, type: 3}
   ambientClips:
   - {fileID: 8300000, guid: 2da30e2f43fa28641bd098fa71857976, type: 3}
@@ -32772,7 +32772,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 100
+  m_Value: 50
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

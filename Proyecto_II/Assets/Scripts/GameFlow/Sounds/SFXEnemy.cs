@@ -68,7 +68,7 @@ public class SFXEnemy : MonoBehaviour
             AudioClip selectedClip = clips[randomIndex];
 
             enemyAudioSource.clip = selectedClip;
-            enemyAudioSource.volume = _volume;
+            enemyAudioSource.volume = _volume * AudioSettings.GeneralVolumeMultiplier * AudioSettings.SFXVolumeMultiplier; ;
             enemyAudioSource.loop = false;
             enemyAudioSource.Play();
         }

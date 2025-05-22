@@ -67,7 +67,7 @@ public class SFXBeast : MonoBehaviour
         {
             int randomIndex = Random.Range(0, clips.Length);
             AudioClip selectedClip = clips[randomIndex];
-            beastAudioSource.PlayOneShot(selectedClip, _volume);
+            beastAudioSource.PlayOneShot(selectedClip, _volume * AudioSettings.GeneralVolumeMultiplier * AudioSettings.SFXVolumeMultiplier);
         }
     }
 
