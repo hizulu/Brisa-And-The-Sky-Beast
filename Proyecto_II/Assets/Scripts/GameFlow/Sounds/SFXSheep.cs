@@ -8,10 +8,7 @@ using UnityEngine;
 public enum SheepSFXType
 {
     Idle,
-    Walk,
-    Graze,
     Jump,
-    Bee
 }
 
 /*
@@ -28,10 +25,7 @@ public class SFXSheep : MonoBehaviour
 
     [Header("Tipos de Audios Ovejas")]
     [SerializeField] private AudioClip[] idle;
-    [SerializeField] private AudioClip[] walk;
-    [SerializeField] private AudioClip[] graze;
     [SerializeField] private AudioClip[] jump;
-    [SerializeField] private AudioClip[] bee;
 
     private Dictionary<SheepSFXType, AudioClip[]> sfxNPCClips;
 
@@ -40,10 +34,7 @@ public class SFXSheep : MonoBehaviour
         sfxNPCClips = new Dictionary<SheepSFXType, AudioClip[]>
         {
             { SheepSFXType.Idle, idle },
-            { SheepSFXType.Walk, walk },
-            { SheepSFXType.Graze, graze },
-            { SheepSFXType.Jump, jump },
-            { SheepSFXType.Bee, bee },
+            { SheepSFXType.Jump, jump }
         };
     }
 

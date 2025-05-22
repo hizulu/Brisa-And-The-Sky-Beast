@@ -56,6 +56,8 @@ public class SheepJumpState : SheepStateTemplate
     /// </summary>
     private void JumpSheep()
     {
+        sheepStateMachine.Sheep.SfxSheep.PlayRandomSFX(SheepSFXType.Jump);
+
         sheepStateMachine.Sheep.AnimSheep.SetTrigger("isJumping");
 
         Rigidbody rb = sheepStateMachine.Sheep.RbSheep;

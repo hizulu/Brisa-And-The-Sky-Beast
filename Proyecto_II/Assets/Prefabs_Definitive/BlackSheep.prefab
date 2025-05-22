@@ -319,9 +319,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -329,23 +329,23 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
+      time: 0.030783953
+      value: 0.554142
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -1.0294118
+      outSlope: -1.0294118
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -354,7 +354,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -408,12 +408,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sheepAudioSource: {fileID: 5670925159111753539}
   idle:
-  - {fileID: 0}
-  walk:
-  - {fileID: 0}
-  graze:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 68f5950541457cc4b9b597df339949cd, type: 3}
   jump:
-  - {fileID: 0}
-  bee:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 8468adff29a304345b8e04850533f69a, type: 3}

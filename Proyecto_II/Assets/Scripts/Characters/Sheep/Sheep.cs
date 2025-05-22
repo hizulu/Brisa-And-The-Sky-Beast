@@ -14,6 +14,7 @@ public class Sheep : MonoBehaviour
 {
     #region Variables
     private SheepStateMachine sheepStateMachine;
+    public SFXSheep SfxSheep { get; private set; }
 
     public Rigidbody RbSheep { get; private set; }
     public Animator AnimSheep {  get; private set; }
@@ -29,7 +30,7 @@ public class Sheep : MonoBehaviour
     {
         RbSheep = GetComponent<Rigidbody>();
         AnimSheep = GetComponent<Animator>();
-
+        SfxSheep = GetComponent<SFXSheep>();
         sheepStateMachine = new SheepStateMachine(this);
     }
 

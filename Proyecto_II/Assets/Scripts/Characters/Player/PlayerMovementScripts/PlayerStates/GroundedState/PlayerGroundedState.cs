@@ -127,7 +127,7 @@ public class PlayerGroundedState : PlayerMovementState
             stateMachine.ChangeState(stateMachine.RunState);
         else if(stateMachine.Player.PlayerInput.PlayerActions.Crouch.IsPressed())
             stateMachine.ChangeState(stateMachine.CrouchState);
-        else
+        else if(stateMachine.Player.PlayerInput.PlayerActions.Movement.IsPressed())
             stateMachine.ChangeState(stateMachine.WalkState);
     }
 
