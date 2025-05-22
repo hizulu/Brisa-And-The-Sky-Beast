@@ -8,7 +8,8 @@ public enum SoundType
 {
     BreakBox,
     Chain,
-    Lever
+    Lever,
+    Seesaw,
 }
 
 public class SoundObjectsManager : MonoBehaviour
@@ -21,6 +22,7 @@ public class SoundObjectsManager : MonoBehaviour
     [SerializeField] private AudioClip breakBox;
     [SerializeField] private AudioClip chain;
     [SerializeField] private AudioClip lever;
+    [SerializeField] private AudioClip seesaw;
 
     private Dictionary<SoundType, AudioClip> sfxObjectClip;
 
@@ -40,16 +42,12 @@ public class SoundObjectsManager : MonoBehaviour
         {
             { SoundType.BreakBox, breakBox },
             { SoundType.Chain, chain },
-            { SoundType.Lever, lever }
+            { SoundType.Lever, lever },
+            { SoundType.Seesaw, seesaw }
         };
     }
 
-    private void Start()
-    {
-        
-    }
-
-    public void PlaySFX(SoundType _soundType, float _volume = 0.3f)
+    public void PlaySFX(SoundType _soundType, float _volume = 0.2f)
     {
         if (objectAudioSource.isPlaying) return;
 

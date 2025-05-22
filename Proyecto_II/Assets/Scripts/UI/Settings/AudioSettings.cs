@@ -29,7 +29,7 @@ public class AudioSettings : MonoBehaviour
 
     private void Start()
     {
-        audioManager = AudioManager.Instance;
+        //audioManager = AudioManager.Instance;
         //soundPlayerManager = SoundObjectsManager.instance;
 
         // if (dialogueSource == null)
@@ -75,7 +75,7 @@ public class AudioSettings : MonoBehaviour
 
         // Actualizar volúmenes principales
         //audioManager.musicSource.volume = generalVolume / 100f * (musicVolume / 100f);
-        audioManager.SFXSource.volume = generalVolume / 100f * (sfxVolume / 100f);
+        //audioManager.SFXSource.volume = generalVolume / 100f * (sfxVolume / 100f);
 
         // Actualizar SoundPlayerManager
         if (soundPlayerManager != null && soundPlayerManager.GetComponent<AudioSource>() != null)

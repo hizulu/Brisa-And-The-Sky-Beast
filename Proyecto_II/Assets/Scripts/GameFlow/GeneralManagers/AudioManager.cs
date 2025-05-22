@@ -1,72 +1,108 @@
+using System.Collections;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    private static AudioManager instance;
+    [SerializeField] public AudioSource music;
+    [SerializeField] public AudioSource smallSounds;
+    [SerializeField] public AudioSource environmentSounds;
 
-    [SerializeField] public AudioSource musicSource;
-    [SerializeField] public AudioSource SFXSource;
+    [SerializeField] private AudioClip musicClip;
+    [SerializeField] private AudioClip[] smallClips;
+    [SerializeField] private AudioClip[] ambientClips;
 
-
-    public AudioClip walk;
-    public AudioClip run;
-    public AudioClip attack01;
-    public AudioClip attack02;
-
-    // private bool isLoopPlaying = false;
-    [SerializeField] private float overlapTime = 0.01f; // Tiempo de solapamiento (1 milisegundo)
-
-    public static AudioManager Instance
+    private void Start()
     {
-        get
+        music.volume = 0.1f;
+        smallSounds.volume = 0.07f;
+        environmentSounds.volume = 0.15f;
+
+        EnviromentSoundPlayLoop();
+
+        StartCoroutine(PlayIntroMusicThenLoopSoundscape());
+    }
+
+    private void EnviromentSoundPlayLoop()
+    {
+        environmentSounds.loop = true;
+        environmentSounds.Play();
+    }
+
+    private IEnumerator PlayIntroMusicThenLoopSoundscape()
+    {
+        StartCoroutine(PlayRandomSmallSound());
+
+        yield return new WaitForSeconds(2f);
+
+        if (musicClip != null)
         {
-            if (instance == null)
+            music.clip = musicClip;
+            music.loop = false;
+
+            yield return StartCoroutine(FadeInMusic(2f, 0.1f));
+
+            yield return new WaitWhile(() => music.isPlaying);
+
+            yield return StartCoroutine(FadeOutMusic(2f));
+        }
+
+        StartCoroutine(SoundscapeLoop());
+    }
+
+
+    private IEnumerator FadeInMusic(float duration, float targetVolume)
+    {
+        float startVolume = 0f;
+        music.volume = 0f;
+        music.Play();
+
+        float timer = 0f;
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            music.volume = Mathf.Lerp(startVolume, targetVolume, timer / duration);
+            yield return null;
+        }
+
+        music.volume = targetVolume;
+    }
+
+    private IEnumerator FadeOutMusic(float duration)
+    {
+        float startVolume = music.volume;
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            music.volume = Mathf.Lerp(startVolume, 0f, timer / duration);
+            yield return null;
+        }
+
+        music.volume = 0f;
+        music.Stop();
+    }
+
+
+    private IEnumerator SoundscapeLoop()
+    {
+        while (true)
+        {
+            bool playBird = Random.value > 0.5f;
+
+            if (playBird && smallClips.Length > 0)
             {
-                instance = FindObjectOfType<AudioManager>();
-
-                if (instance == null)
-                {
-                    GameObject obj = new GameObject("AudioManager");
-                    instance = obj.AddComponent<AudioManager>();
-                }
+                yield return StartCoroutine(PlayRandomSmallSound());
             }
-            return instance;
+
+            yield return new WaitForSeconds(Random.Range(0f, 7f));
         }
     }
 
-    private void Awake()
+    private IEnumerator PlayRandomSmallSound()
     {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
-
-    public void PlaySFX(AudioClip clip)
-    {
-        if (clip == null) return;
-
-        if (!SFXSource.isPlaying)
-        {
-            SFXSource.clip = clip;
-            SFXSource.loop = false;
-            SFXSource.Play();
-            // Debug.Log("Reproduciendo SFX: " + clip);
-        }
-    }
-
-    public bool IsPlaying(AudioClip clip)
-    {
-        return SFXSource.isPlaying && SFXSource.clip == clip;
-    }
-
-    public void StopSFX()
-    {
-        SFXSource.Stop();
+        AudioClip clip = smallClips[Random.Range(0, smallClips.Length)];
+        smallSounds.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
     }
 }

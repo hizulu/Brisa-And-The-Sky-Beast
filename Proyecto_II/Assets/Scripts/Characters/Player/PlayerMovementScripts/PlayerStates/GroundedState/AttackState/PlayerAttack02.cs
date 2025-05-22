@@ -26,7 +26,7 @@ public class PlayerAttack02 : PlayerAttackState
         float attackDamageCombo02 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
         EventsManager.TriggerSpecialEvent<float>("OnAttack02Enemy", attackDamageCombo02); // EVENTO: Crear evento de dañar al enemigo con daño del ComboAttack02.
         //Debug.Log("Daño del ataque 2: " + " " + attackDamageCombo02);
-        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Attack);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Attack, 0.6f);
     }
 
     public override void HandleInput()
