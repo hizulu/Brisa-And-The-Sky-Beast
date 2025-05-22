@@ -91,6 +91,7 @@ public class CinematicsManager : MonoBehaviour
                 if(SceneManager.GetActiveScene().buildIndex == 2)
                 {
                     // Hondonada
+                    Debug.Log("Termina de reproducir segunda cinemática en hondonada");
                     // TODO: Reposicionar Brisa y Bestia salida jaula
                 }
                 if(SceneManager.GetActiveScene().buildIndex == 3) // Ehuna
@@ -140,7 +141,6 @@ public class CinematicsManager : MonoBehaviour
     private void Pause()
     {
         videoPlayer.Pause();
-        CinematicsVolumeController.Instance.StopCinematicAudio();
 
         pausePanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
@@ -151,7 +151,7 @@ public class CinematicsManager : MonoBehaviour
     private void Resume()
     {
         videoPlayer.Play();
-        CinematicsVolumeController.Instance.PlayCinematicAudio();
+
         pausePanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -166,12 +166,4 @@ public class CinematicsManager : MonoBehaviour
         CinematicEnd();
     }
     #endregion
-
-    private void NextScene()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        Cinematics.CineReproduciendo = false;
-        GameManager.Instance.LoadNextScene(true, true);
-    }
 }

@@ -18,11 +18,13 @@ public class BeastFreeingCinematic : MonoBehaviour
 
     private void OnBeastFreed()
     {
+        Debug.Log("Beast has been freed, checking if cinematic needs to be triggered");
+        
         if (hasBeenTriggered)
             return;
 
         hasBeenTriggered = true;
-        Debug.Log("Should play cinematic 0");
+        Debug.Log("Should play cinematic 1");
         CinematicsManager.Instance.PlayCinematic(1);
     }
 }
