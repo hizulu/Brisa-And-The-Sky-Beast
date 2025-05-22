@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.33109567, g: 0.5807726, b: 0.88927, a: 1}
+  m_IndirectSpecularColor: {r: 0.36388734, g: 0.62608767, b: 0.9527331, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -61685,17 +61685,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 919132149372895262}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed5ead246334ac1488bb09153a967623, type: 3}
+  m_Script: {fileID: 11500000, guid: 50d85cb1330bc8448929423216912ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   brisaAudioSource: {fileID: 919132149372895263}
-  idle: []
+  idle:
+  - {fileID: 0}
   walk:
-  - {fileID: 8300000, guid: 038905f4b317b924eae15cb9a7df2185, type: 3}
+  - {fileID: 8300000, guid: 481a33024b7d0d145b5791a83322c4a2, type: 3}
   run:
-  - {fileID: 8300000, guid: d1da5dd4a540db24c80333dc850712a0, type: 3}
+  - {fileID: 8300000, guid: 1e6f141a8c72fb549acab2eea0546c9a, type: 3}
   crouch:
-  - {fileID: 8300000, guid: 94aa06a3dfa9c244fa727e4a78919076, type: 3}
+  - {fileID: 8300000, guid: 879035b555ce6f1469e7f202b5ff91d4, type: 3}
   sprint:
   - {fileID: 8300000, guid: 146bcb45f1cf5984ba400c2c5e04489a, type: 3}
   pickUp:
