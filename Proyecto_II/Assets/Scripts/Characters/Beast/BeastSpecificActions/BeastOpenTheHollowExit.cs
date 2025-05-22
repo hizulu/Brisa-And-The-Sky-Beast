@@ -22,7 +22,8 @@ public class BeastOpenTheHollowExit : BeastActionable
             return false;
         }
         Debug.Log("Triggerea evento de salir de la hondonada");
-        EventsManager.TriggerNormalEvent("LeaveTheHollow");
+        // TODO: Corrutina y efecto de sonido de romper madera
+        GameManager.Instance.LoadNextScene(true, true);
         return true;
     }
 }
