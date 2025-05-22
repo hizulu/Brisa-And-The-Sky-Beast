@@ -16,6 +16,7 @@ public class BeastMountedState : BeastState
     public override void OnEnter(Beast beast)
     {
         Debug.Log("Entering BeastMountedState, Brisa taking over Beast control...");
+        EventsManager.TriggerNormalEvent("MontarBestia_Player");
         beast.agent.enabled = false;
 
         // Subir al jugador para que al colocar la bestia no atraviese el suelo

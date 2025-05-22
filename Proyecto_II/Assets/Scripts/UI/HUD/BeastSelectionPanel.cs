@@ -109,7 +109,7 @@ public class BeastSelectionPanel : MonoBehaviour, IPointerClickHandler
     public void MontarBestia()
     {
         EventsManager.TriggerNormalEvent("MontarBestia_Bestia");
-        EventsManager.TriggerNormalEvent("MontarBestia_Player");
+        // EventsManager.TriggerNormalEvent("MontarBestia_Player");
     }
 
     public void AccionBestia()
