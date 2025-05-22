@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PickUpSceptreCinematic : MonoBehaviour
 {
+    private bool hasBeenTriggered = false;
+    
     private void OnEnable()
     {
         EventsManager.CallNormalEvents("PickUpSceptre", OnPickUpSceptre);
@@ -16,6 +18,10 @@ public class PickUpSceptreCinematic : MonoBehaviour
 
     private void OnPickUpSceptre()
     {
+        if (hasBeenTriggered)
+            return;
+
+        hasBeenTriggered = true;
         CinematicsManager.Instance.PlayCinematic(0);
     }
 }

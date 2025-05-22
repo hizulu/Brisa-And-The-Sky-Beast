@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnteringArineaTempleCinematic : MonoBehaviour
 {
+    private bool hasBeenTriggered = false;
+
     private void OnEnable()
     {
         EventsManager.CallNormalEvents("EnterTemple", OnEnterTemple);
@@ -16,6 +18,10 @@ public class EnteringArineaTempleCinematic : MonoBehaviour
 
     private void OnEnterTemple()
     {
+        if (hasBeenTriggered)
+            return;
+
+        hasBeenTriggered = true;
         CinematicsManager.Instance.PlayCinematic(1);
     }
 }

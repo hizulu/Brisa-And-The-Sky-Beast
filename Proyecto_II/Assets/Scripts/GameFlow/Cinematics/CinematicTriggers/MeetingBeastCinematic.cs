@@ -9,7 +9,10 @@ public class MeetingBeastCinematic : MonoBehaviour
     private bool hasBeenTriggered = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !hasBeenTriggered)
+        if (hasBeenTriggered)
+            return;
+
+        if (other.CompareTag("Player"))
         {
             hasBeenTriggered = true;
             CinematicsManager.Instance.PlayCinematic(0);
