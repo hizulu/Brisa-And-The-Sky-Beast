@@ -19,6 +19,7 @@ public class CageChainMover : MonoBehaviour, IMovableElement
     {
         if (!isMoving) return;
 
+
         transform.localScale = Vector3.Lerp(transform.localScale, targetScale, movementSpeed * Time.deltaTime);
 
         if (Vector3.Distance(transform.localScale, targetScale) < 0.01f)

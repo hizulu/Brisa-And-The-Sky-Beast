@@ -19,6 +19,8 @@ public class BreakableBox : HittableElement
 
     public override void OnHit()
     {
+        SoundObjectsManager.Instance.PlaySFX(SoundType.BreakBox);
+
         Debug.Log("La caja se ha roto.");
         if (anim != null)
         {

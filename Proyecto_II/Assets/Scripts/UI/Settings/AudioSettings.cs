@@ -21,7 +21,7 @@ public class AudioSettings : MonoBehaviour
     // [SerializeField] private AudioSource dialogueSource; // AudioSource para diálogos
 
     private AudioManager audioManager;
-    private SoundPlayerManager soundPlayerManager;
+    private SoundObjectsManager soundPlayerManager;
 
     [SerializeField] private TextMeshProUGUI generalVolumeText;
     [SerializeField] private TextMeshProUGUI musicVolumeText;
@@ -30,7 +30,7 @@ public class AudioSettings : MonoBehaviour
     private void Start()
     {
         audioManager = AudioManager.Instance;
-        soundPlayerManager = SoundPlayerManager.instance;
+        //soundPlayerManager = SoundObjectsManager.instance;
 
         // if (dialogueSource == null)
         //     Debug.LogWarning("No se asignó AudioSource para diálogos.");
