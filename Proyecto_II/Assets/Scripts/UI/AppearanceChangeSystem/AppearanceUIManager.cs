@@ -39,7 +39,7 @@ public class AppearanceUIManager : MonoBehaviour
     public List<AppearanceChangeData> appearances = new List<AppearanceChangeData>();
     private int currentAppearanceIndex = 0;
 
-    public CharacterAppearanceManager characterAppearanceManager;
+    public AppearanceChangeManager characterAppearanceManager;
     #endregion
 
     #region Singleton
@@ -169,7 +169,7 @@ public class AppearanceUIManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No hay apariencias en la lista o CharacterAppearanceManager no está asignado.");
+            Debug.LogError("No hay apariencias en la lista o AppearanceChangeManager no está asignado.");
         }
     }
 }

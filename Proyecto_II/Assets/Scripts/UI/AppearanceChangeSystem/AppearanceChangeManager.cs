@@ -1,6 +1,6 @@
 using UnityEngine;
 
-/* NOMBRE CLASE: Character Appearance Manager
+/* NOMBRE CLASE: Appearance Change Manager
  * AUTOR: Lucía García López
  * FECHA: 25/03/2025
  * DESCRIPCIÓN: Script que se encarga de cambiar la apariencia del personaje.
@@ -8,7 +8,7 @@ using UnityEngine;
  * 1.2 Cambio con Dither Shader.
  */
 
-public class CharacterAppearanceManager : MonoBehaviour
+public class AppearanceChangeManager : MonoBehaviour
 {
     [Header("Renderer Settings")]
     [SerializeField] private Renderer characterRenderer;
