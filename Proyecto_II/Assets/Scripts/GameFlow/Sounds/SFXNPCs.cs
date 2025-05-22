@@ -37,7 +37,7 @@ public class SFXNPCs : MonoBehaviour
         };
     }
 
-    public void PlayRandomSFX(NPCSFXType _soundType, float _volume = 1.0f)
+    public void PlayRandomSFX(NPCSFXType _soundType, float _volume = 0.5f)
     {
         if (npcAudioSource.isPlaying) return;
 

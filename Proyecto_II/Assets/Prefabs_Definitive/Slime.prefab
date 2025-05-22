@@ -388,7 +388,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ed2ff4b04f2fc714c8c4f3083aefa501, type: 3}
   walk:
   - {fileID: 8300000, guid: 57f293162d1f1fa4ebf4c26bbc1b95ad, type: 3}
-  chase: []
+  chase:
+  - {fileID: 8300000, guid: 06b09c5794cfeb446ba8e4052d7af49a, type: 3}
   detectTarget:
   - {fileID: 8300000, guid: cdbd22f725c4ff04a9214cec074f6be4, type: 3}
   takeDamage:
@@ -422,7 +423,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 35
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -432,23 +433,23 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
+      time: 0.040854752
+      value: 0.5042763
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -1.0294118
+      outSlope: -1.0294118
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

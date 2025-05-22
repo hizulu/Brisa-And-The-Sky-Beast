@@ -61,7 +61,7 @@ public class SFXBeast : MonoBehaviour
         };
     }
 
-    public void PlayRandomSFX(BeastSFXType _soundType, float _volume = 1.0f)
+    public void PlayRandomSFX(BeastSFXType _soundType, float _volume = 0.3f)
     {
         if (sfxBeastClips.TryGetValue(_soundType, out AudioClip[] clips) && clips != null && clips.Length > 0)
         {

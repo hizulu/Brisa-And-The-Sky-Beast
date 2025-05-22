@@ -19,7 +19,7 @@ public class PlayerIdleState : PlayerGroundedState
         stateMachine.MovementData.MovementSpeedModifier = 0f;
         SetRandomBlink();
         StartAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
-        //Debug.Log("Has entrado en el estado de IDLE.");
+        Debug.Log("Has entrado en el estado de IDLE.");
     }
 
     public override void UpdateLogic()
@@ -44,7 +44,7 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Exit();
         StopAnimation(stateMachine.Player.PlayerAnimationData.IdleParameterHash);
-        //Debug.Log("Has salido del estado de IDLE.");
+        Debug.Log("Has salido del estado de IDLE.");
     }
     #endregion
 
