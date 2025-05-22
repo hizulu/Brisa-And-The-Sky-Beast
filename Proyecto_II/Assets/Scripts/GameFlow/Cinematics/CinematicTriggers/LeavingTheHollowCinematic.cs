@@ -16,6 +16,7 @@ public class LeavingTheHollowCinematic : MonoBehaviour
 
     private void OnLeaveTheHollow()
     {
+        // Debug.Log("Va a reproducir cinemática anterior a salir de la hondonada");
         CinematicsManager.Instance.PlayCinematic(1);
     }
 }

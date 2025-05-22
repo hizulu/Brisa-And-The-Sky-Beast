@@ -14,13 +14,15 @@ public class BeastOpenTheHollowExit : BeastActionable
         cam = camGO.GetComponent<CameraFade>();
     }
 
-    public override void OnBeast()
+    public override bool OnBeast()
     {
         if (!beastIsIn)
         {
             Debug.Log("Beast is not in");
-            return;
+            return false;
         }
+        Debug.Log("Triggerea evento de salir de la hondonada");
         EventsManager.TriggerNormalEvent("LeaveTheHollow");
+        return true;
     }
 }

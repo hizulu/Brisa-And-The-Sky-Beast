@@ -12,6 +12,8 @@ public class SpecificActions : Node
 
     private float _searchRadius = 5f;
 
+    private bool _isActioned = false;
+
     public SpecificActions(Blackboard blackboard, Beast beast)
     {
         _blackboard = blackboard;
@@ -20,14 +22,22 @@ public class SpecificActions : Node
 
     public override NodeState Evaluate()
     {
-        Debug.Log("Evaluando acción específica");
+        if(_isActioned)
+            return NodeState.SUCCESS;
+
         BeastActionable targetZone = GetClosestActionableZone();
         if (targetZone != null)
         {
-            targetZone.OnBeast();
+            Debug.Log("Ha encontrado target zone");
+            if (targetZone.OnBeast())
+            {
+                _isActioned = true;
+            }
         }
+
         _blackboard.SetValue("menuOpened", false);
         _blackboard.SetValue("isOptionAction", false);
+
         return NodeState.SUCCESS;
     }
 
@@ -46,7 +56,6 @@ public class SpecificActions : Node
                 float distance = Vector3.Distance(_beast.transform.position, zone.transform.position);
                 if (distance < closestDistance)
                 {
-                    Debug.Log("Added a zone");
                     closestDistance = distance;
                     closestZone = zone;
                 }

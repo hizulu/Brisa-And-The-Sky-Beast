@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.36546257, g: 0.62816256, b: 0.9556839, a: 1}
+  m_IndirectSpecularColor: {r: 0.33109567, g: 0.5807726, b: 0.88927, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3018,7 +3018,6 @@ MonoBehaviour:
   biteAttackDamage: 25
   currentHealth: 0
   player: {fileID: 353271126}
-  BeastSounds: {fileID: 0}
 --- !u!95 &58385636
 Animator:
   serializedVersion: 5
@@ -7802,6 +7801,7 @@ GameObject:
   - component: {fileID: 205427740}
   - component: {fileID: 205427739}
   - component: {fileID: 205427738}
+  - component: {fileID: 205427741}
   m_Layer: 0
   m_Name: EndingTrigger
   m_TagString: Untagged
@@ -7885,6 +7885,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 18.555414, y: 11.373915, z: 14.824799}
   m_Center: {x: -1.0768805, y: 0.7107363, z: 1.6660614}
+--- !u!114 &205427741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205427736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f9f3ce96dbb9a4faf8ca1a3e62d0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorials:
+  - inputActionName: UIPanel/BeastPanel
+    tutorialText: "Hay lugares en los que la Bestia puede realizar acciones espec\xEDficas.
+      Ll\xE1mala y pulsa TAB."
+    triggeredByAction: 0
+    activationEventName: 
+    waitForCompletion: 0
+    persistentWhileInsideTrigger: 1
 --- !u!1001 &205669400
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41577,12 +41597,6 @@ MonoBehaviour:
     activationEventName: 
     waitForCompletion: 0
     persistentWhileInsideTrigger: 0
-  - inputActionName: Player/DesmountBeast
-    tutorialText: Pulsa Control Izq. para bajarte de la Bestia.
-    triggeredByAction: 0
-    activationEventName: 
-    waitForCompletion: 0
-    persistentWhileInsideTrigger: 0
   - inputActionName: Player/PointedMode
     tutorialText: "Mant\xE9n ClickDer durante 2 segundos para dirigir a la Bestia"
     triggeredByAction: 0
@@ -51823,15 +51837,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 02c387e0ac3b27048858e9af4e9b52ca, type: 2}
     - target: {fileID: 7397145204159362768, guid: 9b022914cee821f41b135948c1ffe222, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.4772997
+      value: 0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: 7397145204159362768, guid: 9b022914cee821f41b135948c1ffe222, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.4773
+      value: 0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: 7397145204159362768, guid: 9b022914cee821f41b135948c1ffe222, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.4772997
+      value: 0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: 7397145204159362768, guid: 9b022914cee821f41b135948c1ffe222, type: 3}
       propertyPath: m_LocalPosition.x
