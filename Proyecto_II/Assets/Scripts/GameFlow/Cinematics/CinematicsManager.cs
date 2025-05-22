@@ -47,11 +47,6 @@ public class CinematicsManager : MonoBehaviour
 
         videoPlayer = videoGO.GetComponent<VideoPlayer>();
 
-        videoGO.SetActive(true);
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         StartCoroutine(StartCinematic());
     }
 
@@ -94,11 +89,16 @@ public class CinematicsManager : MonoBehaviour
 
     IEnumerator StartCinematic()
     {
-        // TODO: some animation
-        cam.FadeToBlackThenRemove();
-        yield return new WaitForSeconds(1.1f);
+        yield return null;
+
+        videoGO.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         videoPlayer.Play();
+        videoPlayer.SetDirectAudioVolume(0, 1);// multiplicador sonido)
+
         CineReproduciendo = true;
         Time.timeScale = 0f;
         // TODO: stop all sounds

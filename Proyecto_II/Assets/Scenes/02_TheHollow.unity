@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.3606009, g: 0.6215321, b: 0.9463287, a: 1}
+  m_IndirectSpecularColor: {r: 0.3362262, g: 0.5877476, b: 0.8989734, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -18350,7 +18350,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 586113544}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 4181cf1c4da39464fb9bbdbdb2d8c041, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 7b381b778b9799e48856819f52655b18, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -33826,8 +33826,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 586113545}
   - {fileID: 1730918835}
+  - {fileID: 586113545}
   - {fileID: 554809471}
   m_Father: {fileID: 36852037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -46699,7 +46699,7 @@ GameObject:
   - component: {fileID: 1730918837}
   - component: {fileID: 1730918836}
   m_Layer: 5
-  m_Name: SceneEndCinematic
+  m_Name: MeetingBeastCinematic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46732,7 +46732,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730918834}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 1e784bc09903bf5449faf46e94086ac0, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 1fe4399e89a02134f894e27fff7f076e, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -53897,8 +53897,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videos:
-  - {fileID: 586113544}
   - {fileID: 1730918834}
+  - {fileID: 586113544}
   pausePanel: {fileID: 554809470}
   camGO: {fileID: 573680102}
 --- !u!1001 &1948720398
