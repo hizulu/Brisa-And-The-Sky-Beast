@@ -79,8 +79,11 @@ public class CinematicsManager : MonoBehaviour
             case 0:
                 return;
             case 1:
-                if(SceneManager.GetActiveScene().buildIndex == 2) // Hondonada
-                    NextScene();
+                if(SceneManager.GetActiveScene().buildIndex == 2)
+                {
+                    // Hondonada
+                    // TODO: Reposicionar Brisa y Bestia salida jaula
+                }
                 if(SceneManager.GetActiveScene().buildIndex == 3) // Ehuna
                     GameManager.Instance.Victory();
                 return;

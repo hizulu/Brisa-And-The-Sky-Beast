@@ -17,6 +17,6 @@ public class BeastFreeingCinematic : MonoBehaviour
     private void OnBeastFreed()
     {
         Debug.Log("Should play cinematic 0");
-        CinematicsManager.Instance.PlayCinematic(0);
+        CinematicsManager.Instance.PlayCinematic(1);
     }
 }
