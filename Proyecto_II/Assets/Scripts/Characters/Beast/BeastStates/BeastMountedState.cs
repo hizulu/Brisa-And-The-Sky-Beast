@@ -73,6 +73,7 @@ public class BeastMountedState : BeastState
         Vector3 posPlayerDismount = beast.transform.position - beast.transform.right * 2f + Vector3.up * 3f;
         beast.playerTransform.position = posPlayerDismount;
         beast.agent.enabled = true;
+        EventsManager.TriggerNormalEvent("EnsureBrisaDismounts");
         //beast.rb.constraints = RigidbodyConstraints.None;
 
         beast.anim.SetBool("isRunning", false);

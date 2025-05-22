@@ -52,7 +52,7 @@ public class GoToCombatTarget : Node
 
                 _wasWalking = false;
             }
-            Debug.Log("Reached combat target");
+            // Debug.Log("Reached combat target");
             state = NodeState.SUCCESS;
             return state;
         }
