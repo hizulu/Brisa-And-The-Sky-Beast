@@ -36,7 +36,7 @@ public class BeastMountedState : BeastState
     }
     public override void OnUpdate(Beast beast)
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl)) //TODO: sustituirlo por NEW INPUT SYSTEM
+        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Tab))//TODO: sustituirlo por NEW INPUT SYSTEM
         {
             beast.TransitionToState(new BeastFreeState());
         }

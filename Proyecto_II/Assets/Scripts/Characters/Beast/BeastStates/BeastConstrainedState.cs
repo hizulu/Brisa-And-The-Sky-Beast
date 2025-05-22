@@ -35,6 +35,7 @@ public class BeastConstrainedState : BeastState
         Debug.Log("Beast is leaving Constrained State");
 
         blackboard.SetValue("menuOpenedFromOtherState", false);
+        blackboard.SetValue("menuOpened", false);
         blackboard.SetValue("isConstrained", false);
     }
 
