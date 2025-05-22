@@ -145,7 +145,7 @@ public class NPCDialogRange : MonoBehaviour
     {
         playerInput.PlayerActions.Disable();
         playerCam.m_Lens.FieldOfView = 50f;
-        StartCoroutine(TransitionCameraDialogue(-80f, 10f, 1f, true));
+        StartCoroutine(TransitionCameraDialogue(-30f, 10f, 1f, true));
     }
 
     // Método para reanudar las acciones del jugador y restaurar la cámara a su posición original.
@@ -204,7 +204,7 @@ public class NPCDialogRange : MonoBehaviour
     //Método para desbloquear el movimiento de la cámara después del diálogo.
     private void UnLockMovementCamera()
     {
-        camComponents.m_HorizontalAxis.m_MaxSpeed = 300f;
-        camComponents.m_VerticalAxis.m_MaxSpeed = 300f;
+        camComponents.m_HorizontalAxis.m_MaxSpeed = 200f;
+        camComponents.m_VerticalAxis.m_MaxSpeed = 200f;
     }
 }

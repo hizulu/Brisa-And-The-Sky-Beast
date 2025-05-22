@@ -22,6 +22,7 @@ public class SheepIdleState : SheepStateTemplate
     #region Métodos Base de la Máquina de Estados
     public override void Enter()
     {
+        RandomSheepSound();
         base.Enter();
         sheepStateMachine.Sheep.AnimSheep.SetBool("isIdle", true);
         //Debug.Log("La oveja ha entrado en el estado de IDLE");
@@ -53,6 +54,12 @@ public class SheepIdleState : SheepStateTemplate
 
         if (currentTimeIdle > maxTimeInIdle)
             sheepStateMachine.ChangeState(sheepStateMachine.SheepWalkState);
+    }
+
+    private void RandomSheepSound()
+    {
+        if(Random.value < 0.05f)
+            sheepStateMachine.Sheep.SfxSheep.PlayRandomSFX(SheepSFXType.Idle);
     }
     #endregion
 }

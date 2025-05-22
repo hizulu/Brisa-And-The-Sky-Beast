@@ -91,8 +91,8 @@ public class PlayerAttack01 : PlayerAttackState
     {
         if (!attackFinish) return;
 
-        if (!stateMachine.Player.PlayerInput.PlayerActions.Movement.IsPressed())
-            OnStop();
+        //if (!stateMachine.Player.PlayerInput.PlayerActions.Movement.IsPressed())
+        //    OnStop();
     }
 
     /// <summary>
