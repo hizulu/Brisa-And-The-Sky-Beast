@@ -53,6 +53,8 @@ public class EnemyAttackZigZagJump : EnemyStateSOBase
 
     public override void DoExitLogic()
     {
+        enemy.SfxEnemy.StopSound(EnemySFXType.Attack);
+
         base.DoExitLogic();
         // Asegura reactivar el agente al salir del estado
         if (!enemy.agent.enabled)
@@ -62,6 +64,8 @@ public class EnemyAttackZigZagJump : EnemyStateSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
+
+        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Attack, 1f);
 
         float distanceToTargetSQR = (enemy.transform.position - targetTransform.position).sqrMagnitude;
 
@@ -177,7 +181,6 @@ public class EnemyAttackZigZagJump : EnemyStateSOBase
         // Golpea al objetivo
         if (distanceToTargetSQR < distanceToHit * distanceToHit)
         {
-            enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Attack);
 
             if (enemy.targetIsPlayer)
             {

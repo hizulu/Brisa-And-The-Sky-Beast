@@ -27,7 +27,7 @@ public class PlayerHardLandState : PlayerStopState
         base.Enter();
         //Debug.Log("Has entrado en estado de ATERRIZAR");
         StartAnimation(stateMachine.Player.PlayerAnimationData.HardLandParameterHash);
-        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.HardLand);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.HardLand, 0.5f);
     }
 
     public override void UpdateLogic()

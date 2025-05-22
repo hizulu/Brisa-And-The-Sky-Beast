@@ -9,10 +9,12 @@ public class EnemyBaseSoldierDeath : EnemyStateSOBase
 
     public override void DoEnterLogic()
     {
+        enemy.SfxEnemy.PlayRandomSFX(EnemySFXType.Death, 1f);
         base.DoEnterLogic();
-        //Debug.Log("Has entrado en el estado de Muerte del Soldado Base.");
+        Debug.Log("Has entrado en el estado de Muerte del Soldado Base.");
         enemy.anim.SetTrigger("Death");
         enemy.StartCoroutine(BaseSoldierDeath());
+
     }
 
     public override void DoExitLogic()
@@ -27,7 +29,7 @@ public class EnemyBaseSoldierDeath : EnemyStateSOBase
 
         enemy.beast?.OnEnemyExit(enemy.gameObject);
         Destroy(enemy.gameObject);
-        //Debug.Log("Soldier desaparece");
+        Debug.Log("Soldier desaparece");
         enemy.GetComponent<LootBox>()?.DropLoot();
     }
 

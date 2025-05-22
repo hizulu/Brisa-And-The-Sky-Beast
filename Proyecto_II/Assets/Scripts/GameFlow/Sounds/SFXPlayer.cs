@@ -79,7 +79,7 @@ public class SFXPlayer : MonoBehaviour
         };
     }
 
-    public void PlayRandomSFX(BrisaSFXType _soundType, float _volume = 1.0f)
+    public void PlayRandomSFX(BrisaSFXType _soundType, float _volume = 0.1f)
     {
         if (brisaAudioSource.isPlaying) return;
 

@@ -58,7 +58,7 @@ public class SFXEnemy : MonoBehaviour
         };
     }
 
-    public void PlayRandomSFX(EnemySFXType _soundType, float _volume = 1.0f)
+    public void PlayRandomSFX(EnemySFXType _soundType, float _volume = 0.2f)
     {
         if (enemyAudioSource.isPlaying) return;
 

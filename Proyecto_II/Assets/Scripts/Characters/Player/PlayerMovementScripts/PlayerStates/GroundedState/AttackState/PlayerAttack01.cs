@@ -24,7 +24,7 @@ public class PlayerAttack01 : PlayerAttackState
         float attackDamageCombo01 = stateMachine.StatsData.AttackDamageBase * attackDamageModifier;
         EventsManager.TriggerSpecialEvent<float>("OnAttack01Enemy", attackDamageCombo01); // EVENTO: Crear evento de dañar al enemigo con daño del ComboAttack01.
         base.Enter();
-        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Attack);
+        stateMachine.Player.SfxPlayer.PlayRandomSFX(BrisaSFXType.Attack, 0.6f);
         stateMachine.Player.GolpearPrueba();
         StartAnimation(stateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
         //Debug.Log("Daño del ataque 1: " + " " + attackDamageCombo01);
@@ -70,6 +70,7 @@ public class PlayerAttack01 : PlayerAttackState
         attackFinish = false;
         //stateMachine.Player.SfxPlayer.StopSound(BrisaSFXType.Attack);
         base.Exit();
+        stateMachine.MovementData.MovementSpeedModifier = 0f;
         StopAnimation(stateMachine.Player.PlayerAnimationData.Attack01ParameterHash);
     }
     #endregion
@@ -83,14 +84,15 @@ public class PlayerAttack01 : PlayerAttackState
         if (stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Attack01") && stateMachine.Player.AnimPlayer.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             attackFinish = true;
-            if(!stateMachine.Player.PlayerInput.PlayerActions.Movement.IsPressed() && !canContinueCombo)
-                stateMachine.ChangeState(stateMachine.IdleState);
         }
     }
 
     protected override void Move()
     {
         if (!attackFinish) return;
+
+        if (!stateMachine.Player.PlayerInput.PlayerActions.Movement.IsPressed())
+            OnStop();
     }
 
     /// <summary>

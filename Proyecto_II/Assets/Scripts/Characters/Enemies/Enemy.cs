@@ -148,6 +148,8 @@ public class Enemy : HittableElement
 
     public void ApplyDamageToEnemy()
     {
+        SfxEnemy.PlayRandomSFX(EnemySFXType.TakeDamage);
+
         currentHealth -= damageAmount;
         currentHealth = Mathf.Max(currentHealth, 0f);
 

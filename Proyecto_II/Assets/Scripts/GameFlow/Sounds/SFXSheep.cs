@@ -47,7 +47,7 @@ public class SFXSheep : MonoBehaviour
         };
     }
 
-    public void PlayRandomSFX(SheepSFXType _soundType, float _volume = 1.0f)
+    public void PlayRandomSFX(SheepSFXType _soundType, float _volume = 0.3f)
     {
         if (sheepAudioSource.isPlaying) return;
 

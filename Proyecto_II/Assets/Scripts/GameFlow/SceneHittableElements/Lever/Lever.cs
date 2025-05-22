@@ -25,6 +25,8 @@ public class Lever : HittableElement
 
     public override void OnHit()
     {
+        SoundObjectsManager.Instance.PlaySFX(SoundType.Lever);
+
         animator.AnimateLever(moveToActive);
 
         if (leverAction != null)

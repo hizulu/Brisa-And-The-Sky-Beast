@@ -21,7 +21,7 @@ public class AudioSettings : MonoBehaviour
     // [SerializeField] private AudioSource dialogueSource; // AudioSource para diálogos
 
     private AudioManager audioManager;
-    private SoundPlayerManager soundPlayerManager;
+    private SoundObjectsManager soundPlayerManager;
 
     [SerializeField] private TextMeshProUGUI generalVolumeText;
     [SerializeField] private TextMeshProUGUI musicVolumeText;
@@ -29,8 +29,8 @@ public class AudioSettings : MonoBehaviour
 
     private void Start()
     {
-        audioManager = AudioManager.Instance;
-        soundPlayerManager = SoundPlayerManager.instance;
+        //audioManager = AudioManager.Instance;
+        //soundPlayerManager = SoundObjectsManager.instance;
 
         // if (dialogueSource == null)
         //     Debug.LogWarning("No se asignó AudioSource para diálogos.");
@@ -75,7 +75,7 @@ public class AudioSettings : MonoBehaviour
 
         // Actualizar volúmenes principales
         //audioManager.musicSource.volume = generalVolume / 100f * (musicVolume / 100f);
-        audioManager.SFXSource.volume = generalVolume / 100f * (sfxVolume / 100f);
+        //audioManager.SFXSource.volume = generalVolume / 100f * (sfxVolume / 100f);
 
         // Actualizar SoundPlayerManager
         if (soundPlayerManager != null && soundPlayerManager.GetComponent<AudioSource>() != null)
