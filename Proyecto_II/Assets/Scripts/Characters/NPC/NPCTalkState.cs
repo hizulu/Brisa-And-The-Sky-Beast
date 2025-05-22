@@ -19,6 +19,7 @@ public class NPCTalkState : NPCStateTemplate
         base.Enter();
         npcStateMachine.NPC.AnimNPC.SetBool("isTalking", true);
         Debug.Log("El NPC ha entrado en estado de HABLAR");
+        npcStateMachine.NPC.SfxNPC.PlayRandomSFX(NPCSFXType.Talk);
     }
 
     public override void Exit()
