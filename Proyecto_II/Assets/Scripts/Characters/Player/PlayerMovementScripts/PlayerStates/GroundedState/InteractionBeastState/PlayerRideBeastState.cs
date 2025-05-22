@@ -25,6 +25,7 @@ public class PlayerRideBeastState : PlayerInteractionState
         Debug.Log("Has entrado en el estado de MONTAR A LA BESTIA");
         StartAnimation(stateMachine.Player.PlayerAnimationData.RideBeastParameterHash);
         stateMachine.Player.PlayerInput.PlayerActions.DesmountBeast.performed += DismountBeast;
+        EventsManager.CallNormalEvents("EnsureBrisaDismounts", DismountCalledFromBeast);
     }
 
     public override void HandleInput()
@@ -53,6 +54,7 @@ public class PlayerRideBeastState : PlayerInteractionState
         Debug.Log("Has salido del estado de MONTAR A LA BESTIA");
         StopAnimation(stateMachine.Player.PlayerAnimationData.RideBeastParameterHash);
         stateMachine.Player.PlayerInput.PlayerActions.DesmountBeast.performed -= DismountBeast;
+        EventsManager.StopCallNormalEvents("EnsureBrisaDismounts", DismountCalledFromBeast);
     }
     #endregion
 
@@ -64,6 +66,12 @@ public class PlayerRideBeastState : PlayerInteractionState
     private void DismountBeast(InputAction.CallbackContext context)
     {
         Debug.Log("Quieres bajarte de la BESTIA");
+        stateMachine.ChangeState(stateMachine.DismountBeastState);
+    }
+
+    private void DismountCalledFromBeast()
+    {
+        Debug.Log("BESTIA ha salido del estado de montar");
         stateMachine.ChangeState(stateMachine.DismountBeastState);
     }
 

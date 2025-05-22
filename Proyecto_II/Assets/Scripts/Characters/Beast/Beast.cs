@@ -109,6 +109,9 @@ public class Beast : MonoBehaviour
 
     public void TransitionToState(BeastState newState)
     {
+        if (currentHealth <= Mathf.Epsilon && !(newState is BeastHalfDeadState))
+            return;
+        
         currentState?.OnExit(this);
 
         // Para asegurar que se realizan las acciones de fin de corrutina al cambiar de estado:

@@ -16,6 +16,7 @@ public class BeastMountedState : BeastState
     public override void OnEnter(Beast beast)
     {
         Debug.Log("Entering BeastMountedState, Brisa taking over Beast control...");
+        EventsManager.TriggerNormalEvent("MontarBestia_Player");
         beast.agent.enabled = false;
 
         // Subir al jugador para que al colocar la bestia no atraviese el suelo
@@ -35,7 +36,7 @@ public class BeastMountedState : BeastState
     }
     public override void OnUpdate(Beast beast)
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl)) //TODO: sustituirlo por NEW INPUT SYSTEM
+        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Tab))//TODO: sustituirlo por NEW INPUT SYSTEM
         {
             beast.TransitionToState(new BeastFreeState());
         }
@@ -73,6 +74,7 @@ public class BeastMountedState : BeastState
         Vector3 posPlayerDismount = beast.transform.position - beast.transform.right * 2f + Vector3.up * 3f;
         beast.playerTransform.position = posPlayerDismount;
         beast.agent.enabled = true;
+        EventsManager.TriggerNormalEvent("EnsureBrisaDismounts");
         //beast.rb.constraints = RigidbodyConstraints.None;
 
         beast.anim.SetBool("isRunning", false);
