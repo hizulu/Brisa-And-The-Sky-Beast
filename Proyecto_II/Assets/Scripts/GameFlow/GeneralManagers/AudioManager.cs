@@ -1,6 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
+/*
+ * NOMBRE CLASE: AudioManager
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 22/05/2025
+ * DESCRIPCIÓN: Clase que gestiona la lógica de los sonidos ambientales para crear un paisaje sonoro.
+ * VERSIÓN: 1.0.
+ */
+
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] public AudioSource music;
@@ -22,17 +30,25 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(PlayIntroMusicThenLoopSoundscape());
     }
 
+    /// <summary>
+    /// Método que ejecuta en bucle sonidos de fondo de ambiente.
+    /// </summary>
     private void EnviromentSoundPlayLoop()
     {
         environmentSounds.loop = true;
         environmentSounds.Play();
     }
 
+    /// <summary>
+    /// Corrutina que da entrada, al empezar la escena, a un sonido y luego reproduce la música.
+    /// Una vez terminada la canción, ejecuta en bucle sonidos.
+    /// </summary>
+    /// <returns>Corrutina que realiza las acciones.</returns>
     private IEnumerator PlayIntroMusicThenLoopSoundscape()
     {
         StartCoroutine(PlayRandomSmallSound());
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(Random.Range(3f, 5f));
 
         if (musicClip != null)
         {
@@ -43,13 +59,18 @@ public class AudioManager : MonoBehaviour
 
             yield return new WaitWhile(() => music.isPlaying);
 
-            yield return StartCoroutine(FadeOutMusic(2f));
+            yield return StartCoroutine(FadeOutMusic(3f));
         }
 
         StartCoroutine(SoundscapeLoop());
     }
 
-
+    /// <summary>
+    /// Corrutina para que la música no entre de golpe, sino que modifique el nivel de volumen de menos a más.
+    /// </summary>
+    /// <param name="duration">Tiempo del FadeIn.</param>
+    /// <param name="targetVolume">Valor del volumen al que se quiere llegar.</param>
+    /// <returns>Corrutina que realiza las acciones.</returns>
     private IEnumerator FadeInMusic(float duration, float targetVolume)
     {
         float startVolume = 0f;
@@ -67,6 +88,11 @@ public class AudioManager : MonoBehaviour
         music.volume = targetVolume;
     }
 
+    /// <summary>
+    /// Corrutina para que la música no termine de golpe, sino que modifique el nivel de volumen de más a mmenos.
+    /// </summary>
+    /// <param name="duration">Tiempo del FadeIn.</param>
+    /// <returns>Corrutina que realiza las acciones.</returns>
     private IEnumerator FadeOutMusic(float duration)
     {
         float startVolume = music.volume;
@@ -83,14 +109,19 @@ public class AudioManager : MonoBehaviour
         music.Stop();
     }
 
-
+    /// <summary>
+    /// Corrutina que reproduce aleatoriamente sonidos del entorno.
+    /// Reproduce los sonidos en intervalos de tiempo aleatorios.
+    /// Se ha planteado con aleatoriedad por si en un futuro se quiere insertar más tipos de sonidos.
+    /// </summary>
+    /// <returns>Corrutina que realiza las acciones.</returns>
     private IEnumerator SoundscapeLoop()
     {
         while (true)
         {
-            bool playBird = Random.value > 0.5f;
+            bool playSmallSounds = Random.value > 0.5f;
 
-            if (playBird && smallClips.Length > 0)
+            if (playSmallSounds && smallClips.Length > 0)
             {
                 yield return StartCoroutine(PlayRandomSmallSound());
             }
@@ -99,6 +130,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Corrutina que reproduce aleatoriamente un sonido pequeño del array.
+    /// </summary>
+    /// <returns>Corrutina que realiza las acciones.</returns>
     private IEnumerator PlayRandomSmallSound()
     {
         AudioClip clip = smallClips[Random.Range(0, smallClips.Length)];
