@@ -4,7 +4,7 @@ using UnityEngine;
 
 // Jone Sainz Egea
 // 27/03/2025
-
+// Script que gestiona las palancas, recibe la acción desde el inspector
 public class Lever : HittableElement
 {
     [SerializeField] private LeverActionBase leverAction;

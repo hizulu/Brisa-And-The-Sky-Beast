@@ -159,15 +159,6 @@ public class GameManager : MonoBehaviour
         // Iniciar vídeo
         LoadingVideoPlayer.Instance.PlayVideo();
 
-        // Esperar a que el vídeo empiece realmente
-        //float timeout = 3f;
-        //float elapsed = 0f;
-        //while (!LoadingVideoPlayer.Instance.IsPlaying && elapsed < timeout)
-        //{
-        //    elapsed += Time.deltaTime;
-        //    yield return null;
-        //}
-
         // Cargar escena objetivo en segundo plano
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene);
         asyncLoad.allowSceneActivation = false;

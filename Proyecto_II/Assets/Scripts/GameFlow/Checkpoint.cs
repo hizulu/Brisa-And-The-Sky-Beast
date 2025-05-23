@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Jone Sainz Egea
+// Script que se le asocia a cada checkpoint
+// Al entrar player en el trigger guarda la información del estado de la escena y activa el checkpoint
 public class Checkpoint : MonoBehaviour
 {
     public bool Activated = false;

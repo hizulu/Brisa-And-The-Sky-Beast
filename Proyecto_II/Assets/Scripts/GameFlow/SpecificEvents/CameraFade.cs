@@ -15,7 +15,6 @@ public class CameraFade : MonoBehaviour
     [SerializeField] float speedScale = 1f;
     [SerializeField] Color fadeColor = Color.black;
 
-    // Rather than Lerp or Slerp, we allow adaptability with a configurable curve
     public AnimationCurve Curve = new AnimationCurve(new Keyframe(0, 1),
         new Keyframe(0.5f, 0.5f, -1.5f, -1.5f), new Keyframe(1, 0));
 
