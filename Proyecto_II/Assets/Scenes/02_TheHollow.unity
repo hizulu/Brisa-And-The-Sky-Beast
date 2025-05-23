@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.35171166, g: 0.6091575, b: 0.9290076, a: 1}
+  m_IndirectSpecularColor: {r: 0.38430023, g: 0.65441763, b: 0.9925831, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -22850,7 +22850,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &757309857
 Transform:
   m_ObjectHideFlags: 0
@@ -24222,7 +24222,7 @@ MonoBehaviour:
   sunriseHour: 7
   sunsetHour: 23
   timeMultiplier: 80
-  startHour: 12
+  startHour: 8
   dayAmbientLight: {r: 0.6698113, g: 0.64214444, b: 0.41389284, a: 0}
   nightAmbientLight: {r: 0.27750564, g: 0.26593092, b: 0.6792453, a: 0}
   lightCurve:
@@ -35077,7 +35077,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 53b290475480d8c4b80b1c7d42236a12, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 61.3
+      value: 62
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 53b290475480d8c4b80b1c7d42236a12, type: 3}
       propertyPath: m_LocalRotation.w
