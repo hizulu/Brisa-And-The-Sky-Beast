@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 //using static UnityEditor.ShaderData;
 
 // Para la gestión del estado del juego:
-public enum GameState { MainMenu, Playing, Paused, GameOver, Victory }
+public enum GameState { MainMenu, Playing, Paused}
 
 
 /* NOMBRE CLASE: GameManager
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
         CurrentState = newState;
         OnGameStateChanged?.Invoke(newState);
 
-        Time.timeScale = (newState == GameState.Paused || newState == GameState.GameOver || newState == GameState.Victory) ? 0 : 1;
+        Time.timeScale = (newState == GameState.Paused) ? 0 : 1;
     }
 
     public static class GameSession
@@ -254,7 +254,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator VictoryScreen()
     {
         yield return new WaitForSeconds(1f);
-        ChangeGameState(GameState.Victory);
+        // ChangeGameState(GameState.Victory);
         EventsManager.TriggerNormalEvent("UIPanelOpened");
         UIManager.Instance.OpenVictoryMenu();
     }
@@ -262,7 +262,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameOverScreen()
     {
         yield return new WaitForSeconds(3f);
-        ChangeGameState(GameState.GameOver);
+        // ChangeGameState(GameState.GameOver);
         EventsManager.TriggerNormalEvent("UIPanelOpened");
         UIManager.Instance.OpenGameOverMenu();
         Debug.Log("Finished game over");
