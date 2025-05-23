@@ -38,6 +38,7 @@ public class Smell : Node, ICoroutineNode
 
             Debug.Log("Starting to smell");
             _beast.StartNewCoroutine(Smelling(_duration), this);
+            _beast.SfxBeast.PlayRandomSFX(BeastSFXType.Smell);
         }
 
         if (_hasFinished)

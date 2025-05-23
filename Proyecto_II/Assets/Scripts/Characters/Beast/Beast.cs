@@ -4,8 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-// Jone Sainz Egea
-// 15/04/2025
+/*
+ * NOMBRE CLASE: Beast
+ * AUTOR: Jone Sainz Egea
+ * FECHA: 15/04/2025
+ * DESCRIPCIÓN: Script que gestiona toda la lógica de la Bestia, así como sus estadísticas.
+ *              Gestiona la máquina de estados sencilla de la Bestia.
+ *              Gestiona los eventos relacionados con las interacciones con Brisa.
+ *              Cada estado funciona de forma independiente, algunos con árboles de comportamiento.
+ *              Contiene la blackboard en la que se almacena toda la información relevante para los árboles.
+ * VERSIÓN: 1.0. Script base para la gestión de la FSM
+ *              1.1. Lógica de interacción con Brisa mediante panel de interacción. Eventos.
+ *              1.2. Se añade la detección de enemigos para el estado de combate
+ *              1.3. Se añade lógica de recibir daño y morir
+ */
 public class Beast : MonoBehaviour
 {
     [Header("Components")]
@@ -232,6 +244,10 @@ public class Beast : MonoBehaviour
     #endregion
 
     #region Beast Selection Menu
+    public bool IsPlayerWithinInteractionDistance()
+    {
+        return Vector3.Distance(transform.position, playerTransform.position) < interactionThreshold;
+    }
     public void OpenBeastMenu()
     {
         // Por si se abre el menú sin estar en estado de constrained
@@ -295,7 +311,7 @@ public class Beast : MonoBehaviour
         else
             Debug.LogWarning("Animator is null when trying to play damageBeast animation");
 
-        // TODO: beast gets damaged sound
+        SfxBeast.PlayRandomSFX(BeastSFXType.Hurt);
 
         currentHealth -= damage;
         Debug.Log("Beast has been damaged");
@@ -307,19 +323,15 @@ public class Beast : MonoBehaviour
     }
     #endregion
 
-    public bool IsPlayerWithinInteractionDistance()
-    {
-        return Vector3.Distance(transform.position, playerTransform.position) < interactionThreshold;
-    }
-
-    // TODO: borrar esto
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, freeRoamRadius);
-        if (playerTransform == null) return;
-        float distance = Vector3.Distance(transform.position, playerTransform.position);
-        float printInterestInBrisa = baseInterestInBrisa * Mathf.Exp(growthFactorInterestInBrisa * distance);
-        // UnityEditor.Handles.Label(playerTransform.position + Vector3.up * 4, $"Interest: {printInterestInBrisa}");
-    }
+    #region Debugging
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, freeRoamRadius);
+    //    if (playerTransform == null) return;
+    //    float distance = Vector3.Distance(transform.position, playerTransform.position);
+    //    float printInterestInBrisa = baseInterestInBrisa * Mathf.Exp(growthFactorInterestInBrisa * distance);
+    //    // UnityEditor.Handles.Label(playerTransform.position + Vector3.up * 4, $"Interest: {printInterestInBrisa}");
+    //}
+    #endregion
 }

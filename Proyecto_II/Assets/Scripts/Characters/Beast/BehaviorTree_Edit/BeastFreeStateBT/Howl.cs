@@ -31,6 +31,7 @@ public class Howl : Node, ICoroutineNode
 
             _beast.anim.SetBool("isWalking", false);
             _beast.anim.SetTrigger("howl");
+            _beast.SfxBeast.PlayRandomSFX(BeastSFXType.Howl);
 
             _duration = AnimationDurationDatabase.Instance.GetClipDuration("Beast_Howl");
 

@@ -35,6 +35,7 @@ public class DoIdle : Node, ICoroutineNode
             _beast.anim.SetBool("isWalking", false);
 
             _beast.StartNewCoroutine(Sitting(Random.Range(_minDuration, _maxDuration)), this);
+            _beast.SfxBeast.PlayRandomSFX(BeastSFXType.Idle);
         }
 
         if (_hasFinished)

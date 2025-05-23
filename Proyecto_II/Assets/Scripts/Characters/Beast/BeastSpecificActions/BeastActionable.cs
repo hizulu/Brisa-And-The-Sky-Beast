@@ -12,7 +12,7 @@ public interface IBeastActionable
     bool OnBeast();
 }
 
-// Clase abstracta abierta a extensiones, permitiendo nuevos acciones golpeables
+// Clase abstracta abierta a extensiones, permitiendo nuevos acciones de Bestia
 public abstract class BeastActionable : MonoBehaviour, IBeastActionable
 {
     protected bool beastIsIn = false;

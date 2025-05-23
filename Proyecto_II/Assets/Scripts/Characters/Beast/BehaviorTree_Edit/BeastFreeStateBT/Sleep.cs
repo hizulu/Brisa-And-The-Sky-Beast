@@ -35,6 +35,7 @@ public class Sleep : Node, ICoroutineNode
 
             _beast.anim.SetBool("isWalking", false);
             _beast.anim.SetBool("isSleeping", true);
+            _beast.SfxBeast.PlayRandomSFX(BeastSFXType.Purr);
 
             _beast.StartNewCoroutine(Sleeping(Random.Range(_minDuration, _maxDuration)), this);
         }

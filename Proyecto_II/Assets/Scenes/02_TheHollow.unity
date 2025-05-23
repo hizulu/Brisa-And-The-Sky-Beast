@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.34177876, g: 0.59554964, b: 0.9099616, a: 1}
+  m_IndirectSpecularColor: {r: 0.35171166, g: 0.6091575, b: 0.9290076, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3155,25 +3155,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beastAudioSource: {fileID: 58385643}
   idle:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 2cc0f58272a04704290b53db8b1de774, type: 3}
   walk:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 879035b555ce6f1469e7f202b5ff91d4, type: 3}
   run:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 481a33024b7d0d145b5791a83322c4a2, type: 3}
   attackClaw:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: ef3334dddba76974da50b73a32f94e7a, type: 3}
   attackBite:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 8e64e352effa34b43b00c102ebc879a5, type: 3}
   howl:
-  - {fileID: 0}
-  bark:
-  - {fileID: 0}
-  growl:
-  - {fileID: 0}
-  eat:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 21c8da2b1e9b28a4ca671448141f7549, type: 3}
+  hurt:
+  - {fileID: 8300000, guid: 8a8fd97baa231b7428f83a9213469ae6, type: 3}
+  - {fileID: 8300000, guid: a646274d3fff7ea4cb837799e26fd53c, type: 3}
+  purr:
+  - {fileID: 8300000, guid: 267967f123cfbe64e83ad64d2e7a06ed, type: 3}
+  dead:
+  - {fileID: 8300000, guid: 6cb6d30d2a9cc394a8d12093c8197f91, type: 3}
+  halfDead:
+  - {fileID: 8300000, guid: c6c5fae5a07da7a4985e69640c955f07, type: 3}
+  - {fileID: 8300000, guid: a646274d3fff7ea4cb837799e26fd53c, type: 3}
   smell:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 261479c43347ba54a8ef6dfa284b24c8, type: 3}
 --- !u!82 &58385643
 AudioSource:
   m_ObjectHideFlags: 0

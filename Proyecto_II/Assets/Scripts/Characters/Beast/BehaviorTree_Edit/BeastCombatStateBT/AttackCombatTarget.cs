@@ -118,13 +118,14 @@ public class AttackCombatTarget : Node, ICoroutineNode
         if (_isAttackNormal)
         {
             _beast.anim.SetBool("attackSwipe", true);
+            _beast.SfxBeast.PlayRandomSFX(BeastSFXType.AttackClaw);
             _attackDamage = _beast.swipeAttackDamage;
         }
         else
         {
             _beast.anim.SetBool("attackBite", true);
+            _beast.SfxBeast.PlayRandomSFX(BeastSFXType.AttackBite);
             _attackDamage = _beast.biteAttackDamage;
-            //_beast.BeastSounds.PlayRandomSFX(BeastSFXType.Attack);
         }
     }
 

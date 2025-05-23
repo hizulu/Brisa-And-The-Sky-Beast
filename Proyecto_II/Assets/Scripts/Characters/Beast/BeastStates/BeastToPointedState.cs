@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 // Jone Sainz Egea
 // 27/04/2025
+// Estado en el que la Bestia se dirige al punto indicado por el jugador, cuando llega vuelve al estado de libertad
 public class BeastToPointedState : BeastState
 {
     private Vector3 _target;

@@ -27,16 +27,11 @@ public class BeastMountedState : BeastState
         float alturaBestia = 4f;
         beast.playerTransform.position += new Vector3(0, alturaBestia, 0);
 
-        //beast.rb.constraints = RigidbodyConstraints.FreezeAll;
-
-
-
         lastPosition = beast.transform.position;
-        //beast.anim.SetBool("isWalking", false);
     }
     public override void OnUpdate(Beast beast)
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Tab))//TODO: sustituirlo por NEW INPUT SYSTEM
+        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Tab))             //TODO: sustituirlo por NEW INPUT SYSTEM
         {
             beast.TransitionToState(new BeastFreeState());
         }

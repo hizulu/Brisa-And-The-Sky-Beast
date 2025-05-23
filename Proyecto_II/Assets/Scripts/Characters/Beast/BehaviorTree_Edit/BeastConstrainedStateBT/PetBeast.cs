@@ -30,6 +30,7 @@ public class PetBeast : Node, ICoroutineNode
             
             _beast.anim.SetBool("isWalking", false);
             _beast.anim.SetTrigger("petBeast");
+            _beast.SfxBeast.PlayRandomSFX(BeastSFXType.Purr);
 
             Debug.Log("Starting to pet");
             _beast.StartNewCoroutine(Petting(2f), this);

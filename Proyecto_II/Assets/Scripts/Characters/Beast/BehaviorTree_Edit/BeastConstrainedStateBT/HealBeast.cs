@@ -33,6 +33,7 @@ public class HealBeast : Node, ICoroutineNode
 
             _beast.anim.SetBool("isWalking", false);
             _beast.anim.SetTrigger("petBeast");
+            _beast.SfxBeast.PlayRandomSFX(BeastSFXType.Purr);
 
             Heal(_healthAmount);// TODO: añadir funcionalidad de sanación
 

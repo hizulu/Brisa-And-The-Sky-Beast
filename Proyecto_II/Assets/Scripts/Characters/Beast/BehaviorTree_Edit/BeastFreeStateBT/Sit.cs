@@ -35,6 +35,7 @@ public class Sit : Node, ICoroutineNode
 
             _beast.anim.SetBool("isWalking", false);
             _beast.anim.SetBool("isSitting", true);
+            _beast.SfxBeast.PlayRandomSFX(BeastSFXType.Idle);
 
             _beast.StartNewCoroutine(Sitting(Random.Range(_minDuration, _maxDuration)), this);
         }

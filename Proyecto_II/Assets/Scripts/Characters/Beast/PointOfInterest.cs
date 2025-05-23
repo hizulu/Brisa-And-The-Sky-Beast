@@ -52,10 +52,6 @@ public class PointOfInterest : MonoBehaviour
         return currentInterest;
     }
 
-    public InterestType GetInterestType()
-    {
-        return interestType;
-    }
 
     public void ConsumeInterest()
     {
@@ -69,6 +65,11 @@ public class PointOfInterest : MonoBehaviour
         yield return new WaitForSeconds(resetTime);
         currentInterest = baseInterest;
         interestConsumed = false;
+    }
+
+    public InterestType GetInterestType()
+    {
+        return interestType;
     }
 
     private void OnDrawGizmos()

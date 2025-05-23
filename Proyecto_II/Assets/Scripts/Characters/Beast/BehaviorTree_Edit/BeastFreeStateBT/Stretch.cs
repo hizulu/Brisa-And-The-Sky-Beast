@@ -31,6 +31,7 @@ public class Stretch : Node, ICoroutineNode
 
             _beast.anim.SetBool("isWalking", false);
             _beast.anim.SetTrigger("stretch");
+            _beast.SfxBeast.PlayRandomSFX(BeastSFXType.Purr);
             Debug.Log("stretch triggered");
 
             _duration = AnimationDurationDatabase.Instance.GetClipDuration("Beast_Stretch");

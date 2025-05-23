@@ -12,14 +12,15 @@ public enum BeastSFXType
     AttackClaw,
     AttackBite,
     Howl,
-    Bark,
-    Growl,
-    Eat,
+    Hurt,
+    Purr,
+    Dead,
+    Halfdead,
     Smell,
 }
 
 /*
- * NOMBRE CLASE: SFXPlayer
+ * NOMBRE CLASE: SFXBeast
  * AUTOR: Sara Yue Madruga Martín
  * FECHA: 22/05/2025
  * DESCRIPCIÓN: Clase que gestiona la lógica de los efectos de sonido de la Bestia.
@@ -37,9 +38,10 @@ public class SFXBeast : MonoBehaviour
     [SerializeField] private AudioClip[] attackClaw;
     [SerializeField] private AudioClip[] attackBite;
     [SerializeField] private AudioClip[] howl;
-    [SerializeField] private AudioClip[] bark;
-    [SerializeField] private AudioClip[] growl;
-    [SerializeField] private AudioClip[] eat;
+    [SerializeField] private AudioClip[] hurt;
+    [SerializeField] private AudioClip[] purr;
+    [SerializeField] private AudioClip[] dead;
+    [SerializeField] private AudioClip[] halfDead;
     [SerializeField] private AudioClip[] smell;
 
     private Dictionary<BeastSFXType, AudioClip[]> sfxBeastClips;
@@ -54,14 +56,15 @@ public class SFXBeast : MonoBehaviour
             { BeastSFXType.AttackClaw, attackClaw},
             { BeastSFXType.AttackBite, attackBite},
             { BeastSFXType.Howl, howl },
-            { BeastSFXType.Bark, bark },
-            { BeastSFXType.Growl, growl},
-            { BeastSFXType.Eat, eat },
+            { BeastSFXType.Hurt, hurt },
+            { BeastSFXType.Purr, purr},
+            { BeastSFXType.Dead, dead},
+            { BeastSFXType.Halfdead, halfDead},
             { BeastSFXType.Smell, smell},
         };
     }
 
-    public void PlayRandomSFX(BeastSFXType _soundType, float _volume = 0.3f)
+    public void PlayRandomSFX(BeastSFXType _soundType, float _volume = 1f)
     {
         if (sfxBeastClips.TryGetValue(_soundType, out AudioClip[] clips) && clips != null && clips.Length > 0)
         {

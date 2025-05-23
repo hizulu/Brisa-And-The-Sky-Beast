@@ -14,6 +14,7 @@ public class BeastHalfDeadState : BeastState
         EventsManager.TriggerNormalEvent("AskForHelpBrisa"); // Cuando Bestia entra en estado de medio - muerto, manda un evento para avisar a Brisa de que necesita que le reviva.
         beast.anim.SetBool("isWalking", false);
         beast.anim.SetBool("isHalfDead", true);
+        beast.SfxBeast.PlayRandomSFX(BeastSFXType.Halfdead);
         beast.agent.ResetPath();
         Debug.Log("Beast is half dead");
 
@@ -64,6 +65,7 @@ public class BeastHalfDeadState : BeastState
         {
             Debug.Log("Tiempo de espera completado sin que player reviva a Beast. Llamando a condición de fin de juego");
             beast.anim.SetBool("isDead", true);
+            beast.SfxBeast.PlayRandomSFX(BeastSFXType.Dead);
             // TODO: wait for animation before game end
             GameManager.Instance.GameOver();
         }
