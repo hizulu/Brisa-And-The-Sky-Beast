@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.38430023, g: 0.65441763, b: 0.9925831, a: 1}
+  m_IndirectSpecularColor: {r: 0.21515948, g: 0.41949713, b: 0.6632025, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -24222,7 +24222,7 @@ MonoBehaviour:
   sunriseHour: 7
   sunsetHour: 23
   timeMultiplier: 80
-  startHour: 8
+  startHour: 9
   dayAmbientLight: {r: 0.6698113, g: 0.64214444, b: 0.41389284, a: 0}
   nightAmbientLight: {r: 0.27750564, g: 0.26593092, b: 0.6792453, a: 0}
   lightCurve:
@@ -50362,6 +50362,7 @@ Transform:
   - {fileID: 1637251033}
   - {fileID: 550210844}
   - {fileID: 889095243}
+  - {fileID: 2048339565}
   - {fileID: 3007701133291506584}
   - {fileID: 2231154442758594225}
   - {fileID: 1935619380}
@@ -56899,6 +56900,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2045353784}
   m_CullTransparentMesh: 1
+--- !u!1001 &2048339564
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1847195341}
+    m_Modifications:
+    - target: {fileID: 1257903892703862778, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23.26804
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257903892703862778, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10.354762
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257903892703862778, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 44.42186
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257903892703862778, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257903892703862778, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257903892703862778, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257903892703862778, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257903892703862778, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257903892703862778, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257903892703862778, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6875186641893626572, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
+      propertyPath: m_Name
+      value: BayaVoladora
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
+--- !u!4 &2048339565 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1257903892703862778, guid: 24c1e27a25fbebc42851748bfedcbe9e, type: 3}
+  m_PrefabInstance: {fileID: 2048339564}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2062649232
 GameObject:
   m_ObjectHideFlags: 0
@@ -79845,7 +79908,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7576674690093363272, guid: cb89b6d12eee1334d9b9c73f99a41e40, type: 3}
+  - {fileID: 2100000, guid: 7cd2ce4bec0aec040a03c37141a32abd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -90530,7 +90593,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7576674690093363272, guid: 4d40abb33dd734c46b6a9f9dd71a1d3d, type: 3}
+  - {fileID: 2100000, guid: 7cd2ce4bec0aec040a03c37141a32abd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

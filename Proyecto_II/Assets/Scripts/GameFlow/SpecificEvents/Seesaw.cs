@@ -37,7 +37,7 @@ public class Seesaw : MonoBehaviour
     {
         while (true)
         {
-            SoundObjectsManager.Instance.PlaySFX(SoundType.Seesaw, 0.2f);
+            
 
             float current = transform.localRotation.eulerAngles.z;
             if (current > 180f) current -= 360f; // Asegura que esté en el rango -180 a 180
@@ -49,7 +49,6 @@ public class Seesaw : MonoBehaviour
             {
                 transform.localRotation = Quaternion.Euler(0f, 0f, targetRotation);
                 seesawSurface.UpdateNavMesh(seesawSurface.navMeshData);
-                SoundObjectsManager.Instance.StopSFX(SoundType.Seesaw);
                 yield break;
             }
 
@@ -60,6 +59,7 @@ public class Seesaw : MonoBehaviour
     private void StartRotation()
     {
         float target = GetTargetRotation();
+        SoundObjectsManager.Instance.PlaySFX(SoundType.Seesaw, 0.2f);
 
         if (rotationCoroutine != null)
             StopCoroutine(rotationCoroutine);
