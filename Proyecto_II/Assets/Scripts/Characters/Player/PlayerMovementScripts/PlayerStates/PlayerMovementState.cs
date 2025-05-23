@@ -338,6 +338,24 @@ public class PlayerMovementState : IState
 
     #region Métodos Interactions Enemies
     /// <summary>
+    /// Método que disminuye la salud del jugador en función del daño recibido y cambia al estado de Medio-Muerta si la salud llega a cero.
+    /// </summary>
+    /// <param name="_enemyDamage">Daño recibido por parte del enemigo.</param>
+    private void TakeDamage(float _enemyDamage)
+    {
+        if (stateMachine.CurrentState is PlayerHalfDeadState || stateMachine.Player.Shield.activeSelf) return;
+
+        statsData.CurrentHealth -= _enemyDamage;
+        EventsManager.TriggerSpecialEvent<float>("PlayerHealth", statsData.CurrentHealth);
+
+        if (statsData.CurrentHealth < Mathf.Epsilon)
+            PlayerDead();
+        else
+            stateMachine.ChangeState(stateMachine.TakeDamageState);
+    }
+
+    #region Métodos Pendientes Para Implementar A Futuro
+    /// <summary>
     /// Cambia el objetivo fijado al siguiente más cercano dentro de un límite.
     /// Si no hay enemigos se actualiza la lista.
     /// Después del último objetivo de la lista, deja de fijar.
@@ -423,23 +441,7 @@ public class PlayerMovementState : IState
             }
         }
     }
-
-    /// <summary>
-    /// Método que disminuye la salud del jugador en función del daño recibido y cambia al estado de Medio-Muerta si la salud llega a cero.
-    /// </summary>
-    /// <param name="_enemyDamage">Daño recibido por parte del enemigo.</param>
-    private void TakeDamage(float _enemyDamage)
-    {
-        if (stateMachine.CurrentState is PlayerHalfDeadState || stateMachine.Player.Shield.activeSelf) return;
-
-        statsData.CurrentHealth -= _enemyDamage;
-        EventsManager.TriggerSpecialEvent<float>("PlayerHealth", statsData.CurrentHealth);
-
-        if (statsData.CurrentHealth < Mathf.Epsilon)
-            PlayerDead();
-        else
-            stateMachine.ChangeState(stateMachine.TakeDamageState);
-    }
+    #endregion
     #endregion
 
     #region Métodos Defensa

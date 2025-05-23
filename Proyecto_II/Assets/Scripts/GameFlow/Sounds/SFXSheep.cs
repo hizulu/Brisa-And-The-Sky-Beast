@@ -38,6 +38,12 @@ public class SFXSheep : MonoBehaviour
         };
     }
 
+    /// <summary>
+    /// Método que reproduce aleatoriamente un sonido asociado al tipo específico (recibe como parámetro).
+    /// Si el AudioSource ya está reproduciendo algo, no hace nada.
+    /// </summary>
+    /// <param name="_soundType">Tipo de sonido que se quiere reproducir.</param>
+    /// <param name="_volume">Nivel del volumen que se quiere reproducir por defecto (esto luego es modificable al llamar a la función).</param>
     public void PlayRandomSFX(SheepSFXType _soundType, float _volume = 0.3f)
     {
         if (sheepAudioSource.isPlaying) return;
@@ -54,6 +60,10 @@ public class SFXSheep : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Método que detiene el sonido indicado.
+    /// </summary>
+    /// <param name="_soundType">Tipo de sonido que se quiere detener.</param>
     public void StopSound(SheepSFXType _soundType)
     {
         if (sfxNPCClips.TryGetValue(_soundType, out AudioClip[] clips) && clips.Length > 0)

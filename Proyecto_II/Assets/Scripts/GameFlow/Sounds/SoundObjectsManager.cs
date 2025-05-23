@@ -12,6 +12,14 @@ public enum SoundType
     Seesaw,
 }
 
+/*
+ * NOMBRE CLASE: SoundObjectsManager
+ * AUTOR: Sara Yue Madruga Martín
+ * FECHA: 22/05/2025
+ * DESCRIPCIÓN: Clase que gestiona la lógica de los efectos de sonido de objetos interatuables.
+ * VERSIÓN: 1.0.
+ */
+
 public class SoundObjectsManager : MonoBehaviour
 {
     public static SoundObjectsManager Instance;
@@ -47,6 +55,12 @@ public class SoundObjectsManager : MonoBehaviour
         };
     }
 
+    /// <summary>
+    /// Método que reproduce aleatoriamente un sonido asociado al tipo específico (recibe como parámetro).
+    /// Si el AudioSource ya está reproduciendo algo, no hace nada.
+    /// </summary>
+    /// <param name="_soundType">Tipo de sonido que se quiere reproducir.</param>
+    /// <param name="_volume">Nivel del volumen que se quiere reproducir por defecto (esto luego es modificable al llamar a la función).</param>
     public void PlaySFX(SoundType _soundType, float _volume = 0.2f)
     {
         if (objectAudioSource.isPlaying) return;
@@ -60,6 +74,11 @@ public class SoundObjectsManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Método que detiene el sonido indicado.
+    /// (De momento no se utiliza, pero está creado por si en un futuro se necesita).
+    /// </summary>
+    /// <param name="_soundType">Tipo de sonido que se quiere detener.</param>
     public void StopSFX(SoundType _soundType)
     {
         objectAudioSource.Stop();
