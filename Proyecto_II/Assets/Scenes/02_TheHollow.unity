@@ -21,7 +21,7 @@ RenderSettings:
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
-  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
+  m_AmbientEquatorColor: {r: 0.456, g: 0.5, b: 0.532, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 1
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1912030908}
-  m_IndirectSpecularColor: {r: 0.21515948, g: 0.41949713, b: 0.6632025, a: 1}
+  m_IndirectSpecularColor: {r: 0.38518506, g: 0.65555674, b: 0.99414784, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11538,10 +11538,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.15209174
+  m_Radius: 0.26982227
   m_Height: 1.3213062
   m_Direction: 1
-  m_Center: {x: 0, y: 0.665576, z: -0.047535658}
+  m_Center: {x: 0.11773053, y: 0.665576, z: -0.047535658}
 --- !u!95 &353271129
 Animator:
   serializedVersion: 5
@@ -11948,8 +11948,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.013639827, y: 0.029030101, z: 0.044477627}
-  m_Center: {x: -0.040235523, y: 0.010396866, z: 0.022242295}
+  m_Size: {x: 0.014139953, y: 0.029030101, z: 0.044477623}
+  m_Center: {x: -0.039985422, y: 0.010396866, z: 0.022242296}
 --- !u!65 &365050513
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30363,6 +30363,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 21
       objectReference: {fileID: 0}
+    - target: {fileID: 6941355228868297547, guid: bae67286130bfff4b86918843e6c3099, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8259895133089303171, guid: bae67286130bfff4b86918843e6c3099, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -47157,7 +47161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7929690707276820795, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
       propertyPath: m_Size.x
-      value: 2.3996687
+      value: 2.0258994
       objectReference: {fileID: 0}
     - target: {fileID: 7929690707276820795, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
       propertyPath: m_Size.z
@@ -47165,7 +47169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7929690707276820795, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
       propertyPath: m_Center.x
-      value: -0.21120512
+      value: -0.024320364
       objectReference: {fileID: 0}
     - target: {fileID: 7929690707276820795, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
       propertyPath: m_Center.z
@@ -58101,7 +58105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7929690707276820795, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
       propertyPath: m_Size.z
-      value: 2.224762
+      value: 2.016243
       objectReference: {fileID: 0}
     - target: {fileID: 7929690707276820795, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
       propertyPath: m_Center.x
@@ -58109,7 +58113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7929690707276820795, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
       propertyPath: m_Center.z
-      value: -0.11313248
+      value: -0.008872986
       objectReference: {fileID: 0}
     - target: {fileID: 7998688424464739515, guid: ac9a5ceee5c1c4044a5ef550882974d7, type: 3}
       propertyPath: m_Layer
